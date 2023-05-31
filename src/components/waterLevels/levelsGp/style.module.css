@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.element {
+    width: 50%;
+    height: 100%;
+    padding: 0.5%;
+}
+
+.additionalInfo {
+    overflow: visible;
+}
+
+.graph {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    width: 40vw;
+    height: 40vh;
+}
