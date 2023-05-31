@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "https://ris-app.herokuapp.com/$1"
+      }
+    ]
+  }
