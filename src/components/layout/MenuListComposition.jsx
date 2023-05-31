@@ -15,7 +15,7 @@ export default function MenuListComposition() {
   const navigate = useNavigate();
 
   const handleExit = async () => {
-    let res = await axios.get('/auth/logout');
+    let res = await axios.get('/api/auth/logout');
     console.log(res);
     setAuth({role: null, organisation: null});
     navigate('/vvp');
