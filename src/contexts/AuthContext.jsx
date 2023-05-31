@@ -20,7 +20,7 @@ export function AuthProvider(props) {
 
         const getUser = async () => {
             try {
-                let res = await axios.get('api/auth/authCheck');
+                let res = await axios.get('/api/auth/authCheck');
                 setAuth(res.data);
 
                 if (res.data.role === 'Администратор') {

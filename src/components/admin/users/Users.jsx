@@ -27,7 +27,7 @@ export default function Users(props) {
 useEffect(() => {
     const getUsers = async () => {
       try {
-        let res = await axios.get('api/auth/users');
+        let res = await axios.get('/api/auth/users');
         setRows (res.data);
       } catch(err) {
         console.log(err.response.data)
@@ -50,7 +50,7 @@ useEffect(() => {
       organisation: form.organisation.value
     }
     try {
-      let res = await axios.post('api/auth/registration', user);
+      let res = await axios.post('/api/auth/registration', user);
       setRows((rows) => [...rows, {
         id: user.id,
         username: user.username,
@@ -67,7 +67,7 @@ useEffect(() => {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      let res = await axios.delete('api/auth/delete/' + id);
+      let res = await axios.delete('/api/auth/delete/' + id);
       setRows(rows.filter((row) => row.id !== id));
     } catch(err) {
       console.log(err.response.data)
