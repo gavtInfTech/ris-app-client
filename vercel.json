@@ -1,8 +1,12 @@
 {
     "rewrites": [
       {
+        "source": "/api/(.*)",
+        "destination": "https://ris-app.herokuapp.com/api/$1"
+      },
+      {
         "source": "/(.*)",
-        "destination": "https://ris-app.herokuapp.com/$1"
+        "destination": "/$1"
       }
     ]
-  }
+}
