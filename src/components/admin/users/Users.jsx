@@ -11,6 +11,7 @@ import styles from './style.module.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { api } from '../../../axiosConfig';
 import MenuItem from '@mui/material/MenuItem';
 import { randomId } from '@mui/x-data-grid-generator';
 
@@ -27,7 +28,7 @@ export default function Users(props) {
 useEffect(() => {
     const getUsers = async () => {
       try {
-        let res = await axios.get('/api/auth/users');
+        let res = await api.get('/auth/users');
         setRows (res.data);
       } catch(err) {
         console.log(err.response.data)
@@ -50,7 +51,7 @@ useEffect(() => {
       organisation: form.organisation.value
     }
     try {
-      let res = await axios.post('/api/auth/registration', user);
+      let res = await api.post('/auth/registration', user);
       setRows((rows) => [...rows, {
         id: user.id,
         username: user.username,
@@ -67,7 +68,7 @@ useEffect(() => {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      let res = await axios.delete('/api/auth/delete/' + id);
+      let res = await api.delete('/auth/delete/' + id);
       setRows(rows.filter((row) => row.id !== id));
     } catch(err) {
       console.log(err.response.data)
