@@ -19,15 +19,20 @@ export const hydropostGroups = {
 }
 
 export const hydronodeRivers = [
-    "Августовский канал"
+    "Августовский канал",
+    "Неман",
 ]
 
 export const hydronodeGroups = {
     avgCanal: [
+        "Белорусская часть г/у Кужинец",
+        "Судоходный г/у Волкушек",
         "Судоходный г/у Домбровка",
         "Судоходный г/у Немново	"
     ],
-
+    neman: [
+        "Гродненская ГЭС"
+    ],
 }
 
 export const bridgeRivers = [
