@@ -65,7 +65,7 @@ export default function Sib () {
     const sheetNameGabs = 'Габариты судового хода';
 
     const sheetDislocations = XLSX.utils.table_to_sheet(document.getElementById('dislocationsTable'));
-    const sheetNameDislocations = 'Дислокация технического флота и изыскательных партий';
+    const sheetNameDislocations = 'Дислокация технического флота';
 
     const sheetBridges = XLSX.utils.table_to_sheet(document.getElementById('bridgesTable'));
     const sheetNameBridges = 'Габариты подмостовых переходов';

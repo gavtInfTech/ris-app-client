@@ -311,7 +311,7 @@ export default function NoticesUser(props) {
                         </Typography>
                 </Dialog>
                 
-            <Subscription handleOpenMessage={props.handleOpenMessage} data={data} />
+            {/* <Subscription handleOpenMessage={props.handleOpenMessage} data={data} /> */}
 
             <NoticesList data={data} />
         </div>

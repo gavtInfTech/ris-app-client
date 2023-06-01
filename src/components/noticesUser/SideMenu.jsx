@@ -18,13 +18,6 @@ return ( <div className={Style.content1}>
     </a></button>
 </div>
 
-<div className={Style.item3}>
-<button className={Style.btn3}><a href="/weather">
-    <img src="/images/weather.png" alt="meteo" ></img>
-    <br></br>Погода
-    </a></button>
-</div>
-
 </div>
 )
 }
