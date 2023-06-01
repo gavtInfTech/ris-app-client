@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import styles from './layout.module.css'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import axios from 'axios';
+import { api } from '../../axiosConfig';
 
 export default function MenuListComposition() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -15,7 +15,7 @@ export default function MenuListComposition() {
   const navigate = useNavigate();
 
   const handleExit = async () => {
-    let res = await axios.get('/api/auth/logout');
+    let res = await api.get('/auth/logout');
     console.log(res);
     setAuth({role: null, organisation: null});
     navigate('/vvp');
