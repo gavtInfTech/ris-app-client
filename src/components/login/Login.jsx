@@ -11,6 +11,7 @@ import * as adminInfo from '../admin/adminInfo';
 import * as berezinskoeInfo from '../admin/berezinskoeInfo';
 import * as bugskoeInfo from '../admin/bugskoeInfo';
 import * as dvinskoeInfo from '../admin/dvinskoeInfo';
+import axios from 'axios';
 
 export default function Login() {
 
@@ -25,7 +26,7 @@ export default function Login() {
     let password = form.password.value;
    
     try {
-      let res = await api.post('/auth/login', {username, password});
+      let res = await axios.post('https://ris-app-server.herokuapp.com/auth/login', {username, password});
       if (res.data.role === "Администратор") {
         setAuth({...res.data, info: adminInfo, rolePath: "main"});
         navigate('/admin-main/informationTab/levels/levelsGp');
