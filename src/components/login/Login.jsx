@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import styles from './login.module.css';
-import axios from 'axios';
+import { api } from '../../axiosConfig';
 import Typography from '@mui/material/Typography';
 import * as adminInfo from '../admin/adminInfo';
 import * as berezinskoeInfo from '../admin/berezinskoeInfo';
@@ -25,7 +25,7 @@ export default function Login() {
     let password = form.password.value;
    
     try {
-      let res = await axios.post('https://ris-app-server.herokuapp.com/api/auth/login', {username, password});
+      let res = await api.post('/auth/login', {username, password});
       if (res.data.role === "Администратор") {
         setAuth({...res.data, info: adminInfo, rolePath: "main"});
         navigate('/admin-main/informationTab/levels/levelsGp');

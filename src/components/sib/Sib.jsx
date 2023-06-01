@@ -64,9 +64,21 @@ export default function Sib () {
     const sheetGabs = XLSX.utils.table_to_sheet(document.getElementById('gabsTable'));
     const sheetNameGabs = 'Габариты судового хода';
 
+    const sheetDislocations = XLSX.utils.table_to_sheet(document.getElementById('dislocationsTable'));
+    const sheetNameDislocations = 'Дислокация технического флота и изыскательных партий';
+
+    const sheetBridges = XLSX.utils.table_to_sheet(document.getElementById('bridgesTable'));
+    const sheetNameBridges = 'Габариты подмостовых переходов';
+
+    const sheetNotices = XLSX.utils.table_to_sheet(document.getElementById('noticesTable'));
+    const sheetNameNotices = 'Извещения';
+
     XLSX.utils.book_append_sheet(workbook, sheetLevelsGp, sheetNameLevelsGp);
     XLSX.utils.book_append_sheet(workbook, sheetLevelsGu, sheetNameLevelsGu);
     XLSX.utils.book_append_sheet(workbook, sheetGabs, sheetNameGabs);
+    XLSX.utils.book_append_sheet(workbook, sheetDislocations, sheetNameDislocations);
+    XLSX.utils.book_append_sheet(workbook, sheetBridges, sheetNameBridges);
+    XLSX.utils.book_append_sheet(workbook, sheetNotices, sheetNameNotices);
 
     // Генерируем Excel файл
     const excelFile = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });

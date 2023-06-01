@@ -39,7 +39,7 @@ export default function TableDislocations(props) {
         <>
             <Typography sx={{fontSize: 18, alignSelf: 'start'}}>4. ДИСЛОКАЦИЯ ТЕХНИЧЕСКОГО ФЛОТА И ИЗЫСКАТЕЛЬСКИХ ПАРТИЙ</Typography>
             <TableContainer sx={{marginBottom: 5}}>
-            <Table id='gabsTable' className={styles.table} size="small">
+            <Table id='dislocationsTable' className={styles.table} size="small">
                 <TableHead>
                     <TableRow>
                         <TableCell rowSpan={2} align="center">№ судна/партии</TableCell>

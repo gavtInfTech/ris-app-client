@@ -61,7 +61,7 @@ export default function TableGabs(props) {
         <>
             <Typography sx={{fontSize: 18, alignSelf: 'start'}}>5. ГАБАРИТЫ ПОДМОСТОВЫХ ПЕРЕХОДОВ</Typography>
             <TableContainer sx={{marginBottom: 5}}>
-            <Table id='gabsTable' className={styles.table} size="small">
+            <Table id='bridgesTable' className={styles.table} size="small">
                 <TableHead>
                     <TableRow>
                         <TableCell rowSpan={2} align="center">Наименование рек и мостов</TableCell>

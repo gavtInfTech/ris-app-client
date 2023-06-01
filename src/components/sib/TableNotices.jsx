@@ -85,7 +85,7 @@ export default function TableNotices(props) {
         <>
             <Typography sx={{fontSize: 18, alignSelf: 'start'}}>6. ИЗВЕЩЕНИЯ</Typography>
             <TableContainer>
-                <Table id='gabsTable' className={styles.table} size="small">
+                <Table id='noticesTable' className={styles.table} size="small">
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">Наименование рек и участков</TableCell>
