@@ -26,7 +26,7 @@ export default function Login() {
     let password = form.password.value;
    
     try {
-      let res = await axios.post('/api/auth/login', {username, password});
+      let res = await api.post('/auth/login', {username, password});
       if (res.data.role === "Администратор") {
         setAuth({...res.data, info: adminInfo, rolePath: "main"});
         navigate('/admin-main/informationTab/levels/levelsGp');
