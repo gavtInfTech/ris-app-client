@@ -32,7 +32,7 @@ function EditToolbar(props) {
     setRows((oldRows) => [...oldRows, { id, date: new Date(), limitedRoll: "", planDepth: "", forecastDate: null, forecastDepth: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'planDepth' },
     }));
   };
 

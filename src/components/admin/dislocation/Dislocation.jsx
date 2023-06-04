@@ -40,7 +40,7 @@ function EditToolbar(props) {
     setRows((oldRows) => [...oldRows, { id, organisation: organisation}]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'number' },
     }));
   };
 

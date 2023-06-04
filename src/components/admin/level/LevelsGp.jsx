@@ -33,7 +33,7 @@ function EditToolbar(props) {
     setRows((oldRows) => [...oldRows, { id, difference: 0, date: new Date() }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'hydropost' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'level1' },
     }));
   };
 
