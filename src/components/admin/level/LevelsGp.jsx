@@ -54,7 +54,7 @@ EditToolbar.propTypes = {
 export default function LevelsGpAdmin(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
-
+  
 useEffect(() => {
   const getData = async () => {
   const data = await getDocs(query(collection(db, "levelsGp"), where('hydropost', '==', props.hydropost)));

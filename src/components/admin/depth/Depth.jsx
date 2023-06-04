@@ -29,7 +29,7 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, limitedRoll: "", planDepth: "", forecastDate: null, forecastDepth: null }]);
+    setRows((oldRows) => [...oldRows, { id, date: new Date(), limitedRoll: "", planDepth: "", forecastDate: null, forecastDepth: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit },
