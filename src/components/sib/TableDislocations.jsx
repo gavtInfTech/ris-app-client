@@ -1,5 +1,4 @@
 import {React, useState, useEffect} from 'react';
-import {hydroposts} from '../waterLevels/levelsGp/data'
 import { collection, query, getDocs } from "firebase/firestore";
 import  { db }  from "../../init-firebase";
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
