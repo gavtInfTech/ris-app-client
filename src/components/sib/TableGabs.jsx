@@ -46,7 +46,9 @@ export default function TableGabs(props) {
       const getData = async () => {
       const data = await getDocs(query(collection(db, "depths")));
       setData(data.docs.map((doc) => ({...doc.data(), 
-        date: doc.data().date.toDate(),
+        planDepth: doc.data().planDepth !== null ? doc.data().planDepth : "—",
+        date: doc.data().date !== null ? doc.data().date.toDate() : "—",
+        limitedRoll: doc.data().limitedRoll !== null ? doc.data().limitedRoll : "—",
         forecastDate: doc.data().forecastDate !== null ? doc.data().forecastDate.toDate() : "—",
         forecastDepth: doc.data().forecastDepth !== null ? doc.data().forecastDepth : "—"})));
       }   
@@ -57,6 +59,7 @@ export default function TableGabs(props) {
         for (var key in siteGroups) {
           // eslint-disable-next-line no-loop-func
           siteGroups[key].map((site) => {
+                console.log(site)
               let rowData = data.find((dat) => (dat.site === site && dat.date.toLocaleString().slice(0, 10) === date));
               if (rowData === undefined) rows.push({site: site, river: keyToRiver(key), ...emptyObj});
                else rows.push(rowData);
