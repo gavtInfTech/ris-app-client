@@ -323,7 +323,7 @@ export default function NoticeForm(props) {
 
                         <Box className={Styles.input}>
                         <TextField
-                            sx={{ width: 400 }}
+                            sx={{ width: 800 }}
                             name="content"
                             label="Содержание"
                             value={state.noticeInfo.content}
