@@ -29,7 +29,7 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, date: null, limitedRoll: null, planDepth: null, forecastDate: null, forecastDepth: null }]);
+    setRows((oldRows) => [...oldRows, { id, date: new Date(), limitedRoll: null, planDepth: null, forecastDate: null, forecastDepth: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'planDepth' },
@@ -59,7 +59,7 @@ useEffect(() => {
         const data = await getDocs(query(collection(db, "depths"), where('site', '==', props.site)));
         setRows(data.docs.map((doc) => ({...doc.data(), 
           date: doc.data().date.toDate(), 
-          forecastDate: doc.data().forecastDate !== "" && doc.data().forecastDate !== null ? doc.data().forecastDate.toDate() : "",})))
+          forecastDate: doc.data().forecastDate !== null ? doc.data().forecastDate.toDate() : ""})))
         }
 
         getRows();
@@ -93,7 +93,7 @@ useEffect(() => {
     });
 
     const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.name === undefined) {
+    if (editedRow.width === undefined) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };

@@ -21,14 +21,16 @@ export default function NoticeMain() {
     const siteGroups = auth.info.siteGroups;
 
     function filterNotices(data) {
-        let filteredNotices = [];
-      
-        for (var key in siteGroups) {
-          siteGroups[key].forEach((site) => {
-            filteredNotices.push(...data.filter((item) => item.site === site));
+        let filteredNotices = data.filter((element) => {
+            for (const key in siteGroups) {
+              const group = siteGroups[key];
+              if (group.includes(element)) {
+                return true;
+              }
+            }
+            return false;
           });
-        }
-        return filteredNotices;
+          return filteredNotices;
     }
     
     useEffect(() => {

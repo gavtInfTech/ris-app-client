@@ -99,7 +99,6 @@ useEffect(() => {
   };
 
   const processRowUpdate = async (newRow) => {
-    console.log(newRow.date)
     const updatedRow = { ...newRow, river: props.river, hydropost: props.hydropost };
     let updatedRows = rows.map((row) => (row.id === updatedRow.id ? updatedRow : row));
     let hydropostData = updatedRows.filter(row => row.hydropost === updatedRow.hydropost);

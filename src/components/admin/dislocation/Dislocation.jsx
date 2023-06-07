@@ -62,7 +62,6 @@ export default function Dislocation() {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const {auth} = useContext(AuthContext);
-  console.log(auth);
 useEffect(() => {
   const getData = async () => {
     let data;
@@ -105,7 +104,7 @@ useEffect(() => {
     });
     const editedRow = rows.find((row) => row.id === id);
     console.log(editedRow);
-    if (editedRow.company === undefined) {
+    if (editedRow.organisation === undefined) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
@@ -200,7 +199,6 @@ useEffect(() => {
   ];
 
   if (auth.role === "Администратор") {
-    console.log("EER")
     columns = [{ field: 'organisation', 
     headerName: 'Название предприятия', 
     type: 'singleSelect',
