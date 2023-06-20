@@ -20,7 +20,6 @@ export default function FullWidthTabs() {
   else if (pathname.includes("spravka")) value = `/admin-${rolePath}/spravka`;
   else value = "/admin-main/users";
 
-
   return (
     <Box sx={{ bgcolor: 'background.paper', width: '100%', height: '100%' }}>
       <AppBar position="static" className={Style.appBar} sx={{ bgcolor: 'SteelBlue', width: '100%' }}>
@@ -65,7 +64,6 @@ export default function FullWidthTabs() {
               </Route>
           </Routes>
         </Box>
-          
     </Box>
   );
 }

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import {React, useContext, useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -21,15 +20,15 @@ import {
 } from '@mui/x-data-grid';
 import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from '@mui/x-data-grid-generator';
-import { collection, query, where, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
+import { api } from '../../../axiosConfig';
+import { MessageContext } from '../../../contexts/MessageContext.jsx';
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, date: new Date() }]);
+    setRows((oldRows) => [...oldRows, { id, date: new Date(), height: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'height' },
@@ -53,11 +52,20 @@ EditToolbar.propTypes = {
 export default function Bridge(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
+  const [updateFlag, setUpdateFlag] = useState(false);
+  const {message, setMessage} = useContext(MessageContext);
 
 useEffect(() => {
   const getData = async () => {
-  const data = await getDocs(query(collection(db, "bridges"), where('bridge', '==', props.bridge)));
-  setRows(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+  try {
+    const res = await api.get("/bridges/getAllByBridge", { params: { bridge: props.bridge } });
+    res.data.forEach((item) => {
+      item.date = new Date(item.date);
+    })
+    setRows(res.data);
+  } catch (err) { 
+    console.log(err)
+  }
   }   
   getData();
   }, [])
@@ -71,6 +79,7 @@ useEffect(() => {
   };
 
   const handleEditClick = (id) => () => {
+    setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -78,12 +87,17 @@ useEffect(() => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-    deleteDoc(doc(db, "bridges", id));
+  const handleDeleteClick = (id) => async () => {
+    try {
+      let res = await api.delete('/bridges/delete/' + id);
+      setRows(rows.filter((row) => row.id !== id));
+    } catch(err) {
+      console.log(err.response.data)
+    }
   };
 
   const handleCancelClick = (id) => () => {
+    setUpdateFlag(false);
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -96,9 +110,42 @@ useEffect(() => {
   };
 
   const processRowUpdate = async (newRow) => {
+    if (newRow.height === null) {
+      setMessage(() => ({
+        open: true,
+        messageText: "Заполнены не все обязательные поля!",
+        severity: "error"
+    }))
+    return;
+    }
     const updatedRow = { ...newRow, river: props.river, bridge: props.bridge };
-    setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
-    await setDoc (doc(db, 'bridges', updatedRow.id), updatedRow);
+    if(updateFlag) {
+      try {
+        let res = await api.post('/bridges/change', updatedRow);
+        setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+      } catch(err) {
+        setMessage(() => ({
+          open: true,
+          messageText: err.response.data,
+          severity: "error"
+      }))
+        return;
+      }
+    } else {
+      try {
+        let res = await api.post('/bridges/add', updatedRow);
+        setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+      } catch(err) {
+        setMessage((prevState) => ({
+          open: true,
+          messageText: err.response.data,
+          severity: "error"
+      }))
+      console.log(err.response.data);
+        return;
+      }
+    }
+    setUpdateFlag(false);
     return updatedRow;
   };
 
@@ -111,7 +158,7 @@ useEffect(() => {
     },
     {
       field: 'height',
-      headerName: 'Текущая высота пролета, м',
+      headerName: 'Текущая высота пролета, м*',
       type: 'number',
       width: 205,
       editable: true,

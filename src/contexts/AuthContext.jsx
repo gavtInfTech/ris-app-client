@@ -53,5 +53,5 @@ export function AuthProvider(props) {
 
     return <AuthContext.Provider value={{auth, setAuth}}>
             {props.children}
-        </AuthContext.Provider>
+           </AuthContext.Provider>
 }

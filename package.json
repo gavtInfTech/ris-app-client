@@ -60,6 +60,6 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^5.52.0",
     "typescript": "^4.9.5"
-  },
-  "proxy": "https://ris-app.herokuapp.com"
+  }
+ 
 }

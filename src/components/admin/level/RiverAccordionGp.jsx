@@ -21,7 +21,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
               return hydropostGroups.pripiat;
             case "Горынь":
               return hydropostGroups.gorin;
-            case "Зап. Двина":
+            case "Западная Двина":
               return hydropostGroups.dvina;
             case "Неман":
               return hydropostGroups.neman;

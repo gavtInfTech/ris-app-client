@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,7 +13,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box } from '@mui/system';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {
   DataGrid,
   GridRowModes,
@@ -22,15 +20,15 @@ import {
   GridActionsCellItem,
 } from '@mui/x-data-grid';
 import { randomId } from '@mui/x-data-grid-generator';
-import { collection, query, where, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
+import { api } from '../../../axiosConfig';
+import { MessageContext } from '../../../contexts/MessageContext.jsx';
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, difference: 0, date: new Date() }]);
+    setRows((oldRows) => [...oldRows, { id, difference: 0, date: new Date(), level1: null, level2: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'level1' },
@@ -54,12 +52,21 @@ EditToolbar.propTypes = {
 export default function LevelsGpAdmin(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
-  
+  const [updateFlag, setUpdateFlag] = useState(false);
+  const {setMessage} = useContext(MessageContext);
+
 useEffect(() => {
   const getData = async () => {
-  const data = await getDocs(query(collection(db, "levelsGp"), where('hydropost', '==', props.hydropost)));
-  setRows(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
-  }   
+    try {
+      const res = await api.get("/levelsGp/getAllByHydropost", { params: { hydropost: props.hydropost } });
+      res.data.forEach((item) => {
+        item.date = new Date(item.date);
+      })
+      setRows(res.data);
+    } catch (err) { 
+      console.log(err)
+    }
+    }    
 
   getData();
   }, [])
@@ -73,6 +80,7 @@ useEffect(() => {
   };
 
   const handleEditClick = (id) => () => {
+    setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -81,12 +89,16 @@ useEffect(() => {
   };
 
   const handleDeleteClick = (id) => async () => {
-    
-    setRows(rows.filter((row) => row.id !== id));
-    deleteDoc(doc(db, "levelsGp", id));
+    try {
+      let res = await api.delete('/levelsGp/delete/' + id);
+      setRows(rows.filter((row) => row.id !== id));
+    } catch(err) {
+      console.log(err.response.data)
+    }
   };
 
   const handleCancelClick = (id) => () => {
+    setUpdateFlag(false);
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -99,6 +111,16 @@ useEffect(() => {
   };
 
   const processRowUpdate = async (newRow) => {
+    console.log(newRow);
+    if (newRow.level1 === null || newRow.level2 === null) {
+      setMessage(() => ({
+        open: true,
+        messageText: "Заполнены не все обязательные поля!",
+        severity: "error"
+    }))
+    return;
+    }
+
     const updatedRow = { ...newRow, river: props.river, hydropost: props.hydropost };
     let updatedRows = rows.map((row) => (row.id === updatedRow.id ? updatedRow : row));
     let hydropostData = updatedRows.filter(row => row.hydropost === updatedRow.hydropost);
@@ -111,12 +133,39 @@ useEffect(() => {
     }
     if (hydropostData[index + 1] !== undefined) {
       hydropostData[index + 1].difference = hydropostData[index + 1].level1 - hydropostData[index].level1;
-      setRows(rows.map((row) => (row.id === hydropostData[index + 1].id ? hydropostData[index + 1] : row)));
-      await setDoc (doc(db, 'levelsGp', hydropostData[index + 1].id), hydropostData[index + 1]);
+
+      try {
+        let res = await api.post('/levelsGp/change', hydropostData[index + 1]);
+        setRows(rows.map((row) => (row.id === hydropostData[index + 1].id ? hydropostData[index + 1] : row)));
+      } catch(err) {
+        console.log(err.response.data);
+        return;
+      }
     }
-    setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
-    await setDoc (doc(db, 'levelsGp', updatedRow.id), updatedRow);
-    // let res = await axios.post('/levelsGp/add', updatedRow);
+   
+    if(updateFlag) {
+      try {
+        let res = await api.post('/levelsGp/change', updatedRow);
+        setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+      } catch(err) {
+        console.log(err.response.data);
+        return;
+      }
+    } else {
+      try {
+        let res = await api.post('/levelsGp/add', updatedRow);
+        setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+      } catch(err) {
+        setMessage(() => ({
+          open: true,
+          messageText: err.response.data,
+          severity: "error"
+      }))
+      console.log(err.response.data);
+        return;
+      }
+    }
+    setUpdateFlag(false);
     return updatedRow;
   };
 

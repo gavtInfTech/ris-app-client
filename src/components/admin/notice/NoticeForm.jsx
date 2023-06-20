@@ -15,14 +15,15 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { randomId } from '@mui/x-data-grid-generator';
-import { setDoc, doc } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { api } from '../../../axiosConfig';
+import { MessageContext } from '../../../contexts/MessageContext.jsx';
 
 export default function NoticeForm(props) { 
 
     const {auth} = useContext(AuthContext);
-    const { addData, handleOpenMessage } = props;
+    const {setMessage} = useContext(MessageContext);
+    const {addData} = props;
 
     const rivers = auth.info.siteRivers;
     const sites = auth.info.siteGroups;
@@ -48,13 +49,26 @@ export default function NoticeForm(props) {
         state.noticeInfo.date === "" || 
         (state.noticeInfo.cause1 === false && state.noticeInfo.cause2 === false && state.noticeInfo.cause3 === false) ||
         state.noticeInfo.content === "" ) {
-            handleOpenMessage("Заполнены не все поля формы!", "error" );
+            setMessage(() => ({
+                open: true,
+                messageText: "Заполнены не все поля формы!",
+                severity: "error"
+            }))
         } else {
-            let id = randomId();
-            await setDoc (doc(db, 'notices', id), {...state.noticeInfo, id: id});
-            addData(state.noticeInfo, id);
-            handleOpenMessage("Уведомление успешно отправлено");
-            resetForm();
+            try {
+                let id = randomId();
+                let res = await api.post('/notice/add', {...state.noticeInfo, id: id});
+                addData(state.noticeInfo, id);
+                setMessage(() => ({
+                    open: true,
+                    messageText: "Уведомелние успешно отправлено",
+                    severity: "success"
+                }))
+                resetForm();
+              } catch(err) {
+                console.log(err.response.data)
+                return;
+              }
         }
     }
 

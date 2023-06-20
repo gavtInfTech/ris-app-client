@@ -1,6 +1,6 @@
 export const hydropostRivers = [
     "Припять",
-    "Зап. Двина",
+    "Западная Двина",
 ]
 
 export const hydropostGroups = {
@@ -19,7 +19,7 @@ export const hydropostGroups = {
 
 export const hydronodeRivers = [
     "Припять",
-    "ДБК",
+    "Днепро-Бугский канал",
     "Мухавец",
     "Западная Двина",
 ]
@@ -49,7 +49,7 @@ export const hydronodeGroups = {
 }
 
 export const bridgeRivers = [
-    "ДБК",
+    "Днепро-Бугский канал",
     "Припять",
     "Западная Двина"
 ]

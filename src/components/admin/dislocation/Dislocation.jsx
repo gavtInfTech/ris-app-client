@@ -16,9 +16,9 @@ import {
 } from '@mui/x-data-grid';
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { randomId } from '@mui/x-data-grid-generator';
-import { collection, getDocs, setDoc, doc, deleteDoc, query, where } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { MessageContext } from '../../../contexts/MessageContext.jsx';
+import { api } from '../../../axiosConfig';
 
 const organisations = [
   "РУ ЭСП \"Днепро-Бугский водный путь\"",
@@ -33,11 +33,12 @@ function EditToolbar(props) {
   const handleClick = () => {
     const id = randomId();
     let organisation;
-    if (auth.role === "Администратор") organisation = "";
+    if (auth.role === "Администратор") organisation = null;
     else {
       organisation = auth.organisation;
     }
-    setRows((oldRows) => [...oldRows, { id, organisation: organisation}]);
+    setRows((oldRows) => [...oldRows, { id, organisation: organisation, number: "", typeOfWork: "",
+    riverName: "", distance: "", place: "", date: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'number' },
@@ -62,15 +63,19 @@ export default function Dislocation() {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const {auth} = useContext(AuthContext);
+  const [updateFlag, setUpdateFlag] = useState(false);
+  const {setMessage} = useContext(MessageContext);
 useEffect(() => {
   const getData = async () => {
-    let data;
-    if (auth.role === "Администратор") {
-      data = await getDocs(collection(db, "dislocations"));
-    } else {
-      data = await getDocs(query(collection(db, "dislocations"), where('organisation', '==', auth.organisation)));
-    }
-    setRows(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+      try {
+        const res = await api.get("/dislocation/getAllByOrganisation", { params: { organisationName: auth.organisation } });
+        res.data.forEach((item) => {
+          item.date = new Date(item.date);
+        })
+        setRows(res.data);
+      } catch (err) { 
+        console.log(err)
+      }
   }   
 
   getData();
@@ -85,6 +90,7 @@ useEffect(() => {
   };
 
   const handleEditClick = (id) => () => {
+    setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -92,27 +98,61 @@ useEffect(() => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-    deleteDoc(doc(db, "dislocations", id));
+  const handleDeleteClick = (id) => async () => {
+    try {
+      let res = await api.delete('/dislocation/delete/' + id);
+      setRows(rows.filter((row) => row.id !== id));
+    } catch(err) {
+      console.log(err.response.data)
+    }
   };
 
   const handleCancelClick = (id) => () => {
+    setUpdateFlag(false);
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
     const editedRow = rows.find((row) => row.id === id);
-    console.log(editedRow);
-    if (editedRow.organisation === undefined) {
+    if (editedRow.organisation === null) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = async (newRow) => {
     console.log(newRow);
-    setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
-    await setDoc (doc(db, 'dislocations', newRow.id), newRow);
+    if (newRow.organisation === null || newRow.number === "" ||
+        newRow.typeOfWork === "" || newRow.riverName === "" ||
+        newRow.distance === "" || newRow.place === "" ||
+        newRow.date === null) {
+      setMessage(() => ({
+        open: true,
+        messageText: "Заполнены не все обязательные поля!",
+        severity: "error"
+    }))
+    return;
+    }
+   
+    if(updateFlag) {
+      try {
+        let res = await api.post('/dislocation/change', newRow);
+        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+      } catch(err) {
+        console.log(err.response.data);
+        setUpdateFlag(false);
+        return;
+      }
+    } else {
+      try {
+        let res = await api.post('/dislocation/add', newRow);
+        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+      } catch(err) {
+        console.log(err.response.data);
+        setUpdateFlag(false);
+        return;
+      }
+    }
+    setUpdateFlag(false);
     return newRow;
   };
 

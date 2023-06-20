@@ -5,10 +5,9 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import  {GridActionsCellItem } from '@mui/x-data-grid';
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import { doc, deleteDoc } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
 import PopupEdit from './PopupEdit.jsx';
 import style from '../style.module.css'
+import { api } from '../../../axiosConfig';
 
 export default function NoticeTable(props) {
   const [rows, setRows] = useState([]);
@@ -32,9 +31,13 @@ useEffect(() => {
     event.defaultMuiPrevented = true;
   };
 
-  const handleDeleteClick = (id) => () => {
-    props.deleteData(id);
-    deleteDoc(doc(db, "notices", id));
+  const handleDeleteClick = (id) => async () => {
+    try {
+      let res = await api.delete('/notice/delete/' + id);
+      props.deleteData(id);
+    } catch(err) {
+      console.log(err.response.data)
+    }
   };
 
   const columns = [
@@ -53,7 +56,7 @@ useEffect(() => {
     {
       field: 'date',
       headerName: 'Дата',
-      type: 'date',
+      type: 'dateTime',
       width: 150,
       editable: true,
     },
@@ -82,7 +85,7 @@ useEffect(() => {
       getActions: ({ id }) => {
 
         return [
-        <PopupEdit data={props.data} changeData={props.changeData} handleOpenMessage={props.handleOpenMessage} id={id} />,
+        <PopupEdit data={props.data} changeData={props.changeData} id={id} />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"

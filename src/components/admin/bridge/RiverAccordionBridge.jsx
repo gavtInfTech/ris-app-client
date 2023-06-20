@@ -21,7 +21,7 @@ const getBridges = (river, bridgeGroups) => {
       return bridgeGroups.neman;
     case "Августовский канал":
       return bridgeGroups.avgCanal;
-    case "ДБК":
+    case "Днепро-Бугский канал":
       return bridgeGroups.dbk;
     case "Припять":
       return bridgeGroups.pripyat;
@@ -63,6 +63,6 @@ export default function RiverAccordion(props) {
           </Box>
            
         </AccordionDetails>
-          </Accordion>
+    </Accordion>
   );
 }

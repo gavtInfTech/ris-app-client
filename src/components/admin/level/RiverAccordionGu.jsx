@@ -15,7 +15,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
             return hydronodeGroups.pripiat;
         case "Пина":
             return hydronodeGroups.pina;
-        case "ДБК":
+        case "Днепро-Бугский канал":
             return hydronodeGroups.dbk;
         case "Мухавец":
             return hydronodeGroups.muhavets;

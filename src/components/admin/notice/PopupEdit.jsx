@@ -18,27 +18,51 @@ import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Style from './style.module.css';
+import { api } from '../../../axiosConfig';
+import { MessageContext } from '../../../contexts/MessageContext.jsx';
 
 export default function PopupEdit(props) {
 
     const {auth} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
-    const { changeData, handleOpenMessage } = props;
+    const {changeData} = props;
+    const {setMessage} = useContext(MessageContext);
+    const [state, setState] = useState({
+        noticeInfo: {
+            river: "",
+            site: "",
+            date: "",
+            cause1: false,
+            cause2: false,
+            cause3: false,
+            content: ""
+        },
 
+        sites: []
+    })
     const rivers = auth.info.siteRivers;
     const sites = auth.info.siteGroups;
 
   const handleClick = (event) => {
-    const document = props.data.find((doc) => doc.id === props.id);
+    const notice = props.data.find((doc) => doc.id === props.id);
+
+    const date = notice.date;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
 
     setState((prevState) => ({
         noticeInfo: {
-            ...document,
+            ...notice,
+            date: formattedDate
         },
         sites: [...prevState.sites]
     }))
     setAnchorEl(event.currentTarget);
-    setSites(document.river);
+    setSites(notice.river);
   };
 
   const handleClose = () => {
@@ -172,20 +196,6 @@ export default function PopupEdit(props) {
     }
 }
 
-    const [state, setState] = useState({
-        noticeInfo: {
-            river: "",
-            site: "",
-            date: "",
-            cause1: false,
-            cause2: false,
-            cause3: false,
-            content: ""
-        },
-
-        sites: []
-    })
-
     const sendForm =  async (event) => {
         event.preventDefault();
         if (state.noticeInfo.river === "" || 
@@ -193,12 +203,24 @@ export default function PopupEdit(props) {
         state.noticeInfo.date === "" || 
         (state.noticeInfo.cause1 === false && state.noticeInfo.cause2 === false && state.noticeInfo.cause3 === false) ||
         state.noticeInfo.content === "" ) {
-            handleOpenMessage("Заполнены не все поля формы!", "error" );
+            setMessage(() => ({
+                open: true,
+                messageText: "Заполнены не все поля формы!",
+                severity: "error"
+            }))
         } else {
-            changeData(state.noticeInfo, props.id);
-            await setDoc(doc(db, 'notices', props.id), state.noticeInfo);
-            setAnchorEl(null);
-            props.handleOpenMessage("Уведомление успешно изменено!");
+            try {
+                let res = await api.post('/notice/change', state.noticeInfo);
+                changeData(state.noticeInfo, props.id);
+                setAnchorEl(null);
+                setMessage(() => ({
+                    open: true,
+                    messageText: "Уведомелние успешно изменено",
+                    severity: "success"
+                }))
+              } catch(err) {
+                console.log(err.response.data)
+              }
         }
     }
 

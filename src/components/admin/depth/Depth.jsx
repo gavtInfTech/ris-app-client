@@ -1,5 +1,4 @@
-import React  from 'react';
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -19,17 +18,17 @@ import {
   GridActionsCellItem,
   gridClasses
 } from '@mui/x-data-grid';
+import { api } from '../../../axiosConfig';
 import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from '@mui/x-data-grid-generator';
-import { collection, query, where, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
+import { MessageContext } from '../../../contexts/MessageContext.jsx';
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, date: new Date(), limitedRoll: null, planDepth: null, forecastDate: null, forecastDepth: null }]);
+    setRows((oldRows) => [...oldRows, { id, date: new Date(), depth: null, width: null }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'planDepth' },
@@ -53,13 +52,21 @@ EditToolbar.propTypes = {
 export default function Depth(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
+  const [updateFlag, setUpdateFlag] = useState(false);
+  const {setMessage} = useContext(MessageContext);
 
 useEffect(() => {
       const getRows = async () => {
-        const data = await getDocs(query(collection(db, "depths"), where('site', '==', props.site)));
-        setRows(data.docs.map((doc) => ({...doc.data(), 
-          date: doc.data().date.toDate(), 
-          forecastDate: doc.data().forecastDate !== null ? doc.data().forecastDate.toDate() : ""})))
+          try {
+            const res = await api.get("/depth/getAllBySite", { params: { site: props.site } });
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+              if (item.forecastDate !== null) item.forecastDate = new Date(item.forecastDate)
+            })
+            setRows(res.data);
+          } catch (err) { 
+            console.log(err)
+          }
         }
 
         getRows();
@@ -74,6 +81,7 @@ useEffect(() => {
   };
 
   const handleEditClick = (id) => () => {
+    setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -81,28 +89,65 @@ useEffect(() => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-    deleteDoc(doc(db, "depths", id));
+  const handleDeleteClick = (id) => async () => {
+    try {
+      let res = await api.delete('/depth/delete/' + id);
+      setRows(rows.filter((row) => row.id !== id));
+    } catch(err) {
+      console.log(err.response.data)
+    }
   };
 
   const handleCancelClick = (id) => () => {
+    setUpdateFlag(false);
     setRowModesModel({
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
     const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.width === undefined) {
+    if (editedRow.site === undefined) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = async (newRow) => {
-    console.log(newRow);
-    const updatedRow = { ...newRow, river: props.river, site: props.site };
-    setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
-    await setDoc (doc(db, 'depths', updatedRow.id), updatedRow);
+    if (newRow.depth === null || newRow.width === null) {
+      setMessage(() => ({
+        open: true,
+        messageText: "Заполнены не все обязательные поля!",
+        severity: "error"
+    }))
+    return;
+    }
+    const updatedRow = { ...newRow, site: props.site };
+    if(updateFlag) {
+      try {
+        let res = await api.post('/depth/change', updatedRow);
+        setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+      } catch(err) {
+        setMessage(() => ({
+          open: true,
+          messageText: err.response.data,
+          severity: "error"
+      }))
+        return;
+      }
+    } else {
+      try {
+        let res = await api.post('/depth/add', updatedRow);
+        setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+      } catch(err) {
+        setMessage(() => ({
+          open: true,
+          messageText: err.response.data,
+          severity: "error"
+      }))
+      console.log(err.response.data);
+        return;
+      }
+    }
+    setUpdateFlag(false);
     return updatedRow;
   };
 
@@ -130,14 +175,14 @@ useEffect(() => {
     },
     {
       field: 'depth',
-      headerName: 'Глубина, см',
+      headerName: 'Глубина, см*',
       type: 'number',
       width: 100,
       editable: true,
     },
     {
       field: 'width',
-      headerName: 'Ширина, м',
+      headerName: 'Ширина, м*',
       type: 'number',
       width: 90,
       editable: true,

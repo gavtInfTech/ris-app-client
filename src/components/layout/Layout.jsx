@@ -3,9 +3,30 @@ import Profile from './Profile';
 import styles from './layout.module.css';
 import classNames from 'classnames';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { MessageContext } from "../../contexts/MessageContext";
+import { useContext } from 'react';
+
+function Alert(props) {
+  return <MuiAlert elevation={1} variant="filled" {...props} />;
+}
+
 export default function Layout() {
   
+  const {message, setMessage} = useContext(MessageContext);
+
+  const handleCloseMessage = (reason) => {
+    if (reason === 'clickaway') {
+        return;
+        }
+    
+    setMessage((prevState) => ({
+        ...prevState,
+        open: false
+      }));
+}
+
   return (
     <div className={styles.conteiner}>
       <header className={styles.header}>
@@ -28,6 +49,15 @@ export default function Layout() {
       <footer className={styles.footer}>
         Администрация водного транспорта
       </footer>
+
+      <Snackbar anchorOrigin={{vertical: "bottom", horizontal: "center"}} open={message.open} autoHideDuration={5000} onClose={handleCloseMessage}>
+            <div>
+                <Alert onClose={handleCloseMessage} severity={message.severity}>
+                    {message.messageText}
+                </Alert>
+            </div>
+        </Snackbar>
+
     </div>
   );
 }
