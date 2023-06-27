@@ -1,24 +1,29 @@
 import {React, useState, useEffect} from 'react';
-import { collection, query, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
+import { api } from '../../axiosConfig';
 
 export default function TableDislocations(props) {
     const [data, setData] = useState([]);
-    const date = new Date(props.date).toLocaleString().slice(0, 10);
     
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "dislocations")));
-      setData(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+        try {
+            const res = await api.get("/dislocation/getAllByDate", { params: { date: new Date(props.date) } });
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+            setData(res.data);
+          } catch (err) { 
+            console.log(err)
+          }
       }   
       getData();
-      }, [])
+      }, [props.date])
 
       const riverRows = (organisation) => {
-        let filteredRows = data.filter((item) => ( item.organisation === organisation && item.date.toLocaleString().slice(0, 10) === date ));
+        let filteredRows = data.filter((item) => ( item.organisation === organisation));
         let riverRows = filteredRows.map((row) => {
           return (
               <TableRow >

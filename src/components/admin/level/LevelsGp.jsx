@@ -61,6 +61,7 @@ useEffect(() => {
       const res = await api.get("/levelsGp/getAllByHydropost", { params: { hydropost: props.hydropost } });
       res.data.forEach((item) => {
         item.date = new Date(item.date);
+        item.difference = Number(item.difference)
       })
       setRows(res.data);
     } catch (err) { 

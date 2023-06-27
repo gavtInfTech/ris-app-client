@@ -26,7 +26,7 @@ export default function NoticeMain() {
     useEffect(() => {
         const getData = async () => {
             try {
-                const res = await api.get("/notice/getAll");
+                const res = await api.get("/notices/getAll");
                 res.data.forEach((item) => {
                   item.date = new Date(item.date);
                 })

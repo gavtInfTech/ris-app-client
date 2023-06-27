@@ -33,7 +33,7 @@ useEffect(() => {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      let res = await api.delete('/notice/delete/' + id);
+      let res = await api.delete('/notices/delete/' + id);
       props.deleteData(id);
     } catch(err) {
       console.log(err.response.data)

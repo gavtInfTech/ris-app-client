@@ -210,7 +210,7 @@ export default function PopupEdit(props) {
             }))
         } else {
             try {
-                let res = await api.post('/notice/change', state.noticeInfo);
+                let res = await api.post('/notices/change', state.noticeInfo);
                 changeData(state.noticeInfo, props.id);
                 setAnchorEl(null);
                 setMessage(() => ({

@@ -1,10 +1,9 @@
 import {React, useState, useEffect} from 'react';
 import { siteRivers } from '../admin/adminInfo'
-import { collection, query, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
+import { api } from '../../axiosConfig';
 
 const emptyObj = {
     planDepth: '—',
@@ -39,27 +38,33 @@ function keyToRiver(key) {
 
 export default function TableNotices(props) {
     const [data, setData] = useState([]);
-
-    const date = props.date.toLocaleString().slice(0, 10);
     
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "notices")));
-      setData(data.docs.map((doc) => {
-        let cause = "";
-        if (doc.data().cause1) {cause += "Изменение СНО; " }
-        if (doc.data().cause2) {cause += "Метеологические условия; " }
-        if (doc.data().cause3) {cause += "Опасно для жизни; " }
-        
-        return {...doc.data(), cause: cause};
-        }))
+        try {
+            const res = await api.get("/notices/getAllByDate", { params: { date: new Date(props.date) } });
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+
+            setData(res.data.map((doc) => {
+                let cause = "";
+                if (doc.cause1) {cause += "Изменение СНО; " }
+                if (doc.cause2) {cause += "Метеологические условия; " }
+                if (doc.cause3) {cause += "Опасно для жизни; " }
+                
+                return {...doc, cause: cause};
+                }))
+          } catch (err) { 
+            console.log(err)
+          }
       }   
       getData();
-      }, [])
-      
+      }, [props.date])
+      console.log(data);
       const riverRows = (river) => {
         
-        let filteredRows = data.filter((row) => ( row.river === river && row.date.toLocaleString().slice(0, 10) === date ));
+        let filteredRows = data.filter((row) => ( row.river === river));
         if (filteredRows.length === 0) return;
         const riverRows = filteredRows.map((row) => {
           return (

@@ -4,39 +4,29 @@ import { Box } from '@mui/system';
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import styles from './style.module.css'
 import { YMaps, Map, Placemark} from "react-yandex-maps";
-import { hydronodes } from './data';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
-import axios from 'axios';
-
-  let rows = hydronodes;
+import { api } from '../../../axiosConfig';
 
   const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
   export default function LevelsGp(props) {
 
     const [map, setMap] = useState(mapState);
-    const [data, setData] = useState([]);
-    const [authUser, setAuthUser] = useState({});
+    const [hydronodes, setHydronodes] = useState([]);
 
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "levelsGu")));
-      setData(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+        try {
+          const res = await api.get("/levelsGu/getLastLevels");
+          res.data.forEach((item) => {
+            if (item.date !== "—") item.date = new Date(item.date);
+          })
+          setHydronodes(res.data);
+        } catch (err) { 
+          console.log(err)
+        }
       }   
       getData();
       }, [])
-
-      rows = rows.map((row) => {
-        let rowData = data.filter((dat) => (dat.hydronode === row.hydronode && dat.river === row.river));
-        if (rowData.length === 0) return row;
-        let lastRecord = rowData[0];
-        rowData.forEach((dat) => { if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat; })
-        row.level1 = lastRecord.level1;
-        row.level2 = lastRecord.level2;
-        row.date = lastRecord.date.toLocaleString().slice(0, 10);
-        return row;
-      })
 
   const columns = [
     { field: 'hydronode', 
@@ -50,6 +40,7 @@ import axios from 'axios';
     { 
       field: 'date', 
       headerName: 'Дата измерения', 
+      width: '130'
     },
     { field: 'level1', 
       headerName: 'Уровень воды над ПГ, ВБ', 
@@ -60,7 +51,7 @@ import axios from 'axios';
       field: 'level2',
       headerName: 'Уровень воды над ПГ, НБ',
       type: 'number',
-      width: '160'
+      width: '180'
     },
     {
       field: 'action1',
@@ -69,8 +60,8 @@ import axios from 'axios';
       getActions: ({ id }) => {
         return [
           <Button
-            options={rows.find(row => row.id === id).options}
-            onClick={() => setMap({center: rows.find(row => row.id === id).coords, zoom: 15})}
+            options={hydronodes.find(row => row.id === id).options}
+            onClick={() => setMap({center: hydronodes.find(row => row.id === id).coords, zoom: 15})}
             key={id}
           > 
           Показать
@@ -80,7 +71,7 @@ import axios from 'axios';
     },
   ];
 
-  const marks = rows.map((row) => {
+  const marks = hydronodes.map((row) => {
 
     let contentBody = "Гидроузел : " + row.hydronode +
     "<br> Река: " + row.river + 
@@ -102,7 +93,7 @@ import axios from 'axios';
       <div className={styles.container}>
         <Box className={styles.element}>
           <DataGrid
-            rows={rows}
+            rows={hydronodes}
             columns={columns}
             experimentalFeatures={{ newEditingApi: true }}
             getRowHeight={() => 'auto'}

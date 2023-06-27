@@ -1,25 +1,30 @@
 import {React, useState, useEffect} from 'react';
 import {hydroposts} from '../waterLevels/levelsGp/data'
-import { collection, query, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
+import { api } from '../../axiosConfig';
 
 export default function TableLevelsGp(props) {
     const [data, setData] = useState([]);
-    const date = new Date(props.date).toLocaleString().slice(0, 10);
     
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "levelsGp")));
-      setData(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+        try {
+            const res = await api.get("/levelsGp/getAllByDate", { params: { date: new Date(props.date) } });
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+            setData(res.data);
+          } catch (err) { 
+            console.log(err)
+          }
       }   
       getData();
-      }, [])
+      }, [props.date])
 
       let rows = hydroposts.map((row) => {
-        let rowData = data.find((dat) => (dat.hydropost === row.hydropost && dat.date.toLocaleString().slice(0, 10) === date));
+        let rowData = data.find((dat) => (dat.hydropost === row.hydropost));
         if (rowData === undefined) return {...row};
         return {
           ...row,

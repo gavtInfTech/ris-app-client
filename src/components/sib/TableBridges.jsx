@@ -1,10 +1,10 @@
 import {React, useState, useEffect} from 'react';
 import { bridgeGroups } from '../admin/adminInfo'
-import { collection, query, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
+import { api } from '../../axiosConfig';
+import { PDFDocument, PDFTable } from 'pdf-lib';
 
 function keyToRiver(key) {
     // eslint-disable-next-line default-case
@@ -22,26 +22,55 @@ function keyToRiver(key) {
 
 export default function TableGabs(props) {
     const [data, setData] = useState([]);
-
-    const date = new Date(props.date).toLocaleString().slice(0, 10);
     
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "bridges")));
-      setData(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})));
+        try {
+            const res = await api.get("/bridges/getAllByDate", { params: { date: new Date(props.date) } });
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+            setData(res.data);
+          } catch (err) { 
+            console.log(err)
+          }
       }   
       getData();
-      }, [])
+      }, [props.date])
 
         let rows = [];
         for (var key in bridgeGroups) {
           // eslint-disable-next-line no-loop-func
           bridgeGroups[key].map((bridge) => {
-              let rowData = data.find((item) => (item.bridge === bridge && item.date.toLocaleString().slice(0, 10) === date));
+              let rowData = data.find((item) => (item.bridge === bridge));
               if (rowData === undefined) rows.push({bridge: bridge, river: keyToRiver(key), height: '—'});
                else rows.push(rowData);
           })
         }
+
+
+        // async function generatePdfFromTable() {
+        //     const pdfDoc = await PDFDocument.create();
+        //     const page = pdfDoc.addPage();
+          
+        //     const table = new PDFTable();
+          
+        //     table
+        //       .setColumns([
+        //         { header: 'Наименование рек и мостов', dataKey: 'bridge' },
+        //         { header: 'Текущая высота пролета, м', dataKey: 'height' },
+        //       ])
+        //       .addRows(data.map(row => ({ bridge: row.bridge, height: row.height })));
+          
+        //     table.drawOnPage(page, { x: 50, y: 500 });
+          
+        //     const pdfBytes = await pdfDoc.save();
+          
+        //     // Сохранение PDF-файла или выполнение других операций
+        //     // ...
+        //   }
+
+        //   generatePdfFromTable();
 
 
       const riverRows = (river) => {

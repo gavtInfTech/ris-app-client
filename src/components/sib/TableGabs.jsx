@@ -1,10 +1,9 @@
 import {React, useState, useEffect} from 'react';
-import { siteGroups } from '../admin/adminInfo'
-import { collection, query, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
+import { siteGroups } from '../admin/adminInfo';
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
+import { api } from '../../axiosConfig';
 
 const emptyObj = {
     planDepth: '—',
@@ -39,35 +38,36 @@ function keyToRiver(key) {
 
 export default function TableGabs(props) {
     const [data, setData] = useState([]);
-
-    const date = new Date(props.date).toLocaleString().slice(0, 10);
     
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "depths")));
-      setData(data.docs.map((doc) => ({...doc.data(), 
-        planDepth: doc.data().planDepth !== null ? doc.data().planDepth : "—",
-        date: doc.data().date.toDate(),
-        limitedRoll: doc.data().limitedRoll !== null ? doc.data().limitedRoll : "—",
-        forecastDate: doc.data().forecastDate !== null ? doc.data().forecastDate.toDate() : "—",
-        forecastDepth: doc.data().forecastDepth !== null ? doc.data().forecastDepth : "—"})));
+        try {
+            const res = await api.get("/gabs/getAllByDate", { params: { date: new Date(props.date) } });
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+            setData(res.data.map((doc) => ({...doc, 
+                planDepth: doc.planDepth !== null ? doc.planDepth : "—",
+                date: new Date(doc.date),
+                limitedRoll: doc.limitedRoll !== null ? doc.limitedRoll : "—",
+                forecastDate: doc.forecastDate !== null ? new Date(doc.forecastDate) : "—",
+                forecastDepth: doc.forecastDepth !== null ? doc.forecastDepth : "—"})));
+          } catch (err) { 
+            console.log(err)
+          }
       }   
       getData();
-      }, [])
-      console.log(data)
+      }, [props.date])
         let rows = [];
         for (var key in siteGroups) {
           // eslint-disable-next-line no-loop-func
           siteGroups[key].map((site) => {
-               
-              let rowData = data.find((dat) => (dat.site === site && dat.date.toLocaleString().slice(0, 10) === date));
-             
+              let rowData = data.find((dat) => (dat.site === site));
               if (rowData === undefined) rows.push({site: site, river: keyToRiver(key), ...emptyObj});
                else rows.push(rowData);
           })
         }
-    
-      const riverRows = (river) => {
+        const riverRows = (river) => {
         let filteredRows = rows.filter((row) => ( row.river === river ));
         let riverRows = filteredRows.map((row) => {
           return (

@@ -7,9 +7,8 @@ import { YMaps, Map, Placemark} from "react-yandex-maps";
 import { hydroposts } from './data';
 import AdditionalInfo from './AdditionalInfo';
 import Graph from './Graph';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import  { db }  from "../../../init-firebase.js";
 import clsx from 'clsx';
+import { api } from '../../../axiosConfig';
 
   let rows = hydroposts;
 
@@ -22,13 +21,24 @@ import clsx from 'clsx';
 
     useEffect(() => {
       const getData = async () => {
-      const data = await getDocs(query(collection(db, "levelsGp")));
-      setData(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+        try {
+          const res = await api.get("/levelsGp/getAll", { params: { hydropost: props.hydropost } });
+          res.data.forEach((item) => {
+            item.date = new Date(item.date);
+            item.level1 = Number(item.level1);
+            item.level2 = Number(item.level2);
+            item.difference = Number(item.difference);
+          })
+          setData(res.data);
+        } catch (err) { 
+          console.log(err)
+        }
       }   
       getData();
       }, [])
+
       rows = rows.map((row) => {
-        let rowData = data.filter((dat) => (dat.hydropost === row.hydropost && dat.river === row.river));
+        let rowData = data.filter((dat) => (dat.hydropost === row.hydropost));
         if (rowData.length === 0) return row;
         let lastRecord = rowData[0];
         rowData.forEach((dat) => { if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat; })
@@ -40,16 +50,23 @@ import clsx from 'clsx';
       })
 
   const columns = [
-    { field: 'hydropost', 
+    { 
+      field: 'hydropost', 
       headerName: 'Гидропост',
       width: '150'
     },
-    { field: 'river', 
+    { 
+      field: 'river', 
       headerName: 'Река', 
       width: '150'
     },
-
-    { field: 'level1', 
+    { 
+      field: 'date', 
+      headerName: 'Дата измерения', 
+      width: '130'
+    },
+    { 
+      field: 'level1', 
       headerName: 'Уровень воды над 0 граф', 
       type: 'number',
       width: '190'
@@ -100,7 +117,7 @@ import clsx from 'clsx';
         width: '140',
         getActions: ({ id }) => {
           let row = rows.find(item => item.id === id);
-          let filteredData = data.filter((dat) => (row.river === dat.river && row.hydropost === dat.hydropost));
+          let filteredData = data.filter((dat) => (row.hydropost === dat.hydropost));
           filteredData.sort((a, b) => a.date.getTime() - b.date.getTime());
           let newData = filteredData.map((dat) => ([dat.date, dat.level2]));
           

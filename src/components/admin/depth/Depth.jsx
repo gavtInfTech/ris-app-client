@@ -58,7 +58,7 @@ export default function Depth(props) {
 useEffect(() => {
       const getRows = async () => {
           try {
-            const res = await api.get("/depth/getAllBySite", { params: { site: props.site } });
+            const res = await api.get("/gabs/getAllBySite", { params: { site: props.site } });
             res.data.forEach((item) => {
               item.date = new Date(item.date);
               if (item.forecastDate !== null) item.forecastDate = new Date(item.forecastDate)
@@ -91,7 +91,7 @@ useEffect(() => {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      let res = await api.delete('/depth/delete/' + id);
+      let res = await api.delete('/gabs/delete/' + id);
       setRows(rows.filter((row) => row.id !== id));
     } catch(err) {
       console.log(err.response.data)
@@ -123,7 +123,7 @@ useEffect(() => {
     const updatedRow = { ...newRow, site: props.site };
     if(updateFlag) {
       try {
-        let res = await api.post('/depth/change', updatedRow);
+        let res = await api.post('/gabs/change', updatedRow);
         setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
       } catch(err) {
         setMessage(() => ({
@@ -135,7 +135,7 @@ useEffect(() => {
       }
     } else {
       try {
-        let res = await api.post('/depth/add', updatedRow);
+        let res = await api.post('/gabs/add', updatedRow);
         setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
       } catch(err) {
         setMessage(() => ({

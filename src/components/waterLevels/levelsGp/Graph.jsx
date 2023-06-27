@@ -11,7 +11,6 @@ export default function Graph(props) {
 
   google.charts.load('current', {packages: ['corechart'], 'language': 'ru'}); 
   google.charts.setOnLoadCallback(drawChart);
-
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       [
@@ -41,7 +40,7 @@ export default function Graph(props) {
 
   const open = Boolean(anchorEl);
 
-  if (props.data.length === 0) return (<div></div>)
+  if (props.data.length === 0) return (<div>—</div>)
 
   return (
     <div>
