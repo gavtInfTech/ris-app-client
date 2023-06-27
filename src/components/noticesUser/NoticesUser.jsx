@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { collection, query, where, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore";
-import  { db }  from "../../init-firebase.js";
 import NoticesList from './NoticesList'
 import Style from './style.module.css'
 import { Box } from '@mui/system';
@@ -13,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {rivers, sites} from './info';
 import { Typography } from '@mui/material';
 import Subscription from './Subscription';
+import { api } from '../../axiosConfig';
 
 
 
@@ -33,21 +32,28 @@ export default function NoticesUser(props) {
     })
     
     const getData = async () => {
-        const notifications = await getDocs(collection(db, "notices"));
-        setMainData(notifications.docs.map((doc) => {
-            let cause = "";
-            if (doc.data().cause1) {cause += "Изменение СНО; " }
-            if (doc.data().cause2) {cause += "Метеологические условия; " }
-            if (doc.data().cause3) {cause += "Опасно для жизни; " }
-            return {...doc.data(), id: doc.id, cause: cause};
-        }))
-        setData(notifications.docs.map((doc) => {
-            let cause = "";
-            if (doc.data().cause1) {cause += "Изменение СНО; " }
-            if (doc.data().cause2) {cause += "Метеологические условия; " }
-            if (doc.data().cause3) {cause += "Опасно для жизни; " }
-            return {...doc.data(), id: doc.id, cause: cause};
-        }))
+        try {
+            const res = await api.get("/notices/getAll");
+            res.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+            setMainData(res.data.map((doc) => {
+                let cause = "";
+                if (doc.cause1) {cause += "Изменение СНО; " }
+                if (doc.cause2) {cause += "Метеологические условия; " }
+                if (doc.cause3) {cause += "Опасно для жизни; " }
+                return {...doc, id: doc.id, cause: cause};
+            }))
+            setData(res.data.map((doc) => {
+                let cause = "";
+                if (doc.cause1) {cause += "Изменение СНО; " }
+                if (doc.cause2) {cause += "Метеологические условия; " }
+                if (doc.cause3) {cause += "Опасно для жизни; " }
+                return {...doc, id: doc.id, cause: cause};
+            }))
+          } catch (err) { 
+            console.log(err)
+          }
     }
 
     useEffect(() => { 

@@ -21,7 +21,7 @@ export default function NoticesList(props) {
                     id="panel1a-header"
                     sx={{ width: 840 }}
                 >
-                    <Typography sx={{ ml: '20px', fontSize: '17px' }}> ({doc.date.replace("T", " ")}) – {doc.site}</Typography>
+                    <Typography sx={{ ml: '20px', fontSize: '17px' }}> ({doc.date.toLocaleString().slice(0, 17)}) – {doc.site}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
               

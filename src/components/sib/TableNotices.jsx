@@ -62,6 +62,7 @@ export default function TableNotices(props) {
       getData();
       }, [props.date])
       console.log(data);
+    
       const riverRows = (river) => {
         
         let filteredRows = data.filter((row) => ( row.river === river));
@@ -70,7 +71,7 @@ export default function TableNotices(props) {
           return (
               <TableRow >
                   <TableCell align="left">{row.site}</TableCell>
-                  <TableCell align="center">{row.date.toLocaleString().slice(11, 16)}</TableCell>
+                  <TableCell align="center">{row.date.toLocaleString().slice(11, 17)}</TableCell>
                   <TableCell align="center">{row.cause}</TableCell>
                   <TableCell align="center">{row.content}</TableCell>
               </TableRow>
