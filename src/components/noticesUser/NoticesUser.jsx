@@ -69,20 +69,21 @@ export default function NoticesUser(props) {
       };
 
       const setFilter = () => {
-        let copyMainData = mainData;
+        let copiOfMainData = mainData;
+
         if (state.noticeInfo.river !== "") {
-            copyMainData = copyMainData.filter((note) => note.river === state.noticeInfo.river);
+            copiOfMainData = copiOfMainData.filter((note) => note.river === state.noticeInfo.river);
         }
         if (state.noticeInfo.site !== "") {
-            copyMainData = copyMainData.filter((note) => note.site === state.noticeInfo.site);
+            copiOfMainData = copiOfMainData.filter((note) => note.site === state.noticeInfo.site);
         }
         if (state.noticeInfo.date1 !== "") {
-            copyMainData = copyMainData.filter((note) => note.date > state.noticeInfo.date1);
+            copiOfMainData = copiOfMainData.filter((note) => note.date > new Date(state.noticeInfo.date1));
         }
         if (state.noticeInfo.date2 !== "") {
-            copyMainData = copyMainData.filter((note) => note.date < state.noticeInfo.date2);
+            copiOfMainData = copiOfMainData.filter((note) => note.date <  new Date(state.noticeInfo.date2));
         }
-        setData(copyMainData);
+        setData(copiOfMainData);
         setOpen(false);
       };
 

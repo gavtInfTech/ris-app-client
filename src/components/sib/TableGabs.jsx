@@ -58,6 +58,7 @@ export default function TableGabs(props) {
       }   
       getData();
       }, [props.date])
+      
         let rows = [];
         for (var key in siteGroups) {
           // eslint-disable-next-line no-loop-func

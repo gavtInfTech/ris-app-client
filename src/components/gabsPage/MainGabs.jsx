@@ -4,9 +4,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { siteGroups } from '../admin/adminInfo'
-import { collection, query, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
+import { api } from '../../axiosConfig';
 
 const emptyObj = {
     planDepth: '—',
@@ -76,31 +75,39 @@ export default function Sib () {
 
   useEffect(() => {
     const getData = async () => {
-    const data = await getDocs(query(collection(db, "depths")));
-    setData(data.docs.map((doc) => ({...doc.data(), 
-      date: doc.data().date.toDate(),
-      forecastDate: doc.data().forecastDate !== null ? doc.data().forecastDate.toDate() : "—",
-      forecastDepth: doc.data().forecastDepth !== null ? doc.data().forecastDepth : "—"})));
+      try {
+        const res = await api.get("/gabs/getAllByDate", { params: { date: new Date(date) } });
+        res.data.forEach((item) => {
+          item.date = new Date(item.date);
+        })
+        setData(res.data.map((doc) => ({...doc, 
+            planDepth: doc.planDepth !== null ? doc.planDepth : "—",
+            date: new Date(doc.date),
+            limitedRoll: doc.limitedRoll !== null ? doc.limitedRoll : "—",
+            forecastDate: doc.forecastDate !== null ? new Date(doc.forecastDate) : "—",
+            forecastDepth: doc.forecastDepth !== null ? doc.forecastDepth : "—"})));
+      } catch (err) { 
+        console.log(err)
+      }
     }   
     getData();
-    }, [])
+    }, [date])
 
-  const handleChangeDate = (event) => {
-    setDate(event.target.value);
-}
+    let rows = [];
+    for (var key in siteGroups) {
+      // eslint-disable-next-line no-loop-func
+      siteGroups[key].map((site) => {
+          let rowData = data.find((dat) => (dat.site === site));
+          if (rowData === undefined) rows.push({site: site, river: keyToRiver(key), ...emptyObj});
+           else rows.push(rowData);
+      })
+    }
 
-let rows = [];
-const datee = new Date(date).toLocaleString().slice(0, 10);
-for (var key in siteGroups) {
-  // eslint-disable-next-line no-loop-func
-  siteGroups[key].map((site) => {
-      let rowData = data.find((dat) => (dat.site === site && dat.date.toLocaleString().slice(0, 10) === datee));
-      if (rowData === undefined) rows.push({site: site, river: keyToRiver(key), ...emptyObj});
-       else rows.push(rowData);
-  })
-}
+    const handleChangeDate = (event) => {
+      setDate(event.target.value);
+    }
 
-const riverRows = (river) => {
+    const riverRows = (river) => {
     let filteredRows = rows.filter((row) => ( row.river === river ));
     let riverRows = filteredRows.map((row) => {
       return (

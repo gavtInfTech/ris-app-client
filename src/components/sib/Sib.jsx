@@ -12,6 +12,8 @@ import TableBridges from './TableBridges';
 import TableNotices from './TableNotices';
 import TextField from '@mui/material/TextField';
 import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+require("jspdf-autotable");
 
 const theme = createTheme({
     components: {
@@ -86,9 +88,28 @@ export default function Sib () {
     saveAs(blob, `sib_${date}.xlsx`);
   };
 
+  const generatePdfFile = () => {
+    var doc = new jsPDF();
+    var elementHTML = document.querySelector("#levelsGpTable");
+    var options = {
+      margin: { top: 10, right: 10, bottom: 10, left: 10 }, // Adjust margins as needed
+      html2canvas: { scale: 2 } // Increase scale for better resolution (optional)
+    };
+    var styles = {
+      lineColor: [186, 182, 182], // Цвет границы ячеек (RGB)
+      lineWidth: 0.1, // Толщина линии границы ячеек
+    };
+    doc.setFont("times");
+    doc.autoTable({ 
+      html: elementHTML,
+      styles: styles,
+      options });
+    doc.save("table.pdf");
+  };
+
   return (
     <ThemeProvider theme={theme}>
-        <div className={styles.container} >
+        <div id='contnetForPdf' className={styles.container} >
             <h2>СВОДНЫЙ ИНФОРМАЦИОННЫЙ БЮЛЛЕТЕНЬ</h2><br/>
             <Typography sx={{fontSize: 18}} >По внутренним водным путям Республики Беларусь на <span> </span>
              {
@@ -106,7 +127,7 @@ export default function Sib () {
                 variant="contained"  
                 type='submit'
                 sx={{margin: "10px", width: '120px'}}
-                onClick={generateExcelFile}
+                onClick={generatePdfFile}
                 >
                     Скачать 
             </Button>
