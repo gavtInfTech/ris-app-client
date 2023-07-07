@@ -1,9 +1,8 @@
-import {React, useState, useEffect} from 'react';
+import {React} from 'react';
 import { siteGroups } from '../admin/adminInfo';
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
-import { api } from '../../axiosConfig';
 
 const emptyObj = {
     planDepth: '—',
@@ -37,27 +36,7 @@ function keyToRiver(key) {
 }
 
 export default function TableGabs(props) {
-    const [data, setData] = useState([]);
-    
-    useEffect(() => {
-      const getData = async () => {
-        try {
-            const res = await api.get("/gabs/getAllByDate", { params: { date: new Date(props.date) } });
-            res.data.forEach((item) => {
-              item.date = new Date(item.date);
-            })
-            setData(res.data.map((doc) => ({...doc, 
-                planDepth: doc.planDepth !== null ? doc.planDepth : "—",
-                date: new Date(doc.date),
-                limitedRoll: doc.limitedRoll !== null ? doc.limitedRoll : "—",
-                forecastDate: doc.forecastDate !== null ? new Date(doc.forecastDate) : "—",
-                forecastDepth: doc.forecastDepth !== null ? doc.forecastDepth : "—"})));
-          } catch (err) { 
-            console.log(err)
-          }
-      }   
-      getData();
-      }, [props.date])
+    const data = props.data;
       
         let rows = [];
         for (var key in siteGroups) {

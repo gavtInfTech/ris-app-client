@@ -1,30 +1,14 @@
-import {React, useState, useEffect} from 'react';
+import {React} from 'react';
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
-import { api } from '../../axiosConfig';
 
 export default function TableDislocations(props) {
-    const [data, setData] = useState([]);
-    
-    useEffect(() => {
-      const getData = async () => {
-        try {
-            const res = await api.get("/dislocation/getAllByDate", { params: { date: new Date(props.date) } });
-            res.data.forEach((item) => {
-              item.date = new Date(item.date);
-            })
-            setData(res.data);
-          } catch (err) { 
-            console.log(err)
-          }
-      }   
-      getData();
-      }, [props.date])
+    const data = props.data;
 
       const riverRows = (organisation) => {
         let filteredRows = data.filter((item) => ( item.organisation === organisation));
-        let riverRows = filteredRows.map((row) => {
+        let rows = filteredRows.map((row) => {
           return (
               <TableRow >
                   <TableCell align="center">{row.number}</TableCell>
@@ -36,7 +20,7 @@ export default function TableDislocations(props) {
               </TableRow>
           )
         })
-          return riverRows;
+          return rows;
       }
       
       return (
@@ -52,7 +36,7 @@ export default function TableDislocations(props) {
                         <TableCell rowSpan={2} align="center">Дата начала работы</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell align="center">Наименование реки и № участка*</TableCell>
+                        <TableCell align="center">Наименование реки и № участка</TableCell>
                         <TableCell align="center">Км от устья</TableCell>
                         <TableCell align="center">Место дислокации</TableCell>
                     </TableRow>

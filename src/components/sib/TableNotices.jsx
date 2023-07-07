@@ -37,31 +37,7 @@ function keyToRiver(key) {
 }
 
 export default function TableNotices(props) {
-    const [data, setData] = useState([]);
-    
-    useEffect(() => {
-      const getData = async () => {
-        try {
-            const res = await api.get("/notices/getAllByDate", { params: { date: new Date(props.date) } });
-            res.data.forEach((item) => {
-              item.date = new Date(item.date);
-            })
-
-            setData(res.data.map((doc) => {
-                let cause = "";
-                if (doc.cause1) {cause += "Изменение СНО; " }
-                if (doc.cause2) {cause += "Метеологические условия; " }
-                if (doc.cause3) {cause += "Опасно для жизни; " }
-                
-                return {...doc, cause: cause};
-                }))
-          } catch (err) { 
-            console.log(err)
-          }
-      }   
-      getData();
-      }, [props.date])
-      console.log(data);
+    const data = props.data;
     
       const riverRows = (river) => {
         

@@ -1,27 +1,11 @@
-import {React, useState, useEffect} from 'react';
+import {React} from 'react';
 import {hydronodes} from '../waterLevels/levelsGu/data'
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
-import { api } from '../../axiosConfig';
 
 export default function TableLevelsGu(props) {
-    const [data, setData] = useState([]);
-    
-    useEffect(() => {
-      const getData = async () => {
-        try {
-            const res = await api.get("/levelsGu/getAllByDate", { params: { date: new Date(props.date) } });
-            res.data.forEach((item) => {
-              item.date = new Date(item.date);
-            })
-            setData(res.data);
-          } catch (err) { 
-            console.log(err)
-          }
-      }   
-      getData();
-      }, [props.date])
+    const data = props.data;
 
       let rows = hydronodes.map((row) => {
         let rowData = data.find((dat) => (dat.hydronode === row.hydronode));

@@ -10,6 +10,7 @@ import NoticeMain from './notice/NoticeMain';
 import Dislocation from './dislocation/Dislocation';
 import { Link, useLocation, Route, Routes } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
+import NestedList from "../admin/Test";
 
 export default function InformationTab() {
   const {auth} = useContext(AuthContext);
@@ -112,6 +113,7 @@ export default function InformationTab() {
                 <Box sx={{ pl: 6, pt: 4 }}>
                   <NoticeMain />
                 </Box>
+                // <NestedList />
               } />
           </Routes>
         </Box>

@@ -12,7 +12,9 @@ import TableBridges from './TableBridges';
 import TableNotices from './TableNotices';
 import TextField from '@mui/material/TextField';
 import { saveAs } from 'file-saver';
-import jsPDF from 'jspdf';
+import {generatePdfFileByDate, generatePdfFileByPeriod} from './generatePdfFile';
+import { api } from '../../axiosConfig';
+
 require("jspdf-autotable");
 
 const theme = createTheme({
@@ -41,18 +43,147 @@ const theme = createTheme({
 
 export default function Sib () {
 
-  const [date, setDate] = useState('');
-
-  useEffect(() => {
+  const [date, setDate] = useState(() => {
     let todayDate = new Date();
     const dateParts = todayDate.toLocaleString().slice(0, 10).split('.');
     const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-    setDate(formattedDate);
-  }, [])
+    return formattedDate;
+  });
+  const [startPeriod, setStartPeriod] = useState();
+  const [endPeriod, setEndPeriod] = useState();
+  const [levelsGpDataByDate, setLevelsGpDataByDate] = useState([]);
+  const [levelsGuDataByDate, setLevelsGuDataByDate] = useState([]);
+  const [gabsDataByDate, setGabsDataByDate] = useState([]);
+  const [dislocationsDataByDate, setDislocationsDataByDate] = useState([]);
+  const [bridgesDataByDate, setBridgesDataByDate] = useState([]);
+  const [noticesDataByDate, setNoticesDataByDate] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+          const resLevelsGp = await api.get("/levelsGp/getAllByDate", { params: { date: new Date(date) } });
+          resLevelsGp.data.forEach((item) => {
+            item.date = new Date(item.date);
+          })
+          setLevelsGpDataByDate(resLevelsGp.data);
+
+          const resLevelsGu = await api.get("/levelsGu/getAllByDate", { params: { date: new Date(date) } });
+          resLevelsGu.data.forEach((item) => {
+              item.date = new Date(item.date);
+            })
+          setLevelsGuDataByDate(resLevelsGu.data);
+
+          const resGabs = await api.get("/gabs/getAllByDate", { params: { date: new Date(date) } });
+          resGabs.data.forEach((item) => {
+            item.date = new Date(item.date);
+          })
+          setGabsDataByDate(resGabs.data.map((doc) => ({...doc, 
+              planDepth: doc.planDepth !== null ? doc.planDepth : "—",
+              date: new Date(doc.date),
+              limitedRoll: doc.limitedRoll !== null ? doc.limitedRoll : "—",
+              forecastDate: doc.forecastDate !== null ? new Date(doc.forecastDate) : "—",
+              forecastDepth: doc.forecastDepth !== null ? doc.forecastDepth : "—"})));
+
+          const resDislocations = await api.get("/dislocation/getAllByDate", { params: { date: new Date(date) } });
+          resDislocations.data.forEach((item) => {
+            item.date = new Date(item.date);
+          })
+          setDislocationsDataByDate(resDislocations.data);
+
+          const resBridges = await api.get("/bridges/getAllByDate", { params: { date: new Date(date) } });
+          resBridges.data.forEach((item) => {
+            item.date = new Date(item.date);
+          })
+          setBridgesDataByDate(resBridges.data);
+
+          const resNotices = await api.get("/notices/getAllByDate", { params: { date: new Date(date) } });
+          resNotices.data.forEach((item) => {
+            item.date = new Date(item.date);
+          })
+
+          setNoticesDataByDate(resNotices.data.map((doc) => {
+              let cause = "";
+              if (doc.cause1) {cause += "Изменение СНО; " }
+              if (doc.cause2) {cause += "Метеологические условия; " }
+              if (doc.cause3) {cause += "Опасно для жизни; " }
+              
+              return {...doc, cause: cause};
+              }))
+        } catch (err) { 
+          console.log(err)
+        }
+    }   
+    getData();
+  }, [date])
 
   const handleChangeDate = (event) => {
     setDate(event.target.value);
-}
+  }
+
+  const handleChangeStartPeriod = (event) => {
+    setStartPeriod(event.target.value);
+  }
+
+  const handleChangeEndPeriod = (event) => {
+    setEndPeriod(event.target.value);
+  }
+
+  const generatePdfFile = async () => {
+    try {
+      const resLevelsGp = await api.get("/levelsGp/getAllByPeriod", { params: { startPeriod: new Date(startPeriod), endPeriod: new Date(endPeriod) } });
+      resLevelsGp.data.forEach((item) => {
+        item.date = new Date(item.date);
+      })
+      let levelsGpDataByPeriod = resLevelsGp.data;
+
+      const resLevelsGu = await api.get("/levelsGu/getAllByPeriod", { params: { startPeriod: new Date(startPeriod), endPeriod: new Date(endPeriod) } });
+      resLevelsGu.data.forEach((item) => {
+          item.date = new Date(item.date);
+        })
+      let levelsGuDataByPeriod = resLevelsGu.data;
+
+      const resGabs = await api.get("/gabs/getAllByPeriod", { params: { startPeriod: new Date(startPeriod), endPeriod: new Date(endPeriod) } });
+      resGabs.data.forEach((item) => {
+        item.date = new Date(item.date);
+      })
+      let gabsDataByPeriod = resGabs.data.map((doc) => ({...doc, 
+          planDepth: doc.planDepth !== null ? doc.planDepth : "—",
+          date: new Date(doc.date),
+          limitedRoll: doc.limitedRoll !== null ? doc.limitedRoll : "—",
+          forecastDate: doc.forecastDate !== null ? new Date(doc.forecastDate) : "—",
+          forecastDepth: doc.forecastDepth !== null ? doc.forecastDepth : "—"}));
+
+      const resDislocations = await api.get("/dislocation/getAllByPeriod", { params: { startPeriod: new Date(startPeriod), endPeriod: new Date(endPeriod) } });
+      resDislocations.data.forEach((item) => {
+        item.date = new Date(item.date);
+      })
+      let dislocationsDataByPeriod = resDislocations.data;
+
+      const resBridges = await api.get("/bridges/getAllByPeriod", { params: { startPeriod: new Date(startPeriod), endPeriod: new Date(endPeriod) } });
+      resBridges.data.forEach((item) => {
+        item.date = new Date(item.date);
+      })
+      let bridgesDataByPeriod = resBridges.data;
+
+      const resNotices = await api.get("/notices/getAllByPeriod", { params: { startPeriod: new Date(startPeriod), endPeriod: new Date(endPeriod) } });
+      resNotices.data.forEach((item) => {
+        item.date = new Date(item.date);
+      })
+
+      let noticesDataByPeriod = resNotices.data.map((doc) => {
+          let cause = "";
+          if (doc.cause1) {cause += "Изменение СНО; " }
+          if (doc.cause2) {cause += "Метеологические условия; " }
+          if (doc.cause3) {cause += "Опасно для жизни; " }
+          
+          return {...doc, cause: cause};
+          })
+
+      generatePdfFileByPeriod(new Date(startPeriod), new Date(endPeriod), levelsGpDataByPeriod, levelsGuDataByPeriod, gabsDataByPeriod, dislocationsDataByPeriod, bridgesDataByPeriod, noticesDataByPeriod)
+    } catch (err) { 
+      console.log(err)
+    }
+  }
 
   const generateExcelFile = () => {
     const workbook = XLSX.utils.book_new();
@@ -88,25 +219,7 @@ export default function Sib () {
     saveAs(blob, `sib_${date}.xlsx`);
   };
 
-  const generatePdfFile = () => {
-    var doc = new jsPDF();
-    var elementHTML = document.querySelector("#levelsGpTable");
-    var options = {
-      margin: { top: 10, right: 10, bottom: 10, left: 10 }, // Adjust margins as needed
-      html2canvas: { scale: 2 } // Increase scale for better resolution (optional)
-    };
-    var styles = {
-      lineColor: [186, 182, 182], // Цвет границы ячеек (RGB)
-      lineWidth: 0.1, // Толщина линии границы ячеек
-    };
-    doc.setFont("times");
-    doc.autoTable({ 
-      html: elementHTML,
-      styles: styles,
-      options });
-    doc.save("table.pdf");
-  };
-
+ 
   return (
     <ThemeProvider theme={theme}>
         <div id='contnetForPdf' className={styles.container} >
@@ -127,18 +240,47 @@ export default function Sib () {
                 variant="contained"  
                 type='submit'
                 sx={{margin: "10px", width: '120px'}}
-                onClick={generatePdfFile}
+                onClick={() => generatePdfFileByDate(date, levelsGpDataByDate, levelsGuDataByDate, gabsDataByDate, dislocationsDataByDate, bridgesDataByDate, noticesDataByDate)}
                 >
                     Скачать 
             </Button>
 
+            <Typography sx={{fontSize: 18}} >
+              С <span>     </span>
+              <TextField
+                name="startPeriod"
+                type={'date'}
+                value={startPeriod}
+                onChange={handleChangeStartPeriod}
+                variant="standard"
+                sx={{ m: 1 }}
+              />
+              По <span>     </span>
+              <TextField
+                name="endPeriod"
+                type={'date'}
+                value={endPeriod}
+                onChange={handleChangeEndPeriod}
+                variant="standard"
+                sx={{ m: 1 }}
+              />
+              <Button 
+                variant="contained"  
+                type='submit'
+                sx={{m: 1, width: '120px'}}
+                onClick={generatePdfFile}
+                >
+                    Скачать 
+            </Button>
+            </Typography>
+
             <div id='tablesContainer' className={styles.tablesContainer}>
-              <TableLevelsGp date={date} />
-              <TableLevelsGu date={date} />
-              <TableGabs date={date} />
-              <TableDislocations date={date} />
-              <TableBridges date={date} />
-              <TableNotices date={date} />
+              <TableLevelsGp data={levelsGpDataByDate} />
+              <TableLevelsGu data={levelsGuDataByDate} />
+              <TableGabs data={gabsDataByDate} />
+              <TableDislocations data={dislocationsDataByDate} />
+              <TableBridges data={bridgesDataByDate} />
+              <TableNotices data={noticesDataByDate} />
             </div>
             
         </div>

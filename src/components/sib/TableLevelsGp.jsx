@@ -3,26 +3,10 @@ import {hydroposts} from '../waterLevels/levelsGp/data'
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
-import { api } from '../../axiosConfig';
 
 export default function TableLevelsGp(props) {
-    const [data, setData] = useState([]);
-    
-    useEffect(() => {
-      const getData = async () => {
-        try {
-            const res = await api.get("/levelsGp/getAllByDate", { params: { date: new Date(props.date) } });
-            res.data.forEach((item) => {
-              item.date = new Date(item.date);
-            })
-            setData(res.data);
-          } catch (err) { 
-            console.log(err)
-          }
-      }   
-      getData();
-      }, [props.date])
-
+    const data = props.data;
+ 
       let rows = hydroposts.map((row) => {
         let rowData = data.find((dat) => (dat.hydropost === row.hydropost));
         if (rowData === undefined) return {...row};
@@ -77,7 +61,7 @@ export default function TableLevelsGp(props) {
                     </TableRow>
                     {riverRows("Березина")}
 
-                    <TableRow >
+                    <TableRow>
                         <TableCell align="left" colSpan={4} sx={{fontWeight: 'bold'}}>р. Сож</TableCell>
                     </TableRow>
                     {riverRows("Сож")}
