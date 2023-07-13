@@ -22,7 +22,7 @@ import { api } from '../../../axiosConfig';
     useEffect(() => {
       const getData = async () => {
         try {
-          const res = await api.get("/levelsGp/getAll", { params: { hydropost: props.hydropost } });
+          const res = await api.get("/levelsGp/getAll");
           res.data.forEach((item) => {
             item.date = new Date(item.date);
             item.level1 = Number(item.level1);

@@ -8,15 +8,11 @@ import {
   ListBox,
   Polyline,
 } from "react-yandex-maps";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import  { db }  from "../../init-firebase";
-
+import { api } from '../../axiosConfig';
 import {gateways} from "../infrastructure/gateways/data"
 import {ports} from "../infrastructure/ports/data"
 import {hydroposts} from "../waterLevels/levelsGp/data"
 import {ges} from "../infrastructure/ges/data"
-
-let posts = hydroposts;
 
 var Pripyat = [
   [51.4809, 29.9933],
@@ -9282,22 +9278,36 @@ export default function VVP() {
 
   useEffect(() => {
     const getData = async () => {
-    const data = await getDocs(query(collection(db, "levelsGp")));
-    setData(data.docs.map((doc) => ({...doc.data(), date: doc.data().date.toDate()})))
+      try {
+        const res = await api.get("/levelsGp/getAll");
+        res.data.forEach((item) => {
+          item.date = new Date(item.date);
+          item.level1 = Number(item.level1);
+          item.level2 = Number(item.level2);
+          item.difference = Number(item.difference);
+        })
+        setData(res.data);
+      } catch (err) { 
+        console.log(err)
+      }
     }   
     getData();
     }, [])
 
-    posts = posts.map((row) => {
-      let rowData = data.filter((dat) => (dat.hydropost === row.hydropost && dat.river === row.river));
+    let lastHydropostsData = hydroposts.map((row) => {
+      console.log(row);
+      console.log({...row});
+      let rowData = data.filter((dat) => (dat.hydropost === row.hydropost));
       if (rowData.length === 0) return row;
       let lastRecord = rowData[0];
       rowData.forEach((dat) => { if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat; })
-      row.level1 = lastRecord.level1;
-      row.level2 = lastRecord.level2;
-      row.date = lastRecord.date.toLocaleString().slice(0, 10);
-      row.difference = lastRecord.difference;
-      return row;
+      return {
+        ...row,
+        level1: lastRecord.level1,
+        level2: lastRecord.level2,
+        date: lastRecord.date.toLocaleString().slice(0, 10),
+        difference: lastRecord.difference
+      };
     })
 
 
@@ -9355,12 +9365,13 @@ export default function VVP() {
           )
           });
 
-          const hydropostMarks = hydroposts.map((item) => {
+          const hydropostMarks = lastHydropostsData.map((item) => {
 
             let contentBody = "Гидропост : " + item.hydropost +
             "<br> Река: " + item.river + 
             "<br> Уровень воды над 0 граф: " + item.level1 + 
-            "<br> Уровень воды над ПГ: " + item.level2
+            "<br> Уровень воды над ПГ: " + item.level2 +
+            "<br> Дата последнего измерения: " + item.date
         
             return (
                 <Placemark geometry={item.coords} key={item.id} properties={{balloonContentBody: [contentBody]} } modules={['geoObject.addon.balloon']}

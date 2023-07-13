@@ -10,8 +10,14 @@ export default function Profile() {
   const {auth} = useContext(AuthContext);
 
     if (auth.role !== null) {
+        
         return <MenuListComposition />
     } 
-    return <Link className={classNames(styles.link, styles.header_item)} to={'/login'}>Войти</Link>
+    return <Link 
+      className={classNames(styles.link, styles.profileLink)}  
+      to={'/login'} 
+    >
+        Войти
+    </Link>
   
 }

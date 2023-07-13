@@ -1,63 +1,140 @@
-import { Link, Outlet } from 'react-router-dom';
-import Profile from './Profile';
-import styles from './layout.module.css';
-import classNames from 'classnames';
-import Avatar from '@mui/material/Avatar';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import { Link, Outlet } from "react-router-dom";
+import Profile from "./Profile";
+import styles from "./layout.module.css";
+import classNames from "classnames";
+import Avatar from "@mui/material/Avatar";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import { MessageContext } from "../../contexts/MessageContext";
-import { useContext } from 'react';
+import { useContext, useState } from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 function Alert(props) {
   return <MuiAlert elevation={1} variant="filled" {...props} />;
 }
 
 export default function Layout() {
-  
-  const {message, setMessage} = useContext(MessageContext);
+  const { message, setMessage } = useContext(MessageContext);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleCloseMessage = (reason) => {
-    if (reason === 'clickaway') {
-        return;
-        }
-    
+    if (reason === "clickaway") {
+      return;
+    }
+
     setMessage((prevState) => ({
-        ...prevState,
-        open: false
-      }));
-}
+      ...prevState,
+      open: false,
+    }));
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
     <div className={styles.conteiner}>
       <header className={styles.header}>
-          <div className={styles.header_section}>
-            <Avatar  sx={{mr: 1, marginLeft: 2 }} src="/yakor.png" />
-            <Link className={classNames(styles.header_main_item)} to={'/'}>РИАС РБ</Link>
-            <Link className={classNames(styles.link, styles.header_item)} to={'/notices'}>Для судоводителей</Link>
-            {/* <Link className={classNames(styles.link, styles.header_item)} to={'/gabarit'}>Сроки навигации</Link> */}
-            <Link className={classNames(styles.link, styles.header_item)} to={'/infmenu'}>Инфраструктура ВВП</Link>
-          </div>
-          <div className={styles.header_section}>
-            <Profile />
-          </div>
+        <Box sx={{ display: { md: "none" } }} className={styles.header_section}>
+          <IconButton
+            size="60"
+            sx={{
+              backgroundColor: "white",
+              ml: 1,
+              ":hover": {
+                backgroundColor: "white",
+              },
+            }}
+            onClick={handleOpenUserMenu}
+          >
+            <MenuIcon sx={{ color: "#34418f" }} />
+          </IconButton>
+        </Box>
+
+        <Box className={styles.header_section}>
+          <Avatar sx={{ mr: 1, ml: 1 }} src="/yakor.png" />
+          <Link
+            className={styles.mainLink}
+            to={"/"}
+          >
+            РИАС РБ
+          </Link>
+          <Link className={styles.link} to={"/notices"}>
+            Для судоводителей
+          </Link>
+          <Link className={styles.link} to={"/gabarit"}>
+            Сроки навигации
+          </Link>
+          <Link className={styles.link} to={"/infmenu"}>
+            Инфраструктура ВВП
+          </Link>
+        </Box>
+        <Box className={styles.header_section}>
+          <Profile />
+        </Box>
+
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Link to={"/notices"}>
+              Для судоводителей
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Link to={"/gabarit"}>
+              Сроки навигации
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Link to={"/infmenu"}>
+              Инфраструктура ВВП
+            </Link>
+          </MenuItem>
+        </Menu>
       </header>
-      
+
       <main className={styles.main}>
-          <Outlet />
+        <Outlet />
       </main>
 
       <footer className={styles.footer}>
         Администрация водного транспорта
       </footer>
 
-      <Snackbar anchorOrigin={{vertical: "bottom", horizontal: "center"}} open={message.open} autoHideDuration={5000} onClose={handleCloseMessage}>
-            <div>
-                <Alert onClose={handleCloseMessage} severity={message.severity}>
-                    {message.messageText}
-                </Alert>
-            </div>
-        </Snackbar>
-
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={message.open}
+        autoHideDuration={5000}
+        onClose={handleCloseMessage}
+      >
+        <div>
+          <Alert onClose={handleCloseMessage} severity={message.severity}>
+            {message.messageText}
+          </Alert>
+        </div>
+      </Snackbar>
     </div>
   );
 }

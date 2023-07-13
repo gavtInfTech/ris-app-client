@@ -16,12 +16,12 @@ export default function MenuListComposition() {
 
   const handleExit = async () => {
     let res = await api.get('/auth/logout');
-    console.log(res);
     setAuth({role: null, organisation: null});
     navigate('/vvp');
   }
 
   function handleMenu() {
+
     if (auth.role === "Администратор") navigate('/admin-main/informationTab/levels/levelsGp');
       else {
         switch (auth.organisation) {
@@ -47,32 +47,29 @@ export default function MenuListComposition() {
   };
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
-      <div>
-          <AccountCircleIcon sx={{fontSize: 50 }} className={styles.avatarImg} onClick={handleOpenUserMenu} />
-      </div>
-
-        <Menu className={styles.menu}
-          sx={{ mt: '50px', minWidth: 200 }}
-          id="menu-appbar"
-          anchorEl={anchorElUser}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(anchorElUser)}
-          onClose={handleCloseUserMenu}
-          >
-          <Box sx={{ minWidth: 100 }}>
-            <MenuItem onClick={handleMenu}>Меню</MenuItem>
-            <MenuItem onClick={handleExit}>Выйти</MenuItem>
-          </Box>
-        </Menu>
+    <Box sx={{ flexGrow: 0, width: '100%' }}>
+     
+      <AccountCircleIcon sx={{fontSize: 50 }} className={styles.avatarImg} onClick={handleOpenUserMenu} />
+    
+      <Menu 
+        sx={{ mt: '50px', width: '100%' }}
+        id="menu-appbar"
+        anchorEl={anchorElUser}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorElUser)}
+        onClose={handleCloseUserMenu}
+        >
+          <MenuItem onClick={handleMenu}>Меню</MenuItem>
+          <MenuItem onClick={handleExit}>Выйти</MenuItem>
+      </Menu>
     </Box>
   );
 }

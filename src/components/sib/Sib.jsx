@@ -65,6 +65,7 @@ export default function Sib () {
           resLevelsGp.data.forEach((item) => {
             item.date = new Date(item.date);
           })
+          console.log(resLevelsGp.data)
           setLevelsGpDataByDate(resLevelsGp.data);
 
           const resLevelsGu = await api.get("/levelsGu/getAllByDate", { params: { date: new Date(date) } });

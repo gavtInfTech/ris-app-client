@@ -6,7 +6,7 @@ import styles from './style.module.css';
 
 export default function TableLevelsGp(props) {
     const data = props.data;
- 
+        console.log(hydroposts);
       let rows = hydroposts.map((row) => {
         let rowData = data.find((dat) => (dat.hydropost === row.hydropost));
         if (rowData === undefined) return {...row};
@@ -23,13 +23,13 @@ export default function TableLevelsGp(props) {
         let filteredRows = rows.filter((row) => ( row.river === river ));
         let riverRows = filteredRows.map((row) => {
           return (
-              <TableRow >
-                  <TableCell align="left">{row.hydropost}</TableCell>
-                  <TableCell align="center">{row.level1}</TableCell>
-                  <TableCell align="center">{row.level2}</TableCell>
-                  <TableCell align="center">{row.difference}</TableCell>
-              </TableRow>
-          )
+            <TableRow >
+                <TableCell align="left">{row.hydropost}</TableCell>
+                <TableCell align="center">{row.level1}</TableCell>
+                <TableCell align="center">{row.level2}</TableCell>
+                <TableCell align="center">{row.difference}</TableCell>
+            </TableRow>
+        )
         })
           return riverRows;
       }

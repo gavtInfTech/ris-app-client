@@ -1,36 +1,37 @@
 import React from 'react';
 import './InfMenu.css';
+import { Link } from 'react-router-dom';
 
 export default function Gidroteh () {
     return (
         <div className="content14">
             <div></div>
             <div className="item21">
-            <button className="btn33"><a href="/gateways">
+            <button className="btn33"><Link to={'/gateways'}>
                 <img src="/images/gateway.png" alt="gateways" ></img>
                 <br></br>Шлюзы
-                </a></button>
+                </Link></button>
                 </div>
             <div></div>
             <div className="item22">
-            <button className="btn33"><a href="/bridges">
+            <button className="btn33"><Link to={'/bridges'}>
                 <img src="/images/bridge.png" alt="bridges" ></img>
                 <br></br>Мосты
-                </a></button>
+                </Link></button>
                 </div>
             <div></div>
             <div className="item23">
-            <button className="btn33"><a href="/ports">
+            <button className="btn33"><Link to={'/ports'}>
                 <img src="/images/port.png" alt="ports"></img>
                 <br></br>Порты
-                </a></button>
+                </Link></button>
                 </div>
             <div></div>
             <div className="item24">
-            <button className="btn33"><a href="/ges">
+            <button className="btn33"><Link to={'/ges'}>
                 <img src="/images/ges.png" alt="ges"></img>
                 <br></br>ГЭС
-                </a></button>
+                </Link></button>
                 </div>
             <div></div>
         </div>

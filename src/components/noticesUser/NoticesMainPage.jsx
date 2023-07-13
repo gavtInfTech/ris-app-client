@@ -50,4 +50,4 @@ export default function NoticesMainPage () {
             </Snackbar>
         </div>
     )
-    }
+}
