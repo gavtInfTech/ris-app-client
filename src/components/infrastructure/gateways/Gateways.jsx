@@ -1,7 +1,7 @@
 import  { React, useState } from 'react';
 import Button from '@mui/material/Button';
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import styles from './style.module.css'
+import styles from '../menu.module.css'
 import { YMaps, Map, Placemark} from "react-yandex-maps";
 import { gateways } from './data';
 
@@ -86,7 +86,7 @@ export default function Shluzi(props) {
     });
 
   return ( 
-      <div className={styles.container}>
+      <div className={styles.containerMap}>
         <div className={styles.element}>
           <DataGrid
 

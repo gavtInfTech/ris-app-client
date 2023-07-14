@@ -67,8 +67,8 @@ export default function MenuListComposition() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={handleMenu}>Меню</MenuItem>
-          <MenuItem onClick={handleExit}>Выйти</MenuItem>
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleMenu}>Меню</MenuItem>
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleExit}>Выйти</MenuItem>
       </Menu>
     </Box>
   );

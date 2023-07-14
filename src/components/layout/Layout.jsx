@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Typography } from "@mui/material";
 
 function Alert(props) {
   return <MuiAlert elevation={1} variant="filled" {...props} />;
@@ -45,7 +46,7 @@ export default function Layout() {
       <header className={styles.header}>
         <Box sx={{ display: { md: "none" } }} className={styles.header_section}>
           <IconButton
-            size="60"
+            size="50"
             sx={{
               backgroundColor: "white",
               ml: 1,
@@ -97,17 +98,17 @@ export default function Layout() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem onClick={handleCloseUserMenu}>
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
             <Link to={"/notices"}>
               Для судоводителей
             </Link>
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu}>
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
             <Link to={"/gabarit"}>
               Сроки навигации
             </Link>
           </MenuItem>
-          <MenuItem onClick={handleCloseUserMenu}>
+          <MenuItem  sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
             <Link to={"/infmenu"}>
               Инфраструктура ВВП
             </Link>

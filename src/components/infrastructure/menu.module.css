@@ -1,0 +1,65 @@
+.container {
+  color: black;
+  text-decoration: none;  
+  display: flex;
+  flex-flow: row wrap;
+  padding-top: 8%;
+  justify-content: center;
+}
+
+.btn{
+  background-color:white;
+  border: none;
+  cursor: pointer;
+  padding: 30px;
+  font-size: 25px;
+  width: 18vw;
+  align-self: center;
+}
+
+.btn:hover {
+  background-color: rgb(158, 208, 240);
+  border-radius: 10%;
+}
+
+.containerMap {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.element {
+  width: 50%;
+  height: 100%;
+  padding: 0.5%;
+}
+
+@media (max-width: 1600px) {
+  .btn {
+    width: 20vw;
+    font-size: 22px;
+  }
+ 
+}
+
+@media (max-width: 900px) {
+  .btn {
+    width: 38vw;
+    font-size: 20px;
+  }
+  .containerMap {
+    flex-direction: column;
+  }
+  .element {
+      width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .btn {
+    width: 55vw;
+    font-size: 20px;
+  }
+ 
+}

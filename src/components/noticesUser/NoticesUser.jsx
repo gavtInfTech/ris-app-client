@@ -245,7 +245,7 @@ export default function NoticesUser(props) {
 
     return (
         <div className={Style.noticesConteiner}>
-            <button className={Style.button} variant="outlined" onClick={handleOpen}>
+            <button sx={{width: '500px'}} className={Style.button} variant="outlined" onClick={handleOpen}>
                 <FilterAltIcon className={Style.filterIcon}/>
             </button>
                 <Dialog maxWidth={'lg'} onClose={handleClose} open={open}>

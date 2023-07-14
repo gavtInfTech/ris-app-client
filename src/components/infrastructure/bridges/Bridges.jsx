@@ -2,7 +2,7 @@ import  { React, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import styles from './style.module.css'
+import styles from '../menu.module.css'
 import { YMaps, Map, Placemark} from "react-yandex-maps";
 import { bridges } from './data';
 
@@ -74,7 +74,7 @@ import { bridges } from './data';
     });
 
   return ( 
-      <div className={styles.container}>
+      <div className={styles.containerMap}>
         <Box className={styles.element}>
           <DataGrid
             rows={rows}
