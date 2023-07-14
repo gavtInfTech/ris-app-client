@@ -44,7 +44,7 @@ export default function Layout() {
   return (
     <div className={styles.conteiner}>
       <header className={styles.header}>
-        <Box sx={{ display: { md: "none" } }} className={styles.header_section}>
+        <Box sx={{ display: { md: "none" } }}>
           <IconButton
             size="50"
             sx={{

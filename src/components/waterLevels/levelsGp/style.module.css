@@ -1,8 +1,8 @@
 .container {
-    display: flex;
-    position: absolute;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .element {
@@ -21,3 +21,12 @@
     width: 40vw;
     height: 40vh;
 }
+
+@media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+    }
+    .element {
+        width: 100%;
+    }
+  }
