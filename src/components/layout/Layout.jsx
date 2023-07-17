@@ -1,7 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import Profile from "./Profile";
 import styles from "./layout.module.css";
-import classNames from "classnames";
 import Avatar from "@mui/material/Avatar";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -12,7 +11,6 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Typography } from "@mui/material";
 
 function Alert(props) {
   return <MuiAlert elevation={1} variant="filled" {...props} />;

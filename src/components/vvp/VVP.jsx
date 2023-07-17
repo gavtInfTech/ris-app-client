@@ -9398,7 +9398,7 @@ export default function VVP() {
             ))}
           </ListBox>
 
-          <ListBox data={{content: "Порты"}}>
+          {/* <ListBox data={{content: "Порты"}}>
             {ports.map((port) => (
               <ListBoxItem
                 data={{ content: port.name }}
@@ -9406,13 +9406,13 @@ export default function VVP() {
                 options={{ selectOnClick: false }}
               />
             ))}
-          </ListBox>
+          </ListBox> */}
 
           <ListBox data={{ content: "Шлюзы" }}>
-            {ges.map((ge) => (
+            {gateways.map((gateway) => (
               <ListBoxItem
-                data={{ content: ge.name }}
-                onClick={() => setMap({center: ge.coords, zoom: 15})}
+                data={{ content: gateway.sluz }}
+                onClick={() => setMap({center: gateway.coords, zoom: 15})}
                 options={{ selectOnClick: false }}
               />
             ))}
@@ -9500,9 +9500,7 @@ export default function VVP() {
               strokeOpacity: 0.5,
             }}
           />
-          {gatewaysMarks}
-          {gesMarks}
-          {portMarks}
+          {gatewaysMarks} 
           {hydropostMarks}
         </Map>
       </YMaps>

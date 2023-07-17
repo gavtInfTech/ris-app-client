@@ -170,7 +170,7 @@ useEffect(() => {
     {
       field: 'limitedRoll',
       headerName: 'Лимитирующий перекат',
-      width: 200,
+      width: 250,
       editable: true,
     },
     {
@@ -196,7 +196,7 @@ useEffect(() => {
     },
     { 
       field: 'forecastDepth', 
-      headerName: 'Прогнозируемая глубина, м', 
+      headerName: 'Прогнозируемая \n глубина, м', 
       type: 'number', 
       width: 200, 
       editable: true 
@@ -261,7 +261,7 @@ useEffect(() => {
             <Box
               sx={{
                 height: 500,
-                width: 1090,
+                width: 1120,
                 
               }}
             >
@@ -274,19 +274,19 @@ useEffect(() => {
                 onRowEditStart={handleRowEditStart}
                 onRowEditStop={handleRowEditStop}
                 processRowUpdate={processRowUpdate}
+                experimentalFeatures={{ newEditingApi: true }}
                 getRowHeight={() => 'auto'}
                 sx={{
-                    [`& .${gridClasses.cell}`]: {
-                      py: 2,
-                    },
-                  }}
+                  [`& .${gridClasses.cell}`]: {
+                    py: 1,
+                  },
+                }}
                 components={{
                   Toolbar: EditToolbar,
                 }}
                 componentsProps={{
                   toolbar: { setRows, setRowModesModel },
                 }}
-                experimentalFeatures={{ newEditingApi: true }}
               />
             </Box>
         </Typography>

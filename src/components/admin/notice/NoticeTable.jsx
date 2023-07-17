@@ -66,7 +66,6 @@ useEffect(() => {
       type: 'string',
       width: 200,
       editable: true,
-
     },
     {
         field: 'content',
