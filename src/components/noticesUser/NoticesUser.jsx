@@ -8,10 +8,12 @@ import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { rivers, sites } from "./info";
-import { Button, DialogContent } from "@mui/material"
+import { Button, DialogContent } from "@mui/material";
 import Subscription from "./Subscription";
 import { api } from "../../axiosConfig";
 import Style from "./style.module.css";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function NoticesUser(props) {
   const [open, setOpen] = useState(false);
@@ -265,11 +267,7 @@ export default function NoticesUser(props) {
 
   return (
     <Box sx={{ width: "100%", mt: 6 }}>
-      <Button
-        // sx={{ width: "100%", backgroundColor: "#34418f" }}
-        onClick={handleOpen}
-        className={Style.button}
-      >
+      <Button onClick={handleOpen} className={Style.btnFilter}>
         <FilterAltIcon className={Style.filterIcon} />
       </Button>
 
@@ -282,6 +280,20 @@ export default function NoticesUser(props) {
         <DialogTitle sx={{ alignSelf: "center" }}>
           Фильтрация уведомлений
         </DialogTitle>
+
+        <IconButton
+        aria-label="close"
+        onClick={handleClose}
+        sx={{
+          position: "absolute",
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.grey[500],
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
+
         <DialogContent
           sx={{
             display: "flex",
