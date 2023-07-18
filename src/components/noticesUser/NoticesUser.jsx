@@ -266,7 +266,7 @@ export default function NoticesUser(props) {
   };
 
   return (
-    <Box sx={{ width: "100%", mt: 6 }}>
+    <Box sx={{ width: "100%" }}>
       <Button onClick={handleOpen} className={Style.btnFilter}>
         <FilterAltIcon className={Style.filterIcon} />
       </Button>
