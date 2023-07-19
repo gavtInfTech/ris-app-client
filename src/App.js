@@ -18,7 +18,7 @@ import Ports from './components/infrastructure/ports/Ports';
 import GES from './components/infrastructure/ges/GES';
 import LevelsMenu from './components/waterLevels/LevelsMenu';
 import Weather from './components/weather/Weather';
-import Users from './components/admin/users/Users';
+import Registration from './components/login/Registration';
 import Sib from './components/sib/Sib'
 import MainGabs from './components/gabsPage/MainGabs'
 
@@ -37,6 +37,7 @@ export default function App() {
                     <Route path='/levelsGp' element={<LevelsGp />}/>
                     <Route path='/levelsGu' element={<LevelsGu />}/>
                     <Route path='/login' element={<Login />}/>
+                    <Route path='/registration' element={<Registration />} />
                     <Route path='/infmenu' element={<InfMenu />}/>
                     <Route path='/gabarit' element={<Gabarit />}/>
                     <Route path='/gateways' element={<Gateways />}/>

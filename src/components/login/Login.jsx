@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import styles from "./login.module.css";
+import styles from "./style.module.css";
 import { api } from "../../axiosConfig";
 import Typography from "@mui/material/Typography";
 import * as adminInfo from "../admin/adminInfo";
 import * as berezinskoeInfo from "../admin/berezinskoeInfo";
 import * as bugskoeInfo from "../admin/bugskoeInfo";
 import * as dvinskoeInfo from "../admin/dvinskoeInfo";
-import axios from "axios";
+import Box from "@mui/material/Box";
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
@@ -55,28 +56,46 @@ export default function Login() {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <TextField
-        sx={{ pb: 1 }}
-        required
-        label="Имя пользователя"
-        className={styles.input}
-        name="username"
+    <Box className={styles.container}>
+      <Box
+        component="img"
+        sx={{
+          width: 60,
+          color: "black"
+        }}
+        alt="Иконка якоря"
+        src="/yakor.png"
       />
-      <TextField
-        sx={{ pb: 1 }}
-        required
-        label="Пароль"
-        type="password"
-        className={styles.input}
-        name="password"
-      />
-      <Typography color="red" sx={{ mb: 1 }}>
-        {message}
+
+      <Typography sx={{mt: 2, mb: 1}}>
+        Войдите в систему или 
       </Typography>
-      <Button variant="contained" type="submit" className={styles.button}>
-        Войти
-      </Button>
-    </form>
+
+      <Link to={'/registration'} className={styles.link}>зарегистрируйтесь</Link>
+
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <TextField
+          sx={{ pb: 1 }}
+          required
+          label="Имя пользователя или e-mail"
+          className={styles.input}
+          name="username"
+        />
+        <TextField
+          sx={{ pb: 1 }}
+          required
+          label="Пароль"
+          type="password"
+          className={styles.input}
+          name="password"
+        />
+        <Typography color="red" sx={{ mb: 1 }}>
+          {message}
+        </Typography>
+        <Button variant="contained" type="submit" className={styles.button}>
+          Войти
+        </Button>
+      </form>
+    </Box>
   );
 }

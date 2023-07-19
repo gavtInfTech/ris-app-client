@@ -123,6 +123,7 @@ export default function Layout() {
       </footer>
 
       <Snackbar
+        sx={{mb: 10}}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={message.open}
         autoHideDuration={5000}

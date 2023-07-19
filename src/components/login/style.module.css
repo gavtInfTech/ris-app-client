@@ -1,0 +1,93 @@
+.container,
+.containerReg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.containerReg {
+  margin-top: 100px;
+}
+
+.containerForm {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #ebf4fc;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.formReg {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.button,
+.buttonReg {
+  margin: 10px;
+  height: 40px;
+  width: 180px;
+  font-size: 15px;
+  background-color: #34418f;
+}
+
+.button:hover,
+.buttonReg:hover {
+  background-color: #3e4ea8;
+  box-shadow: 0px 0px 0px 1px #3e4ea8;
+}
+
+.buttonReg {
+  margin: 0px;
+  width: 100%;
+}
+
+.input {
+  width: 280px;
+}
+
+.inputReg {
+ margin-bottom: 40px;
+}
+
+.link {
+  color: #3e4ea8;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .containerReg {
+    margin: 30px 0;
+    }
+  .containerForm {
+    width: 90%;
+    }
+}
+
+@media (min-height: 1000px) {
+  .containerReg {
+    margin-top: 200px;
+    }
+}

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./style.module.css";
 import {
   YMaps,

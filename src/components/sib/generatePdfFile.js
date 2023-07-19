@@ -255,8 +255,9 @@ const noticesRowsByRiver = (river) => {
       startY: 18
     })
 
-    currentY = doc.lastAutoTable.finalY;
-    doc.text("3. НАИМЕНЬШИЕ ГАБАРИТЫ СУДОВОГО ХОДА", 15, currentY + 15);
+    // currentY = doc.lastAutoTable.finalY;
+    doc.addPage();
+    doc.text("3. НАИМЕНЬШИЕ ГАБАРИТЫ СУДОВОГО ХОДА", 15, 15);
     autoTable(doc, {
       theme: 'plain',
       styles: styles,
@@ -310,11 +311,12 @@ const noticesRowsByRiver = (river) => {
         [{ content: '15. река Свислочь (Минская кольцевая автомобильная дорога - переулок Канатный)' , colSpan: 8, styles: { halign: 'left', fontStyle: 'bold'} }],
         ...gabsRowsByRiver('Свислочь')
       ],
-      startY: currentY + 18
+      startY: 18
     })
 
-    currentY = doc.lastAutoTable.finalY;
-    doc.text("4. ДИСЛОКАЦИЯ ТЕХНИЧЕСКОГО ФЛОТА И ИЗЫСКАТЕЛЬСКИХ ПАРТИЙ", 15, currentY + 15);
+    // currentY = doc.lastAutoTable.finalY;
+    doc.addPage();
+    doc.text("4. ДИСЛОКАЦИЯ ТЕХНИЧЕСКОГО ФЛОТА И ИЗЫСКАТЕЛЬСКИХ ПАРТИЙ", 15, 15);
     autoTable(doc, {
       theme: 'plain',
       styles: styles,
@@ -342,11 +344,12 @@ const noticesRowsByRiver = (river) => {
         [{ content: 'РУ Днепро-Березинское предприятие водных путей' , colSpan: 6, styles: { halign: 'left', fontStyle: 'bold'} }],
         ...dislocationRowsByRiver('РУ Днепро-Березинское предприятие водных путей'),
       ],
-      startY: currentY + 18
+      startY: 18
     })
     
-    currentY = doc.lastAutoTable.finalY;
-    doc.text("5. ГАБАРИТЫ ПОДМОСТОВЫХ ПЕРЕХОДОВ", 15, currentY + 15);
+    // currentY = doc.lastAutoTable.finalY;
+    doc.addPage();
+    doc.text("5. ГАБАРИТЫ ПОДМОСТОВЫХ ПЕРЕХОДОВ", 15, 15);
     autoTable(doc, {
       theme: 'plain',
       styles: styles,
@@ -377,11 +380,12 @@ const noticesRowsByRiver = (river) => {
         [{ content: 'р. Западная Двина' , colSpan: 2, styles: { halign: 'left', fontStyle: 'bold'} }],
         ...bridgeRowsByRiver('Западная Двина')
       ],
-      startY: currentY + 18
+      startY: 18
     })
 
-    currentY = doc.lastAutoTable.finalY;
-    doc.text("6. ИЗВЕЩЕНИЯ", 15, currentY + 15);
+    // currentY = doc.lastAutoTable.finalY;
+    doc.addPage();
+    doc.text("6. ИЗВЕЩЕНИЯ", 15, 15);
     autoTable(doc, {
       theme: 'plain',
       styles: styles,
@@ -413,7 +417,7 @@ const noticesRowsByRiver = (river) => {
         ...noticesRowsByRiver("Августовский канал"),
         ...noticesRowsByRiver("Свислочь")
       ],
-      startY: currentY + 18
+      startY: 18
     })
     
   return doc;
