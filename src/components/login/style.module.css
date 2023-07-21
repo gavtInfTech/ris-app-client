@@ -79,15 +79,15 @@
 
 @media (max-width: 1024px) {
   .containerReg {
-    margin: 30px 0;
+    margin-top: 30px;
     }
   .containerForm {
     width: 90%;
     }
 }
 
-@media (min-height: 1000px) {
+@media (min-height: 1024px) {
   .containerReg {
-    margin-top: 200px;
+    margin-top: 170px;
     }
 }

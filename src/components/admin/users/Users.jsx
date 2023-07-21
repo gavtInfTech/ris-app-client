@@ -113,7 +113,7 @@ useEffect(() => {
   
 
   return (
-    <div className={styles.conteiner}>
+    <div className={styles.container}>
 
       <form className={styles.form} onSubmit={handleSubmit}>
 
@@ -165,7 +165,7 @@ useEffect(() => {
       </form>
       
    
-      <Box className={styles.tableContainer}>   
+      <Box>   
           <DataGrid
           rows={rows}
           columns={columns}
@@ -174,7 +174,7 @@ useEffect(() => {
               [`& .${gridClasses.cell}`]: {
                   py: 2,
               },
-              width: 800
+              width: 900
               }}
           experimentalFeatures={{ newEditingApi: true }}
           />

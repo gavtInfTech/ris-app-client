@@ -1,4 +1,4 @@
-.conteiner {
+.container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -21,4 +21,13 @@
   flex-flow: column;
   align-items: center;
   width: 100%;
+}
+
+.containerClients {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
 }

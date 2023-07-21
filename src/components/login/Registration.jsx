@@ -6,13 +6,14 @@ import styles from "./style.module.css";
 import { api } from "../../axiosConfig";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { MessageContext } from '../../contexts/MessageContext';
+import { MessageContext } from "../../contexts/MessageContext";
+import { randomId } from "@mui/x-data-grid-generator";
 
-const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+const EMAIL_REGEXP =
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
 export default function Login() {
-
-  const {setMessage} = useContext(MessageContext);
+  const { setMessage } = useContext(MessageContext);
   const [state, setState] = useState({
     fio: "",
     email: "",
@@ -34,19 +35,29 @@ export default function Login() {
       ...prevState,
       [name]: value,
     }));
-    
+
     setErrState((prevState) => ({
-        ...prevState,
-        [name]: false,
-      }));
+      ...prevState,
+      [name]: false,
+    }));
   };
+
+  const resetForm = (event) => {
+    if (event) {event.preventDefault();}
+    setState({
+      fio: "",
+      email: "",
+      password: "",
+      passwordRepeat: "",
+    })
+}
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     let flag = false;
 
     if (state.fio.length === 0) {
-        setErrState((prevState) => ({
+      setErrState((prevState) => ({
         ...prevState,
         fio: true,
       }));
@@ -54,7 +65,7 @@ export default function Login() {
     }
 
     if (state.email.length === 0 || !EMAIL_REGEXP.test(state.email)) {
-        setErrState((prevState) => ({
+      setErrState((prevState) => ({
         ...prevState,
         email: true,
       }));
@@ -62,15 +73,19 @@ export default function Login() {
     }
 
     if (state.password.length < 6 || state.password.length > 32) {
-        setErrState((prevState) => ({
+      setErrState((prevState) => ({
         ...prevState,
         password: true,
       }));
       flag = true;
     }
 
-    if (state.passwordRepeat.length < 6 || state.passwordRepeat.length > 32 || state.password !== state.passwordRepeat) {
-        setErrState((prevState) => ({
+    if (
+      state.passwordRepeat.length < 6 ||
+      state.passwordRepeat.length > 32 ||
+      state.password !== state.passwordRepeat
+    ) {
+      setErrState((prevState) => ({
         ...prevState,
         passwordRepeat: true,
       }));
@@ -78,21 +93,29 @@ export default function Login() {
     }
 
     if (flag === true) return;
+
     try {
-    //   let res = await api.post("/auth/login", { username, password });
+      let id = randomId();
+      let res = await api.post("/client/registrationClient", {
+        id: id,
+        fio: state.fio,
+        email: state.email,
+        password: state.password,
+      });
 
       setMessage(() => ({
         open: true,
         messageText: "Пользователь успешно зарегистрирован!",
-        severity: "success"
-    }))
+        severity: "success",
+      }));
+      resetForm();
     } catch (err) {
       setMessage(() => ({
         open: true,
         messageText: err.response.data,
         severity: "error",
-    }))
-    }
+      }));
+    } 
   };
 
   return (
@@ -126,7 +149,10 @@ export default function Login() {
             variant="standard"
             onChange={handleChange}
             error={errState.email}
-            helperText={errState.email && "Необходимо ввести корректный адрес электронной почты."}
+            helperText={
+              errState.email &&
+              "Необходимо ввести корректный адрес электронной почты."
+            }
           />
 
           <InputLabel>Пароль*</InputLabel>
@@ -138,7 +164,10 @@ export default function Login() {
             variant="standard"
             onChange={handleChange}
             error={errState.password}
-            helperText={errState.password && "Пароль не может быть меньше 6 символов и не более 32."}
+            helperText={
+              errState.password &&
+              "Пароль не может быть меньше 6 и больше 32 символов."
+            }
           />
 
           <InputLabel>Повторите пароль*</InputLabel>

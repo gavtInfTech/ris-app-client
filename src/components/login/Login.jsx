@@ -12,7 +12,7 @@ import * as berezinskoeInfo from "../admin/berezinskoeInfo";
 import * as bugskoeInfo from "../admin/bugskoeInfo";
 import * as dvinskoeInfo from "../admin/dvinskoeInfo";
 import Box from "@mui/material/Box";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
@@ -30,6 +30,9 @@ export default function Login() {
       if (res.data.role === "Администратор") {
         setAuth({ ...res.data, info: adminInfo, rolePath: "main" });
         navigate("/admin-main/informationTab/levels/levelsGp");
+      } else if (res.data.role === "Клиент") {
+        setAuth({ ...res.data });
+        navigate("/client");
       } else {
         switch (res.data.organisation) {
           case 'РУ ЭСП "Днепро-Бугский водный путь"':
@@ -61,17 +64,17 @@ export default function Login() {
         component="img"
         sx={{
           width: 60,
-          color: "black"
+          color: "black",
         }}
         alt="Иконка якоря"
         src="/yakor.png"
       />
 
-      <Typography sx={{mt: 2, mb: 1}}>
-        Войдите в систему или 
-      </Typography>
+      <Typography sx={{ mt: 2, mb: 1 }}>Войдите в систему или</Typography>
 
-      <Link to={'/registration'} className={styles.link}>зарегистрируйтесь</Link>
+      <Link to={"/registration"} className={styles.link}>
+        зарегистрируйтесь
+      </Link>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <TextField

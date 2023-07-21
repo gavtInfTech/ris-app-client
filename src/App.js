@@ -46,6 +46,9 @@ export default function App() {
                     <Route path='/ges' element={<GES />}/>
                     <Route path='/levelsMenu' element={<LevelsMenu />}/>
                     <Route path='/limit' element={<MainGabs />}/>
+                    {/* <Route element={ <ProtectedRoute role="Клиент" /> } >
+                        <Route path='/client/*' element={<MainTabClient />} ></Route>
+                    </Route> */}
                     <Route element={ <ProtectedRoute role="Администратор" /> } >
                         <Route path='/admin-main/*' element={<MainTab />} ></Route>
                     </Route>
