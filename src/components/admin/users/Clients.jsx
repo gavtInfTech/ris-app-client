@@ -20,6 +20,9 @@ import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import styles from "./style.module.css";
 import Typography from "@mui/material/Typography";
 
+const EMAIL_REGEXP =
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
@@ -27,11 +30,11 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, date: new Date(), depth: null, width: null },
+      { id, fio: null, email: null, password: null, confirmed: false },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "planDepth" },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "fio" },
     }));
   };
 
@@ -58,14 +61,8 @@ export default function Depth(props) {
   useEffect(() => {
     const getRows = async () => {
       try {
-        const res = await api.get("/gabs/getAllBySite", {
-          params: { site: props.site },
-        });
-        res.data.forEach((item) => {
-          item.date = new Date(item.date);
-          if (item.forecastDate !== null)
-            item.forecastDate = new Date(item.forecastDate);
-        });
+        const res = await api.get("/clients/getAll");
+        console.log(res.data);
         setRows(res.data);
       } catch (err) {
         console.log(err);
@@ -94,7 +91,7 @@ export default function Depth(props) {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      let res = await api.delete("/gabs/delete/" + id);
+      let res = await api.delete("/clients/delete/" + id);
       setRows(rows.filter((row) => row.id !== id));
     } catch (err) {
       console.log(err.response.data);
@@ -109,27 +106,52 @@ export default function Depth(props) {
     });
 
     const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.site === undefined) {
+    if (editedRow.fio === null) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = async (newRow) => {
-    if (newRow.depth === null || newRow.width === null) {
+    if (newRow.fio === null || newRow.fio.length === 0) {
       setMessage(() => ({
         open: true,
-        messageText: "Заполнены не все обязательные поля!",
+        messageText: "Поле ФИО не заполненно.",
         severity: "error",
       }));
       return;
     }
-    const updatedRow = { ...newRow, site: props.site };
+
+    if (
+      newRow.email === null ||
+      newRow.email.length === 0 ||
+      !EMAIL_REGEXP.test(newRow.email)
+    ) {
+      setMessage(() => ({
+        open: true,
+        messageText:
+          "Поле электронная почта не заполнено либо неверный формат ввода.",
+        severity: "error",
+      }));
+      return;
+    }
+
+    if (
+      newRow.password === null ||
+      newRow.password.length === 0 ||
+      newRow.password.length < 6
+    ) {
+      setMessage(() => ({
+        open: true,
+        messageText: "Поле пароль не заполнено либо слишком короткий пароль.",
+        severity: "error",
+      }));
+      return;
+    }
+
     if (updateFlag) {
       try {
-        let res = await api.post("/gabs/change", updatedRow);
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-        );
+        let res = await api.post("/clients/change", newRow);
+        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       } catch (err) {
         setMessage(() => ({
           open: true,
@@ -140,10 +162,8 @@ export default function Depth(props) {
       }
     } else {
       try {
-        let res = await api.post("/gabs/add", updatedRow);
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-        );
+        let res = await api.post("/clients/registrationClient", newRow);
+        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       } catch (err) {
         setMessage(() => ({
           open: true,
@@ -155,56 +175,35 @@ export default function Depth(props) {
       }
     }
     setUpdateFlag(false);
-    return updatedRow;
+    return newRow;
   };
 
   const columns = [
     {
-      field: "planDepth",
-      headerName: "Плановая глубина",
-      type: "number",
-      width: 140,
+      field: "fio",
+      headerName: "ФИО",
+      type: "string",
+      width: 400,
       editable: true,
     },
     {
-      field: "date",
-      headerName: "Дата",
-      type: "date",
+      field: "email",
+      headerName: "Электронная почта",
+      type: "string",
+      width: 300,
+      editable: true,
+    },
+    {
+      field: "password",
+      headerName: "Пароль",
+      width: 220,
+      editable: true,
+    },
+    {
+      field: "confirmed",
+      headerName: "Подтвержден",
+      type: "boolean",
       width: 120,
-      editable: true,
-    },
-    {
-      field: "limitedRoll",
-      headerName: "Лимитирующий перекат",
-      width: 250,
-      editable: true,
-    },
-    {
-      field: "depth",
-      headerName: "Глубина, см*",
-      type: "number",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "width",
-      headerName: "Ширина, м*",
-      type: "number",
-      width: 90,
-      editable: true,
-    },
-    {
-      field: "forecastDate",
-      headerName: "Дата прогноза",
-      type: "date",
-      width: 120,
-      editable: true,
-    },
-    {
-      field: "forecastDepth",
-      headerName: "Прогнозируемая \n глубина, м",
-      type: "number",
-      width: 200,
       editable: true,
     },
     {
@@ -253,31 +252,32 @@ export default function Depth(props) {
   ];
 
   return (
-    <Box >
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-        onRowEditStart={handleRowEditStart}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        experimentalFeatures={{ newEditingApi: true }}
-        getRowHeight={() => "auto"}
-        sx={{
-          [`& .${gridClasses.cell}`]: {
-            py: 1,
-          },
-          height: 500, 
-        }}
-        components={{
-          Toolbar: EditToolbar,
-        }}
-        componentsProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-      />
+    <Box sx={{ display: "flex", justifyContent: "center", pt: "30px" }}>
+      <Box sx={{ display: "flex", width: 1160, height: 700 }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+          onRowEditStart={handleRowEditStart}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          experimentalFeatures={{ newEditingApi: true }}
+          getRowHeight={() => "auto"}
+          sx={{
+            [`& .${gridClasses.cell}`]: {
+              py: 1,
+            },
+          }}
+          components={{
+            Toolbar: EditToolbar,
+          }}
+          componentsProps={{
+            toolbar: { setRows, setRowModesModel },
+          }}
+        />
+      </Box>
     </Box>
   );
 }

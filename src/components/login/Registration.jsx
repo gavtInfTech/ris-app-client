@@ -96,7 +96,7 @@ export default function Login() {
 
     try {
       let id = randomId();
-      let res = await api.post("/client/registrationClient", {
+      let res = await api.post("/clients/registrationClient", {
         id: id,
         fio: state.fio,
         email: state.email,

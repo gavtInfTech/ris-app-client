@@ -9,7 +9,7 @@ export const hydropostGroups = {
         "Жлобин",
     ],
     berezina: [
-        "Березено",
+        "Березино",
         "Бобруйск",
         "Светлогорск",
     ],

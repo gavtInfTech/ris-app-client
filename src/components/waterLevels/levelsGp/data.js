@@ -183,7 +183,7 @@ export const hydroposts = [
     },
     {
         id: 14,
-        hydropost: 'Горынь',
+        hydropost: 'ст. Горынь',
         river: 'Горынь',
         level1: '—',
         level2: '—',
