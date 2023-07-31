@@ -169,6 +169,20 @@ export const hydroposts = [
     },
     {
         id: 13,
+        hydropost: 'Петриков',
+        river: 'Припять',
+        level1: '—',
+        level2: '—',
+        difference: '—',
+        date: '—',
+        distance: '—',
+        square: '—',
+        openDate: '—',
+        closeDate: '—',
+        coords: [52.117734, 28.496446]
+    },
+    {
+        id: 14,
         hydropost: 'Мозырь',
         river: 'Припять',
         level1: '—',
@@ -182,7 +196,21 @@ export const hydroposts = [
         coords: [52.049019, 29.267301]
     },
     {
-        id: 14,
+        id: 15,
+        hydropost: 'Наровля',
+        river: 'Припять',
+        level1: '—',
+        level2: '—',
+        difference: '—',
+        date: '—',
+        distance: '—',
+        square: '—',
+        openDate: '—',
+        closeDate: '—',
+        coords: [51.799896, 29.515057]
+    },
+    {
+        id: 16,
         hydropost: 'ст. Горынь',
         river: 'Горынь',
         level1: '—',
@@ -196,7 +224,7 @@ export const hydroposts = [
         coords: [51.852052, 26.783764]
     },
     {
-        id: 15,
+        id: 17,
         hydropost: 'Сураж',
         river: 'Западная Двина',
         level1: '—',
@@ -210,7 +238,7 @@ export const hydroposts = [
         coords:  [55.41, 30.721]
     },
     {
-        id: 16,
+        id: 18,
         hydropost: 'Витебск',
         river: 'Западная Двина',
         level1: '—',
@@ -224,7 +252,7 @@ export const hydroposts = [
         coords: [55.184217, 30.202878]
     },
     {
-        id: 17,
+        id: 19,
         hydropost: 'Полоцк',
         river: 'Западная Двина',
         level1: '—',
@@ -238,7 +266,7 @@ export const hydroposts = [
         coords: [55.485576, 28.768349 ]
     },
     {
-        id: 18,
+        id: 20,
         hydropost: 'Гродно',
         river: 'Неман',
         level1: '—',

@@ -67,7 +67,6 @@ export default function FullWidthTabs() {
         <Box sx={{ p: 3 }}>
           <Routes>
               <Route path="/informationTab/*" element={<InformationTab />} />
-              {/* <Route path="/spravka" element={<Map />} /> */}
               <Route element={ <ProtectedRoute role="Администратор" /> } >
                 <Route path="/users" element={<Users />} />
               </Route>

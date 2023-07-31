@@ -32,7 +32,7 @@ export default function Login() {
         navigate("/admin-main/informationTab/levels/levelsGp");
       } else if (res.data.role === "Клиент") {
         setAuth({ ...res.data });
-        navigate("/client");
+        navigate("/client/sib");
       } else {
         switch (res.data.organisation) {
           case 'РУ ЭСП "Днепро-Бугский водный путь"':

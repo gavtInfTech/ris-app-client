@@ -1,0 +1,46 @@
+.form {
+    display: flex;
+    flex-flow: column;
+    margin: 15px;
+}
+
+.input {
+    padding-top: 10px;
+}
+
+.button {
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 38px;
+    width: 170px;
+    border-radius: 0.5vw;
+    font-size: 16px;
+    border: 0ch;
+    cursor: pointer;
+    color: #fff;
+    background-color: #1976d2;
+  }
+  
+  .button:hover {
+    box-shadow: 0px 0px 0px 3px rgb(184, 231, 254);
+  }
+
+
+  .appBar {
+    background-color: #487fb6;
+    color: white;
+  }
+
+  .MuiDataGrid {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    padding: 0 16px;
+    width: 100%;
+    background-color: #1976d2;
+  }
+
+  .containerMap {
+    position: relative;
+  }

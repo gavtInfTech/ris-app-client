@@ -58,7 +58,7 @@ export default function NoticesMainPage() {
       
       <div className={Style.item4}>
         <button className={Style.btn}>
-          <Link to={"/bridges"}>
+          <Link to={"/bridgeGabs"}>
             <img src="/images/bridgeGab.png" alt="gabmost"></img>
             <br></br>Подмостовые<br></br>
             габариты

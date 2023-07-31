@@ -2,22 +2,21 @@ import { React, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import styles from "./style.module.css";
+import styles from "../menu.module.css";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
-import { api } from "../../../axiosConfig";
+import { api } from '../../../axiosConfig';
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
-export default function LevelsGp(props) {
+export default function BridgeGabs() {
   const [map, setMap] = useState(mapState);
-  const [hydronodes, setHydronodes] = useState([]);
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await api.get("/levelsGu/getLastLevels");
-       
-        setHydronodes(res.data);
+        const res = await api.get("/bridges/getLastBridgeGabs");
+        setRows(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -26,36 +25,26 @@ export default function LevelsGp(props) {
   }, []);
 
   const columns = [
-    { field: "hydronode", headerName: "Гидроузел", width: "150" },
-    { field: "river", headerName: "Река", width: "150" },
+    { field: "bridge", headerName: "Название моста", width: "220" },
+    { field: "river", headerName: "Река (канал)", width: "130" },
+    { field: "date", headerName: "Дата последнего измерения", width: "210" },
     {
-      field: "date",
-      headerName: "Дата измерения",
-      width: "130",
-    },
-    {
-      field: "level1",
-      headerName: "Уровень воды над ПГ, ВБ",
-      type: "number",
-      width: "190",
-    },
-    {
-      field: "level2",
-      headerName: "Уровень воды над ПГ, НБ",
-      type: "number",
+      field: "height",
+      headerName: "Подмостовые габариты",
       width: "180",
+      type: "number",
     },
     {
-      field: "action1",
+      field: "actions",
       type: "actions",
       headerName: "На карте",
       getActions: ({ id }) => {
         return [
           <Button
-            options={hydronodes.find((row) => row.id === id).options}
+            options={rows.find((row) => row.id === id).options}
             onClick={() =>
               setMap({
-                center: hydronodes.find((row) => row.id === id).coords,
+                center: rows.find((row) => row.id === id).coords,
                 zoom: 15,
               })
             }
@@ -68,43 +57,42 @@ export default function LevelsGp(props) {
     },
   ];
 
-  const marks = hydronodes.map((row) => {
+  const marks = rows.map((row) => {
     let contentBody =
-      "Гидроузел: " +
-      row.hydronode +
-      "<br> Река: " +
+      "Название моста: " +
+      row.bridge +
+      "<br> Река (канал): " +
       row.river +
-      "<br> Дата измерения: " +
+      "<br> Дата последнего измерения: " +
       row.date +
-      "<br> Уровень воды над ПГ, ВБ: " +
-      row.level1 +
-      "<br> Уровень воды над ПГ, НБ: " +
-      row.level2;
+      "<br> Текущая высота пролета: " +
+      row.height;
 
     return (
       <Placemark
         geometry={row.coords}
         key={row.id}
-        properties={{ balloonContentBody: contentBody }}
+        properties={{ balloonContentBody: [contentBody] }}
         modules={["geoObject.addon.balloon"]}
         options={{
           iconLayout: "default#image",
-          iconImageHref: "/images/levelGu.png",
+          iconImageHref: "./images/bridge.png",
           iconImageSize: [30, 30],
-          iconImageOffset: [-15, -15],
+          iconImageOffset: [-15, -15]
         }}
       />
     );
   });
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containerMap}>
       <Box className={styles.element}>
         <DataGrid
-          rows={hydronodes}
+          rows={rows}
           columns={columns}
           experimentalFeatures={{ newEditingApi: true }}
           getRowHeight={() => "auto"}
+          get
           sx={{
             [`& .${gridClasses.cell}`]: {
               py: 1,

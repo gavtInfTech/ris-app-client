@@ -11,6 +11,7 @@ import Dislocation from './dislocation/Dislocation';
 import { Link, useLocation, Route, Routes } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import NestedList from "../admin/Test";
+import Sib from '../sib/Sib';
 
 export default function InformationTab() {
   const {auth} = useContext(AuthContext);
@@ -45,6 +46,7 @@ export default function InformationTab() {
         <Tab sx={{ height: 60, fontSize: 14 }} label="Габариты подмостовых переходов" value={`/admin-${rolePath}/informationTab/bridges`} to={`/admin-${rolePath}/informationTab/bridges`} component={Link}/>
         <Tab sx={{ height: 60, fontSize: 14 }} label="Дислокация тех. флота" value={`/admin-${rolePath}/informationTab/dislocation`} to={`/admin-${rolePath}/informationTab/dislocation`} component={Link}/>
         <Tab sx={{ height: 60, fontSize: 14 }} label="Уведомления" value={`/admin-${rolePath}/informationTab/notices`} to={`/admin-${rolePath}/informationTab/notices`} component={Link} />
+        <Tab sx={{ height: 60, fontSize: 14 }} label="Сводный информационный бюллетень" value={`/admin-${rolePath}/informationTab/sib`} to={`/admin-${rolePath}/informationTab/sib`} component={Link} />
       </Tabs>
 
       <Box sx={{ pl: 4, pb: 4, width: '100%'}}>
@@ -113,7 +115,11 @@ export default function InformationTab() {
                 <Box sx={{ pl: 6, pt: 4 }}>
                   <NoticeMain />
                 </Box>
-                // <NestedList />
+              } />
+               <Route path="/sib" element={
+                <Box sx={{ mt: '40px' }}>
+                  <Sib />
+                </Box>
               } />
           </Routes>
         </Box>

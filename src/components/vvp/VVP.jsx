@@ -9381,6 +9381,7 @@ export default function VVP() {
                      iconLayout: 'default#image',
                      iconImageHref: '/images/levelGp.png',
                      iconImageSize: [30, 30],
+                     iconImageOffset: [-15, -15],
                     }} />
             )
             });
@@ -9408,6 +9409,7 @@ export default function VVP() {
                     iconLayout: "default#image",
                     iconImageHref: "/images/levelGu.png",
                     iconImageSize: [30, 30],
+                    iconImageOffset: [-15, -15],
                   }}
                 />
               );

@@ -3,8 +3,6 @@ import { bridgeGroups } from '../admin/adminInfo'
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { Typography } from '@mui/material';
 import styles from './style.module.css';
-import { api } from '../../axiosConfig';
-import { PDFDocument, PDFTable } from 'pdf-lib';
 
 function keyToRiver(key) {
     // eslint-disable-next-line default-case
@@ -14,7 +12,7 @@ function keyToRiver(key) {
         case 'soj': return 'Сож'
         case 'neman': return 'Неман'
         case 'avgCanal': return 'Августовский канал'
-        case 'dbk': return 'ДБК'
+        case 'dbk': return 'Днепро-Бугский канал'
         case 'pripyat': return 'Припять'
         case 'zapDvina': return 'Западная Двина'
     }
@@ -84,9 +82,9 @@ export default function TableGabs(props) {
                     {riverRows("Августовский канал")}
 
                     <TableRow >
-                        <TableCell align="left" colSpan={8} sx={{fontWeight: 'bold'}}>ДБК</TableCell>
+                        <TableCell align="left" colSpan={8} sx={{fontWeight: 'bold'}}>Днепро-Бугский канал</TableCell>
                     </TableRow>
-                    {riverRows("ДБК")}
+                    {riverRows("Днепро-Бугский канал")}
 
                     <TableRow >
                         <TableCell align="left" colSpan={8} sx={{fontWeight: 'bold'}}>р. Припять</TableCell>

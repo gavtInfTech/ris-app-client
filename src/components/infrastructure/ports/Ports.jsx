@@ -76,6 +76,8 @@ import { ports } from './data';
              iconLayout: 'default#image',
              iconImageHref: '/images/port.png',
              iconImageSize: [30, 30],
+             iconImageOffset: [-15, -15],
+            //  hideIconOnBalloonOpen: false
             }} />
     )
     });

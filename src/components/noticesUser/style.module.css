@@ -5,10 +5,11 @@
   padding: 10px;
   padding-top: 50px;
   grid-template-columns: 1fr 2.7fr 1fr; 
-  grid-template-rows: 320px 360px;
+  grid-template-rows: auto; 
   grid-template-areas: 
     "item1 item3 item4"
-    "item2 item3 item5";
+    "item2 item3 item5"
+    ". item3 .";
 }
 
 .item1,
@@ -30,6 +31,7 @@ grid-area: item2;
 
 .item3 {
   grid-area: item3;
+  padding-bottom: 50px;
 }
 
 .item4 {
@@ -127,6 +129,7 @@ grid-area: item5;
     padding-left: 50px;
     padding-right: 50px;
     align-items: center;
+    padding-bottom: 0px;
   }
 
   .btn{

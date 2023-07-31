@@ -153,6 +153,7 @@ import { api } from '../../../axiosConfig';
              iconLayout: 'default#image',
              iconImageHref: '/images/levelGp.png',
              iconImageSize: [30, 30],
+             iconImageOffset: [-15, -15],
             }} />
     )
     });

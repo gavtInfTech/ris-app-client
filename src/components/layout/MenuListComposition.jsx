@@ -24,7 +24,7 @@ export default function MenuListComposition() {
     if (auth.role === "Администратор")
       navigate("/admin-main/informationTab/levels/levelsGp");
     else if (auth.role === "Клиент")
-      navigate("/client");
+      navigate("/client/sib");
     else {
       switch (auth.organisation) {
         case 'РУ ЭСП "Днепро-Бугский водный путь"':

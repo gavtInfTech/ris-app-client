@@ -69,6 +69,7 @@ import { bridges } from './data';
              iconLayout: 'default#image',
              iconImageHref: './images/bridge.png',
              iconImageSize: [30, 30],
+             iconImageOffset: [-15, -15],
             }} />
     )
     });

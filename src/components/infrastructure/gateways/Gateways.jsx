@@ -81,6 +81,7 @@ export default function Shluzi(props) {
              iconLayout: 'default#image',
              iconImageHref: '/images/gateway.png',
              iconImageSize: [30, 30],
+             iconImageOffset: [-15, -15],
             }} />
     )
     });

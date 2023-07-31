@@ -339,7 +339,7 @@ export default function NoticesUser(props) {
               <p>Уведомления с: </p>
               <TextField
                 name="date1"
-                type={"datetime-local"}
+                type="datetime-local"
                 value={state.noticeInfo.date1}
                 onChange={handleChange}
                 variant="standard"
@@ -349,7 +349,7 @@ export default function NoticesUser(props) {
               <p>Уведомления по: </p>
               <TextField
                 name="date2"
-                type={"datetime-local"}
+                type="datetime-local"
                 value={state.noticeInfo.date2}
                 onChange={handleChange}
                 variant="standard"
@@ -375,8 +375,6 @@ export default function NoticesUser(props) {
           </Box>
         </DialogContent>
       </Dialog>
-
-      {/* <Subscription handleOpenMessage={props.handleOpenMessage} data={data} /> */}
 
       <NoticesList data={data} />
     </Box>
