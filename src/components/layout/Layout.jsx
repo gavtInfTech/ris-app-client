@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import CookieConsentSnackbar from './CookieConsentSnackbar'
 
 function Alert(props) {
   return <MuiAlert elevation={1} variant="filled" {...props} />;
@@ -135,6 +136,8 @@ export default function Layout() {
           </Alert>
         </div>
       </Snackbar>
+
+      {/* <CookieConsentSnackbar /> */}
     </div>
   );
 }
