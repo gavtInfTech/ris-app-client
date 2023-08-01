@@ -10837,15 +10837,15 @@ var Berezina = [
   [53.8405, 29.0001],
 ];
 
-// const sites = [
-//   {
-//   id: ,
-//   name: ,
-//   coords: [
+const sites = [
+  {
+  id: 1,
+  name: '1.1 дер.Левки (воздушный переход) – Прудки III',
+  coords: [
 
-//   ]
-//   }
-// ]
+  ]
+  }
+]
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 export default function VVP() {
@@ -11098,7 +11098,10 @@ export default function VVP() {
               strokeColor: "#0000ff",
               strokeWidth: 4,
               strokeOpacity: 0.5,
+              
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           <Polyline
             geometry={Dvina}
@@ -11107,6 +11110,8 @@ export default function VVP() {
               strokeWidth: 4,
               strokeOpacity: 0.5,
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           <Polyline
             geometry={Neman}
@@ -11115,6 +11120,8 @@ export default function VVP() {
               strokeWidth: 4,
               strokeOpacity: 0.5,
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           <Polyline
             geometry={startNeman}
@@ -11123,6 +11130,8 @@ export default function VVP() {
               strokeWidth: 4,
               strokeOpacity: 0.5,
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           <Polyline
             geometry={Svisloch}
@@ -11131,6 +11140,8 @@ export default function VVP() {
               strokeWidth: 4,
               strokeOpacity: 0.5,
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           {hydropostMarks}
           {hydronodeMarks}
