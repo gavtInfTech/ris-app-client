@@ -11081,6 +11081,8 @@ export default function VVP() {
               strokeWidth: 4,
               strokeOpacity: 0.5,
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           <Polyline
             geometry={Berezina}
