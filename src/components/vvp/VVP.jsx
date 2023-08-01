@@ -11586,18 +11586,20 @@ export default function VVP() {
   });
 
   const polylines = sites.map((site) => {
-    <Polyline
-    geometry={site.coords}
-    properties={{ balloonContentBody: ["qweasdadsfdas"] }}
-    modules={["geoObject.addon.balloon"]}
-    options={{
-      strokeColor: "#0000ff",
-      strokeWidth: 5,
-      strokeOpacity: 0.5,
-    }}
-    onMouseEnter={handleMouseEnter}
-    onMouseLeave={handleMouseLeave}
-  />
+    return (
+      <Polyline
+      geometry={site.coords}
+      properties={{ balloonContentBody: ["qweasdadsfdas"] }}
+      modules={["geoObject.addon.balloon"]}
+      options={{
+        strokeColor: "#0000ff",
+        strokeWidth: 5,
+        strokeOpacity: 0.5,
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      />
+    )
   });
 
   return (
@@ -11654,88 +11656,7 @@ export default function VVP() {
             ))}
           </ListBox>
 
-          <Polyline
-            geometry={Pripyat}
-            properties={{ balloonContentBody: ["qweasdadsfdas"] }}
-            modules={["geoObject.addon.balloon"]}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 5,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={Dnepr}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={Berezina}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={toMogilev}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={Dvina}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={Neman}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={startNeman}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
-          <Polyline
-            geometry={Svisloch}
-            options={{
-              strokeColor: "#0000ff",
-              strokeWidth: 4,
-              strokeOpacity: 0.5,
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          />
+          {polylines}
           {hydropostMarks}
           {hydronodeMarks}
         </Map>
