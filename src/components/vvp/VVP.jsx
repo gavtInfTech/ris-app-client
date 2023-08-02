@@ -9598,11 +9598,6 @@ export default function VVP() {
     } else return;
   };
 
-  const handleBalloonOpen = (event) => {
-    setIsBalloonOpen(true);
-    event.get("target").options.set("strokeColor", '#8c00ff').set("strokeWidth", 8);
-  };
-
   const handleBalloonClose = (event) => {
     setIsBalloonOpen(false);
     event.get("target").options.set("strokeColor", '#0000ff').set("strokeWidth", 5);
@@ -9667,6 +9662,7 @@ export default function VVP() {
   });
 
   const polylines = sites.map((site) => {
+    let isBalloonOpen = false;
     return (
       <Polyline
         geometry={site.coords}
@@ -9676,11 +9672,22 @@ export default function VVP() {
           strokeColor: "#0000ff",
           strokeWidth: 5,
         }}
-        onBalloonOpen={handleBalloonOpen}
-        onClick={handleClick}
-        onBalloonClose={handleBalloonClose}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onClick={(event) => {
+          isBalloonOpen = true;
+          event.get("target").options.set("strokeColor", '#8c00ff').set("strokeWidth", 8);
+        }}
+        onBalloonClose={(event) => {
+          isBalloonOpen = false;
+          event.get("target").options.set("strokeColor", '#0000ff').set("strokeWidth", 5);
+        }}
+        onMouseEnter={(event) => {
+          event.get("target").options.set("strokeColor", '#8c00ff').set("strokeWidth", 8);
+        }}
+        onMouseLeave={(event) => {
+          if (!isBalloonOpen) {
+            event.get("target").options.set("strokeColor", '#0000ff').set("strokeWidth", 5);
+          };
+        }}
       />
     );
   });
