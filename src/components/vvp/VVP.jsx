@@ -9489,6 +9489,7 @@ export default function VVP() {
   const [dataGp, setDataGp] = useState([]);
   const [dataGu, setDataGu] = useState([]);
   const [currentNotices, setCurrentNotices] = useState([]);
+  const [isBalloonOpen, setIsBalloonOpen] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -9581,12 +9582,32 @@ export default function VVP() {
   //       )
   //       });
   const handleMouseEnter = (event) => {
-    event.get("target").options.set("strokeOpacity", 0).set("strokeWidth", 6);
+    event.get("target").options.set("strokeColor", '#8c00ff').set("strokeWidth", 8);
+  };
+
+  const handleClick = (event) => {
+    console.log("qweasd")
+    setIsBalloonOpen(true);
+    event.get("target").options.set("strokeColor", '#8c00ff').set("strokeWidth", 8);
   };
 
   const handleMouseLeave = (event) => {
-    event.get("target").options.set("strokeOpacity", 0.5).set("strokeWidth", 5);
+    console.log(isBalloonOpen);
+    if (!isBalloonOpen) {
+      event.get("target").options.set("strokeColor", '#0000ff').set("strokeWidth", 5);
+    } else return;
   };
+
+  const handleBalloonOpen = (event) => {
+    setIsBalloonOpen(true);
+    event.get("target").options.set("strokeColor", '#8c00ff').set("strokeWidth", 8);
+  };
+
+  const handleBalloonClose = (event) => {
+    setIsBalloonOpen(false);
+    event.get("target").options.set("strokeColor", '#0000ff').set("strokeWidth", 5);
+  };
+
   const hydropostMarks = lastHydropostsData.map((item) => {
     let contentBody =
       "Гидропост : " +
@@ -9654,8 +9675,10 @@ export default function VVP() {
         options={{
           strokeColor: "#0000ff",
           strokeWidth: 5,
-          strokeOpacity: 0.5,
         }}
+        onBalloonOpen={handleBalloonOpen}
+        onClick={handleClick}
+        onBalloonClose={handleBalloonClose}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       />
