@@ -11,7 +11,7 @@ import {
 import { api } from "../../axiosConfig";
 import { hydroposts } from "../waterLevels/levelsGp/data";
 import { fairwayDneprCoords } from './FairwayDnepr';
-import { zeroPointFairwayDnepr} from '.FairwayDnepr';
+import { zeroPointFairwayDnepr} from './FairwayDnepr';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [

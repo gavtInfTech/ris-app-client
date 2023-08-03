@@ -1,5 +1,3 @@
-import { coordinates } from "./FairwayDnepr.js";
-
 const coords = [
   
 ]
