@@ -1467,67 +1467,67 @@ const sites = [
   {
     river: "Днепр",
     name: "1.1 дер.Левки (воздушный переход) – Прудки III",
-    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1040, 1080)
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1530, 1575)
   },
   {
     river: "Днепр",
     name: "1.2 Прудки III – Могилев (мостовой переход)",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1502, 1530)
   },
   {
     river: "Днепр",
     name: "1.3 Могилев (мостовой переход) – прк. Стайки III",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1476, 1502)
   },
   {
     river: "Днепр",
     name: "1.4 прк. Стайки III – Быхов",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1431, 1476)
   },
   {
     river: "Днепр",
     name: "1.5 Быхов – у.р. Друть",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1313, 1431)
   },
   {
     river: "Днепр",
     name: "1.6 у.р. Друть – у.р. Березины",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1206, 1313)
   },
   {
     river: "Днепр",
     name: "1.7 у.р. Березины – прк. Черное I",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1187, 1206)
   },
   {
     river: "Днепр",
     name: "1.8 прк. Черное I – Речицкий ССРЗ",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1180, 1187)
   },
   {
     river: "Днепр",
     name: "1.9 Речицкий ССРЗ – прк. Боровая I",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1150, 1180)
   },
   {
     river: "Днепр",
     name: "1.10 прк. Боровая I – Подречицкое",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1098, 1150)
   },
   {
     river: "Днепр",
     name: "1.11 Подречицкое – 1082 км",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1082, 1098)
   },
   {
     river: "Днепр",
     name: "1.12 1082 км – Каменка",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1080, 1082)
   },
   {
     river: "Днепр",
     name: "1.13 Каменка – н.п. Любеч (гр. Белводпуть - Укрводпуть)",
-    coords: []
+    coords: findSegmentByKilometer(fairwayDneprCoords, zeroPointFairwayDnepr, 1040, 1080)
   },
   {
     river: "Березина",

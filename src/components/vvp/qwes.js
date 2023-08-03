@@ -29,8 +29,11 @@ export function findSegmentByKilometer (coords, zeroPoint, startKM, endKM) {
   let sum = 0;
 
   for (let i = 0; i < coords.length; i++) { 
+    if (endIndex == null && i + 1 === coords.length) {
+      endIndex = i;
+      break;
+    }
     sum += haversineDistance(coords[i], coords[i + 1]);
-    console.log(sum);
     if (startIndex == null && sum >= (startKM - zeroPoint)) startIndex = i;
     if (endIndex == null && sum >= (endKM - zeroPoint)) {
       endIndex = i;
