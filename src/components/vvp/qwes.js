@@ -21192,7 +21192,7 @@ function haversineDistance(point1, point2) {
   return distance;
 }
 
- function findSegmentByKilometer (coords, zeroPoint, startKM, endKM) { 
+ export function findSegmentByKilometer (coords, zeroPoint, startKM, endKM) { 
   let startIndex = null;
   let endIndex = null;
   let sum = 0;
