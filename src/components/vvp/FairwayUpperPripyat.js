@@ -1,6 +1,6 @@
 export const zeroPointUpperPripyat = 0;
 
-export const coordsUperPripyat = [
+export const coordsUpperPripyat = [
   [52.067078, 26.160044],
   [52.067793, 26.159381],
   [52.06838, 26.158861],
