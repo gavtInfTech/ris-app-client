@@ -20,6 +20,8 @@ import { coordsSozh } from './FairwaySozh';
 import { zeroPointSozh} from './FairwaySozh';
 import { coordsWestDvina } from './FairwayWestDvina';
 import { zeroPointWestDvina } from './FairwayWestDvina';
+import { coordsDbk } from './FairwayDbk';
+import { zeroPointDbk } from './FairwayDbk';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -1650,7 +1652,7 @@ const sites = [
   {
     river: "Днепро-Бугский канал",
     name: "6.1 г. Кобрин (слияние р. Мухавец и ДБК) – слияние ДБК и р.Пина",
-    coords: [],
+    coords: findSegmentByKilometer(coordsDbk, zeroPointDbk, 0, 92.5),
   },
   {
     river: "Пина",
