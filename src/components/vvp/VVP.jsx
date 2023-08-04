@@ -26,6 +26,8 @@ import { coordsMuhavets } from './FairwayMuhavets';
 import { zeroPointMuhavets } from './FairwayMuhavets';
 import { coordsPina } from './FairwayPina';
 import { zeroPointPina } from './FairwayPina';
+import { coordsUpperPripyat } from './FairwayUpperPripyat';
+import { zeroPointUpperPripyat } from './FairwayUpperPripyat';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -258,7 +260,7 @@ const sites = [
   {
     river: "Верхний участок реки Припять",
     name: "8.1 7 км реки Припять – г.Пинск (слияние рек Пина и Припять)",
-    coords: [],
+    coords: findSegmentByKilometer(coordsUpperPripyat, zeroPointUpperPripyat, 0, 7),
   },
   {
     river: "Припять",
