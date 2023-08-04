@@ -239,21 +239,21 @@ const sites = [
   {
     river: "Пина",
     name: '7.1.1 слияние ДБК и реки Пина-г/у "Дубой"',
-    coords: findSegmentByKilometer(coordsDbk, zeroPointDbk, 0, 92.5),
+    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 28, 41.2),
   },
   {
     river: "Пина",
     name: '7.1.2 г/у "Дубой" – порт Пинск',
-    coords: findSegmentByKilometer(coordsDbk, zeroPointDbk, 0, 92.5),
+    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 9.7, 28),
   },
   {
     name: "7.2 порт Пинск – г.Пинск (сл. рек Пина и Припять)",
-    coords: findSegmentByKilometer(coordsDbk, zeroPointDbk, 0,8, 3),
+    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0.8, 9.7),
   },
   {
     river: "Пина",
     name: '7.3 Слияние р.Пина и Припять – знак "Запрещение прохода"',
-    coords: findSegmentByKilometer(coordsDbk, zeroPointDbk, 0, 0,8),
+    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0, 0.8),
   },
   {
     river: "Верхний участок реки Припять",
