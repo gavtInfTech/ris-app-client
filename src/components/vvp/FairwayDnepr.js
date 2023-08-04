@@ -1,6 +1,6 @@
 export const zeroPointDnepr = 1040;
 
-export const dneprCoords = [
+export const coordsDnepr = [
   [51.729196, 30.624918],
   [51.73124674391271, 30.625716816455196],
   [51.73192711021213, 30.626122765360968],

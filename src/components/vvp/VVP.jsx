@@ -10,11 +10,11 @@ import {
 } from "react-yandex-maps";
 import { api } from "../../axiosConfig";
 import { hydroposts } from "../waterLevels/levelsGp/data";
-import { dneprCoords } from './FairwayDnepr';
+import { coordsDnepr } from './FairwayDnepr';
 import { zeroPointDnepr} from './FairwayDnepr';
-import { berezinaCoords } from './FairwayBerezina';
+import { coordsBerezina } from './FairwayBerezina';
 import { zeroPointBerezina} from './FairwayBerezina';
-import { nemanCoords } from './FairwayNeman';
+import { coordsNeman } from './FairwayNeman';
 import { zeroPointNeman} from './FairwayNeman';
 import { findSegmentByKilometer } from './qwes';
 
@@ -1471,97 +1471,97 @@ const sites = [
   {
     river: "Днепр",
     name: "1.1 дер.Левки (воздушный переход) – Прудки III",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1530, 1575)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1530, 1575)
   },
   {
     river: "Днепр",
     name: "1.2 Прудки III – Могилев (мостовой переход)",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1502, 1530)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1502, 1530)
   },
   {
     river: "Днепр",
     name: "1.3 Могилев (мостовой переход) – прк. Стайки III",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1476, 1502)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1476, 1502)
   },
   {
     river: "Днепр",
     name: "1.4 прк. Стайки III – Быхов",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1431, 1476)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1431, 1476)
   },
   {
     river: "Днепр",
     name: "1.5 Быхов – у.р. Друть",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1313, 1431)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1313, 1431)
   },
   {
     river: "Днепр",
     name: "1.6 у.р. Друть – у.р. Березины",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1206, 1313)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1206, 1313)
   },
   {
     river: "Днепр",
     name: "1.7 у.р. Березины – прк. Черное I",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1187, 1206)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1187, 1206)
   },
   {
     river: "Днепр",
     name: "1.8 прк. Черное I – Речицкий ССРЗ",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1180, 1187)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1180, 1187)
   },
   {
     river: "Днепр",
     name: "1.9 Речицкий ССРЗ – прк. Боровая I",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1150, 1180)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1150, 1180)
   },
   {
     river: "Днепр",
     name: "1.10 прк. Боровая I – Подречицкое",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1098, 1150)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1098, 1150)
   },
   {
     river: "Днепр",
     name: "1.11 Подречицкое – 1082 км",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1082, 1098)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1082, 1098)
   },
   {
     river: "Днепр",
     name: "1.12 1082 км – Каменка",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1080, 1082)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1080, 1082)
   },
   {
     river: "Днепр",
     name: "1.13 Каменка – н.п. Любеч (гр. Белводпуть - Укрводпуть)",
-    coords: findSegmentByKilometer(dneprCoords, zeroPointDnepr, 1040, 1080)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1040, 1080)
   },
   {
     river: "Березина",
     name: "2.1 г.Березино (Березино пристань) – у.р. Волчанки",
-    coords: findSegmentByKilometer(berezinaCoords, zeroPointBerezina, 200, 310)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 200, 310)
   },
   {
     river: "Березина",
     name: "2.2 у.р. Волчанки – Бобруйский порт",
-    coords: findSegmentByKilometer(berezinaCoords, zeroPointBerezina, 170, 200)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 170, 200)
   },
   {
     river: "Березина",
     name: "2.3 Бобруйский порт – прк. Волышино",
-    coords: findSegmentByKilometer(berezinaCoords, zeroPointBerezina, 147, 170)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 147, 170)
   },
   {
     river: "Березина",
     name: "2.4 прк. Волышино – оз. Сельное",
-    coords: findSegmentByKilometer(berezinaCoords, zeroPointBerezina, 61, 147)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 61, 147)
   },
   {
     river: "Березина",
     name: "2.5 оз. Сельное – Якимова Слобода IV",
-    coords: findSegmentByKilometer(berezinaCoords, zeroPointBerezina, 48, 67)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 48, 67)
   },
   {
     river: "Березина",
     name: "2.6 Якимова Слобода IV – устье реки Березина",
-    coords: findSegmentByKilometer(berezinaCoords, zeroPointBerezina, 0, 48)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 0, 48)
   },
   {
     river: "Сож",
@@ -1611,22 +1611,22 @@ const sites = [
   {
     river: "Неман",
     name: "4.1 деревня Щечицы (вход в затон Яблоново) – д. Ковшово",
-    coords: findSegmentByKilometer(nemanCoords, zeroPointNeman, 557, 575),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 557, 575),
   },
   {
     river: "Неман",
     name: "4.2 деревня Ковшово – Гродненская ГЭС",
-    coords: findSegmentByKilometer(nemanCoords, zeroPointNeman, 528, 557),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 528, 557),
   },
   {
     river: "Неман",
     name: "4.3.1 Гродненская ГЭС - прк. Городнянка",
-    coords: findSegmentByKilometer(nemanCoords, zeroPointNeman, 500, 528),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 500, 528),
   },
   {
     river: "Неман",
     name: "4.3.2 прк. Городнянка - граница с Литовской Республикой",
-    coords: findSegmentByKilometer(nemanCoords, zeroPointNeman, 480, 500),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 480, 500),
   },
   {
     river: "Мухавец",
