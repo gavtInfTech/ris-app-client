@@ -16,6 +16,8 @@ import { coordsBerezina } from './FairwayBerezina';
 import { zeroPointBerezina} from './FairwayBerezina';
 import { coordsNeman } from './FairwayNeman';
 import { zeroPointNeman} from './FairwayNeman';
+import { coordsSozh } from './FairwaySozh';
+import { zeroPointSozh} from './FairwaySozh';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -1566,47 +1568,47 @@ const sites = [
   {
     river: "Сож",
     name: "3.1 г. Славгород (Славгород - город) – Чечерский а/м мост",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointBerezina, 205, 301)
   },
   {
     river: "Сож",
     name: "3.2.1 Чечерский автомобильный мост - пкр. у.р.Беседь 2",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointBerezina, 170, 205)
   },
   {
     river: "Сож",
     name: "3.2.2 прк. у.р.Беседь 2 - прк. Крысин 1",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 127, 170)
   },
   {
     river: "Сож",
     name: "3.3 прк. Крысин 1- Гомель пристань",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 106, 127)
   },
   {
     river: "Сож",
     name: "3.4 Гомель пристань – порт Осовцы",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 96, 106)
   },
   {
     river: "Сож",
     name: "3.5 порт Осовцы – прк. Никольский 3",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 76, 96)
   },
   {
     river: "Сож",
     name: "3.6 прк. Никольский 3 – 35 км",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 35, 76)
   },
   {
     river: "Сож",
     name: "3.7 35 км – прк. Карповка 1",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 17, 35)
   },
   {
     river: "Сож",
     name: "3.8 прк. Карповка 1 – устье реки Сож",
-    coords: []
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 0, 17)
   },
   {
     river: "Неман",
