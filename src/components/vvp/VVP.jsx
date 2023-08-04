@@ -28,7 +28,10 @@ import { coordsPina } from './FairwayPina';
 import { zeroPointPina } from './FairwayPina';
 import { coordsUpperPripyat } from './FairwayUpperPripyat';
 import { zeroPointUpperPripyat } from './FairwayUpperPripyat';
+import { coordsUpperAvgCanal } from './FairwayUpperAvgCanal';
+import { zeroPointUpperAvgCanal } from './FairwayUpperAvgCanal';
 import { findSegmentByKilometer } from './qwes';
+import { coordsAvgCanal, zeroPointAvgCanal } from "./FairwayAvgCanal";
 
 const rivers = [
   {
@@ -365,12 +368,12 @@ const sites = [
   {
     river: "Августовский канал",
     name: "14.1 Граница с Республикой Польша –16 км Августовского канала",
-    coords: [],
+    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 3.2, 19.2),
   },
   {
     river: "Августовский канал",
     name: "14.2 16 км Августовского канала – устье Августовского канала (слияние с рекой Неман)",
-    coords: [],
+    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 0, 3.2),
   },
   {
     river: "Свислочь",
