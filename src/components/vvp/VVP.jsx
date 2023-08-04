@@ -22,6 +22,8 @@ import { coordsWestDvina } from './FairwayWestDvina';
 import { zeroPointWestDvina } from './FairwayWestDvina';
 import { coordsDbk } from './FairwayDbk';
 import { zeroPointDbk } from './FairwayDbk';
+import { coordsMuhavets } from './FairwayMuhavets';
+import { zeroPointMuhavets } from './FairwayMuhavets';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -1637,17 +1639,17 @@ const sites = [
   {
     river: "Мухавец",
     name: '5.1 г. Брест (речной порт Брест) – г/у "Тришин"',
-    coords: [],
+    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 1),
   },
   {
     river: "Мухавец",
     name: '5.2 г/у "Тришин" – г/у "Новосады"',
-    coords: [],
+    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 1),
   },
   {
     river: "Мухавец",
     name: "5.3 г/у Новосады – г.Кобрин (слияние р. Мухавец и ДБК)",
-    coords: [],
+    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 33),
   },
   {
     river: "Днепро-Бугский канал",
