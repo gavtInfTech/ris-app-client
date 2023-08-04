@@ -1,4 +1,4 @@
-export const zeroPointNeman = 1;
+export const zeroPointNeman = 480;
 
 export const coordsNeman = [
   [53.89377236529407, 23.77756579117234],
