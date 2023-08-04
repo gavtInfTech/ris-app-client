@@ -1639,17 +1639,17 @@ const sites = [
   {
     river: "Мухавец",
     name: '5.1 г. Брест (речной порт Брест) – г/у "Тришин"',
-    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 1),
+    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 54.3, 58.3),
   },
   {
     river: "Мухавец",
     name: '5.2 г/у "Тришин" – г/у "Новосады"',
-    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 1),
+    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 35.4, 54.3),
   },
   {
     river: "Мухавец",
     name: "5.3 г/у Новосады – г.Кобрин (слияние р. Мухавец и ДБК)",
-    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 33),
+    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 35.4),
   },
   {
     river: "Днепро-Бугский канал",
