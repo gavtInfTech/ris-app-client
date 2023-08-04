@@ -18,6 +18,8 @@ import { coordsNeman } from './FairwayNeman';
 import { zeroPointNeman} from './FairwayNeman';
 import { coordsSozh } from './FairwaySozh';
 import { zeroPointSozh} from './FairwaySozh';
+import { coordsWestDvina } from './FairwayWestDvina';
+import { zeroPointWestDvina } from './FairwayWestDvina';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -1737,37 +1739,37 @@ const sites = [
   {
     river: "Западная Двина",
     name: "12.1 деревня Сураж – д. Круподеры",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 657, 676),
   },
   {
     river: "Западная Двина",
     name: "12.2 д. Круподеры – Витебская ГЭС",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 626, 657),
   },
   {
     river: "Западная Двина",
     name: "12.3 Витебская ГЭС – Витебск (груз.) порт",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 606, 626),
   },
   {
     river: "Западная Двина",
     name: "12.4 Витебск (груз.) порт – д. Слобода",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 586, 606),
   },
   {
     river: "Западная Двина",
     name: "12.5 д. Слобода – г. Бешенковичи",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 548, 586),
   },
   {
     river: "Западная Двина",
     name: "12.6 г. Бешенковичи – прк. Сосница",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 480, 548),
   },
   {
     river: "Западная Двина",
     name: "12.7 прк. Сосница – Полоцкая гидроэлектростанция",
-    coords: [],
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 475, 480),
   },
   {
     river: "Туровский затон",
