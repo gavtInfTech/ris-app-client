@@ -28,10 +28,9 @@ import { coordsPina } from './FairwayPina';
 import { zeroPointPina } from './FairwayPina';
 import { coordsUpperPripyat } from './FairwayUpperPripyat';
 import { zeroPointUpperPripyat } from './FairwayUpperPripyat';
-import { coordsUpperAvgCanal } from './FairwayUpperAvgCanal';
-import { zeroPointUpperAvgCanal } from './FairwayUpperAvgCanal';
+import { coordsAvgCanal } from './FairwayAvgCanal';
+import { zeroPointAvgCanal } from './FairwayAvgCanal';
 import { findSegmentByKilometer } from './qwes';
-import { coordsAvgCanal, zeroPointAvgCanal } from "./FairwayAvgCanal";
 
 const rivers = [
   {
