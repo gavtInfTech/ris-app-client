@@ -369,12 +369,12 @@ const sites = [
   {
     river: "Августовский канал",
     name: "14.1 Граница с Республикой Польша –16 км Августовского канала",
-    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 3.2, 19.2),
+    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 16, 21.6),
   },
   {
     river: "Августовский канал",
     name: "14.2 16 км Августовского канала – устье Августовского канала (слияние с рекой Неман)",
-    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 0, 3.2),
+    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 0, 16),
   },
   {
     river: "Свислочь",
