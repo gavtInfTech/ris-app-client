@@ -329,7 +329,7 @@ const sites = [
   {
     river: "Западная Двина",
     name: "12.1 деревня Сураж – д. Круподеры",
-    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 657, 676),
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 657, 673),
   },
   {
     river: "Западная Двина",
@@ -359,7 +359,7 @@ const sites = [
   {
     river: "Западная Двина",
     name: "12.7 прк. Сосница – Полоцкая гидроэлектростанция",
-    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 475, 480),
+    coords: findSegmentByKilometer(coordsWestDvina, zeroPointWestDvina, 476, 480),
   },
   {
     river: "Туровский затон",

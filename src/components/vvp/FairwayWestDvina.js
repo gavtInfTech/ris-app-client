@@ -1,4 +1,4 @@
-export const zeroPointWestDvina = 475;
+export const zeroPointWestDvina = 476;
 
 export const coordsWestDvina = [
   [55.432536758294866, 28.946450437976146],
