@@ -252,17 +252,17 @@ const sites = [
   },
   {
     name: "7.2 порт Пинск – г.Пинск (сл. рек Пина и Припять)",
-    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0.8, 9.7),
+    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0.7, 9.7),
   },
   {
     river: "Пина",
     name: '7.3 Слияние р.Пина и Припять – знак "Запрещение прохода"',
-    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0, 0.8),
+    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0, 0.7),
   },
   {
     river: "Верхний участок реки Припять",
     name: "8.1 7 км реки Припять – г.Пинск (слияние рек Пина и Припять)",
-    coords: findSegmentByKilometer(coordsUpperPripyat, zeroPointUpperPripyat, 0, 7),
+    coords: findSegmentByKilometer(coordsUpperPripyat, zeroPointUpperPripyat, 0, 8),
   },
   {
     river: "Припять",
