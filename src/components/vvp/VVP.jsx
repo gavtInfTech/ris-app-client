@@ -30,6 +30,8 @@ import { coordsUpperPripyat } from './FairwayUpperPripyat';
 import { zeroPointUpperPripyat } from './FairwayUpperPripyat';
 import { coordsAvgCanal } from './FairwayAvgCanal';
 import { zeroPointAvgCanal } from './FairwayAvgCanal';
+import { coordsPripyat } from './FairwayPripyat';
+import { zeroPointPripyat } from './FairwayPripyat';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -267,52 +269,52 @@ const sites = [
   {
     river: "Припять",
     name: '9.1 г.Пинск (сл. рр Пина и Припять) – г/у "Качановичи"',
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 505.5, 530),
   },
   {
     river: "Припять",
     name: '9.2 г/у "Качановичи" – г/у "Стахово"',
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 480, 505.5),
   },
   {
     river: "Припять",
     name: '9.3 г/у "Стахово" – устье р. Горынь',
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 422, 480),
   },
   {
     river: "Припять",
     name: "9.4 устье р. Горынь – устье Микашевичского канала",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 410, 422),
   },
   {
     river: "Припять",
     name: "9.5 устье Микашевичского канала - затон Кабачок",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 309, 410),
   },
   {
     river: "Припять",
     name: "9.6 затон Кабачок - у.р. Птичь",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 230, 309),
   },
   {
     river: "Припять",
     name: "9.7 у.р. Птичь - Пховский затон",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 189, 230),
   },
   {
     river: "Припять",
     name: "9.8 Пховский затон - Мозырская БНС",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 172, 189),
   },
   {
     river: "Припять",
     name: "9.9 Мозырская БНС - прк. Довлядовское спрямление",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 81, 172),
   },
   {
     river: "Припять",
     name: "9.10 прк. Довлядовское спрямление - прк. Усовский 1 (граница с Украиной)",
-    coords: [],
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointUpperPripyat, 63, 81),
   },
   {
     river: "Микашевичский канал",
