@@ -130,32 +130,32 @@ const sites = [
   {
     river: "Березина",
     name: "2.1 г.Березино (Березино пристань) – у.р. Волчанки",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 200, 310)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 199, 303)
   },
   {
     river: "Березина",
     name: "2.2 у.р. Волчанки – Бобруйский порт",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 170, 200)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 170, 199)
   },
   {
     river: "Березина",
     name: "2.3 Бобруйский порт – прк. Волышино",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 147, 170)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 145, 170)
   },
   {
     river: "Березина",
     name: "2.4 прк. Волышино – оз. Сельное",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 61, 147)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 61, 145)
   },
   {
     river: "Березина",
     name: "2.5 оз. Сельное – Якимова Слобода IV",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 48, 67)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 52, 61)
   },
   {
     river: "Березина",
     name: "2.6 Якимова Слобода IV – устье реки Березина",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 0, 48)
+    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 0, 52)
   },
   {
     river: "Сож",
