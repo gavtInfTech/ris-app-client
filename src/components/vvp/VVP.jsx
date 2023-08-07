@@ -160,22 +160,22 @@ const sites = [
   {
     river: "Сож",
     name: "3.1 г. Славгород (Славгород - город) – Чечерский а/м мост",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointBerezina, 205, 301)
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 205, 300)
   },
   {
     river: "Сож",
     name: "3.2.1 Чечерский автомобильный мост - пкр. у.р.Беседь 2",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointBerezina, 170, 205)
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 147, 205)
   },
   {
     river: "Сож",
     name: "3.2.2 прк. у.р.Беседь 2 - прк. Крысин 1",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 127, 170)
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 128, 147)
   },
   {
     river: "Сож",
     name: "3.3 прк. Крысин 1- Гомель пристань",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 106, 127)
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 106, 128)
   },
   {
     river: "Сож",
@@ -185,12 +185,12 @@ const sites = [
   {
     river: "Сож",
     name: "3.5 порт Осовцы – прк. Никольский 3",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 76, 96)
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 78, 96)
   },
   {
     river: "Сож",
     name: "3.6 прк. Никольский 3 – 35 км",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 35, 76)
+    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 35, 78)
   },
   {
     river: "Сож",
@@ -205,22 +205,22 @@ const sites = [
   {
     river: "Неман",
     name: "4.1 деревня Щечицы (вход в затон Яблоново) – д. Ковшово",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 558, 573),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 557, 575),
   },
   {
     river: "Неман",
     name: "4.2 деревня Ковшово – Гродненская ГЭС",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 528, 558),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 528, 557),
   },
   {
     river: "Неман",
     name: "4.3.1 Гродненская ГЭС - прк. Городнянка",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 515, 528),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 500, 528),
   },
   {
     river: "Неман",
     name: "4.3.2 прк. Городнянка - граница с Литовской Республикой",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 481, 515),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 480, 500),
   },
   {
     river: "Мухавец",
