@@ -221,7 +221,7 @@ export const hydroposts = [
         square: 27000,
         openDate: '20.08.1922',
         closeDate: 'Действует',
-        coords: [51.852052, 26.783764]
+        coords: [51.8654, 26.8766]
     },
     {
         id: 17,

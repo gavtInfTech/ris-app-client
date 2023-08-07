@@ -36,6 +36,8 @@ import { coordsMikhashevichy } from './FairwayMikhashevichy';
 import { zeroPointMikhashevichy } from './FairwayMikhashevichy';
 import { coordsGorin } from './FairwayGorin';
 import { zeroPointGorin } from './FairwayGorin';
+import { coordsTurov } from './FairwayTurov';
+import { zeroPointTurov } from './FairwayTurov';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -368,7 +370,7 @@ const sites = [
   {
     river: "Туровский затон",
     name: "13.1 г. Туров (вход в затон) – г. Туров (причал)",
-    coords: [],
+    coords: findSegmentByKilometer(coordsTurov, zeroPointTurov, 0, 1.6)
   },
   {
     river: "Августовский канал",
@@ -522,7 +524,7 @@ export default function VVP() {
 
   const hydropostMarks = lastHydropostsData.map((item) => {
     let contentBody =
-      "Гидропост : " +
+      "Гидропост: " +
       item.hydropost +
       "<br> Река: " +
       item.river +
