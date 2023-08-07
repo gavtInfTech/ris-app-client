@@ -205,22 +205,22 @@ const sites = [
   {
     river: "Неман",
     name: "4.1 деревня Щечицы (вход в затон Яблоново) – д. Ковшово",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 557, 575),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 558, 573),
   },
   {
     river: "Неман",
     name: "4.2 деревня Ковшово – Гродненская ГЭС",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 528, 557),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 528, 558),
   },
   {
     river: "Неман",
     name: "4.3.1 Гродненская ГЭС - прк. Городнянка",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 500, 528),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 515, 528),
   },
   {
     river: "Неман",
     name: "4.3.2 прк. Городнянка - граница с Литовской Республикой",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 480, 500),
+    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 481, 515),
   },
   {
     river: "Мухавец",
