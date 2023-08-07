@@ -65,12 +65,12 @@ const sites = [
   {
     river: "Днепр",
     name: "1.1 дер.Левки (воздушный переход) – Прудки III",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1530, 1575)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1531, 1575)
   },
   {
     river: "Днепр",
     name: "1.2 Прудки III – Могилев (мостовой переход)",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1502, 1530)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1502, 1531)
   },
   {
     river: "Днепр",
@@ -80,27 +80,27 @@ const sites = [
   {
     river: "Днепр",
     name: "1.4 прк. Стайки III – Быхов",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1431, 1476)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1439, 1476)
   },
   {
     river: "Днепр",
     name: "1.5 Быхов – у.р. Друть",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1313, 1431)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1313.5, 1439)
   },
   {
     river: "Днепр",
     name: "1.6 у.р. Друть – у.р. Березины",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1206, 1313)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1206, 1313.5)
   },
   {
     river: "Днепр",
     name: "1.7 у.р. Березины – прк. Черное I",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1187, 1206)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1188, 1206)
   },
   {
     river: "Днепр",
     name: "1.8 прк. Черное I – Речицкий ССРЗ",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1180, 1187)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1180, 1188)
   },
   {
     river: "Днепр",
@@ -125,7 +125,7 @@ const sites = [
   {
     river: "Днепр",
     name: "1.13 Каменка – н.п. Любеч (гр. Белводпуть - Укрводпуть)",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1040, 1080)
+    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1044.5, 1080)
   },
   {
     river: "Березина",
