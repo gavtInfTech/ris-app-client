@@ -314,7 +314,7 @@ const sites = [
   {
     river: "Припять",
     name: "9.10 прк. Довлядовское спрямление - прк. Усовский 1 (граница с Украиной)",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointUpperPripyat, 63, 81),
+    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 63, 81),
   },
   {
     river: "Микашевичский канал",
