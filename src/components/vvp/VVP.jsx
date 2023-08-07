@@ -34,6 +34,8 @@ import { coordsPripyat } from './FairwayPripyat';
 import { zeroPointPripyat } from './FairwayPripyat';
 import { coordsMikhashevichy } from './FairwayMikhashevichy';
 import { zeroPointMikhashevichy } from './FairwayMikhashevichy';
+import { coordsGorin } from './FairwayGorin';
+import { zeroPointGorin } from './FairwayGorin';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -326,7 +328,7 @@ const sites = [
   {
     river: "Горынь",
     name: "11.1 перекат Комора-2 – устье реки Горынь",
-    coords: [],
+    coords: findSegmentByKilometer(coordsGorin, zeroPointGorin, 0, 13.8)
   },
   {
     river: "Западная Двина",
