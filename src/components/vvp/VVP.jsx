@@ -32,6 +32,8 @@ import { coordsAvgCanal } from './FairwayAvgCanal';
 import { zeroPointAvgCanal } from './FairwayAvgCanal';
 import { coordsPripyat } from './FairwayPripyat';
 import { zeroPointPripyat } from './FairwayPripyat';
+import { coordsMikhashevichy } from './FairwayMikhashevichy';
+import { zeroPointMikhashevichy } from './FairwayMikhashevichy';
 import { findSegmentByKilometer } from './qwes';
 
 const rivers = [
@@ -319,7 +321,7 @@ const sites = [
   {
     river: "Микашевичский канал",
     name: "10.1 устье Микашевичского канала – р.п. Микашевичи",
-    coords: [],
+    coords: findSegmentByKilometer(coordsMikhashevichy, zeroPointMikhashevichy, 0, 6)
   },
   {
     river: "Горынь",
