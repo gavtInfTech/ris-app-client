@@ -5,7 +5,7 @@ const coords = [
 coords.forEach((coord) => { console.log('[' + coord[1] + ', ' + coord[0] + ']' + ',')});
 
 function haversineDistance(point1, point2) {
-  const R = 6371;
+  const R = 6383;
   const toRadians = (degrees) => (degrees * Math.PI) / 180;
   
   const lat1Rad = toRadians(point1[0]);
