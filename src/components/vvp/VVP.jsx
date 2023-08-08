@@ -445,6 +445,9 @@ export default function VVP() {
 
         const resGu = await api.get("/levelsGu/getLastLevels");
         setDataGu(resGu.data);
+
+        const resNotices = await api.get("/notices/getCurrentNotices");
+        setCurrentNotices(resNotices.data);
       } catch (err) {
         console.log(err);
       }
@@ -582,13 +585,15 @@ export default function VVP() {
 
   const polylines = sites.map((site) => {
     let isBalloonOpen = false;
+    let notice = currentNotices.find((notice) => (notice.site === site.name));
+    let color  = notice ? "#ff6f00 " : "#0000ff";
     return (
       <Polyline
         geometry={site.coords}
         properties={{ balloonContentBody: [site.name] }}
         modules={["geoObject.addon.balloon"]}
         options={{
-          strokeColor: "#0000ff",
+          strokeColor: color,
           strokeWidth: 5,
         }}
         onClick={(event) => {
@@ -602,7 +607,7 @@ export default function VVP() {
           isBalloonOpen = false;
           event
             .get("target")
-            .options.set("strokeColor", "#0000ff")
+            .options.set("strokeColor", color)
             .set("strokeWidth", 5);
         }}
         onMouseEnter={(event) => {
