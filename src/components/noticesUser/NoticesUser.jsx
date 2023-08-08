@@ -33,6 +33,7 @@ export default function NoticesUser(props) {
   const getData = async () => {
     try {
       const res = await api.get("/notices/getAll");
+      console.log(res);
       res.data.forEach((item) => {
         item.date = new Date(item.date);
       });

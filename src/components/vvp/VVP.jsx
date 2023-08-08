@@ -641,17 +641,22 @@ export default function VVP() {
       />
     );
   });
-  
+
   const polylines = sites.map((site) => {
     let isBalloonOpen = false;
     let notice = currentNotices.find((notice) => notice.site === site.name);
     let color = notice ? "#ff6f00" : "#0000ff";
     let propertyObject = {
-      balloonContentHeader:
-        "Река: " + site.river + "<br>Участок: " + site.name,
+      balloonContentBody:
+        "<b>Река: " + site.river + "<br>Участок: " + site.name + "</b>",
     };
     if (notice) {
-      propertyObject.balloonContentBody = "Причина уведомления: " + notice.cause + "<br> Содержание: " + notice.content;
+      propertyObject.balloonContentBody =
+        propertyObject.balloonContentBody +
+        "<br>Причина уведомления: " +
+        notice.cause +
+        "<br>Содержание: " +
+        notice.content;
       propertyObject.balloonContentFooter = "Дата: " + notice.date;
     }
     return (
