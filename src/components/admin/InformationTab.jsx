@@ -12,6 +12,7 @@ import { Link, useLocation, Route, Routes } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import NestedList from "../admin/Test";
 import Sib from '../sib/Sib';
+import WorkMap from './map/WorkMap';
 
 export default function InformationTab() {
   const {auth} = useContext(AuthContext);
@@ -108,7 +109,7 @@ export default function InformationTab() {
               } />
               <Route path="/dislocation" element={
                 <Box sx={{ pl: 6, pt: 4 }}>
-                  <Dislocation />
+                  <WorkMap />
                 </Box>
               } />
               <Route path="/notices" element={
