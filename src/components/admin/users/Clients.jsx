@@ -252,8 +252,7 @@ export default function Depth(props) {
   ];
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", pt: "30px" }}>
-      <Box sx={{ display: "flex", width: 1160, height: 700 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", pt: "10px" }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -269,6 +268,8 @@ export default function Depth(props) {
             [`& .${gridClasses.cell}`]: {
               py: 1,
             },
+            maxWidth: 1160,
+            height: 700
           }}
           components={{
             Toolbar: EditToolbar,
@@ -278,6 +279,5 @@ export default function Depth(props) {
           }}
         />
       </Box>
-    </Box>
   );
 }

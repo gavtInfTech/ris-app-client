@@ -247,12 +247,12 @@ useEffect(() => {
   ];
 
   return (
-    <Accordion sx={{ width: 1170 }}>
+    <Accordion >
     <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
-        sx={{ width: 1160 }}
+        
     >
     <Typography sx={{ ml: '20px', fontSize: 17 }}>{props.site}</Typography>
     </AccordionSummary>
@@ -261,7 +261,7 @@ useEffect(() => {
             <Box
               sx={{
                 height: 500,
-                width: 1120,
+                
                 
               }}
             >

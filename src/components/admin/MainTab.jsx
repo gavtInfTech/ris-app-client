@@ -34,6 +34,9 @@ export default function FullWidthTabs() {
             }
           }}
           textColor="inherit"
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
         >
           <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
             label="Текущая информация" 
