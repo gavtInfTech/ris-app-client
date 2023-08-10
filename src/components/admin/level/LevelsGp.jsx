@@ -254,12 +254,11 @@ useEffect(() => {
   ];
 
   return (
-    <Accordion sx={{ width: 880 }}>
+    <Accordion>
         <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            sx={{ width: 870 }}
         >
             <Typography sx={{ ml: '20px', fontSize: 17 }}>{props.hydropost}</Typography>
         </AccordionSummary>
@@ -267,8 +266,8 @@ useEffect(() => {
           
                 <Box
                   sx={{
-                    height: 500,
-                    width: 800,
+                    height: 600,
+                    maxWidth: 800,
                     '& .super-app.negative': {
                       backgroundColor: '#d47483',
                       color: '#1a3e72',

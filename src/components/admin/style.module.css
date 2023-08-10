@@ -1,3 +1,11 @@
+.tabPanel {
+  /* display: flex;
+  justify-content: center; */
+  padding-left: 50px;
+  padding-top: 20px;
+  width: 100%;
+}
+
 .form {
     display: flex;
     flex-flow: column;
@@ -43,6 +51,13 @@
 
   .containerMap {
     position: relative;
+  }
+
+  @media (max-width: 1200px) {
+    .tabPanel {
+      padding-left: 0px;
+
+    }
   }
 
   

@@ -1,4 +1,4 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -10,16 +10,30 @@ import NoticeMain from "./notice/NoticeMain";
 import Dislocation from "./dislocation/Dislocation";
 import { Link, useLocation, Route, Routes } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import NestedList from "../admin/Test";
 import Sib from "../sib/Sib";
 import WorkMap from "./map/WorkMap";
+import styles from "./style.module.css";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useMediaQuery } from '@mui/material';
 
 export default function InformationTab() {
   const { auth } = useContext(AuthContext);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   let info = auth.info;
   let { pathname } = useLocation();
   let value;
   let rolePath = auth.rolePath;
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const isMdScreen = useMediaQuery('(max-width:1200px)');
 
   if (pathname.includes("levelsGp")) {
     value = "levelsGp";
@@ -34,18 +48,18 @@ export default function InformationTab() {
     <div>
       <Box
         sx={{
-          flexGrow: 1,
           bgcolor: "background.paper",
           display: "flex",
+          flexDirection: { xs: 'column', lg: 'row' },
           width: "100%",
         }}
       >
         <Tabs
-          orientation="vertical"
+          orientation={isMdScreen ? "horizontal" : "vertical"}
           variant="scrollable"
           value={pathname}
           aria-label="Vertical tabs example"
-          sx={{ borderColor: "divider", width: "15%" }}
+          sx={{ borderColor: "divider" }}
         >
           <Tab
             sx={{ height: 60, fontSize: 14 }}
@@ -91,7 +105,7 @@ export default function InformationTab() {
           />
         </Tabs>
 
-        <Box sx={{ pl: 10, pt: 4, width: "100%" }}>
+        <Box className={styles.tabPanel}>
           <Routes>
             <Route
               path="/levels/*"
@@ -101,7 +115,8 @@ export default function InformationTab() {
                     variant="scrollable"
                     value={value}
                     aria-label="Vertical tabs example"
-                    sx={{ pl: 3, pb: 5 }}
+                    sx={{ mr: -3, pb: 5 }}
+                    allowScrollButtonsMobile
                   >
                     <Tab
                       sx={{ height: 60, fontSize: 14, width: 300 }}

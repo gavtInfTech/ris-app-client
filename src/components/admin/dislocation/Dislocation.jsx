@@ -256,8 +256,8 @@ useEffect(() => {
         [`& .${gridClasses.cell}`]: {
           py: 2,
         },
-        height: 500,
-        width: '100%'
+        height: 700,
+        maxWidth: 1520
       }}
       rows={rows}
       columns={columns}
