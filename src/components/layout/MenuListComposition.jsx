@@ -21,6 +21,7 @@ export default function MenuListComposition() {
   };
 
   function handleMenu() {
+    setAnchorElUser(null);
     if (auth.role === "Администратор")
       navigate("/admin-main/informationTab/levels/levelsGp");
     else if (auth.role === "Клиент")
