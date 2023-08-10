@@ -115,7 +115,7 @@ export default function InformationTab() {
                     variant="scrollable"
                     value={value}
                     aria-label="Vertical tabs example"
-                    sx={{ mr: -3, pb: 5 }}
+                    sx={{ pb: 5 }}
                     allowScrollButtonsMobile
                   >
                     <Tab
