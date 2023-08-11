@@ -57,6 +57,7 @@ export default function InformationTab() {
         <Tabs
           orientation={isMdScreen ? "horizontal" : "vertical"}
           variant="scrollable"
+          allowScrollButtonsMobile
           value={pathname}
           aria-label="Vertical tabs example"
           sx={{ borderColor: "divider" }}

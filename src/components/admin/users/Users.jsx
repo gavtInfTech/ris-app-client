@@ -31,7 +31,7 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, username: null, password: null, organisatoin: null },
+      { id, username: null, password: null, organisation: null },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -106,7 +106,7 @@ export default function Depth(props) {
     });
 
     const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.fio === null) {
+    if (editedRow.organisation === null) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
@@ -258,7 +258,7 @@ export default function Depth(props) {
           [`& .${gridClasses.cell}`]: {
             py: 1,
           },
-          maxWidth: 1000,
+          maxWidth: 1040,
           height: 700,
         }}
         components={{
