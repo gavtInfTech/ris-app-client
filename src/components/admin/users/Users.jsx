@@ -17,8 +17,6 @@ import { api } from "../../../axiosConfig";
 import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
-import styles from "./style.module.css";
-import Typography from "@mui/material/Typography";
 
 const organisations = [
   'РУ ЭСП "Днепро-Бугский водный путь"',
@@ -114,10 +112,10 @@ export default function Depth(props) {
   };
 
   const processRowUpdate = async (newRow) => {
-    if (newRow.organisatoin === null) {
+    if (newRow.organisation === null) {
       setMessage(() => ({
         open: true,
-        messageText: "Поле Организация не заполненно.",
+        messageText: "Поле Название предприятия не заполненно.",
         severity: "error",
       }));
       return;
@@ -182,7 +180,7 @@ export default function Depth(props) {
       headerName: "Название предприятия",
       type: "singleSelect",
       valueOptions: organisations,
-      width: 300,
+      width: 400,
       editable: true,
     },
     {
