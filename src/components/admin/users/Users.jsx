@@ -258,7 +258,7 @@ export default function Depth(props) {
           [`& .${gridClasses.cell}`]: {
             py: 1,
           },
-          maxWidth: 1160,
+          maxWidth: 1000,
           height: 700,
         }}
         components={{
