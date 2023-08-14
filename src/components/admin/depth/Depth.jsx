@@ -69,7 +69,7 @@ export default function Depth(props) {
           if (item.forecastDate !== null)
             item.forecastDate = new Date(item.forecastDate);
         });
-        setRows(res.data);
+        setRows(res.data.sort((a, b) => a.date.getTime() - b.date.getTime()));
       } catch (err) {
         console.log(err);
       }

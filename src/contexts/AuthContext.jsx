@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
 import { api } from "../axiosConfig";
 import * as adminInfo from "../components/admin/adminInfo";
 import * as berezinskoeInfo from "../components/admin/berezinskoeInfo";

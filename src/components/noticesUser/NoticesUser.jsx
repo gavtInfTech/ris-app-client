@@ -37,36 +37,22 @@ export default function NoticesUser(props) {
       res.data.forEach((item) => {
         item.date = new Date(item.date);
       });
-      setMainData(
-        res.data.map((doc) => {
-          let cause = "";
-          if (doc.cause1) {
-            cause += "Изменение СНО; ";
-          }
-          if (doc.cause2) {
-            cause += "Метеологические условия; ";
-          }
-          if (doc.cause3) {
-            cause += "Опасно для жизни; ";
-          }
-          return { ...doc, id: doc.id, cause: cause };
-        })
-      );
-      setData(
-        res.data.map((doc) => {
-          let cause = "";
-          if (doc.cause1) {
-            cause += "Изменение СНО; ";
-          }
-          if (doc.cause2) {
-            cause += "Метеологические условия; ";
-          }
-          if (doc.cause3) {
-            cause += "Опасно для жизни; ";
-          }
-          return { ...doc, id: doc.id, cause: cause };
-        })
-      );
+     
+      res.data = res.data.map((doc) => {
+        let cause = "";
+        if (doc.cause1) {
+          cause += "Изменение СНО; ";
+        }
+        if (doc.cause2) {
+          cause += "Метеологические условия; ";
+        }
+        if (doc.cause3) {
+          cause += "Опасно для жизни; ";
+        }
+        return { ...doc, id: doc.id, cause: cause };
+      })
+      setMainData(res.data.sort((a, b) => b.date.getTime() - a.date.getTime()));
+      setData(res.data.sort((a, b) => b.date.getTime() - a.date.getTime()));
     } catch (err) {
       console.log(err);
     }

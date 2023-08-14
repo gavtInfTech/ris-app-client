@@ -10,7 +10,7 @@ import Graph from './Graph';
 import clsx from 'clsx';
 import { api } from '../../../axiosConfig';
 
-  let rows = hydroposts;
+  let rows = [...hydroposts];
 
   const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 

@@ -64,7 +64,7 @@ export default function Bridge(props) {
         res.data.forEach((item) => {
           item.date = new Date(item.date);
         });
-        setRows(res.data);
+        setRows(res.data.sort((a, b) => a.date.getTime() - b.date.getTime()));
       } catch (err) {
         console.log(err);
       }

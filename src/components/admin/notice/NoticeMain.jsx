@@ -30,7 +30,7 @@ export default function NoticeMain() {
                 res.data.forEach((item) => {
                   item.date = new Date(item.date);
                 })
-                setData(filterNotices(res.data));
+                setData(filterNotices(res.data.sort((a, b) => a.date.getTime() - b.date.getTime())));
               } catch (err) { 
                 console.log(err)
               }

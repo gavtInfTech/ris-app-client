@@ -10,7 +10,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box } from "@mui/system";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
   GridRowModes,
@@ -21,6 +21,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
+import { Box } from "@mui/system";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -29,7 +30,14 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, date: new Date(), level1: null, level2: null },
+      {
+        id,
+        date: new Date(),
+        level1: null,
+        level2: null,
+        level1Change: null,
+        level2Change: null,
+      },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -66,7 +74,7 @@ export default function LevelsGuAdmin(props) {
         res.data.forEach((item) => {
           item.date = new Date(item.date);
         });
-        setRows(res.data);
+        setRows(res.data.sort((a, b) => a.date.getTime() - b.date.getTime()));
       } catch (err) {
         console.log(err);
       }
@@ -114,7 +122,12 @@ export default function LevelsGuAdmin(props) {
   };
 
   const processRowUpdate = async (newRow) => {
-    if (newRow.level1 === null || newRow.level2 === null) {
+    if (
+      newRow.level1 === null ||
+      newRow.level1 === "" ||
+      newRow.level2 === null ||
+      newRow.level2 === ""
+    ) {
       setMessage(() => ({
         open: true,
         messageText: "Заполнены не все обязательные поля!",
@@ -128,6 +141,7 @@ export default function LevelsGuAdmin(props) {
       river: props.river,
       hydronode: props.hydronode,
     };
+
     if (updateFlag) {
       try {
         let res = await api.post("/levelsGu/change", updatedRow);
@@ -168,17 +182,55 @@ export default function LevelsGuAdmin(props) {
     },
     {
       field: "level1",
-      headerName: "Уровень воды над ПГ, ВБ",
-      type: "number",
-      width: 200,
+      headerName: "Уровень воды над ПГ, ВБ (см)",
+      type: "string",
+      width: 220,
       editable: true,
     },
     {
       field: "level2",
-      headerName: "Уровень воды над ПГ, НБ",
-      type: "number",
-      width: 200,
+      headerName: "Уровень воды над ПГ, НБ (см)",
+      type: "string",
+      width: 220,
       editable: true,
+    },
+    {
+      field: "level1Change",
+      headerName: "Изменение ВБ",
+      type: "string",
+      editable: true,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          negative: params.row.level1Change < 0,
+          positive: params.row.level1Change > 0,
+          default:
+            params.row.level1Change === '0' || params.row.level1Change === "-",
+        });
+      },
+      width: 115,
+    },
+    {
+      field: "level2Change",
+      headerName: "Изменение НБ",
+      type: "string",
+      editable: true,
+      cellClassName: (params) => {
+        if (params.row.level2Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          negative: params.row.level2Change < 0,
+          positive: params.row.level2Change > 0,
+          default:
+            params.row.level2Change === '0' || params.row.level2Change === "-",
+        });
+      },
+      width: 115,
     },
     {
       field: "actions",
@@ -237,27 +289,49 @@ export default function LevelsGuAdmin(props) {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          editMode="row"
-          rowModesModel={rowModesModel}
-          onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-          onRowEditStart={handleRowEditStart}
-          onRowEditStop={handleRowEditStop}
-          processRowUpdate={processRowUpdate}
-          components={{
-            Toolbar: EditToolbar,
-          }}
-          componentsProps={{
-            toolbar: { setRows, setRowModesModel },
-          }}
-          experimentalFeatures={{ newEditingApi: true }}
+        <Box
           sx={{
             height: 600,
-            maxWidth: 640,
+            maxWidth: 910,
+            "& .super-app.negative": {
+              backgroundColor: "#d47483",
+              color: "#1a3e72",
+              fontWeight: "600",
+            },
+            "& .super-app.positive": {
+              backgroundColor: "rgba(157, 255, 118, 0.49)",
+              color: "#1a3e72",
+              fontWeight: "600",
+            },
+            "& .super-app.default": {
+              backgroundColor: "rgba(114, 163, 255, 0.49)",
+              color: "#1a3e72",
+              fontWeight: "600",
+            },
           }}
-        />
+        >
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            editMode="row"
+            rowModesModel={rowModesModel}
+            onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+            onRowEditStart={handleRowEditStart}
+            onRowEditStop={handleRowEditStop}
+            processRowUpdate={processRowUpdate}
+            components={{
+              Toolbar: EditToolbar,
+            }}
+            componentsProps={{
+              toolbar: { setRows, setRowModesModel },
+            }}
+            experimentalFeatures={{ newEditingApi: true }}
+            sx={{
+              height: 600,
+              maxWidth: 910,
+            }}
+          />
+        </Box>
       </AccordionDetails>
     </Accordion>
   );
