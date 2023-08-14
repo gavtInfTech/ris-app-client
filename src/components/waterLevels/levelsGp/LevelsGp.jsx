@@ -10,7 +10,7 @@ import Graph from './Graph';
 import clsx from 'clsx';
 import { api } from '../../../axiosConfig';
 
-  let rows = [...hydroposts];
+  let rows = [];
 
   const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
@@ -37,16 +37,19 @@ import { api } from '../../../axiosConfig';
       getData();
       }, [])
 
-      rows = rows.map((row) => {
+      rows = hydroposts.map((row) => {
         let rowData = data.filter((dat) => (dat.hydropost === row.hydropost));
         if (rowData.length === 0) return row;
         let lastRecord = rowData[0];
         rowData.forEach((dat) => { if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat; })
-        row.level1 = lastRecord.level1;
-        row.level2 = lastRecord.level2;
-        row.date = lastRecord.date.toLocaleString().slice(0, 10);
-        row.difference = lastRecord.difference;
-        return row;
+      
+        return {
+          ...row,
+          level1: lastRecord.level1,
+          level2: lastRecord.level2,
+          difference: lastRecord.difference,
+          date: lastRecord.date.toLocaleString().slice(0, 10)
+        }
       })
 
   const columns = [
