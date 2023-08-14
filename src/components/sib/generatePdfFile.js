@@ -43,6 +43,8 @@ const generateSib = (doc, date, levelsGpData, levelsGuData, gabsData, dislocatio
       ...row,
       level1: rowData.level1,
       level2: rowData.level2,
+      level1Change: rowData.level1Change === "-" ? '—' : rowData.level1Change,
+      level2Change: rowData.level2Change === "-" ? '—' : rowData.level2Change,
       date: rowData.date.toLocaleString().slice(0, 10),
     };
   })
@@ -50,7 +52,7 @@ const generateSib = (doc, date, levelsGpData, levelsGuData, gabsData, dislocatio
   const levelsGuRowsByRiver = (river) => {
     let filteredRows = levelsGuRows.filter((row) => ( row.river === river ));
     let rows = filteredRows.map((row) => {
-      return ([row.hydronode, row.level1, row.level2])
+      return ([row.hydronode, row.level1, row.level2, row.level1Change, row.level2Change])
     })
       return rows;
   }
@@ -229,8 +231,11 @@ const noticesRowsByRiver = (river) => {
         [
           { content: 'Наименование рек каналов и гидроузлов', rowSpan: 2, styles: { cellWidth: 100 } },
           { content: 'Уровни воды над проектным горизонтом, см', colSpan: 2 },
+          { content: 'Изменение уровня за сутки, см', colSpan: 2 },
         ],
         [
+          { content: 'ВБ' },
+          { content: 'НБ' },
           { content: 'ВБ' },
           { content: 'НБ' },
         ]

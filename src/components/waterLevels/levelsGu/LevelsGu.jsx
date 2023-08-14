@@ -5,20 +5,23 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import styles from "./style.module.css";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import { api } from "../../../axiosConfig";
+import { hydronodes } from './data';
 import clsx from 'clsx';
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
+let rows =[];
+
 export default function LevelsGp(props) {
   const [map, setMap] = useState(mapState);
-  const [hydronodes, setHydronodes] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await api.get("/levelsGu/getLastLevels");
+        const res = await api.get("/levelsGu/getAll");
        
-        setHydronodes(res.data);
+        setData(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -26,6 +29,18 @@ export default function LevelsGp(props) {
     getData();
   }, []);
 
+  rows = hydronodes.map((row) => {
+    let rowData = data.filter((dat) => (dat.hydronode === row.hydronode));
+    if (rowData.length === 0) return row;
+    let lastRecord = rowData[0];
+    rowData.forEach((dat) => { if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat; })
+  
+    return {
+        ...lastRecord,
+        date: lastRecord.date.toLocaleString().slice(0, 10)
+    }
+  })
+  
   const columns = [
     { field: "hydronode", headerName: "Гидроузел", width: "150" },
     { field: "river", headerName: "Река", width: "150" },
@@ -89,10 +104,10 @@ export default function LevelsGp(props) {
       getActions: ({ id }) => {
         return [
           <Button
-            options={hydronodes.find((row) => row.id === id).options}
+            options={rows.find((row) => row.id === id).options}
             onClick={() =>
               setMap({
-                center: hydronodes.find((row) => row.id === id).coords,
+                center: rows.find((row) => row.id === id).coords,
                 zoom: 15,
               })
             }
@@ -105,7 +120,7 @@ export default function LevelsGp(props) {
     },
   ];
 
-  const marks = hydronodes.map((row) => {
+  const marks = rows.map((row) => {
     let contentBody =
       "Гидроузел: " +
       row.hydronode +
@@ -142,7 +157,7 @@ export default function LevelsGp(props) {
     <div className={styles.container}>
       <Box className={styles.element}>
         <DataGrid
-          rows={hydronodes}
+          rows={rows}
           columns={columns}
           experimentalFeatures={{ newEditingApi: true }}
           getRowHeight={() => "auto"}
