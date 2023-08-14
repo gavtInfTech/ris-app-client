@@ -291,8 +291,7 @@ export default function LevelsGuAdmin(props) {
       <AccordionDetails>
         <Box
           sx={{
-            height: 600,
-            maxWidth: 910,
+        
             "& .super-app.negative": {
               backgroundColor: "#d47483",
               color: "#1a3e72",

@@ -10,6 +10,7 @@ import {
 } from "react-yandex-maps";
 import { api } from "../../axiosConfig";
 import { hydroposts } from "../waterLevels/levelsGp/data";
+import { hydronodes } from "../waterLevels/levelsGu/data";
 import { coordsDnepr } from "./FairwayDnepr";
 import { zeroPointDnepr } from "./FairwayDnepr";
 import { coordsBerezina } from "./FairwayBerezina";
@@ -492,13 +493,13 @@ export default function VVP() {
         const resGp = await api.get("/levelsGp/getAll");
         resGp.data.forEach((item) => {
           item.date = new Date(item.date);
-          item.level1 = Number(item.level1);
-          item.level2 = Number(item.level2);
-          item.difference = Number(item.difference);
         });
         setDataGp(resGp.data);
 
-        const resGu = await api.get("/levelsGu/getLastLevels");
+        const resGu = await api.get("/levelsGu/getAll");
+        resGu.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
         setDataGu(resGu.data);
 
         const resNotices = await api.get("/notices/getCurrentNotices");
@@ -530,59 +531,23 @@ export default function VVP() {
     };
   });
 
-  // const gatewaysMarks = gateways.map((item) => {
+  let lastHydronodesData = hydronodes.map((row) => {
+    let rowData = dataGu.filter((dat) => dat.hydronode === row.hydronode);
+    if (rowData.length === 0) return row;
+    let lastRecord = rowData[0];
+    rowData.forEach((dat) => {
+      if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat;
+    });
 
-  //   let contentBody = "Шлюз: " + item.sluz +
-  //   "<br> Габариты сооружения: <br> " +
-  //   "Длина камеры между устоями (полезная): " + item.length +
-  //   "<br> Ширина камеры, (пролета): " + item.width +
-  //   "<br> Напор: " + item.napor +
-  //   "<br> Глубина на пороге (ВГ/НГ): " + item.depth
-
-  //   return (
-  //       <Placemark geometry={item.coords} key={item.id} properties={{balloonContentBody: [contentBody]} } modules={['geoObject.addon.balloon']}
-  //          options={{
-  //            iconLayout: 'default#image',
-  //            iconImageHref: '/images/gateway.png',
-  //            iconImageSize: [30, 30],
-  //           }} />
-  //   )
-  //   });
-
-  //   const gesMarks = ges.map((item) => {
-
-  //     let contentBody = "Наименование: " + item.name +
-  //     "<br> Год ввода в эксплуатацию: " + item.year +
-  //     "<br> Река (канал): " + item.river +
-  //     "<br> Установленная мощность, МВт: " + item.power +
-  //     "<br> Собственник: " + item.owner
-
-  //     return (
-  //         <Placemark geometry={item.coords} key={item.id} properties={{balloonContentBody: [contentBody]} } modules={['geoObject.addon.balloon']}
-  //            options={{
-  //              iconLayout: 'default#image',
-  //              iconImageHref: '/images/ges.png',
-  //              iconImageSize: [30, 30],
-  //             }} />
-  //     )
-  //     });
-
-  //     const portMarks = ports.map((item) => {
-
-  //       let contentBody = "Адрес: " + item.address +
-  //       "<br> Телефон: " + item.telephone +
-  //       "<br> E-mail: " + item.email +
-  //       `<br> <a href=${item.website} target="blank" style="color: blue">Перейти на сайт</a>`
-
-  //       return (
-  //           <Placemark geometry={item.coords} key={item.id} properties={{balloonContentBody: [contentBody]} } modules={['geoObject.addon.balloon']}
-  //              options={{
-  //                iconLayout: 'default#image',
-  //                iconImageHref: '/images/port.png',
-  //                iconImageSize: [30, 30],
-  //               }} />
-  //       )
-  //       });
+    return {
+      ...row,
+      level1: lastRecord.level1,
+      level2: lastRecord.level2,
+      level1Change: lastRecord.level1Change === "-" ? '—' : lastRecord.level1Change,
+      level2Change: lastRecord.level2Change === "-" ? '—' : lastRecord.level2Change,
+      date: lastRecord.date.toLocaleString().slice(0, 10),
+    };
+  });
 
   const hydropostMarks = lastHydropostsData.map((item) => {
     let contentBody =
@@ -613,7 +578,7 @@ export default function VVP() {
     );
   });
 
-  const hydronodeMarks = dataGu.map((item) => {
+  const hydronodeMarks = lastHydronodesData.map((item) => {
     let contentBody =
       "Гидроузел: " +
       item.hydronode +
@@ -714,26 +679,6 @@ export default function VVP() {
             ))}
           </ListBox>
 
-          {/* <ListBox data={{content: "Порты"}}>
-            {ports.map((port) => (
-              <ListBoxItem
-                data={{ content: port.name }}
-                onClick={() => setMap({center: port.coords, zoom: 15})}
-                options={{ selectOnClick: false }}
-              />
-            ))}
-          </ListBox> */}
-
-          {/* <ListBox data={{ content: "Шлюзы" }}>
-            {gateways.map((gateway) => (
-              <ListBoxItem
-                data={{ content: gateway.sluz }}
-                onClick={() => setMap({center: gateway.coords, zoom: 15})}
-                options={{ selectOnClick: false }}
-              />
-            ))}
-          </ListBox> */}
-
           <ListBox data={{ content: "Гидропосты" }}>
             {hydroposts.map((hydropost) => (
               <ListBoxItem
@@ -745,7 +690,7 @@ export default function VVP() {
           </ListBox>
 
           <ListBox data={{ content: "Гидроузлы" }}>
-            {dataGu.map((hydronode) => (
+            {lastHydronodesData.map((hydronode) => (
               <ListBoxItem
                 data={{ content: hydronode.hydronode }}
                 onClick={() => setMap({ center: hydronode.coords, zoom: 15 })}

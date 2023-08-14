@@ -25,9 +25,6 @@ import { api } from '../../../axiosConfig';
           const res = await api.get("/levelsGp/getAll");
           res.data.forEach((item) => {
             item.date = new Date(item.date);
-            item.level1 = Number(item.level1);
-            item.level2 = Number(item.level2);
-            item.difference = Number(item.difference);
           })
           setData(res.data);
         } catch (err) { 
@@ -71,28 +68,28 @@ import { api } from '../../../axiosConfig';
     { 
       field: 'level1', 
       headerName: 'Уровень воды над 0 граф', 
-      type: 'number',
+      type: 'string',
       width: '190'
     },
     {
       field: 'level2',
       headerName: 'Уровень воды над ПГ',
-      type: 'number',
+      type: 'string',
       width: '160'
     },
     {
       field: 'difference',
       headerName: 'Прибыло (+), убыло (-)',
-      type: 'number',
+      type: 'string',
       cellClassName: (params) => {
-        if (params.value == null) {
+        if (params.row.difference == null) {
           return '';
         }
   
         return clsx('super-app', {
-          negative: params.value < 0,
-          positive: params.value > 0,
-          default: params.value === 0
+          negative: params.row.difference < 0,
+          positive: params.row.difference > 0,
+          default: params.row.difference === 0
         });
       },
       width: 180,

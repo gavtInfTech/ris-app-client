@@ -5,12 +5,10 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import styles from "./style.module.css";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 import { api } from "../../../axiosConfig";
-import { hydronodes } from './data';
-import clsx from 'clsx';
+import { hydronodes } from "./data";
+import clsx from "clsx";
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
-
-let rows =[];
 
 export default function LevelsGp(props) {
   const [map, setMap] = useState(mapState);
@@ -20,7 +18,9 @@ export default function LevelsGp(props) {
     const getData = async () => {
       try {
         const res = await api.get("/levelsGu/getAll");
-       
+        res.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
         setData(res.data);
       } catch (err) {
         console.log(err);
@@ -29,18 +29,24 @@ export default function LevelsGp(props) {
     getData();
   }, []);
 
-  rows = hydronodes.map((row) => {
-    let rowData = data.filter((dat) => (dat.hydronode === row.hydronode));
+  let rows = hydronodes.map((row) => {
+    let rowData = data.filter((dat) => dat.hydronode === row.hydronode);
     if (rowData.length === 0) return row;
     let lastRecord = rowData[0];
-    rowData.forEach((dat) => { if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat; })
-  
+    rowData.forEach((dat) => {
+      if (dat.date.getTime() > lastRecord.date.getTime()) lastRecord = dat;
+    });
+
     return {
-        ...lastRecord,
-        date: lastRecord.date.toLocaleString().slice(0, 10)
-    }
-  })
-  
+      ...row,
+      level1: lastRecord.level1,
+      level2: lastRecord.level2,
+      level1Change: lastRecord.level1Change === "-" ? '—' : lastRecord.level1Change,
+      level2Change: lastRecord.level2Change === "-" ? '—' : lastRecord.level2Change,
+      date: lastRecord.date.toLocaleString().slice(0, 10),
+    };
+  });
+
   const columns = [
     { field: "hydronode", headerName: "Гидроузел", width: "150" },
     { field: "river", headerName: "Река", width: "150" },
@@ -67,7 +73,7 @@ export default function LevelsGp(props) {
       type: "string",
       width: "115",
       cellClassName: (params) => {
-        if (params.row.level1Change === null) {
+        if (params.row.level1 === "—") {
           return "";
         }
 
@@ -75,7 +81,7 @@ export default function LevelsGp(props) {
           negative: params.row.level1Change < 0,
           positive: params.row.level1Change > 0,
           default:
-            params.row.level1Change === '0' || params.row.level1Change === "-",
+            params.row.level1Change === "0" || params.row.level1Change === "—",
         });
       },
     },
@@ -85,7 +91,7 @@ export default function LevelsGp(props) {
       type: "string",
       width: "115",
       cellClassName: (params) => {
-        if (params.row.level1Change === null) {
+        if (params.row.level1 === "—") {
           return "";
         }
 
@@ -93,7 +99,7 @@ export default function LevelsGp(props) {
           negative: params.row.level2Change < 0,
           positive: params.row.level2Change > 0,
           default:
-            params.row.level1Change === '0' || params.row.level2Change === "-",
+            params.row.level1Change === "0" || params.row.level2Change === "—",
         });
       },
     },
@@ -155,7 +161,26 @@ export default function LevelsGp(props) {
 
   return (
     <div className={styles.container}>
-      <Box className={styles.element}>
+      <Box
+        sx={{
+          "& .super-app.negative": {
+            backgroundColor: "#d47483",
+            color: "#1a3e72",
+            fontWeight: "600",
+          },
+          "& .super-app.positive": {
+            backgroundColor: "rgba(157, 255, 118, 0.49)",
+            color: "#1a3e72",
+            fontWeight: "600",
+          },
+          "& .super-app.default": {
+            backgroundColor: "rgba(114, 163, 255, 0.49)",
+            color: "#1a3e72",
+            fontWeight: "600",
+          },
+        }}
+        className={styles.element}
+      >
         <DataGrid
           rows={rows}
           columns={columns}
@@ -165,23 +190,6 @@ export default function LevelsGp(props) {
             [`& .${gridClasses.cell}`]: {
               py: 1,
             },
-   
-              '& .super-app.negative': {
-                backgroundColor: '#d47483',
-                color: '#1a3e72',
-                fontWeight: '600',
-              },
-              '& .super-app.positive': {
-                backgroundColor: 'rgba(157, 255, 118, 0.49)',
-                color: '#1a3e72',
-                fontWeight: '600',
-              },
-              '& .super-app.default': {
-                backgroundColor: 'rgba(114, 163, 255, 0.49)',
-                color: '#1a3e72',
-                fontWeight: '600',
-              },
-           
           }}
         />
       </Box>
