@@ -82,14 +82,12 @@ import { api } from '../../../axiosConfig';
       headerName: 'Прибыло (+), убыло (-)',
       type: 'string',
       cellClassName: (params) => {
-        if (params.row.difference == null) {
-          return '';
-        }
+     
   
         return clsx('super-app', {
           negative: params.row.difference < 0,
           positive: params.row.difference > 0,
-          default: params.row.difference === 0
+          default: params.row.difference === '0'
         });
       },
       width: 180,
@@ -119,7 +117,7 @@ import { api } from '../../../axiosConfig';
           let row = rows.find(item => item.id === id);
           let filteredData = data.filter((dat) => (row.hydropost === dat.hydropost));
           filteredData.sort((a, b) => a.date.getTime() - b.date.getTime());
-          let newData = filteredData.map((dat) => ([dat.date, dat.level2]));
+          let newData = filteredData.map((dat) => ([dat.date, Number(dat.level2)]));
           
           return [
             <Graph data={newData} row={row}/>
@@ -145,7 +143,8 @@ import { api } from '../../../axiosConfig';
     let contentBody = "Гидропост : " + row.hydropost +
     "<br> Река: " + row.river + 
     "<br> Уровень воды над 0 граф: " + row.level1 + 
-    "<br> Уровень воды над ПГ: " + row.level2
+    "<br> Уровень воды над ПГ: " + row.level2 +
+    "<br> Прибыло (+), убыло (-)" + row.difference
 
     return (
         <Placemark geometry={row.coords} key={row.id} properties={{balloonContentBody: [contentBody]} } modules={['geoObject.addon.balloon']}
