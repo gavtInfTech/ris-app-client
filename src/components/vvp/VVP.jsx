@@ -543,8 +543,10 @@ export default function VVP() {
       ...row,
       level1: lastRecord.level1,
       level2: lastRecord.level2,
-      level1Change: lastRecord.level1Change === "-" ? '—' : lastRecord.level1Change,
-      level2Change: lastRecord.level2Change === "-" ? '—' : lastRecord.level2Change,
+      level1Change:
+        lastRecord.level1Change === "-" ? "—" : lastRecord.level1Change,
+      level2Change:
+        lastRecord.level2Change === "-" ? "—" : lastRecord.level2Change,
       date: lastRecord.date.toLocaleString().slice(0, 10),
     };
   });
@@ -560,7 +562,9 @@ export default function VVP() {
       "<br> Уровень воды над ПГ: " +
       item.level2 +
       "<br> Дата последнего измерения: " +
-      item.date;
+      item.date +
+      "<br> Прибыло (+), убыло (-): " +
+      item.difference;
 
     return (
       <Placemark
