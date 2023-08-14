@@ -589,7 +589,11 @@ export default function VVP() {
       "<br> Уровень воды над ПГ, ВБ: " +
       item.level1 +
       "<br> Уровень воды над ПГ, НБ: " +
-      item.level2;
+      item.level2 +
+      "<br> Изменение ВБ: " +
+      item.level1Change +
+      "<br> Изменение НБ: " +
+      item.level2Change;
 
     return (
       <Placemark
