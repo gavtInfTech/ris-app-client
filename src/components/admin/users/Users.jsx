@@ -19,9 +19,15 @@ import { randomId } from "@mui/x-data-grid-generator";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 
 const organisations = [
+  "Государственная администрация водного транспорта",
   'РУ ЭСП "Днепро-Бугский водный путь"',
   'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
   "РУ Днепро-Березинское предприятие водных путей",
+];
+
+const roles = [
+  'Оператор',
+  'Путевик',
 ];
 
 function EditToolbar(props) {
@@ -184,6 +190,14 @@ export default function Depth(props) {
       editable: true,
     },
     {
+      field: "role",
+      headerName: "Роль",
+      type: "singleSelect",
+      valueOptions: roles,
+      width: 300,
+      editable: true,
+    },
+    {
       field: "username",
       headerName: "Имя пользователя",
       type: "string",
@@ -258,7 +272,7 @@ export default function Depth(props) {
           [`& .${gridClasses.cell}`]: {
             py: 1,
           },
-          maxWidth: 1040,
+          maxWidth: 1340,
           height: 700,
         }}
         components={{

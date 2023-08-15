@@ -22,6 +22,7 @@ import CommonSib from "./components/sib/CommonSib";
 import MainGabs from "./components/gabsPage/MainGabs";
 import MainTabClient from "./components/client/MainTabClient";
 import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
+import PathInformationMenu from "./components/admin/PathInformationMenu";
 
 export default function App() {
   return (
@@ -46,9 +47,9 @@ export default function App() {
           <Route path="/ges" element={<GES />} />
           <Route path="/levelsMenu" element={<LevelsMenu />} />
           <Route path="/limit" element={<MainGabs />} />
-          {/* <Route element={ <ProtectedRoute role="Клиент" /> } >
-                        <Route path='/client/*' element={<MainTabClient />} ></Route>
-                    </Route> */}
+          <Route element={ <ProtectedRoute role="Путевик" /> } >
+              <Route path='/path-information/*' element={<PathInformationMenu />} ></Route>
+          </Route>
           <Route element={<ProtectedRoute role="Администратор" />}>
             <Route path="/admin-main/*" element={<MainTab />}></Route>
           </Route>

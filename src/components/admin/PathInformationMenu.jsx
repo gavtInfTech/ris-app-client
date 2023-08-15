@@ -14,20 +14,12 @@ import ProtectedRoute from '../../ProtectedRoute';
 
 export default function PathInformationMenu() {
   const {pathname} = useLocation();
-  const {auth} = useContext(AuthContext);
-  let value;
-  let rolePath = auth.rolePath;
-
-  if (pathname.includes("informationTab")) value=`/admin-${rolePath}/informationTab`;
-  else if (pathname.includes("spravka")) value = `/admin-${rolePath}/spravka`;
-  else if (pathname.includes("clients")) value = "/admin-main/clients";
-  else value = "/admin-main/users";
 
   return (
     <Box sx={{ bgcolor: 'background.paper',  height: '100%' }}>
       <AppBar position="static" className={style.appBar} sx={{ bgcolor: 'SteelBlue', width: '100%' }}>
         <Tabs
-          value={value}
+          value={pathname}
           indicatorColor="secondary"
           TabIndicatorProps={{
             style: {
@@ -40,20 +32,20 @@ export default function PathInformationMenu() {
         >
           <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
             label="Днепр" 
-            value={`/admin-path/dnepr`} 
-            to={`/admin-path/dnepr`} 
+            value={`/path-information/dnepr`} 
+            to={`/path-information/dnepr`} 
             component={Link} 
           />
           <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
             label="Березина" 
-            value={`/admin-path/berezina`} 
-            to={`/admin-path/berezina`} 
+            value={`/path-information/berezina`} 
+            to={`/path-information/berezina`} 
             component={Link} 
           />
           <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
             label="Припять" 
-            value={`/admin-path/pripyat`} 
-            to={`/admin-path/pripyat`} 
+            value={`/path-information/pripyat`} 
+            to={`/path-information/pripyat`} 
             component={Link} 
           />
         </Tabs>
@@ -61,14 +53,9 @@ export default function PathInformationMenu() {
 
         <Box sx={{ p: 3 }}>
           <Routes>
-              <Route path="/informationTab/*" element={<InformationTab />} />
-              <Route path="/travelInformation/*" element={<PathInformationTab />} />
-              <Route element={ <ProtectedRoute role="Администратор" /> } >
-                <Route path="/users" element={<Users />} />
-              </Route>
-              <Route element={ <ProtectedRoute role="Администратор" /> } >
-                <Route path="/clients" element={<Clients />} />
-              </Route>
+              <Route path="/dnepr" element={<InformationTab />} />
+              <Route path="/berezina" element={<InformationTab />} />
+              <Route path="/pripyat" element={<InformationTab />} />
           </Routes>
         </Box>
     </Box>

@@ -24,29 +24,27 @@ export function AuthProvider(props) {
 
         if (res.data.role === "Администратор") {
           setAuth({ ...res.data, info: adminInfo, rolePath: "main" });
-        } else if (res.data.role === "Клиент") {
+        } else if (res.data.role === "Клиент" || res.data.role === "Путевик") {
           setAuth({ ...res.data });
+        } else if (
+          res.data.organisation === 'РУ ЭСП "Днепро-Бугский водный путь"'
+        ) {
+          setAuth({ ...res.data, info: bugskoeInfo, rolePath: "bugskoe" });
+        } else if (
+          res.data.organisation ===
+          'РУ Днепро-Двинское предприятие водных путей "Белводпуть"'
+        ) {
+          setAuth({
+            ...res.data,
+            info: dvinskoeInfo,
+            rolePath: "dvinskoe",
+          });
         } else {
-          if (res.data.organisation === 'РУ ЭСП "Днепро-Бугский водный путь"') {
-            setAuth({ ...res.data, info: bugskoeInfo, rolePath: "bugskoe" });
-          } else {
-            if (
-              res.data.organisation ===
-              'РУ Днепро-Двинское предприятие водных путей "Белводпуть"'
-            ) {
-              setAuth({
-                ...res.data,
-                info: dvinskoeInfo,
-                rolePath: "dvinskoe",
-              });
-            } else {
-              setAuth({
-                ...res.data,
-                info: berezinskoeInfo,
-                rolePath: "berezinskoe",
-              });
-            }
-          }
+          setAuth({
+            ...res.data,
+            info: berezinskoeInfo,
+            rolePath: "berezinskoe",
+          });
         }
 
         setIsLoading(false);
