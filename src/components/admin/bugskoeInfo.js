@@ -24,6 +24,7 @@ export const hydropostGroups = {
 
 export const hydronodeRivers = [
     "Припять",
+    "Пина",
     "Днепро-Бугский канал",
     "Мухавец",
     "Западная Двина",
