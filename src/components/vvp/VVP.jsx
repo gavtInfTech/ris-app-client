@@ -594,9 +594,9 @@ export default function VVP() {
       item.level1 +
       "<br> Уровень воды над ПГ, НБ: " +
       item.level2 +
-      "<br> Изменение ВБ: " +
+      "<br> Изменение уровня за сутки, ВБ: " +
       item.level1Change +
-      "<br> Изменение НБ: " +
+      "<br> Изменение уровня за сутки, НБ: " +
       item.level2Change;
 
     return (

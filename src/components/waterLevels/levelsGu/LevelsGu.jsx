@@ -69,9 +69,9 @@ export default function LevelsGp(props) {
     },
     {
       field: "level1Change",
-      headerName: "Изменение ВБ",
+      headerName: "Изменение ВБ за сутки",
       type: "string",
-      width: "115",
+      width: "175",
       cellClassName: (params) => {
         if (params.row.level1 === "—") {
           return "";
@@ -87,9 +87,9 @@ export default function LevelsGp(props) {
     },
     {
       field: "level2Change",
-      headerName: "Изменение НБ",
+      headerName: "Изменение НБ за сутки",
       type: "string",
-      width: "115",
+      width: "175",
       cellClassName: (params) => {
         if (params.row.level1 === "—") {
           return "";
@@ -138,9 +138,9 @@ export default function LevelsGp(props) {
       row.level1 +
       "<br> Уровень воды над ПГ, НБ: " +
       row.level2 +
-      "<br> Изменение ВБ: " +
+      "<br> Изменение уровня за сутки, ВБ: " +
       row.level1Change +
-      "<br> Изменение НБ: " +
+      "<br> Изменение уровня за сутки, НБ: " +
       row.level2Change;
 
     return (
