@@ -54,9 +54,9 @@ export default function PathInformationMenu() {
 
         <Box sx={{ p: 3 }}>
           <Routes>
-              <Route path="/dnepr" element={<WorkMap />} />
-              <Route path="/berezina" element={<WorkMap />} />
-              <Route path="/pripyat" element={<WorkMap />} />
+              <Route path="/dnepr" element={<qwe />} />
+              <Route path="/berezina" element={<asd />} />
+              <Route path="/pripyat" element={<zxc />} />
           </Routes>
         </Box>
     </Box>
