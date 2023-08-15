@@ -1,27 +1,27 @@
-import { React } from "react";
+import { React, lazy } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import "./index.css";
-import Login from "./components/login/Login";
-import Layout from "./components/layout/Layout";
-import ProtectedRoute from "./ProtectedRoute";
-import MainTab from "./components/admin/MainTab";
-import LevelsGp from "./components/waterLevels/levelsGp/LevelsGp";
-import LevelsGu from "./components/waterLevels/levelsGu/LevelsGu";
-import VVP from "./components/vvp/VVP";
-import InfMenu from "./components/infrastructure/InfMenu";
-import NoticesMainPage from "./components/noticesUser/NoticesMainPage";
-import Gabarit from "./components/gabarit/Gabarit";
-import Gateways from "./components/infrastructure/gateways/Gateways";
-import Bridges from "./components/infrastructure/bridges/Bridges";
-import Ports from "./components/infrastructure/ports/Ports";
-import GES from "./components/infrastructure/ges/GES";
-import LevelsMenu from "./components/waterLevels/LevelsMenu";
-import Registration from "./components/login/Registration";
-import CommonSib from "./components/sib/CommonSib";
-import MainGabs from "./components/gabsPage/MainGabs";
-import MainTabClient from "./components/client/MainTabClient";
-import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
+const Login  = lazy(() => import( "./components/login/Login"));
+const Layout  = lazy(() => import( "./components/layout/Layout"));
+const ProtectedRoute = lazy(() => import( "./ProtectedRoute"));
+const MainTab = lazy(() => import( "./components/admin/MainTab"));
+const LevelsGp = lazy(() => import( "./components/waterLevels/levelsGp/LevelsGp"));
+const LevelsGu = lazy(() => import( "./components/waterLevels/levelsGu/LevelsGu"));
+const VVP = lazy(() => import( "./components/vvp/VVP"));
+const InfMenu = lazy(() => import( "./components/infrastructure/InfMenu"));
+const NoticesMainPage = lazy(() => import( "./components/noticesUser/NoticesMainPage"));
+const Gabarit = lazy(() => import( "./components/gabarit/Gabarit"));
+const Gateways = lazy(() => import( "./components/infrastructure/gateways/Gateways"));
+const Bridges = lazy(() => import( "./components/infrastructure/bridges/Bridges"));
+const Ports = lazy(() => import( "./components/infrastructure/ports/Ports"));
+const GES = lazy(() => import( "./components/infrastructure/ges/GES"));
+const LevelsMenu = lazy(() => import( "./components/waterLevels/LevelsMenu"));
+const Registration = lazy(() => import( "./components/login/Registration"));
+const CommonSib = lazy(() => import( "./components/sib/CommonSib"));
+const MainGabs = lazy(() => import( "./components/gabsPage/MainGabs"));
+const MainTabClient = lazy(() => import( "./components/client/MainTabClient"));
+const BridgeGabs = lazy(() => import( "./components/infrastructure/bridges/BridgeGabs"));
 
 export default function App() {
   return (
