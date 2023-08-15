@@ -33,6 +33,9 @@ export default function Login() {
       } else if (res.data.role === "Клиент") {
         setAuth({ ...res.data });
         navigate("/client/sib");
+      } else if (res.data.role === "Путевик") {
+        setAuth({ ...res.data });
+        navigate("/path-information/dnepr");
       } else {
         switch (res.data.organisation) {
           case 'РУ ЭСП "Днепро-Бугский водный путь"':

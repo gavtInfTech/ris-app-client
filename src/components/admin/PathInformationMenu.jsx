@@ -11,6 +11,7 @@ import Users from './users/Users';
 import Clients from './users/Clients';
 import { AuthContext } from "../../contexts/AuthContext";
 import ProtectedRoute from '../../ProtectedRoute';
+import WorkMap from './map/WorkMap';
 
 export default function PathInformationMenu() {
   const {pathname} = useLocation();
@@ -53,9 +54,9 @@ export default function PathInformationMenu() {
 
         <Box sx={{ p: 3 }}>
           <Routes>
-              <Route path="/dnepr" element={<InformationTab />} />
-              <Route path="/berezina" element={<InformationTab />} />
-              <Route path="/pripyat" element={<InformationTab />} />
+              <Route path="/dnepr" element={<WorkMap />} />
+              <Route path="/berezina" element={<WorkMap />} />
+              <Route path="/pripyat" element={<WorkMap />} />
           </Routes>
         </Box>
     </Box>

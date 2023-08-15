@@ -27,7 +27,7 @@ export default function MenuListComposition() {
     else if (auth.role === "Клиент")
       navigate("/client/sib")
     else if (auth.role === "Путевик")
-    navigate("/path-information/dnepr");
+      navigate("/path-information/dnepr");
     else {
       switch (auth.organisation) {
         case 'РУ ЭСП "Днепро-Бугский водный путь"':
