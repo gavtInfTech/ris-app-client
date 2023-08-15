@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import InformationTab from './InformationTab';
+import PathInformationTab from './PathInformationMenu';
 import style from './style.module.css'
 import { Route, Routes, Link, useLocation} from 'react-router-dom';
 import Users from './users/Users';
@@ -11,12 +12,12 @@ import Clients from './users/Clients';
 import { AuthContext } from "../../contexts/AuthContext";
 import ProtectedRoute from '../../ProtectedRoute';
 
-export default function FullWidthTabs() {
+export default function PathInformationMenu() {
   const {pathname} = useLocation();
   const {auth} = useContext(AuthContext);
   let value;
   let rolePath = auth.rolePath;
-console.log(pathname);
+
   if (pathname.includes("informationTab")) value=`/admin-${rolePath}/informationTab`;
   else if (pathname.includes("spravka")) value = `/admin-${rolePath}/spravka`;
   else if (pathname.includes("clients")) value = "/admin-main/clients";
@@ -38,37 +39,30 @@ console.log(pathname);
           allowScrollButtonsMobile
         >
           <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
-            label="Текущая информация" 
-            value={`/admin-${rolePath}/informationTab`} 
-            to={`/admin-${rolePath}/informationTab/levels/levelsGp`} 
+            label="Днепр" 
+            value={`/admin-path/dnepr`} 
+            to={`/admin-path/dnepr`} 
             component={Link} 
           />
-          { auth.role === 'Администратор' && 
-          <Tab sx={{ width: 300, fontSize: 14  }} 
-            label="Пользователи от предприятий водных путей" 
-            value="/admin-main/users" 
-            to="/admin-main/users" 
-            component={Link}
-          />}
-          { auth.role === 'Администратор' && 
-           <Tab sx={{ width: 300, fontSize: 14  }} 
-            label="Клиенты" 
-            value="/admin-main/clients" 
-            to="/admin-main/clients" 
-            component={Link}
-          />}
-          {/* <Tab sx={{ width: 300, fontSize: 14  }} 
-            label="Справочная информация" 
-            value="/main-admin/spravka" 
-            to="/main-admin/spravka" 
-            component={Link}
-          /> */}
+          <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
+            label="Березина" 
+            value={`/admin-path/berezina`} 
+            to={`/admin-path/berezina`} 
+            component={Link} 
+          />
+          <Tab sx={{ width: 300, height: 70, fontSize: 14 }} 
+            label="Припять" 
+            value={`/admin-path/pripyat`} 
+            to={`/admin-path/pripyat`} 
+            component={Link} 
+          />
         </Tabs>
       </AppBar>
 
         <Box sx={{ p: 3 }}>
           <Routes>
               <Route path="/informationTab/*" element={<InformationTab />} />
+              <Route path="/travelInformation/*" element={<PathInformationTab />} />
               <Route element={ <ProtectedRoute role="Администратор" /> } >
                 <Route path="/users" element={<Users />} />
               </Route>
