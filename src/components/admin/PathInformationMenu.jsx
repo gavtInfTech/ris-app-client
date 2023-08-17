@@ -3,19 +3,14 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import InformationTab from './InformationTab';
-import PathInformationTab from './PathInformationMenu';
 import style from './style.module.css'
 import { Route, Routes, Link, useLocation} from 'react-router-dom';
-import Users from './users/Users';
-import Clients from './users/Clients';
-import { AuthContext } from "../../contexts/AuthContext";
-import ProtectedRoute from '../../ProtectedRoute';
 import WorkMap from './map/WorkMap';
+import Sib from '../sib/Sib';
 
 export default function PathInformationMenu() {
   const {pathname} = useLocation();
-
+  console.log(pathname);
   return (
     <Box sx={{ bgcolor: 'background.paper',  height: '100%' }}>
       <AppBar position="static" className={style.appBar} sx={{ bgcolor: 'SteelBlue', width: '100%' }}>
@@ -54,9 +49,9 @@ export default function PathInformationMenu() {
 
         <Box sx={{ p: 3 }}>
           <Routes>
-              <Route path="/dnepr" element={<qwe />} />
-              <Route path="/berezina" element={<asd />} />
-              <Route path="/pripyat" element={<zxc />} />
+              <Route path="/dnepr" element={<Sib />} />
+              <Route path="/berezina" element={<Sib />} />
+              <Route path="/pripyat" element={<Sib />} />
           </Routes>
         </Box>
     </Box>
