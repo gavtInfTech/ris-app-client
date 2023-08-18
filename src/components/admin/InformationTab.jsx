@@ -11,7 +11,7 @@ import Dislocation from "./dislocation/Dislocation";
 import { Link, useLocation, Route, Routes } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import Sib from "../sib/Sib";
-import WorkMap from "./map/WorkMap";
+import WorkMap from "./map/PathInformationMap";
 import styles from "./style.module.css";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";

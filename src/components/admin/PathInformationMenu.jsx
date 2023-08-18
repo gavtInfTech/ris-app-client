@@ -5,14 +5,14 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import style from './style.module.css'
 import { Route, Routes, Link, useLocation} from 'react-router-dom';
-import WorkMap from './map/WorkMap';
+import PathInformationMap from './map/PathInformationMap';
 import Sib from '../sib/Sib';
 
 export default function PathInformationMenu() {
   const {pathname} = useLocation();
-  console.log(pathname);
+  
   return (
-    <Box sx={{ bgcolor: 'background.paper',  height: '100%' }}>
+    <Box sx={{ bgcolor: 'background.paper', position: 'absolute', height: '100%', width: '100%' }}>
       <AppBar position="static" className={style.appBar} sx={{ bgcolor: 'SteelBlue', width: '100%' }}>
         <Tabs
           value={pathname}
@@ -47,13 +47,13 @@ export default function PathInformationMenu() {
         </Tabs>
       </AppBar>
 
-        <Box sx={{ p: 3 }}>
-          <Routes>
-              <Route path="/dnepr" element={<Sib />} />
-              <Route path="/berezina" element={<Sib />} />
-              <Route path="/pripyat" element={<Sib />} />
-          </Routes>
-        </Box>
+       
+      <Routes>
+          <Route path="/dnepr" element={<PathInformationMap />} />
+          <Route path="/berezina" element={<PathInformationMap />} />
+          <Route path="/pripyat" element={<PathInformationMap />} />
+      </Routes>
+        
     </Box>
   );
 }
