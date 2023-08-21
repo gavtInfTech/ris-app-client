@@ -5,7 +5,7 @@ import "./index.css";
 import Login from "./components/login/Login";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./ProtectedRoute";
-import MainTab from "./components/admin/MainTab";
+// import MainTab from "./components/admin/MainTab";
 import LevelsGp from "./components/waterLevels/levelsGp/LevelsGp";
 import LevelsGu from "./components/waterLevels/levelsGu/LevelsGu";
 import VVP from "./components/vvp/VVP";
@@ -20,10 +20,12 @@ import LevelsMenu from "./components/waterLevels/LevelsMenu";
 import Registration from "./components/login/Registration";
 import CommonSib from "./components/sib/CommonSib";
 import MainGabs from "./components/gabsPage/MainGabs";
-import MainTabClient from "./components/client/MainTabClient";
+// import MainTabClient from "./components/client/MainTabClient";
 import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
+// import PathInformationMenu from "./components/admin/PathInformationMenu";
 const PathInformationMenu = lazy(() => import("./components/admin/PathInformationMenu"));
-
+const MainTabClient = lazy(() => import("./components/client/MainTabClient")); 
+const MainTab = lazy(() => import("./components/admin/MainTab"));
 export default function App() {
   return (
     <BrowserRouter>
