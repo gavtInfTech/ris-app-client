@@ -22,7 +22,7 @@ import CommonSib from "./components/sib/CommonSib";
 import MainGabs from "./components/gabsPage/MainGabs";
 import MainTabClient from "./components/client/MainTabClient";
 import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
-import PathInformationMenu from "./components/admin/PathInformationMenu";
+const PathInformationMenu = lazy(() => import("./components/admin/PathInformationMenu"));
 
 export default function App() {
   return (
