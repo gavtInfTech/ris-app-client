@@ -12,12 +12,15 @@ import { api } from "../../axiosConfig";
 export default function PathInformationMenu() {
   const { pathname } = useLocation();
   const [signs, setSigns] = useState([]);
+  const [rifts, setRifts] = useState([]);
 
   useEffect(() => {
     const getSigns = async () => {
       try {
-        const res = await api.get("/signs/getAll");
-        setSigns(res.data);
+        const resSigns = await api.get("/signs/getAll");
+        const resRifts = await api.get("/rifts/getAll");
+        setSigns(resSigns.data);
+        setRifts(resRifts.data);
       } catch (err) {
         console.log(err);
       }
@@ -81,16 +84,30 @@ export default function PathInformationMenu() {
           />
             <Tab
             sx={{ width: 200, height: 70, fontSize: 14 }}
-            label="Припять"
-            value={`/path-information/pripyat1`}
-            to={`/path-information/pripyat1`}
+            label="Мухавец"
+            value={`/path-information/muhavets`}
+            to={`/path-information/muhavets`}
+            component={Link}
+          />
+            <Tab
+            sx={{ width: 200, height: 70, fontSize: 14 }}
+            label="Днепро-Бугский канал"
+            value={`/path-information/dbk`}
+            to={`/path-information/dbk`}
+            component={Link}
+          />
+            <Tab
+            sx={{ width: 200, height: 70, fontSize: 14 }}
+            label="Пина"
+            value={`/path-information/pina`}
+            to={`/path-information/pina`}
             component={Link}
           />
                <Tab
             sx={{ width: 200, height: 70, fontSize: 14 }}
-            label="Верхний участок реки Припять"
-            value={`/path-information/pripyat2`}
-            to={`/path-information/pripyat2`}
+            label="Припять"
+            value={`/path-information/pripyat`}
+            to={`/path-information/pripyat`}
             component={Link}
           />
              <Tab
@@ -104,22 +121,30 @@ export default function PathInformationMenu() {
       </AppBar>
 
       <Routes>
-        <Route path="/dnepr" element={<PathInformationMap signs={signs} />} />
+        <Route path="/dnepr" element={<PathInformationMap signs={signs} rifts={rifts} />} />
         <Route
           path="/berezina"
-          element={<PathInformationMap signs={signs} />}
+          element={<PathInformationMap signs={signs} rifts={rifts} />}
         />
-        <Route path="/dvina" element={<PathInformationMap signs={signs} />} />
-        <Route path="/neman" element={<PathInformationMap signs={signs} />} />
+        <Route path="/dvina" element={<PathInformationMap signs={signs} rifts={rifts} />} />
+        <Route path="/neman" element={<PathInformationMap signs={signs} rifts={rifts} />} />
         <Route
-          path="/pripyat1"
-          element={<PathInformationMap signs={signs} />}
+          path="/muhavets" 
+          element={<PathInformationMap signs={signs} rifts={rifts} />}
         />
         <Route
-          path="/pripyat2"
-          element={<PathInformationMap signs={signs} />}
+          path="/dbk" 
+          element={<PathInformationMap signs={signs} rifts={rifts} />}
         />
-        <Route path="/soj" element={<PathInformationMap signs={signs} />} />
+        <Route
+          path="/pina" 
+          element={<PathInformationMap signs={signs} rifts={rifts} />}
+        />
+        <Route
+          path="/pripyat"
+          element={<PathInformationMap signs={signs} rifts={rifts} />}
+        />
+        <Route path="/soj" element={<PathInformationMap signs={signs} rifts={rifts} />} />
       </Routes>
     </Box>
   );

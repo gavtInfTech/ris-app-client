@@ -270,6 +270,7 @@ const sites = [
     coords: findSegmentByKilometer(coordsPina, zeroPointPina, 9.7, 28),
   },
   {
+    river: "Пина",
     name: "7.2 порт Пинск – г.Пинск (сл. рек Пина и Припять)",
     coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0.7, 9.7),
   },
