@@ -185,14 +185,14 @@ export default function Depth(props) {
     {
       field: "depth",
       headerName: "Глубина, см*",
-      type: "number",
+      type: "string",
       width: 100,
       editable: true,
     },
     {
       field: "width",
       headerName: "Ширина, м*",
-      type: "number",
+      type: "string",
       width: 90,
       editable: true,
     },
@@ -205,8 +205,8 @@ export default function Depth(props) {
     },
     {
       field: "forecastDepth",
-      headerName: "Прогнозируемая \n глубина, м",
-      type: "number",
+      headerName: "Прогнозируемая глубина, м",
+      type: "string",
       width: 200,
       editable: true,
     },

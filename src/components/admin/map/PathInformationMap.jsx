@@ -7,6 +7,7 @@ import {
   ListBoxItem,
   ListBox,
   Polyline,
+  Clusterer,
 } from "react-yandex-maps";
 import { Box } from "@mui/system";
 import { useLocation } from "react-router-dom";
@@ -462,71 +463,71 @@ export default function PathInformationMap(props) {
   const [signs, setSigns] = useState([]);
   const [sites, setSites] = useState([]);
   const [rifts, setRifts] = useState([]);
+  const [displaySigns, setDisplaySigns] = useState(true);
+  const [displayRifts, setDisplayRifts] = useState(false);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
-
-  }, []);
-
-  useEffect(() => {
-    let filteredSigns = [];
-    let filteredSites = [];
-    let filteredRifts = [];
+    let riverSigns = [];
+    let riverSites = [];
+    let riverRifts = [];
     // eslint-disable-next-line default-case
     switch (pathname) {
       case "/path-information/dnepr":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Днепр");
-        filteredSites = allSites.filter((site) => site.river === "Днепр");
-        filteredRifts = props.rifts.filter((rift) => rift.river === "Днепр");
+        riverSigns = props.signs.filter((sign) => sign.river === "Днепр");
+        riverSites = allSites.filter((site) => site.river === "Днепр");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Днепр");
         break;
       case "/path-information/berezina":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Березина");
-        filteredSites = allSites.filter((site) => site.river === "Березина");
-        filteredRifts = props.rifts.filter((rift) => rift.river === "Березина");
+        riverSigns = props.signs.filter((sign) => sign.river === "Березина");
+        riverSites = allSites.filter((site) => site.river === "Березина");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Березина");
         break;
       case "/path-information/dvina":
-        filteredSigns = props.signs.filter(
+        riverSigns = props.signs.filter(
           (sign) => sign.river === "Западная Двина"
         );
-        filteredSites = allSites.filter(
-          (site) => site.river === "Западная Двина"
+        riverSites = allSites.filter((site) => site.river === "Западная Двина");
+        riverRifts = props.rifts.filter(
+          (rift) => rift.river === "Западная Двина"
         );
-        filteredRifts = props.rifts.filter((rift) => rift.river === "Западная Двина");
         break;
       case "/path-information/neman":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Неман");
-        filteredSites = allSites.filter((site) => site.river === "Неман");
-        filteredRifts = props.rifts.filter((rift) => rift.river === "Неман");
+        riverSigns = props.signs.filter((sign) => sign.river === "Неман");
+        riverSites = allSites.filter((site) => site.river === "Неман");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Неман");
         break;
       case "/path-information/muhavets":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Мухавец");
-        filteredSites = allSites.filter((site) => site.river === "Мухавец");
+        riverSigns = props.signs.filter((sign) => sign.river === "Мухавец");
+        riverSites = allSites.filter((site) => site.river === "Мухавец");
         break;
       case "/path-information/dbk":
-        filteredSigns = props.signs.filter(
+        riverSigns = props.signs.filter(
           (sign) => sign.river === "Днепро-Бугский канал"
         );
-        filteredSites = allSites.filter(
+        riverSites = allSites.filter(
           (site) => site.river === "Днепро-Бугский канал"
         );
         break;
       case "/path-information/pina":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Пина");
-        filteredSites = allSites.filter((site) => site.river === "Пина");
+        riverSigns = props.signs.filter((sign) => sign.river === "Пина");
+        riverSites = allSites.filter((site) => site.river === "Пина");
         break;
       case "/path-information/pripyat":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Припять");
-        filteredSites = allSites.filter((site) => site.river === "Припять");
-        filteredRifts = props.rifts.filter((rift) => rift.river === "Припять");
+        riverSigns = props.signs.filter((sign) => sign.river === "Припять");
+        riverSites = allSites.filter((site) => site.river === "Припять");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Припять");
         break;
       case "/path-information/soj":
-        filteredSigns = props.signs.filter((sign) => sign.river === "Сож");
-        filteredSites = allSites.filter((site) => site.river === "Сож");
-        filteredRifts = props.rifts.filter((rift) => rift.river === "Сож");
+        riverSigns = props.signs.filter((sign) => sign.river === "Сож");
+        riverSites = allSites.filter((site) => site.river === "Сож");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Сож");
         break;
     }
-    setSigns(filteredSigns);
-    setSites(filteredSites);
-    setRifts(filteredRifts);
+    setSigns(riverSigns);
+    setSites(riverSites);
+    setRifts(riverRifts);
   }, [pathname, props.signs]);
 
   const polylines = sites.map((site) => {
@@ -598,7 +599,7 @@ export default function PathInformationMap(props) {
         options={{
           iconLayout: "default#image",
           iconImageHref: `/images/pathInformationImages/${item.image}.png`,
-          iconImageSize: [30, 30],
+          iconImageSize: [35, 35],
           iconImageOffset: [-15, -15],
         }}
       />
@@ -622,7 +623,7 @@ export default function PathInformationMap(props) {
         options={{
           iconLayout: "default#image",
           iconImageHref: `/images/pathInformationImages/rift.png`,
-          iconImageSize: [40, 40],
+          iconImageSize: [30, 30],
           iconImageOffset: [-15, -15],
         }}
       />
@@ -651,9 +652,23 @@ export default function PathInformationMap(props) {
       <Box className={styles.mapPart}>
         <YMaps>
           <Map state={map} className={styles.map}>
-            {riverRiftsMarks}
-            {riverSignsMarks}
+            <ListBox data={{ content: "Фильтрация" }}>
+              <ListBoxItem
+                data={{ content: "Знаки" }}
+                state={{ selected: displaySigns }}
+                options={{ selectOnClick: true }}
+                onClick={() => setDisplaySigns(!displaySigns)}
+              />
+              <ListBoxItem
+                data={{ content: "Перекаты" }}
+                state={{ selected: displayRifts }}
+                options={{ selectOnClick: true }}
+                onClick={() => setDisplayRifts(!displayRifts)}
+              />
+            </ListBox>
             {polylines}
+            {displayRifts && riverRiftsMarks}
+            {displaySigns && riverSignsMarks}
           </Map>
         </YMaps>
       </Box>
