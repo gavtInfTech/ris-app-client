@@ -551,27 +551,23 @@ export default function PathInformationMap(props) {
           event
             .get("target")
             .options.set("strokeColor", "#8c00ff")
-            .set("strokeWidth", 7);
         }}
         onBalloonClose={(event) => {
           isBalloonOpen = false;
           event
             .get("target")
             .options.set("strokeColor", color)
-            .set("strokeWidth", 4);
         }}
         onMouseEnter={(event) => {
           event
             .get("target")
             .options.set("strokeColor", "#8c00ff")
-            .set("strokeWidth", 7);
         }}
         onMouseLeave={(event) => {
           if (!isBalloonOpen) {
             event
               .get("target")
               .options.set("strokeColor", color)
-              .set("strokeWidth", 4);
           }
         }}
       />

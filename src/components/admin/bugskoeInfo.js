@@ -1,6 +1,7 @@
 export const hydropostRivers = [
     "Припять",
     "Западная Двина",
+    "Горынь"
 ]
 
 export const hydropostGroups = {
