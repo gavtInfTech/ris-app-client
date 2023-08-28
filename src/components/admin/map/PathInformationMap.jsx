@@ -40,6 +40,7 @@ import { zeroPointGorin } from "../../vvp/FairwayGorin";
 import { coordsTurov } from "../../vvp/FairwayTurov";
 import { zeroPointTurov } from "../../vvp/FairwayTurov";
 import { findSegmentByKilometer } from "../../vvp/qwes";
+import PathInformationPart from "./PathInformationPart";
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
@@ -463,6 +464,7 @@ export default function PathInformationMap(props) {
   const [signs, setSigns] = useState([]);
   const [sites, setSites] = useState([]);
   const [rifts, setRifts] = useState([]);
+  const [river, setRiver] = useState();
   const [displaySigns, setDisplaySigns] = useState(true);
   const [displayRifts, setDisplayRifts] = useState(false);
 
@@ -475,16 +477,19 @@ export default function PathInformationMap(props) {
     // eslint-disable-next-line default-case
     switch (pathname) {
       case "/path-information/dnepr":
+        setRiver("Днепр");
         riverSigns = props.signs.filter((sign) => sign.river === "Днепр");
         riverSites = allSites.filter((site) => site.river === "Днепр");
         riverRifts = props.rifts.filter((rift) => rift.river === "Днепр");
         break;
       case "/path-information/berezina":
+        setRiver("Березина");
         riverSigns = props.signs.filter((sign) => sign.river === "Березина");
         riverSites = allSites.filter((site) => site.river === "Березина");
         riverRifts = props.rifts.filter((rift) => rift.river === "Березина");
         break;
       case "/path-information/dvina":
+        setRiver("Западная Двина");
         riverSigns = props.signs.filter(
           (sign) => sign.river === "Западная Двина"
         );
@@ -494,15 +499,18 @@ export default function PathInformationMap(props) {
         );
         break;
       case "/path-information/neman":
+        setRiver("Неман");
         riverSigns = props.signs.filter((sign) => sign.river === "Неман");
         riverSites = allSites.filter((site) => site.river === "Неман");
         riverRifts = props.rifts.filter((rift) => rift.river === "Неман");
         break;
       case "/path-information/muhavets":
+        setRiver("Мухавец");
         riverSigns = props.signs.filter((sign) => sign.river === "Мухавец");
         riverSites = allSites.filter((site) => site.river === "Мухавец");
         break;
       case "/path-information/dbk":
+        setRiver("Днепро-Бугский канал");
         riverSigns = props.signs.filter(
           (sign) => sign.river === "Днепро-Бугский канал"
         );
@@ -511,15 +519,18 @@ export default function PathInformationMap(props) {
         );
         break;
       case "/path-information/pina":
+        setRiver("Пина");
         riverSigns = props.signs.filter((sign) => sign.river === "Пина");
         riverSites = allSites.filter((site) => site.river === "Пина");
         break;
       case "/path-information/pripyat":
+        setRiver("Припять");
         riverSigns = props.signs.filter((sign) => sign.river === "Припять");
         riverSites = allSites.filter((site) => site.river === "Припять");
         riverRifts = props.rifts.filter((rift) => rift.river === "Припять");
         break;
       case "/path-information/soj":
+        setRiver("Сож");
         riverSigns = props.signs.filter((sign) => sign.river === "Сож");
         riverSites = allSites.filter((site) => site.river === "Сож");
         riverRifts = props.rifts.filter((rift) => rift.river === "Сож");
@@ -548,26 +559,18 @@ export default function PathInformationMap(props) {
         }}
         onClick={(event) => {
           isBalloonOpen = true;
-          event
-            .get("target")
-            .options.set("strokeColor", "#8c00ff")
+          event.get("target").options.set("strokeColor", "#8c00ff");
         }}
         onBalloonClose={(event) => {
           isBalloonOpen = false;
-          event
-            .get("target")
-            .options.set("strokeColor", color)
+          event.get("target").options.set("strokeColor", color);
         }}
         onMouseEnter={(event) => {
-          event
-            .get("target")
-            .options.set("strokeColor", "#8c00ff")
+          event.get("target").options.set("strokeColor", "#8c00ff");
         }}
         onMouseLeave={(event) => {
           if (!isBalloonOpen) {
-            event
-              .get("target")
-              .options.set("strokeColor", color)
+            event.get("target").options.set("strokeColor", color);
           }
         }}
       />
@@ -644,7 +647,9 @@ export default function PathInformationMap(props) {
       <Box
         sx={{ maxHeight: contentHeight + "px" }}
         className={styles.infoPart}
-      ></Box>
+      >
+        <PathInformationPart river={river}/>
+      </Box>
       <Box className={styles.mapPart}>
         <YMaps>
           <Map state={map} className={styles.map}>

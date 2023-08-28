@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import Styles from "../style.module.css";
 import Style from "./style.module.css";
 import { Box } from "@mui/system";
 import FormLabel from "@mui/material/FormLabel";
@@ -319,7 +318,6 @@ export default function NoticeForm(props) {
               value={state.noticeInfo.date}
               onChange={handleChange}
               variant="standard"
-              label="Дата"
             />
 
             <FormControl

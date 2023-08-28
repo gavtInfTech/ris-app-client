@@ -247,7 +247,7 @@ export default function Sib () {
             </Button>
 
             <Typography sx={{fontSize: 18}} >
-              С <span>     </span>
+              <span>     </span>
               <TextField
                 name="startPeriod"
                 type={'date'}

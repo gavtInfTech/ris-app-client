@@ -1,1213 +1,407 @@
 const fs = require("fs");
 
 let data = {
-  "0241e474-871a-4c03-bcf4-bb669efabfef": {
+  "16a12bac-6771-4941-ba2d-7e562e917131": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Кривичи 3",
-      "id": "0241e474-871a-4c03-bcf4-bb669efabfef",
+      "description": "Переломский ",
+      "id": "16a12bac-6771-4941-ba2d-7e562e917131",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.097854,
-      "longitude": 26.342521
+      "latitude": 53.893102,
+      "longitude": 23.779782
     }
   },
-  "03048a7b-eda8-4395-b880-69a6d7478f2d": {
+  "16d47493-8bb7-4f97-888d-26c4677fb1eb": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Мнево",
-      "id": "03048a7b-eda8-4395-b880-69a6d7478f2d",
+      "description": "Воробей",
+      "id": "16d47493-8bb7-4f97-888d-26c4677fb1eb",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.150683,
-      "longitude": 27.069865
+      "latitude": 53.655231,
+      "longitude": 23.892096
     }
   },
-  "058284b5-2de1-449a-b844-c60a84699960": {
+  "230277a8-75c5-4104-ab18-025467d119d4": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Гайдомашка",
-      "id": "058284b5-2de1-449a-b844-c60a84699960",
+      "description": "Сольная баля верхн.",
+      "id": "230277a8-75c5-4104-ab18-025467d119d4",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.156513,
-      "longitude": 26.988016
+      "latitude": 53.717622,
+      "longitude": 23.764206
     }
   },
-  "070ae0f4-969e-47b0-ab39-4f5f2056e033": {
+  "25b7c5b4-42f7-4cb2-87a7-aea4743b3628": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Полянка 1",
-      "id": "070ae0f4-969e-47b0-ab39-4f5f2056e033",
+      "description": "Княжеводский нижний",
+      "id": "25b7c5b4-42f7-4cb2-87a7-aea4743b3628",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.154594,
-      "longitude": 27.254086
+      "latitude": 53.454446,
+      "longitude": 24.318747
     }
   },
-  "077e17dd-3f41-4ed0-a3be-1ed2d4e65810": {
+  "28ea7dd7-1e43-4557-99d7-da6fa2623196": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Бобрик спрямление",
-      "id": "077e17dd-3f41-4ed0-a3be-1ed2d4e65810",
+      "description": "Бережанский ",
+      "id": "28ea7dd7-1e43-4557-99d7-da6fa2623196",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.137094,
-      "longitude": 26.776064
+      "latitude": 53.739558,
+      "longitude": 23.786374
     }
   },
-  "0783bdc2-73c2-4abb-80d0-9770c159ccc7": {
+  "292e05c0-6621-4528-acfe-b6104ea94c8b": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Жабка Болшая 2",
-      "id": "0783bdc2-73c2-4abb-80d0-9770c159ccc7",
+      "description": "Науха",
+      "id": "292e05c0-6621-4528-acfe-b6104ea94c8b",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.139592,
-      "longitude": 27.072658
+      "latitude": 53.652643,
+      "longitude": 23.90714
     }
   },
-  "0cbd3aa2-2dfc-4c70-ba69-07526dd7862f": {
+  "3684e4b8-8f32-48fd-9fdc-d05e6ce09215": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Корень-Крупа 1",
-      "id": "0cbd3aa2-2dfc-4c70-ba69-07526dd7862f",
+      "description": "Гожанский нижн.",
+      "id": "3684e4b8-8f32-48fd-9fdc-d05e6ce09215",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.163589,
-      "longitude": 27.200682
+      "latitude": 53.808788,
+      "longitude": 23.85458
     }
   },
-  "1573ea7d-365f-44f6-8223-093e4c729d2e": {
+  "406eb9f5-e949-4320-a73a-23a905048f3c": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Курадово 4",
-      "id": "1573ea7d-365f-44f6-8223-093e4c729d2e",
+      "description": "Лунненский нижний",
+      "id": "406eb9f5-e949-4320-a73a-23a905048f3c",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.102586,
-      "longitude": 26.396057
+      "latitude": 53.47481,
+      "longitude": 24.264629
     }
   },
-  "1767c842-86ad-4228-afa6-5ea87a76543e": {
+  "43b9e1a7-2ecc-4046-a7d0-50ee5315c42a": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Плаканица 2",
-      "id": "1767c842-86ad-4228-afa6-5ea87a76543e",
+      "description": "Ятвезьский нижн.",
+      "id": "43b9e1a7-2ecc-4046-a7d0-50ee5315c42a",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.118357,
-      "longitude": 26.742558
+      "latitude": 53.859449,
+      "longitude": 23.787495
     }
   },
-  "1d55768c-a5ad-47ca-9287-328dcbef98a4": {
+  "556b9687-f746-4da8-bf3c-f3aefa905cb7": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Требухово 7",
-      "id": "1d55768c-a5ad-47ca-9287-328dcbef98a4",
+      "description": "Гожанский ",
+      "id": "556b9687-f746-4da8-bf3c-f3aefa905cb7",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.149513,
-      "longitude": 26.936534
+      "latitude": 53.79817,
+      "longitude": 23.846394
     }
   },
-  "203ec749-517c-472d-b7d2-e1826d8e5b4c": {
+  "57195373-5add-4e0a-b79e-c3f5ed00aad9": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Копанец 1",
-      "id": "203ec749-517c-472d-b7d2-e1826d8e5b4c",
+      "description": "Гремянка ",
+      "id": "57195373-5add-4e0a-b79e-c3f5ed00aad9",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.116706,
-      "longitude": 26.128955
+      "latitude": 53.694486,
+      "longitude": 23.771609
     }
   },
-  "2041bd3c-d01f-48ee-a0a4-8dd2981b6570": {
+  "5850a2e3-06e0-4f2f-a108-077259196700": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Жабка Болшая 4",
-      "id": "2041bd3c-d01f-48ee-a0a4-8dd2981b6570",
+      "description": "Городнянка ",
+      "id": "5850a2e3-06e0-4f2f-a108-077259196700",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.140232,
-      "longitude": 27.097781
+      "latitude": 53.677389,
+      "longitude": 23.797394
     }
   },
-  "219aa484-f233-4297-ac92-5a1123ecec03": {
+  "6cc5a79d-c49c-4d28-9e48-7e783a32b343": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Копанец 5",
-      "id": "219aa484-f233-4297-ac92-5a1123ecec03",
+      "description": "Воля",
+      "id": "6cc5a79d-c49c-4d28-9e48-7e783a32b343",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.115873,
-      "longitude": 26.189567
+      "latitude": 53.451963,
+      "longitude": 24.298284
     }
   },
-  "2450d5b3-31a2-463e-884c-c737aedcafd5": {
+  "714e5e62-1d4f-49d5-9acd-0e954d57ddda": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Перекоп 2",
-      "id": "2450d5b3-31a2-463e-884c-c737aedcafd5",
+      "description": "Румблевка ",
+      "id": "714e5e62-1d4f-49d5-9acd-0e954d57ddda",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.115104,
-      "longitude": 26.532707
+      "latitude": 53.657889,
+      "longitude": 23.861084
     }
   },
-  "2527419d-fa66-48c0-a133-50e21cc8f60d": {
+  "734d46fc-8fdc-44e3-9691-da6f3bd338c4": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Подыход 5",
-      "id": "2527419d-fa66-48c0-a133-50e21cc8f60d",
+      "description": "Конкольский ",
+      "id": "734d46fc-8fdc-44e3-9691-da6f3bd338c4",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.124928,
-      "longitude": 26.649086
+      "latitude": 53.760418,
+      "longitude": 23.80278
     }
   },
-  "25cb2a6a-9c8a-49f7-913a-e3fe0b6053e9": {
+  "75ab42ba-8ee2-4359-afeb-474f329b3d46": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Лопаты",
-      "id": "25cb2a6a-9c8a-49f7-913a-e3fe0b6053e9",
+      "description": "Кошелевка",
+      "id": "75ab42ba-8ee2-4359-afeb-474f329b3d46",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.111245,
-      "longitude": 26.700659
+      "latitude": 53.64411,
+      "longitude": 23.913377
     }
   },
-  "290ed797-c6ca-403e-b974-0b5159121e53": {
+  "7693c77a-0f09-43b7-9786-1de8f0f82ffb": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Копанец 2",
-      "id": "290ed797-c6ca-403e-b974-0b5159121e53",
+      "description": "Лунненский верхний",
+      "id": "7693c77a-0f09-43b7-9786-1de8f0f82ffb",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.118671,
-      "longitude": 26.143887
+      "latitude": 53.45807,
+      "longitude": 24.291175
     }
   },
-  "2a280f39-5a5d-46e7-832c-f312ff63f3f0": {
+  "76d88cb3-5597-4643-97b5-a99e2e69cf56": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Корень-Крупа 4",
-      "id": "2a280f39-5a5d-46e7-832c-f312ff63f3f0",
+      "description": "Плосковский ",
+      "id": "76d88cb3-5597-4643-97b5-a99e2e69cf56",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.151948,
-      "longitude": 27.229605
+      "latitude": 53.830681,
+      "longitude": 23.829586
     }
   },
-  "2abb19b0-d1af-4b37-9f6e-0eebf0b64eff": {
+  "82a85965-bde6-4309-8950-3cb4f1c01733": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Осотное",
-      "id": "2abb19b0-d1af-4b37-9f6e-0eebf0b64eff",
+      "description": "Сольная баля нижн.",
+      "id": "82a85965-bde6-4309-8950-3cb4f1c01733",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.144584,
-      "longitude": 27.330952
+      "latitude": 53.736713,
+      "longitude": 23.782282
     }
   },
-  "2b9cf4cb-64aa-49c8-a109-26641c925b35": {
+  "82e20699-5a30-4d2f-a970-040e9d12cf34": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Лаховское спрямление",
-      "id": "2b9cf4cb-64aa-49c8-a109-26641c925b35",
+      "description": "Колотуха",
+      "id": "82e20699-5a30-4d2f-a970-040e9d12cf34",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.147129,
-      "longitude": 27.187308
+      "latitude": 53.646128,
+      "longitude": 23.950866
     }
   },
-  "2bef6cd5-eb39-41bd-931a-cf977f236886": {
+  "ae6baeb3-ee7f-4671-be72-5cdbcc963fe5": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "устье реки Бобрик",
-      "id": "2bef6cd5-eb39-41bd-931a-cf977f236886",
+      "description": "Пальницкий ",
+      "id": "ae6baeb3-ee7f-4671-be72-5cdbcc963fe5",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.135027,
-      "longitude": 26.769135
+      "latitude": 53.834587,
+      "longitude": 23.811228
     }
   },
-  "2edc0e56-79f8-44db-8636-a02d48c06909": {
+  "b1b1456e-82bf-4f74-bd42-1d415e675bd4": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Качановичи 7",
-      "id": "2edc0e56-79f8-44db-8636-a02d48c06909",
+      "description": "Меловец ",
+      "id": "b1b1456e-82bf-4f74-bd42-1d415e675bd4",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.11697,
-      "longitude": 26.477321
+      "latitude": 53.709584,
+      "longitude": 23.776627
     }
   },
-  "2f943642-b4d3-4803-b8f8-08ec34610c19": {
+  "c4945122-53bb-449a-9519-2a79a426c5e4": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Кричиво 1",
-      "id": "2f943642-b4d3-4803-b8f8-08ec34610c19",
+      "description": "Лукавицкий",
+      "id": "c4945122-53bb-449a-9519-2a79a426c5e4",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.145086,
-      "longitude": 26.867004
+      "latitude": 53.869239,
+      "longitude": 23.779659
     }
   },
-  "3893edfd-d849-4b3e-86cd-208fed0b37ed": {
+  "c82a257e-b5dd-4884-84a5-9a93b0997e92": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Полыно",
-      "id": "3893edfd-d849-4b3e-86cd-208fed0b37ed",
+      "description": "Маньковский ",
+      "id": "c82a257e-b5dd-4884-84a5-9a93b0997e92",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.137364,
-      "longitude": 26.849793
+      "latitude": 53.778904,
+      "longitude": 23.830844
     }
   },
-  "3b552286-d9c3-4645-8a7a-6652abbe4752": {
+  "d56b0a33-e2d2-46fc-87a2-a9861da0644e": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Жабка Малая",
-      "id": "3b552286-d9c3-4645-8a7a-6652abbe4752",
+      "description": "Дмисевичский ",
+      "id": "d56b0a33-e2d2-46fc-87a2-a9861da0644e",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.159174,
-      "longitude": 27.05494
+      "latitude": 53.88931,
+      "longitude": 23.760349
     }
   },
-  "3d4b0f62-44ed-4980-bb81-52322b3212b5": {
+  "d62e8507-7648-4963-a8a1-e77b409b7c2b": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Курадово 1",
-      "id": "3d4b0f62-44ed-4980-bb81-52322b3212b5",
+      "description": "Ятвезьский верхн.",
+      "id": "d62e8507-7648-4963-a8a1-e77b409b7c2b",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.092535,
-      "longitude": 26.368555
+      "latitude": 53.851895,
+      "longitude": 23.790759
     }
   },
-  "42b0ef16-314e-4aeb-8695-fe8594b77c66": {
+  "e6f3df40-adec-4a11-916a-2587eb5525f5": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Подыход 4",
-      "id": "42b0ef16-314e-4aeb-8695-fe8594b77c66",
+      "description": "Пышковский ",
+      "id": "e6f3df40-adec-4a11-916a-2587eb5525f5",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.127418,
-      "longitude": 26.644894
+      "latitude": 53.686766,
+      "longitude": 23.777315
     }
   },
-  "43b3cb14-0a1a-4087-bdbd-071f88d99c48": {
+  "e8f43b8d-cf41-443d-a865-0fe867ee9362": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Требухово 1",
-      "id": "43b3cb14-0a1a-4087-bdbd-071f88d99c48",
+      "description": "Плебанский ",
+      "id": "e8f43b8d-cf41-443d-a865-0fe867ee9362",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.128181,
-      "longitude": 26.890225
+      "latitude": 53.819523,
+      "longitude": 23.841651
     }
   },
-  "44bb495a-b0d8-4b93-8f70-a7f453aecd1c": {
+  "e9576adc-802f-410d-b1c2-a190c9415e8b": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Теребень 2",
-      "id": "44bb495a-b0d8-4b93-8f70-a7f453aecd1c",
+      "description": "Поднемновский",
+      "id": "e9576adc-802f-410d-b1c2-a190c9415e8b",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.110192,
-      "longitude": 26.28319
+      "latitude": 53.881547,
+      "longitude": 23.761115
     }
   },
-  "488717e2-fa0a-46e9-89e0-e490a0fbe419": {
+  "ed9c86d3-dbc5-42a7-8295-0896c4435b7f": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Бережцы 1",
-      "id": "488717e2-fa0a-46e9-89e0-e490a0fbe419",
+      "description": "Бережанск. верхн.",
+      "id": "ed9c86d3-dbc5-42a7-8295-0896c4435b7f",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.116285,
-      "longitude": 26.604056
+      "latitude": 53.736189,
+      "longitude": 23.791854
     }
   },
-  "4957b461-9476-4f8b-a590-5afb0537503d": {
+  "f3de3498-4dfc-4170-b830-3c61fd1be94c": {
     "data": {
       "currentWaterLevel": 220,
-      "description": "Лаховский перевоз",
-      "id": "4957b461-9476-4f8b-a590-5afb0537503d",
+      "description": "Диковский ",
+      "id": "f3de3498-4dfc-4170-b830-3c61fd1be94c",
       "waterLevel": 220
     },
     "image": "riftnormal",
     "point": {
-      "latitude": 52.145454,
-      "longitude": 27.142372
-    }
-  },
-  "4b40ca2e-b29e-483f-8e39-08c12761a2d6": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Верхнее Осотное",
-      "id": "4b40ca2e-b29e-483f-8e39-08c12761a2d6",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.135265,
-      "longitude": 27.325001
-    }
-  },
-  "54aeee2e-ffcf-4566-9e09-a5e3737c2fdb": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Межа 5",
-      "id": "54aeee2e-ffcf-4566-9e09-a5e3737c2fdb",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.11657,
-      "longitude": 26.694038
-    }
-  },
-  "59e42090-faad-4f6b-876b-c88b2ce8eff6": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Требухово 5",
-      "id": "59e42090-faad-4f6b-876b-c88b2ce8eff6",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.145756,
-      "longitude": 26.914298
-    }
-  },
-  "5ef5c6a0-7b31-44f7-8c0a-ab01e18d2133": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Качановичи 5",
-      "id": "5ef5c6a0-7b31-44f7-8c0a-ab01e18d2133",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.115121,
-      "longitude": 26.449587
-    }
-  },
-  "63e89844-be02-430c-b11b-7c95936688ae": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Курадово 3",
-      "id": "63e89844-be02-430c-b11b-7c95936688ae",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.099609,
-      "longitude": 26.383346
-    }
-  },
-  "6ea85d46-6607-45ef-8321-c7a5f32ea1cc": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Ланский 1,2",
-      "id": "6ea85d46-6607-45ef-8321-c7a5f32ea1cc",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.154546,
-      "longitude": 27.296809
-    }
-  },
-  "7048a2af-f7b4-4079-9483-7a7968d4267e": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Кожан-Городок 2",
-      "id": "7048a2af-f7b4-4079-9483-7a7968d4267e",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.152439,
-      "longitude": 27.036642
-    }
-  },
-  "72222d8e-93f6-401e-a9af-bb153cf1f4c4": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Попово плесо 1",
-      "id": "72222d8e-93f6-401e-a9af-bb153cf1f4c4",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.111237,
-      "longitude": 26.714307
-    }
-  },
-  "725b4120-3837-4275-a1bc-3598a514d266": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Полянка 2",
-      "id": "725b4120-3837-4275-a1bc-3598a514d266",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.143026,
-      "longitude": 27.250337
-    }
-  },
-  "732ff19e-6f3e-4564-8a6f-eac9962c6822": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Стаховское спрямление",
-      "id": "732ff19e-6f3e-4564-8a6f-eac9962c6822",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.108625,
-      "longitude": 26.726422
-    }
-  },
-  "79057770-0c71-4db9-87ed-be1670866891": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Копанец 4",
-      "id": "79057770-0c71-4db9-87ed-be1670866891",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.117599,
-      "longitude": 26.178091
-    }
-  },
-  "7a7c9ad6-a03e-48e0-bc7f-ae4c368a99b6": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Кривичи 2",
-      "id": "7a7c9ad6-a03e-48e0-bc7f-ae4c368a99b6",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.104681,
-      "longitude": 26.34066
-    }
-  },
-  "7d6337b8-4009-40a9-84df-6e12314301ac": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Копанец 3",
-      "id": "7d6337b8-4009-40a9-84df-6e12314301ac",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.116374,
-      "longitude": 26.171219
-    }
-  },
-  "7fd07b33-f551-4f49-bb7d-2ffcaeaed9de": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Курадово 2",
-      "id": "7fd07b33-f551-4f49-bb7d-2ffcaeaed9de",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.097121,
-      "longitude": 26.365508
-    }
-  },
-  "85104894-80a6-4fe3-9618-c7d51d73040c": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Волчье",
-      "id": "85104894-80a6-4fe3-9618-c7d51d73040c",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.146673,
-      "longitude": 27.309067
-    }
-  },
-  "86484154-84ba-418b-a8c4-2dbca6fa425a": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Волянские мосты",
-      "id": "86484154-84ba-418b-a8c4-2dbca6fa425a",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.143979,
-      "longitude": 26.797006
-    }
-  },
-  "8fab8eb2-5d0b-4114-ad45-155c1fdface1": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Железница",
-      "id": "8fab8eb2-5d0b-4114-ad45-155c1fdface1",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.149477,
-      "longitude": 27.321097
-    }
-  },
-  "9af89ded-ae9a-4d85-a658-844567ff3e2b": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Усть-Горынский",
-      "id": "9af89ded-ae9a-4d85-a658-844567ff3e2b",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.145225,
-      "longitude": 27.273092
-    }
-  },
-  "a0180ddf-4e78-4548-b611-cc21371c04e5": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Перекоп 1",
-      "id": "a0180ddf-4e78-4548-b611-cc21371c04e5",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.111062,
-      "longitude": 26.516295
-    }
-  },
-  "a12cfa4e-20f8-43e0-b898-22943ff500ad": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Требухово 3",
-      "id": "a12cfa4e-20f8-43e0-b898-22943ff500ad",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.135985,
-      "longitude": 26.900325
-    }
-  },
-  "a71505ff-8742-4dd4-9ac3-a9285dad4e06": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Вертяче 2",
-      "id": "a71505ff-8742-4dd4-9ac3-a9285dad4e06",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.151446,
-      "longitude": 27.021132
-    }
-  },
-  "a789c75a-3501-4178-9abb-290f0ebb1115": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Еврейская яма 1",
-      "id": "a789c75a-3501-4178-9abb-290f0ebb1115",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.156494,
-      "longitude": 27.202003
-    }
-  },
-  "a81abc25-61a9-45eb-96fd-c914e8407b64": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Коробье-Осокорь",
-      "id": "a81abc25-61a9-45eb-96fd-c914e8407b64",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.147156,
-      "longitude": 26.825282
-    }
-  },
-  "a824cb1a-7da9-4096-a35f-0c2597021ace": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Половинник 2",
-      "id": "a824cb1a-7da9-4096-a35f-0c2597021ace",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.1127,
-      "longitude": 26.226812
-    }
-  },
-  "ab940bd6-8a54-49df-b326-604d29d9f05f": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Быстросочево",
-      "id": "ab940bd6-8a54-49df-b326-604d29d9f05f",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.14971,
-      "longitude": 26.958407
-    }
-  },
-  "abe96c90-1106-4021-b073-8881117624cf": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Спрямление-Лучица",
-      "id": "abe96c90-1106-4021-b073-8881117624cf",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.153755,
-      "longitude": 27.186176
-    }
-  },
-  "ae2dd47f-2f90-41b2-8723-52773168a7d4": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Еврейская яма 2",
-      "id": "ae2dd47f-2f90-41b2-8723-52773168a7d4",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.158788,
-      "longitude": 27.187221
-    }
-  },
-  "b001e5ed-dad6-4cf4-97de-0569f22fdd43": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Половинник",
-      "id": "b001e5ed-dad6-4cf4-97de-0569f22fdd43",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.11489,
-      "longitude": 26.208725
-    }
-  },
-  "b08f111e-0b71-4b36-b2e4-51cac1ebeab9": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Ветлица",
-      "id": "b08f111e-0b71-4b36-b2e4-51cac1ebeab9",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.14671,
-      "longitude": 27.108778
-    }
-  },
-  "b37e8929-b0b4-49b4-a181-ec2c2086844e": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Добрый дуб",
-      "id": "b37e8929-b0b4-49b4-a181-ec2c2086844e",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.1109,
-      "longitude": 26.58997
-    }
-  },
-  "b59e80f4-781d-4e32-8070-5727d457d5a0": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Жабка Болшая 1",
-      "id": "b59e80f4-781d-4e32-8070-5727d457d5a0",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.146303,
-      "longitude": 27.067931
-    }
-  },
-  "b6f24190-2ada-4e95-be7b-a60f8807d6b4": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Кожан-Городок 1",
-      "id": "b6f24190-2ada-4e95-be7b-a60f8807d6b4",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.162018,
-      "longitude": 27.038198
-    }
-  },
-  "b849f7ca-62bc-4e99-b8b4-9d9336b62b1a": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Кривичи",
-      "id": "b849f7ca-62bc-4e99-b8b4-9d9336b62b1a",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.116391,
-      "longitude": 26.301913
-    }
-  },
-  "b966c31c-0810-49fa-aee3-8b5511b9d4ee": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Подыход 1",
-      "id": "b966c31c-0810-49fa-aee3-8b5511b9d4ee",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.124177,
-      "longitude": 26.626784
-    }
-  },
-  "bc7eb587-12ec-4381-b9f8-42ebb12581f1": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Качановичи 8",
-      "id": "bc7eb587-12ec-4381-b9f8-42ebb12581f1",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.10959,
-      "longitude": 26.4835
-    }
-  },
-  "be6ddf1b-3b97-4928-a0f3-0fa21c89f67c": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Требухово 4",
-      "id": "be6ddf1b-3b97-4928-a0f3-0fa21c89f67c",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.141517,
-      "longitude": 26.899903
-    }
-  },
-  "c0fee8d9-639a-411f-a22f-a39a47366c23": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Бережцы 2",
-      "id": "c0fee8d9-639a-411f-a22f-a39a47366c23",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.122152,
-      "longitude": 26.615081
-    }
-  },
-  "c2877a7f-b399-4515-bf39-3be87a26b58a": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "прк.Сулимно",
-      "id": "c2877a7f-b399-4515-bf39-3be87a26b58a",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.152148,
-      "longitude": 26.991022
-    }
-  },
-  "c43ea6a5-7d6f-4d78-97bb-ebf991cf9d64": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Особовичи 2",
-      "id": "c43ea6a5-7d6f-4d78-97bb-ebf991cf9d64",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.116939,
-      "longitude": 26.506358
-    }
-  },
-  "c4695c4e-38d6-42d6-af2d-181a117f0648": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Качановичи 2",
-      "id": "c4695c4e-38d6-42d6-af2d-181a117f0648",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.1079,
-      "longitude": 26.424455
-    }
-  },
-  "c5182b67-e9fd-4830-a03c-2e41224607ec": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Демьянова Грива",
-      "id": "c5182b67-e9fd-4830-a03c-2e41224607ec",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.156941,
-      "longitude": 27.139347
-    }
-  },
-  "c543f04e-bf95-418c-ae48-aeefb6caa1fa": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Бережцы 3",
-      "id": "c543f04e-bf95-418c-ae48-aeefb6caa1fa",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.127272,
-      "longitude": 26.623756
-    }
-  },
-  "c54b1aea-a1b2-480c-9203-9228e131374e": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Подлучица",
-      "id": "c54b1aea-a1b2-480c-9203-9228e131374e",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.153016,
-      "longitude": 27.141157
-    }
-  },
-  "c5690992-0cca-47e7-a72a-640a135e070e": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Качановичи 4",
-      "id": "c5690992-0cca-47e7-a72a-640a135e070e",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.12236,
-      "longitude": 26.433844
-    }
-  },
-  "cd5fe8fd-ffe0-4638-bbf6-85d5f665d188": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Муравче плесо",
-      "id": "cd5fe8fd-ffe0-4638-bbf6-85d5f665d188",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.111613,
-      "longitude": 26.564139
-    }
-  },
-  "d0b91285-fa90-4fa0-a986-f4827b924a57": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Качановичи 6",
-      "id": "d0b91285-fa90-4fa0-a986-f4827b924a57",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.1187,
-      "longitude": 26.465192
-    }
-  },
-  "d16ecf03-9148-455e-8d60-057702311dcb": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Требухово 2",
-      "id": "d16ecf03-9148-455e-8d60-057702311dcb",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.132958,
-      "longitude": 26.903403
-    }
-  },
-  "d36c94ca-50d1-41ca-bcdc-0b5fd7a24a4a": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Особовичи 1",
-      "id": "d36c94ca-50d1-41ca-bcdc-0b5fd7a24a4a",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.115389,
-      "longitude": 26.488167
-    }
-  },
-  "d629e3cc-fc3c-4124-83f6-d6eb6bcac55e": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Сеймы",
-      "id": "d629e3cc-fc3c-4124-83f6-d6eb6bcac55e",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.150496,
-      "longitude": 26.977096
-    }
-  },
-  "d7286e7c-e76e-494d-823d-f1e92c1f6d3b": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Кричиво 2",
-      "id": "d7286e7c-e76e-494d-823d-f1e92c1f6d3b",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.145086,
-      "longitude": 26.867004
-    }
-  },
-  "d745cebb-7226-4674-bd64-183c2567428e": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Ст.Стырь",
-      "id": "d745cebb-7226-4674-bd64-183c2567428e",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.109884,
-      "longitude": 26.577539
-    }
-  },
-  "d7793261-4a2b-4fac-af8c-892c77584a21": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Корень-Крупа 3",
-      "id": "d7793261-4a2b-4fac-af8c-892c77584a21",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.151948,
-      "longitude": 27.229605
-    }
-  },
-  "d95ca6c6-0bb9-4056-b269-6cf0b9129f5d": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Жабка Болшая 3",
-      "id": "d95ca6c6-0bb9-4056-b269-6cf0b9129f5d",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.148998,
-      "longitude": 27.074695
-    }
-  },
-  "da6678b2-6c47-420d-a4cc-8c4c439b51a3": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Плюхово",
-      "id": "da6678b2-6c47-420d-a4cc-8c4c439b51a3",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.125928,
-      "longitude": 26.759978
-    }
-  },
-  "dd42a6b8-5810-4bd0-acc0-5d720eaeae0d": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Кривичи 1",
-      "id": "dd42a6b8-5810-4bd0-acc0-5d720eaeae0d",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.114554,
-      "longitude": 26.320451
-    }
-  },
-  "e428d994-08ba-4498-b2b9-913f8a952db2": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Попово плесо 2",
-      "id": "e428d994-08ba-4498-b2b9-913f8a952db2",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.107604,
-      "longitude": 26.711673
-    }
-  },
-  "e53e4ad3-60b8-45cf-a672-0ab739f05b86": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Корень-Крупа 2",
-      "id": "e53e4ad3-60b8-45cf-a672-0ab739f05b86",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.165621,
-      "longitude": 27.227235
-    }
-  },
-  "e56d3b56-87f2-4a16-9fc5-3cb6147a6877": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Межа 1",
-      "id": "e56d3b56-87f2-4a16-9fc5-3cb6147a6877",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.12141,
-      "longitude": 26.675913
-    }
-  },
-  "f0a77d1a-d124-45f3-af71-7cf87b747433": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Теребень 1",
-      "id": "f0a77d1a-d124-45f3-af71-7cf87b747433",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.112379,
-      "longitude": 26.265975
-    }
-  },
-  "f2739999-7c61-4723-bd39-f68f644547df": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Перекоп 3",
-      "id": "f2739999-7c61-4723-bd39-f68f644547df",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.120307,
-      "longitude": 26.540082
-    }
-  },
-  "f4da1ea6-64e1-4c0d-b4cb-5bed4c836563": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Требухово 6",
-      "id": "f4da1ea6-64e1-4c0d-b4cb-5bed4c836563",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.147367,
-      "longitude": 26.941278
-    }
-  },
-  "fc070c3d-5610-47b6-83d5-6d63cb39a978": {
-    "data": {
-      "currentWaterLevel": 220,
-      "description": "Перекоп 4",
-      "id": "fc070c3d-5610-47b6-83d5-6d63cb39a978",
-      "waterLevel": 220
-    },
-    "image": "riftnormal",
-    "point": {
-      "latitude": 52.114539,
-      "longitude": 26.5577
+      "latitude": 53.680217,
+      "longitude": 23.780485
     }
   }
   }
@@ -1226,6 +420,294 @@ for (const key in data) {
     });
   }
 
+let arrayForChange = [
+  {
+    "id": "16a12bac-6771-4941-ba2d-7e562e917131",
+    "image": "riftnormal",
+    "latitude": 53.893102,
+    "longitude": 23.779782,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Переломский "
+  },
+  {
+    "id": "16d47493-8bb7-4f97-888d-26c4677fb1eb",
+    "image": "riftnormal",
+    "latitude": 53.655231,
+    "longitude": 23.892096,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Воробей"
+  },
+  {
+    "id": "230277a8-75c5-4104-ab18-025467d119d4",
+    "image": "riftnormal",
+    "latitude": 23.764206,
+    "longitude": 23.764206,
+    "currentWaterLevel": 145,
+    "waterLevel": 220,
+    "description": "Сольная баля верхн."
+  },
+  {
+    "id": "25b7c5b4-42f7-4cb2-87a7-aea4743b3628",
+    "image": "riftnormal",
+    "latitude": 53.454446,
+    "longitude": 24.318747,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Княжеводский нижний"
+  },
+  {
+    "id": "28ea7dd7-1e43-4557-99d7-da6fa2623196",
+    "image": "riftnormal",
+    "latitude": 23.786374,
+    "longitude": 23.786374,
+    "currentWaterLevel": 145,
+    "waterLevel": 220,
+    "description": "Бережанский "
+  },
+  {
+    "id": "292e05c0-6621-4528-acfe-b6104ea94c8b",
+    "image": "riftnormal",
+    "latitude": 23.90714,
+    "longitude": 23.90714,
+    "currentWaterLevel": 115,
+    "waterLevel": 220,
+    "description": "Науха"
+  },
+  {
+    "id": "3684e4b8-8f32-48fd-9fdc-d05e6ce09215",
+    "image": "riftnormal",
+    "latitude": 23.85458,
+    "longitude": 23.85458,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Гожанский нижн."
+  },
+  {
+    "id": "406eb9f5-e949-4320-a73a-23a905048f3c",
+    "image": "riftnormal",
+    "latitude": 53.47481,
+    "longitude": 24.264629,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лунненский нижний"
+  },
+  {
+    "id": "43b9e1a7-2ecc-4046-a7d0-50ee5315c42a",
+    "image": "riftnormal",
+    "latitude": 23.787495,
+    "longitude": 23.787495,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Ятвезьский нижн."
+  },
+  {
+    "id": "556b9687-f746-4da8-bf3c-f3aefa905cb7",
+    "image": "riftnormal",
+    "latitude": 23.846394,
+    "longitude": 23.846394,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Гожанский "
+  },
+  {
+    "id": "57195373-5add-4e0a-b79e-c3f5ed00aad9",
+    "image": "riftnormal",
+    "latitude": 23.771609,
+    "longitude": 23.771609,
+    "currentWaterLevel": 125,
+    "waterLevel": 220,
+    "description": "Гремянка "
+  },
+  {
+    "id": "5850a2e3-06e0-4f2f-a108-077259196700",
+    "image": "riftnormal",
+    "latitude": 23.797394,
+    "longitude": 23.797394,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Городнянка "
+  },
+  {
+    "id": "6cc5a79d-c49c-4d28-9e48-7e783a32b343",
+    "image": "riftnormal",
+    "latitude": 53.451963,
+    "longitude": 24.298284,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Воля"
+  },
+  {
+    "id": "714e5e62-1d4f-49d5-9acd-0e954d57ddda",
+    "image": "riftnormal",
+    "latitude": 23.861084,
+    "longitude": 23.861084,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Румблевка "
+  },
+  {
+    "id": "734d46fc-8fdc-44e3-9691-da6f3bd338c4",
+    "image": "riftnormal",
+    "latitude": 23.80278,
+    "longitude": 23.80278,
+    "currentWaterLevel": 140,
+    "waterLevel": 220,
+    "description": "Конкольский "
+  },
+  {
+    "id": "75ab42ba-8ee2-4359-afeb-474f329b3d46",
+    "image": "riftnormal",
+    "latitude": 23.913377,
+    "longitude": 23.913377,
+    "currentWaterLevel": 115,
+    "waterLevel": 220,
+    "description": "Кошелевка"
+  },
+  {
+    "id": "7693c77a-0f09-43b7-9786-1de8f0f82ffb",
+    "image": "riftnormal",
+    "latitude": 53.45807,
+    "longitude": 24.291175,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лунненский верхний"
+  },
+  {
+    "id": "76d88cb3-5597-4643-97b5-a99e2e69cf56",
+    "image": "riftnormal",
+    "latitude": 23.829586,
+    "longitude": 23.829586,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Плосковский "
+  },
+  {
+    "id": "82a85965-bde6-4309-8950-3cb4f1c01733",
+    "image": "riftnormal",
+    "latitude": 23.782282,
+    "longitude": 23.782282,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Сольная баля нижн."
+  },
+  {
+    "id": "82e20699-5a30-4d2f-a970-040e9d12cf34",
+    "image": "riftnormal",
+    "latitude": 23.950866,
+    "longitude": 23.950866,
+    "currentWaterLevel": 120,
+    "waterLevel": 220,
+    "description": "Колотуха"
+  },
+  {
+    "id": "ae6baeb3-ee7f-4671-be72-5cdbcc963fe5",
+    "image": "riftnormal",
+    "latitude": 23.811228,
+    "longitude": 23.811228,
+    "currentWaterLevel": 125,
+    "waterLevel": 220,
+    "description": "Пальницкий "
+  },
+  {
+    "id": "b1b1456e-82bf-4f74-bd42-1d415e675bd4",
+    "image": "riftnormal",
+    "latitude": 23.776627,
+    "longitude": 23.776627,
+    "currentWaterLevel": 135,
+    "waterLevel": 220,
+    "description": "Меловец "
+  },
+  {
+    "id": "c4945122-53bb-449a-9519-2a79a426c5e4",
+    "image": "riftnormal",
+    "latitude": 23.779659,
+    "longitude": 23.779659,
+    "currentWaterLevel": 135,
+    "waterLevel": 220,
+    "description": "Лукавицкий"
+  },
+  {
+    "id": "c82a257e-b5dd-4884-84a5-9a93b0997e92",
+    "image": "riftnormal",
+    "latitude": 23.830844,
+    "longitude": 23.830844,
+    "currentWaterLevel": 150,
+    "waterLevel": 220,
+    "description": "Маньковский "
+  },
+  {
+    "id": "d56b0a33-e2d2-46fc-87a2-a9861da0644e",
+    "image": "riftnormal",
+    "latitude": 23.760349,
+    "longitude": 23.760349,
+    "currentWaterLevel": 160,
+    "waterLevel": 220,
+    "description": "Дмисевичский "
+  },
+  {
+    "id": "d62e8507-7648-4963-a8a1-e77b409b7c2b",
+    "image": "riftnormal",
+    "latitude": 23.790759,
+    "longitude": 23.790759,
+    "currentWaterLevel": 125,
+    "waterLevel": 220,
+    "description": "Ятвезьский верхн."
+  },
+  {
+    "id": "e6f3df40-adec-4a11-916a-2587eb5525f5",
+    "image": "riftnormal",
+    "latitude": 23.777315,
+    "longitude": 23.777315,
+    "currentWaterLevel": 140,
+    "waterLevel": 220,
+    "description": "Пышковский "
+  },
+  {
+    "id": "e8f43b8d-cf41-443d-a865-0fe867ee9362",
+    "image": "riftnormal",
+    "latitude": 23.841651,
+    "longitude": 23.841651,
+    "currentWaterLevel": 100,
+    "waterLevel": 220,
+    "description": "Плебанский "
+  },
+  {
+    "id": "e9576adc-802f-410d-b1c2-a190c9415e8b",
+    "image": "riftnormal",
+    "latitude": 23.761115,
+    "longitude": 23.761115,
+    "currentWaterLevel": 145,
+    "waterLevel": 220,
+    "description": "Поднемновский"
+  },
+  {
+    "id": "ed9c86d3-dbc5-42a7-8295-0896c4435b7f",
+    "image": "riftnormal",
+    "latitude": 23.791854,
+    "longitude": 23.791854,
+    "currentWaterLevel": 125,
+    "waterLevel": 220,
+    "description": "Бережанск. верхн."
+  },
+  {
+    "id": "f3de3498-4dfc-4170-b830-3c61fd1be94c",
+    "image": "riftnormal",
+    "latitude": 23.780485,
+    "longitude": 23.780485,
+    "currentWaterLevel": 125,
+    "waterLevel": 220,
+    "description": "Диковский "
+  }
+]
+
+
+arrayForChange.forEach((item) => { 
+  let changeItem = transformedArray.find((obj) => obj.id === item.id);
+  item.latitude = changeItem.latitude;
+  item.longitude = changeItem.longitude;
+ })
 // for (const key in data) {
 //   transformedArray.push({
 //     id: data[key].data.id,
@@ -1245,7 +727,7 @@ for (const key in data) {
 
 fs.writeFile(
   "asdf.js",
-  `module.exports = ${JSON.stringify(transformedArray, null, 2)}`,
+  `module.exports = ${JSON.stringify(arrayForChange, null, 2)}`,
   (err) => {
     if (err) {
       console.error("Error writing file:", err);
