@@ -5,6 +5,7 @@ import { api } from "../../../axiosConfig";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import LevelsGpTable from "./LevelsGpTable";
 
 const months = [
   "Январь",
@@ -81,13 +82,48 @@ const numberToMonth = (number) => {
   }
 };
 
+const numberToCaseMonth = (number) => {
+  // eslint-disable-next-line default-case
+  switch (number) {
+    case 0:
+      return "января";
+    case 1:
+      return "февраля";
+    case 2:
+      return "марта";
+    case 3:
+      return "апреля";
+    case 4:
+      return "мая";
+    case 5:
+      return "июня";
+    case 6:
+      return "июля";
+    case 7:
+      return "августа";
+    case 8:
+      return "сентября";
+    case 9:
+      return "октября";
+    case 10:
+      return "ноября";
+    case 11:
+      return "декабря";
+  }
+};
+
 export default function PathInformationPart(props) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [session, setSession] = useState();
   const [changes, setChanges] = useState([]);
+  const [sites, setSites] = useState([]);
+  const [levelsGp, setLevelsGp] = useState([]);
   const [month, setMonth] = useState(() => {
     let currentDate = new Date();
     return numberToMonth(currentDate.getMonth());
   });
+
+ 
 
   useEffect(() => {
     const getData = async () => {
@@ -95,29 +131,54 @@ export default function PathInformationPart(props) {
         const resSession = await api.get("/sessions/getByMonth", {
           params: { month: monthToNumber(month), river: props.river },
         });
+        if (resSession.data === "") setSession(null);
+        else
+          setSession({
+            ...resSession.data,
+            startDate: new Date(resSession.data.startDate),
+            endDate: new Date(resSession.data.endDate),
+          });
         
-        let currentDate = new Date();
-
-        setSession({
-          ...resSession.data,
-        });
-
         const resChanges = await api.get("/changes/getBySession", {
           params: { session: resSession.data.id },
         });
+        resChanges.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
         setChanges(resChanges.data);
+
+        const resSites = await api.get("/sites/getAllByRiver", {
+          params: { river: props.river },
+        });
+        setSites(resSites.data);
+        console.log(resSites);
+        const resLevelsGp = await api.get(
+          "/levelsGp/getAllByPeriodAndRiver",
+          {
+            params: {
+              startPeriod: new Date(resSession.data.startDate),
+              endPeriod: new Date(resSession.data.endDate),
+              river: props.river,
+            },
+          }
+        );
+        resLevelsGp.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
+        setLevelsGp(resLevelsGp.data);
+        setIsLoaded(true);
       } catch (err) {
         console.log(err);
       }
     };
     getData();
-  }, [month]);
+  }, [month, props.river]);
 
   const handleMonthChange = (event) => {
     let value = event.target.value;
     setMonth(value);
   };
-  console.log(Boolean(session));
+
   return (
     <Box
       sx={{
@@ -157,12 +218,23 @@ export default function PathInformationPart(props) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            width: "100%",
           }}
         >
-          <Typography sx={{ fontWeight: "bold", fontSize: 15, mt: 2 }}>АКТ</Typography>
+          <Typography sx={{ fontWeight: "bold", fontSize: 15, mt: 2 }}>
+            АКТ
+          </Typography>
           <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
             осмотра внутренних водных путей № _/202_
           </Typography>
+          <Typography className={styles.typography} sx={{ mt: 3 }}>
+            1. Комиссия в составе: {session.inspector1}, {session.inspector2},{" "}
+            {session.inspector3}, {session.inspector4}
+          </Typography>
+          <Typography className={styles.typography}>
+            2. Осмотр производился при уровнях воды по гидропостам:
+          </Typography>
+          <LevelsGpTable session={session} levelsGp={levelsGp} />
         </Box>
       )}
     </Box>

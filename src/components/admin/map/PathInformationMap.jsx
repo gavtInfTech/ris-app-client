@@ -458,13 +458,14 @@ const allSites = [
 ];
 
 export default function PathInformationMap(props) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [map, setMap] = useState(mapState);
   const [contentHeight, setContentHeight] = useState();
   const { pathname } = useLocation();
   const [signs, setSigns] = useState([]);
   const [sites, setSites] = useState([]);
   const [rifts, setRifts] = useState([]);
-  const [river, setRiver] = useState();
+  const [river, setRiver] = useState("Днепр");
   const [displaySigns, setDisplaySigns] = useState(true);
   const [displayRifts, setDisplayRifts] = useState(false);
 
@@ -539,6 +540,7 @@ export default function PathInformationMap(props) {
     setSigns(riverSigns);
     setSites(riverSites);
     setRifts(riverRifts);
+    setIsLoaded(true);
   }, [pathname, props.signs]);
 
   const polylines = sites.map((site) => {
@@ -648,7 +650,7 @@ export default function PathInformationMap(props) {
         sx={{ maxHeight: contentHeight + "px" }}
         className={styles.infoPart}
       >
-        <PathInformationPart river={river}/>
+       { isLoaded && <PathInformationPart river={river}/> }
       </Box>
       <Box className={styles.mapPart}>
         <YMaps>
