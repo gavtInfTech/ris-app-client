@@ -6,6 +6,25 @@ import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import LevelsGpTable from "./LevelsGpTable";
+import GabsTableSib from "./GabsTableSib";
+import GabsTableActual from "./GabsTableActual";
+import {getSiteByCoords} from "../../vvp/qwes"
+import DocxFile from "./DocxFile";
+
+function customComparator(a, b) {
+  const A = a.name.split(' ')[0].split('.');
+  const B = b.name.split(' ')[0].split('.');
+
+  for (let i = 0; i < Math.max(A.length, B.length); i++) {
+    const partA = parseInt(A[i]) || 0;
+    const partB = parseInt(B[i]) || 0;
+
+    if (partA !== partB) {
+      return partA - partB;
+    }
+  }
+  return 0;
+}
 
 const months = [
   "Январь",
@@ -115,15 +134,16 @@ const numberToCaseMonth = (number) => {
 export default function PathInformationPart(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [session, setSession] = useState();
-  const [changes, setChanges] = useState([]);
   const [sites, setSites] = useState([]);
+  const [siteAccordances, setSiteAccordances] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [signNotices, setSignNotices] = useState([]);
   const [levelsGp, setLevelsGp] = useState([]);
+  const [gabs, setGabs] = useState([]);
   const [month, setMonth] = useState(() => {
     let currentDate = new Date();
     return numberToMonth(currentDate.getMonth());
   });
-
- 
 
   useEffect(() => {
     const getData = async () => {
@@ -138,34 +158,72 @@ export default function PathInformationPart(props) {
             startDate: new Date(resSession.data.startDate),
             endDate: new Date(resSession.data.endDate),
           });
-        
-        const resChanges = await api.get("/changes/getBySession", {
-          params: { session: resSession.data.id },
-        });
-        resChanges.data.forEach((item) => {
-          item.date = new Date(item.date);
-        });
-        setChanges(resChanges.data);
 
         const resSites = await api.get("/sites/getAllByRiver", {
           params: { river: props.river },
         });
-        setSites(resSites.data);
-        console.log(resSites);
-        const resLevelsGp = await api.get(
-          "/levelsGp/getAllByPeriodAndRiver",
-          {
-            params: {
-              startPeriod: new Date(resSession.data.startDate),
-              endPeriod: new Date(resSession.data.endDate),
-              river: props.river,
-            },
-          }
-        );
+        setSites(resSites.data.sort(customComparator));
+
+        const resLevelsGp = await api.get("/levelsGp/getAllByPeriodAndRiver", {
+          params: {
+            startPeriod: new Date(resSession.data.startDate),
+            endPeriod: new Date(resSession.data.endDate),
+            river: props.river,
+          },
+        });
         resLevelsGp.data.forEach((item) => {
           item.date = new Date(item.date);
         });
         setLevelsGp(resLevelsGp.data);
+
+        const resGabs = await api.get("/gabs/getAllByPeriodAndRiver", {
+          params: {
+            startPeriod: new Date(resSession.data.startDate),
+            endPeriod: new Date(resSession.data.endDate),
+            river: props.river,
+          },
+        });
+        resGabs.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
+        setGabs(resGabs.data);
+
+        const resAlerts = await api.get("/alerts/getAllByPeriodAndRiver", {
+          params: {
+            startPeriod: new Date(resSession.data.startDate),
+            endPeriod: new Date(resSession.data.endDate),
+            river: props.river,
+          },
+        });
+        resAlerts.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
+        setAlerts(resAlerts.data);
+
+        const resSignNotices = await api.get("/signNotices/getAllByPeriodAndRiver", {
+          params: {
+            startPeriod: new Date(resSession.data.startDate),
+            endPeriod: new Date(resSession.data.endDate),
+            river: props.river,
+          },
+        });
+        resSignNotices.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
+        setSignNotices(resSignNotices.data);
+        console.log(resSignNotices.data);
+        const resSiteAccordances = await api.get("/siteAccordances/getAllByPeriodAndRiver", {
+          params: {
+            startPeriod: new Date(resSession.data.startDate),
+            endPeriod: new Date(resSession.data.endDate),
+            river: props.river,
+          },
+        });
+        resSiteAccordances.data.forEach((item) => {
+          item.date = new Date(item.date);
+        });
+        setSiteAccordances(resSiteAccordances.data);
+        
         setIsLoaded(true);
       } catch (err) {
         console.log(err);
@@ -178,6 +236,23 @@ export default function PathInformationPart(props) {
     let value = event.target.value;
     setMonth(value);
   };
+
+  let notices = [];
+  for (let i = 0; i < sites.length; i++) {
+    let n = 1;
+    notices.push(<Typography className={styles.typography}>5.{i + 1}. На участке {sites[i].name}:</Typography>)
+    for (let j = 0; j < signNotices.length; j++) {
+      if (sites[i].name === getSiteByCoords(props.river, [signNotices[j].latitude, signNotices[j].longitude], sites)) {
+        notices.push(<Typography className={styles.typography}>5.{i + 1}.{j + 1}. {signNotices[j].comment} </Typography>)
+      }
+    }
+  }
+  console.log(alerts);
+  if (alerts.length > 0) {
+    for (let i = 0; i < alerts.length; i++) {
+      notices.push(<Typography className={styles.typography}>5.{i + 1 + sites.length}. {alerts[i].comment} </Typography>)
+    }
+  }
 
   return (
     <Box
@@ -212,7 +287,7 @@ export default function PathInformationPart(props) {
         </Typography>
       )}
 
-      {Boolean(session) && (
+      {Boolean(session) && isLoaded && (
         <Box
           sx={{
             display: "flex",
@@ -235,6 +310,28 @@ export default function PathInformationPart(props) {
             2. Осмотр производился при уровнях воды по гидропостам:
           </Typography>
           <LevelsGpTable session={session} levelsGp={levelsGp} />
+          <Typography className={styles.typography}>
+            3. Минимальные габариты судового хода согласно заданию по
+            дифференцированным гарантированным габаритам внутреннего водного
+            пути должны составлять:
+          </Typography>
+          <GabsTableSib session={session} sites={sites} siteAccordances={siteAccordances} gabs={gabs} />
+          <Typography className={styles.typography}>
+            4. Промеры габаритов на перекатах осмотренных участков водного пути
+            соответствуют заданию по дифференцированным гарантированным
+            габаритам и сведениям о фактических габаритах, отраженным в сводном
+            информационном бюллетене с «{session.startDate.getDate()}»{" "}
+            {numberToCaseMonth(session.startDate.getMonth())}{" "}
+            {session.startDate.getFullYear()} г. по «{session.endDate.getDate()}»{" "}
+            {numberToCaseMonth(session.endDate.getMonth())} {session.endDate.getFullYear()}{" "}
+            г. Фактические минимальные габариты на перекатах составили:
+          </Typography>
+          <GabsTableActual sites={sites} siteAccordances={siteAccordances} gabs={gabs} />
+          <Typography className={styles.typography}>
+            5. Рекомендации комиссии по улучшению судоходных условий на участках внутренних водных путей Республики Беларусь р. {props.river}:
+          </Typography>
+          {notices}
+          <DocxFile />
         </Box>
       )}
     </Box>

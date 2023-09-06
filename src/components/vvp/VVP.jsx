@@ -11,34 +11,6 @@ import {
 import { api } from "../../axiosConfig";
 import { hydroposts } from "../waterLevels/levelsGp/data";
 import { hydronodes } from "../waterLevels/levelsGu/data";
-import { coordsDnepr } from "./FairwayDnepr";
-import { zeroPointDnepr } from "./FairwayDnepr";
-import { coordsBerezina } from "./FairwayBerezina";
-import { zeroPointBerezina } from "./FairwayBerezina";
-import { coordsNeman } from "./FairwayNeman";
-import { zeroPointNeman } from "./FairwayNeman";
-import { coordsSozh } from "./FairwaySozh";
-import { zeroPointSozh } from "./FairwaySozh";
-import { coordsWestDvina } from "./FairwayWestDvina";
-import { zeroPointWestDvina } from "./FairwayWestDvina";
-import { coordsDbk } from "./FairwayDbk";
-import { zeroPointDbk } from "./FairwayDbk";
-import { coordsMuhavets } from "./FairwayMuhavets";
-import { zeroPointMuhavets } from "./FairwayMuhavets";
-import { coordsPina } from "./FairwayPina";
-import { zeroPointPina } from "./FairwayPina";
-import { coordsUpperPripyat } from "./FairwayUpperPripyat";
-import { zeroPointUpperPripyat } from "./FairwayUpperPripyat";
-import { coordsAvgCanal } from "./FairwayAvgCanal";
-import { zeroPointAvgCanal } from "./FairwayAvgCanal";
-import { coordsPripyat } from "./FairwayPripyat";
-import { zeroPointPripyat } from "./FairwayPripyat";
-import { coordsMikhashevichy } from "./FairwayMikhashevichy";
-import { zeroPointMikhashevichy } from "./FairwayMikhashevichy";
-import { coordsGorin } from "./FairwayGorin";
-import { zeroPointGorin } from "./FairwayGorin";
-import { coordsTurov } from "./FairwayTurov";
-import { zeroPointTurov } from "./FairwayTurov";
 import { findSegmentByKilometer } from "./qwes";
 
 const rivers = [
@@ -72,169 +44,168 @@ const sites = [
   {
     river: "Днепр",
     name: "1.1 дер.Левки (воздушный переход) – Прудки III",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1531, 1575),
+    coords: findSegmentByKilometer("Днепр", 1531, 1575),
   },
   {
     river: "Днепр",
     name: "1.2 Прудки III – Могилев (мостовой переход)",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1502, 1531),
+    coords: findSegmentByKilometer("Днепр", 1502, 1531),
   },
   {
     river: "Днепр",
     name: "1.3 Могилев (мостовой переход) – прк. Стайки III",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1476, 1502),
+    coords: findSegmentByKilometer("Днепр", 1476, 1502),
   },
   {
     river: "Днепр",
     name: "1.4 прк. Стайки III – Быхов",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1439, 1476),
+    coords: findSegmentByKilometer("Днепр", 1439, 1476),
   },
   {
     river: "Днепр",
     name: "1.5 Быхов – у.р. Друть",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1313.5, 1439),
+    coords: findSegmentByKilometer("Днепр", 1313.5, 1439),
   },
   {
     river: "Днепр",
     name: "1.6 у.р. Друть – у.р. Березины",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1206, 1313.5),
+    coords: findSegmentByKilometer("Днепр", 1206, 1313.5),
   },
   {
     river: "Днепр",
     name: "1.7 у.р. Березины – прк. Черное I",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1188, 1206),
+    coords: findSegmentByKilometer("Днепр", 1188, 1206),
   },
   {
     river: "Днепр",
     name: "1.8 прк. Черное I – Речицкий ССРЗ",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1180, 1188),
+    coords: findSegmentByKilometer("Днепр", 1180, 1188),
   },
   {
     river: "Днепр",
     name: "1.9 Речицкий ССРЗ – прк. Боровая I",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1150, 1180),
+    coords: findSegmentByKilometer("Днепр", 1150, 1180),
   },
   {
     river: "Днепр",
     name: "1.10 прк. Боровая I – Подречицкое",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1098, 1150),
+    coords: findSegmentByKilometer("Днепр", 1098, 1150),
   },
   {
     river: "Днепр",
     name: "1.11 Подречицкое – 1082 км",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1082, 1098),
+    coords: findSegmentByKilometer("Днепр", 1082, 1098),
   },
   {
     river: "Днепр",
     name: "1.12 1082 км – Каменка",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1080, 1082),
+    coords: findSegmentByKilometer("Днепр", 1080, 1082),
   },
   {
     river: "Днепр",
     name: "1.13 Каменка – н.п. Любеч (гр. Белводпуть - Укрводпуть)",
-    coords: findSegmentByKilometer(coordsDnepr, zeroPointDnepr, 1044.5, 1080),
+    coords: findSegmentByKilometer("Днепр", 1044.5, 1080),
   },
   {
     river: "Березина",
     name: "2.1 г.Березино (Березино пристань) – у.р. Волчанки",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 199, 303),
+    coords: findSegmentByKilometer("Березина", 199, 303),
   },
   {
     river: "Березина",
     name: "2.2 у.р. Волчанки – Бобруйский порт",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 170, 199),
+    coords: findSegmentByKilometer("Березина", 170, 199),
   },
   {
     river: "Березина",
     name: "2.3 Бобруйский порт – прк. Волышино",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 145, 170),
+    coords: findSegmentByKilometer("Березина", 145, 170),
   },
   {
     river: "Березина",
     name: "2.4 прк. Волышино – оз. Сельное",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 61, 145),
+    coords: findSegmentByKilometer("Березина", 61, 145),
   },
   {
     river: "Березина",
     name: "2.5 оз. Сельное – Якимова Слобода IV",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 52, 61),
+    coords: findSegmentByKilometer("Березина", 52, 61),
   },
   {
     river: "Березина",
     name: "2.6 Якимова Слобода IV – устье реки Березина",
-    coords: findSegmentByKilometer(coordsBerezina, zeroPointBerezina, 0, 52),
+    coords: findSegmentByKilometer("Березина", 0, 52),
   },
   {
     river: "Сож",
     name: "3.1 г. Славгород (Славгород - город) – Чечерский а/м мост",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 205, 300),
+    coords: findSegmentByKilometer("Сож", 205, 300),
   },
   {
     river: "Сож",
     name: "3.2.1 Чечерский автомобильный мост - пкр. у.р.Беседь 2",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 147, 205),
+    coords: findSegmentByKilometer("Сож", 147, 205),
   },
   {
     river: "Сож",
     name: "3.2.2 прк. у.р.Беседь 2 - прк. Крысин 1",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 128, 147),
+    coords: findSegmentByKilometer("Сож", 128, 147),
   },
   {
     river: "Сож",
     name: "3.3 прк. Крысин 1- Гомель пристань",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 106, 128),
+    coords: findSegmentByKilometer("Сож", 106, 128),
   },
   {
     river: "Сож",
     name: "3.4 Гомель пристань – порт Осовцы",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 96, 106),
+    coords: findSegmentByKilometer("Сож", 96, 106),
   },
   {
     river: "Сож",
     name: "3.5 порт Осовцы – прк. Никольский 3",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 78, 96),
+    coords: findSegmentByKilometer("Сож", 78, 96),
   },
   {
     river: "Сож",
     name: "3.6 прк. Никольский 3 – 35 км",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 35, 78),
+    coords: findSegmentByKilometer("Сож", 35, 78),
   },
   {
     river: "Сож",
     name: "3.7 35 км – прк. Карповка 1",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 17, 35),
+    coords: findSegmentByKilometer("Сож", 17, 35),
   },
   {
     river: "Сож",
     name: "3.8 прк. Карповка 1 – устье реки Сож",
-    coords: findSegmentByKilometer(coordsSozh, zeroPointSozh, 0, 17),
+    coords: findSegmentByKilometer("Сож", 0, 17),
   },
   {
     river: "Неман",
     name: "4.1 деревня Щечицы (вход в затон Яблоново) – д. Ковшово",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 558, 573),
+    coords: findSegmentByKilometer("Неман", 558, 573),
   },
   {
     river: "Неман",
     name: "4.2 деревня Ковшово – Гродненская ГЭС",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 528, 558),
+    coords: findSegmentByKilometer("Неман", 528, 558),
   },
   {
     river: "Неман",
     name: "4.3.1 Гродненская ГЭС - прк. Городнянка",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 515, 528),
+    coords: findSegmentByKilometer("Неман", 515, 528),
   },
   {
     river: "Неман",
     name: "4.3.2 прк. Городнянка - граница с Литовской Республикой",
-    coords: findSegmentByKilometer(coordsNeman, zeroPointNeman, 481, 515),
+    coords: findSegmentByKilometer("Неман", 481, 515),
   },
   {
     river: "Мухавец",
     name: '5.1 г. Брест (речной порт Брест) – г/у "Тришин"',
     coords: findSegmentByKilometer(
-      coordsMuhavets,
-      zeroPointMuhavets,
+      "Мухавец",
       54.3,
       58.3
     ),
@@ -243,8 +214,7 @@ const sites = [
     river: "Мухавец",
     name: '5.2 г/у "Тришин" – г/у "Новосады"',
     coords: findSegmentByKilometer(
-      coordsMuhavets,
-      zeroPointMuhavets,
+      "Мухавец",
       35.4,
       54.3
     ),
@@ -252,39 +222,38 @@ const sites = [
   {
     river: "Мухавец",
     name: "5.3 г/у Новосады – г.Кобрин (слияние р. Мухавец и ДБК)",
-    coords: findSegmentByKilometer(coordsMuhavets, zeroPointMuhavets, 0, 35.4),
+    coords: findSegmentByKilometer("Мухавец", 0, 35.4),
   },
   {
     river: "Днепро-Бугский канал",
     name: "6.1 г. Кобрин (слияние р. Мухавец и ДБК) – слияние ДБК и р.Пина",
-    coords: findSegmentByKilometer(coordsDbk, zeroPointDbk, 0, 92.5),
+    coords: findSegmentByKilometer("Днепро-Бугский канал", 0, 92.5),
   },
   {
     river: "Пина",
     name: '7.1.1 слияние ДБК и реки Пина-г/у "Дубой"',
-    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 28, 41.2),
+    coords: findSegmentByKilometer("Пина", 28, 41.2),
   },
   {
     river: "Пина",
     name: '7.1.2 г/у "Дубой" – порт Пинск',
-    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 9.7, 28),
+    coords: findSegmentByKilometer("Пина", 9.7, 28),
   },
   {
     river: "Пина",
     name: "7.2 порт Пинск – г.Пинск (сл. рек Пина и Припять)",
-    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0.7, 9.7),
+    coords: findSegmentByKilometer("Пина", 0.7, 9.7),
   },
   {
     river: "Пина",
     name: '7.3 Слияние р.Пина и Припять – знак "Запрещение прохода"',
-    coords: findSegmentByKilometer(coordsPina, zeroPointPina, 0, 0.7),
+    coords: findSegmentByKilometer("Пина", 0, 0.7),
   },
   {
     river: "Верхний участок реки Припять",
     name: "8.1 7 км реки Припять – г.Пинск (слияние рек Пина и Припять)",
     coords: findSegmentByKilometer(
-      coordsUpperPripyat,
-      zeroPointUpperPripyat,
+      "Верхний участок реки Припять",
       0,
       8
     ),
@@ -292,59 +261,58 @@ const sites = [
   {
     river: "Припять",
     name: '9.1 г.Пинск (сл. рр Пина и Припять) – г/у "Качановичи"',
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 505.5, 530),
+    coords: findSegmentByKilometer("Припять", 505.5, 530),
   },
   {
     river: "Припять",
     name: '9.2 г/у "Качановичи" – г/у "Стахово"',
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 480, 505.5),
+    coords: findSegmentByKilometer("Припять", 480, 505.5),
   },
   {
     river: "Припять",
     name: '9.3 г/у "Стахово" – устье р. Горынь',
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 422, 480),
+    coords: findSegmentByKilometer("Припять", 422, 480),
   },
   {
     river: "Припять",
     name: "9.4 устье р. Горынь – устье Микашевичского канала",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 410, 422),
+    coords: findSegmentByKilometer("Припять", 410, 422),
   },
   {
     river: "Припять",
     name: "9.5 устье Микашевичского канала - затон Кабачок",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 309, 410),
+    coords: findSegmentByKilometer("Припять", 309, 410),
   },
   {
     river: "Припять",
     name: "9.6 затон Кабачок - у.р. Птичь",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 230, 309),
+    coords: findSegmentByKilometer("Припять", 230, 309),
   },
   {
     river: "Припять",
     name: "9.7 у.р. Птичь - Пховский затон",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 189, 230),
+    coords: findSegmentByKilometer("Припять", 189, 230),
   },
   {
     river: "Припять",
     name: "9.8 Пховский затон - Мозырская БНС",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 172, 189),
+    coords: findSegmentByKilometer("Припять", 172, 189),
   },
   {
     river: "Припять",
     name: "9.9 Мозырская БНС - прк. Довлядовское спрямление",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 81, 172),
+    coords: findSegmentByKilometer("Припять", 81, 172),
   },
   {
     river: "Припять",
     name: "9.10 прк. Довлядовское спрямление - прк. Усовский 1 (граница с Украиной)",
-    coords: findSegmentByKilometer(coordsPripyat, zeroPointPripyat, 63, 81),
+    coords: findSegmentByKilometer("Припять", 63, 81),
   },
   {
     river: "Микашевичский канал",
     name: "10.1 устье Микашевичского канала – р.п. Микашевичи",
     coords: findSegmentByKilometer(
-      coordsMikhashevichy,
-      zeroPointMikhashevichy,
+      "Микашевичский канал",
       0,
       6
     ),
@@ -352,14 +320,13 @@ const sites = [
   {
     river: "Горынь",
     name: "11.1 перекат Комора-2 – устье реки Горынь",
-    coords: findSegmentByKilometer(coordsGorin, zeroPointGorin, 0, 13.8),
+    coords: findSegmentByKilometer("Горынь", 0, 13.8),
   },
   {
     river: "Западная Двина",
     name: "12.1 деревня Сураж – д. Круподеры",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       657,
       673
     ),
@@ -368,8 +335,7 @@ const sites = [
     river: "Западная Двина",
     name: "12.2 д. Круподеры – Витебская ГЭС",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       626,
       657
     ),
@@ -378,8 +344,7 @@ const sites = [
     river: "Западная Двина",
     name: "12.3 Витебская ГЭС – Витебск (груз.) порт",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       606,
       626
     ),
@@ -388,8 +353,7 @@ const sites = [
     river: "Западная Двина",
     name: "12.4 Витебск (груз.) порт – д. Слобода",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       586,
       606
     ),
@@ -398,8 +362,7 @@ const sites = [
     river: "Западная Двина",
     name: "12.5 д. Слобода – г. Бешенковичи",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       548,
       586
     ),
@@ -408,8 +371,7 @@ const sites = [
     river: "Западная Двина",
     name: "12.6 г. Бешенковичи – прк. Сосница",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       480,
       548
     ),
@@ -418,8 +380,7 @@ const sites = [
     river: "Западная Двина",
     name: "12.7 прк. Сосница – Полоцкая гидроэлектростанция",
     coords: findSegmentByKilometer(
-      coordsWestDvina,
-      zeroPointWestDvina,
+      "Западная Двина",
       476,
       480
     ),
@@ -427,17 +388,17 @@ const sites = [
   {
     river: "Туровский затон",
     name: "13.1 г. Туров (вход в затон) – г. Туров (причал)",
-    coords: findSegmentByKilometer(coordsTurov, zeroPointTurov, 0, 1.6),
+    coords: findSegmentByKilometer("Туровский затон", 0, 1.6),
   },
   {
     river: "Августовский канал",
     name: "14.1 Граница с Республикой Польша –16 км Августовского канала",
-    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 16, 21.6),
+    coords: findSegmentByKilometer("Августовский канал", 16, 21.6),
   },
   {
     river: "Августовский канал",
     name: "14.2 16 км Августовского канала – устье Августовского канала (слияние с рекой Неман)",
-    coords: findSegmentByKilometer(coordsAvgCanal, zeroPointAvgCanal, 0, 16),
+    coords: findSegmentByKilometer("Августовский канал", 0, 16),
   },
   {
     river: "Свислочь",

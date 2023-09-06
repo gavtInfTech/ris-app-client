@@ -129,7 +129,7 @@ export const hydronodes = [
         level2: '—',
         level1Change: '—',
         level2Change: '—',
-        coords: [52.083828006110416, 23.663883865425976]
+        coords: [52.084453, 23.676813]
     },
     {
         id: 13,

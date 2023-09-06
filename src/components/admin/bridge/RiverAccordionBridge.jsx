@@ -5,8 +5,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box } from "@mui/system";
-import Bridge from "./Bridge";
-import { AuthContext } from "../../../contexts/AuthContext";
+import Bridge from "./Bridge.jsx";
+import { AuthContext } from "../../../contexts/AuthContext.jsx";
 
 const getBridges = (river, bridgeGroups) => {
   // eslint-disable-next-line default-case

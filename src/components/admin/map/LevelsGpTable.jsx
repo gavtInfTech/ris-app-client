@@ -13,9 +13,8 @@ export default function LevelsGpTable(props) {
     let rows = [];
     let headerCells = [];
     headerCells.push(<td className={styles.th}>Гидропост</td>);
-    console.log(props.levelsGp)
+
     props.levelsGp.forEach((item) => {
-        console.log(item);
       if (!hydroposts.includes(item.hydropost)) hydroposts.push(item.hydropost);
     });
 
