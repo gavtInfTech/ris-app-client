@@ -3,21 +3,6 @@ import { useState, useEffect } from "react";
 import { numberToCaseMonth } from "./numberToCaseMonth";
 import styles from "./style.module.css";
 
-function customComparator(a, b) {
-    const A = a.name.split(' ')[0].split('.');
-    const B = b.name.split(' ')[0].split('.');
-
-    for (let i = 0; i < Math.max(A.length, B.length); i++) {
-      const partA = parseInt(A[i]) || 0;
-      const partB = parseInt(B[i]) || 0;
-  
-      if (partA !== partB) {
-        return partA - partB;
-      }
-    }
-    return 0;
-  }
-
 export default function GabsTableSib(props) {
   const [headerCells, setHeaderCells] = useState([]);
   const [rows, setRows] = useState([]);

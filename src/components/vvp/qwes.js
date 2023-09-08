@@ -160,10 +160,7 @@ export function getSiteByCoords(river, targetCoords, sites) {
     sum += haversineDistance(riverCoords[i], riverCoords[i + 1]);
   }
 
-  console.log(sum)
   for (const site of sites) {
-    console.log(site.firstKM, site.secondKM)
-    console.log(sum)
     if (sum >= site.firstKM && sum <= site.secondKM) {
       return site.name;
     }

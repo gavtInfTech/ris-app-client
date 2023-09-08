@@ -1,4 +1,4 @@
-import { React, lazy } from "react";
+import { React, lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import "./index.css";
@@ -20,16 +20,18 @@ import LevelsMenu from "./components/waterLevels/LevelsMenu";
 import Registration from "./components/login/Registration";
 import CommonSib from "./components/sib/CommonSib";
 import MainGabs from "./components/gabsPage/MainGabs";
-// import MainTabClient from "./components/client/MainTabClient";
+import MainTab from "./components/admin/MainTab";
+import MainTabClient from "./components/client/MainTabClient";
 import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
-// import PathInformationMenu from "./components/admin/PathInformationMenu";
-const PathInformationMenu = lazy(() => import("./components/admin/PathInformationMenu"));
-const MainTabClient = lazy(() => import("./components/client/MainTabClient")); 
-const MainTab = lazy(() => import("./components/admin/MainTab"));
+import PathInformationMenu from "./components/admin/PathInformationMenu";
+// const PathInformationMenu = lazy(() => import("./components/admin/PathInformationMenu"));
+// const MainTabClient = lazy(() => import("./components/client/MainTabClient")); 
+// const MainTab = lazy(() => import("./components/admin/MainTab"));
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+ 
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Navigate to="/vvp" />} />
           <Route path="/vvp" element={<VVP />} />
@@ -88,6 +90,7 @@ export default function App() {
             <Route path="/client/*" element={<MainTabClient />}></Route>
           </Route>
         </Route>
+   
       </Routes>
     </BrowserRouter>
   );

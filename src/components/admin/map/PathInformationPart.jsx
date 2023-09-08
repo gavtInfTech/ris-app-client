@@ -8,12 +8,12 @@ import MenuItem from "@mui/material/MenuItem";
 import LevelsGpTable from "./LevelsGpTable";
 import GabsTableSib from "./GabsTableSib";
 import GabsTableActual from "./GabsTableActual";
-import {getSiteByCoords} from "../../vvp/qwes"
+import { getSiteByCoords } from "../../vvp/qwes";
 import DocxFile from "./DocxFile";
 
 function customComparator(a, b) {
-  const A = a.name.split(' ')[0].split('.');
-  const B = b.name.split(' ')[0].split('.');
+  const A = a.name.split(" ")[0].split(".");
+  const B = b.name.split(" ")[0].split(".");
 
   for (let i = 0; i < Math.max(A.length, B.length); i++) {
     const partA = parseInt(A[i]) || 0;
@@ -200,30 +200,36 @@ export default function PathInformationPart(props) {
         });
         setAlerts(resAlerts.data);
 
-        const resSignNotices = await api.get("/signNotices/getAllByPeriodAndRiver", {
-          params: {
-            startPeriod: new Date(resSession.data.startDate),
-            endPeriod: new Date(resSession.data.endDate),
-            river: props.river,
-          },
-        });
+        const resSignNotices = await api.get(
+          "/signNotices/getAllByPeriodAndRiver",
+          {
+            params: {
+              startPeriod: new Date(resSession.data.startDate),
+              endPeriod: new Date(resSession.data.endDate),
+              river: props.river,
+            },
+          }
+        );
         resSignNotices.data.forEach((item) => {
           item.date = new Date(item.date);
         });
         setSignNotices(resSignNotices.data);
         console.log(resSignNotices.data);
-        const resSiteAccordances = await api.get("/siteAccordances/getAllByPeriodAndRiver", {
-          params: {
-            startPeriod: new Date(resSession.data.startDate),
-            endPeriod: new Date(resSession.data.endDate),
-            river: props.river,
-          },
-        });
+        const resSiteAccordances = await api.get(
+          "/siteAccordances/getAllByPeriodAndRiver",
+          {
+            params: {
+              startPeriod: new Date(resSession.data.startDate),
+              endPeriod: new Date(resSession.data.endDate),
+              river: props.river,
+            },
+          }
+        );
         resSiteAccordances.data.forEach((item) => {
           item.date = new Date(item.date);
         });
         setSiteAccordances(resSiteAccordances.data);
-        
+
         setIsLoaded(true);
       } catch (err) {
         console.log(err);
@@ -240,17 +246,36 @@ export default function PathInformationPart(props) {
   let notices = [];
   for (let i = 0; i < sites.length; i++) {
     let n = 1;
-    notices.push(<Typography className={styles.typography}>5.{i + 1}. На участке {sites[i].name}:</Typography>)
+    notices.push(
+      <Typography className={styles.typography}>
+        5.{i + 1}. На участке {sites[i].name}:
+      </Typography>
+    );
     for (let j = 0; j < signNotices.length; j++) {
-      if (sites[i].name === getSiteByCoords(props.river, [signNotices[j].latitude, signNotices[j].longitude], sites)) {
-        notices.push(<Typography className={styles.typography}>5.{i + 1}.{j + 1}. {signNotices[j].comment} </Typography>)
+      if (
+        sites[i].name ===
+        getSiteByCoords(
+          props.river,
+          [signNotices[j].latitude, signNotices[j].longitude],
+          sites
+        )
+      ) {
+        notices.push(
+          <Typography className={styles.typography}>
+            5.{i + 1}.{j + 1}. {signNotices[j].comment}{" "}
+          </Typography>
+        );
       }
     }
   }
-  console.log(alerts);
+
   if (alerts.length > 0) {
     for (let i = 0; i < alerts.length; i++) {
-      notices.push(<Typography className={styles.typography}>5.{i + 1 + sites.length}. {alerts[i].comment} </Typography>)
+      notices.push(
+        <Typography className={styles.typography}>
+          5.{i + 1 + sites.length}. {alerts[i].comment}{" "}
+        </Typography>
+      );
     }
   }
 
@@ -300,11 +325,11 @@ export default function PathInformationPart(props) {
             АКТ
           </Typography>
           <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
-            осмотра внутренних водных путей № _/202_
+            осмотра внутренних водных путей № _/2023
           </Typography>
           <Typography className={styles.typography} sx={{ mt: 3 }}>
-            1. Комиссия в составе: {session.inspector1}, {session.inspector2},{" "}
-            {session.inspector3}, {session.inspector4}
+            1. Комиссия в составе: {session.inspector1 !== null && session.inspector1}, {session.inspector1 !== null && session.inspector2},{" "}
+            {session.inspector1 !== null && session.inspector3}, {session.inspector1 !== null && session.inspector4}
           </Typography>
           <Typography className={styles.typography}>
             2. Осмотр производился при уровнях воды по гидропостам:
@@ -315,23 +340,43 @@ export default function PathInformationPart(props) {
             дифференцированным гарантированным габаритам внутреннего водного
             пути должны составлять:
           </Typography>
-          <GabsTableSib session={session} sites={sites} siteAccordances={siteAccordances} gabs={gabs} />
+          <GabsTableSib
+            session={session}
+            sites={sites}
+            siteAccordances={siteAccordances}
+            gabs={gabs}
+          />
           <Typography className={styles.typography}>
             4. Промеры габаритов на перекатах осмотренных участков водного пути
             соответствуют заданию по дифференцированным гарантированным
             габаритам и сведениям о фактических габаритах, отраженным в сводном
             информационном бюллетене с «{session.startDate.getDate()}»{" "}
             {numberToCaseMonth(session.startDate.getMonth())}{" "}
-            {session.startDate.getFullYear()} г. по «{session.endDate.getDate()}»{" "}
-            {numberToCaseMonth(session.endDate.getMonth())} {session.endDate.getFullYear()}{" "}
-            г. Фактические минимальные габариты на перекатах составили:
+            {session.startDate.getFullYear()} г. по «{session.endDate.getDate()}
+            » {numberToCaseMonth(session.endDate.getMonth())}{" "}
+            {session.endDate.getFullYear()} г. Фактические минимальные габариты
+            на перекатах составили:
           </Typography>
-          <GabsTableActual sites={sites} siteAccordances={siteAccordances} gabs={gabs} />
+          <GabsTableActual
+            sites={sites}
+            siteAccordances={siteAccordances}
+            gabs={gabs}
+          />
           <Typography className={styles.typography}>
-            5. Рекомендации комиссии по улучшению судоходных условий на участках внутренних водных путей Республики Беларусь р. {props.river}:
+            5. Рекомендации комиссии по улучшению судоходных условий на участках
+            внутренних водных путей Республики Беларусь р. {props.river}:
           </Typography>
           {notices}
-          <DocxFile />
+          <DocxFile
+            river={props.river}
+            session={session}
+            levelsGp={levelsGp}
+            sites={sites}
+            siteAccordances={siteAccordances}
+            gabs={gabs}
+            alerts={alerts}
+            signNotices={signNotices}
+          />
         </Box>
       )}
     </Box>
