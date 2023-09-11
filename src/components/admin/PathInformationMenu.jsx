@@ -84,30 +84,16 @@ export default function PathInformationMenu() {
           />
             <Tab
             sx={{ width: 200, height: 70, fontSize: 14 }}
-            label="Мухавец"
-            value={`/path-information/muhavets`}
-            to={`/path-information/muhavets`}
-            component={Link}
-          />
-            <Tab
-            sx={{ width: 200, height: 70, fontSize: 14 }}
-            label="Днепро-Бугский канал"
-            value={`/path-information/dbk`}
-            to={`/path-information/dbk`}
-            component={Link}
-          />
-            <Tab
-            sx={{ width: 200, height: 70, fontSize: 14 }}
-            label="Пина"
-            value={`/path-information/pina`}
-            to={`/path-information/pina`}
+            label="Припять-Микашевичи"
+            value={`/path-information/pripyat1`}
+            to={`/path-information/pripyat1`}
             component={Link}
           />
                <Tab
             sx={{ width: 200, height: 70, fontSize: 14 }}
-            label="Припять"
-            value={`/path-information/pripyat`}
-            to={`/path-information/pripyat`}
+            label="Микашевичи-Брест"
+            value={`/path-information/pripyat2`}
+            to={`/path-information/pripyat2`}
             component={Link}
           />
              <Tab
@@ -129,19 +115,11 @@ export default function PathInformationMenu() {
         <Route path="/dvina" element={<PathInformationMap signs={signs} rifts={rifts} />} />
         <Route path="/neman" element={<PathInformationMap signs={signs} rifts={rifts} />} />
         <Route
-          path="/muhavets" 
+          path="/pripyat1" 
           element={<PathInformationMap signs={signs} rifts={rifts} />}
         />
         <Route
-          path="/dbk" 
-          element={<PathInformationMap signs={signs} rifts={rifts} />}
-        />
-        <Route
-          path="/pina" 
-          element={<PathInformationMap signs={signs} rifts={rifts} />}
-        />
-        <Route
-          path="/pripyat"
+          path="/pripyat2"
           element={<PathInformationMap signs={signs} rifts={rifts} />}
         />
         <Route path="/soj" element={<PathInformationMap signs={signs} rifts={rifts} />} />
