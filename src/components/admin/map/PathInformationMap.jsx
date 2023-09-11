@@ -474,6 +474,7 @@ export default function PathInformationMap(props) {
       case "/path-information/pripyat2":
         setRiver("Микашевичи-Брест");
         riverSigns = props.signs.filter((sign) => sign.river === "Припять2");
+        console.log(riverSigns);
         riverSites = allSites.filter((site) => site.river === "Припять");
         riverRifts = props.rifts.filter((rift) => rift.river === "Припять2");
         break;

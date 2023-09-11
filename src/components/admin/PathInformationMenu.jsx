@@ -18,6 +18,7 @@ export default function PathInformationMenu() {
     const getSigns = async () => {
       try {
         const resSigns = await api.get("/signs/getAll");
+        console.log(resSigns.data);
         const resRifts = await api.get("/rifts/getAll");
         setSigns(resSigns.data);
         setRifts(resRifts.data);
