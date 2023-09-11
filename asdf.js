@@ -1,2009 +1,1325 @@
 module.exports = [
   {
-    "id": "04a2f923-b13c-4b3e-b330-52a5ef8c0971",
+    "id": "004f0fa8-c371-4e70-9781-8eb184a0f74e",
     "image": "riftnormal",
-    "latitude": 52.813668,
-    "longitude": 30.102161,
+    "latitude": 53.3084,
+    "longitude": 29.063742,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Проскурни 2"
+    "description": "Орлинское Озеро "
   },
   {
-    "id": "06d07506-9911-4ca5-980f-585ac94a0b06",
+    "id": "023c2f35-f383-4222-94b6-23c9e46d6d8a",
     "image": "riftnormal",
-    "latitude": 52.857191,
-    "longitude": 30.087582,
+    "latitude": 53.415461,
+    "longitude": 29.002892,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Черепица "
+    "description": "Хмелинка "
   },
   {
-    "id": "06ed7979-15a0-4daa-9fb1-5f8e59027a93",
+    "id": "028dd4d5-3c21-4908-ac07-d12907d650ed",
     "image": "riftnormal",
-    "latitude": 52.159636,
-    "longitude": 30.636365,
+    "latitude": 52.637843,
+    "longitude": 29.806392,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Холмеч 1 "
+    "description": "Потапов отмут "
   },
   {
-    "id": "0a13ff04-8520-424b-961e-012c0dcef66c",
+    "id": "051035c9-eb6d-443a-bfe7-d951e1e4f699",
     "image": "riftnormal",
-    "latitude": 52.027972,
-    "longitude": 30.790302,
+    "latitude": 52.740931,
+    "longitude": 29.574389,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Сутков 5"
+    "description": "Хвойка 2"
   },
   {
-    "id": "0a706fdb-fafa-494c-802d-8b6b3f4d128d",
+    "id": "0653d2df-b732-447d-9cf9-a35b238e0b38",
     "image": "riftnormal",
-    "latitude": 54.195635,
-    "longitude": 30.313099,
+    "latitude": 52.619092,
+    "longitude": 29.915194,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Шклов 2"
+    "description": "Терехов 2"
   },
   {
-    "id": "0a7c8021-bdd4-4164-996d-56075b7e8c30",
+    "id": "089a7811-ffab-4fe3-9bc7-b83aa9abc3d8",
     "image": "riftnormal",
-    "latitude": 54.299425,
-    "longitude": 30.266762,
+    "latitude": 53.519334,
+    "longitude": 28.96197,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Слободка"
+    "description": "Притерпа 2"
   },
   {
-    "id": "0c0bd66a-0880-4d62-b46e-333bb7bda651",
+    "id": "0a3ec529-ca72-4c5c-8cf2-eadc44a9e27d",
     "image": "riftnormal",
-    "latitude": 53.89114936542786,
-    "longitude": 30.407906528385837,
+    "latitude": 52.647758,
+    "longitude": 29.810562,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Куликово 1 "
+  },
+  {
+    "id": "0d8ab549-3126-48d0-b837-92bcb07c3d6d",
+    "image": "riftnormal",
+    "latitude": 53.140829,
+    "longitude": 29.259145,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бобруйск 4"
+  },
+  {
+    "id": "15dc7666-17cb-455f-8430-46715fc64255",
+    "image": "riftnormal",
+    "latitude": 52.678218,
+    "longitude": 29.680265,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Синеводы 2"
+  },
+  {
+    "id": "1649666a-9940-42f2-85f8-a95202094826",
+    "image": "riftnormal",
+    "latitude": 53.071319,
+    "longitude": 29.240283,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Поплавец 3"
+  },
+  {
+    "id": "1655e206-45d2-45a5-b671-1d29ee78ec55",
+    "image": "riftnormal",
+    "latitude": 52.790509,
+    "longitude": 29.493121,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Струга 1 "
+  },
+  {
+    "id": "17fbd7e1-f3fa-4cf2-ab8f-687baaf1a8ab",
+    "image": "riftnormal",
+    "latitude": 52.968425,
+    "longitude": 29.36552,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Белогорье "
+  },
+  {
+    "id": "189986d9-8dd3-4244-a3bd-64f678c28046",
+    "image": "riftnormal",
+    "latitude": 53.333915,
+    "longitude": 29.047803,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Косье верхнее"
+  },
+  {
+    "id": "1950985d-0add-48a2-a688-b8a1b1e1ae2b",
+    "image": "riftnormal",
+    "latitude": 53.211919,
+    "longitude": 29.23033,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Козловка "
+  },
+  {
+    "id": "1a11c288-f66e-4a88-afc9-8b9d945c6d2a",
+    "image": "riftnormal",
+    "latitude": 53.012855,
+    "longitude": 29.290188,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Хустное 2"
+  },
+  {
+    "id": "1b3e8c92-f7b0-4329-93e7-d5df42c8bb8d",
+    "image": "riftnormal",
+    "latitude": 53.492198,
+    "longitude": 28.958392,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Городок"
+  },
+  {
+    "id": "1c2806b0-c41f-4fbc-a238-ecf9ee4c08c6",
+    "image": "riftnormal",
+    "latitude": 52.597139,
+    "longitude": 29.967653,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Алексин 2"
+  },
+  {
+    "id": "1ccba379-6f4a-48c0-bcd3-f7dec817cfa6",
+    "image": "riftnormal",
+    "latitude": 52.602346,
+    "longitude": 29.950048,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Алексин 1 "
+  },
+  {
+    "id": "1d106318-b4cf-469a-8423-38b68b42f3d7",
+    "image": "riftnormal",
+    "latitude": 53.042266,
+    "longitude": 29.264152,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лесники 2"
+  },
+  {
+    "id": "1f3a1db0-4e55-42ad-8afa-333be066ac71",
+    "image": "riftnormal",
+    "latitude": 53.511787,
+    "longitude": 28.965729,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Притерпа 3"
+  },
+  {
+    "id": "210b8300-2152-453c-9f4f-fd94ffa0b70a",
+    "image": "riftnormal",
+    "latitude": 52.888085,
+    "longitude": 29.345116,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Васильевка 3"
+  },
+  {
+    "id": "2175b0af-f6bd-4a24-9a35-43dac4bbe058",
+    "image": "riftnormal",
+    "latitude": 52.681524,
+    "longitude": 29.67356,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чирковичи 3"
+  },
+  {
+    "id": "22d1e674-303e-42b9-a5d0-42ee799c5842",
+    "image": "riftnormal",
+    "latitude": 52.813337,
+    "longitude": 29.447314,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Паричи 4"
+  },
+  {
+    "id": "2584997e-9d4e-4364-ac17-c19034f7154a",
+    "image": "riftnormal",
+    "latitude": 52.570084,
+    "longitude": 30.167101,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чернейск 3"
+  },
+  {
+    "id": "27e7a284-69e8-45e3-875f-eab5bba01774",
+    "image": "riftnormal",
+    "latitude": 52.744752,
+    "longitude": 29.567691,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Хвойка 1 "
+  },
+  {
+    "id": "28ba2680-683c-42cd-9ba6-2f44e5f9cdf3",
+    "image": "riftnormal",
+    "latitude": 53.445701,
+    "longitude": 28.967181,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лавочка "
+  },
+  {
+    "id": "2997677c-5898-4ff8-958b-386a0275efea",
+    "image": "riftnormal",
+    "latitude": 52.616432,
+    "longitude": 29.932551,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Муреевка "
+  },
+  {
+    "id": "29e80cca-74d1-474f-a209-6752b3393895",
+    "image": "riftnormal",
+    "latitude": 52.625013,
+    "longitude": 29.913167,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Терехов 1 "
+  },
+  {
+    "id": "2b4e63ec-7401-4b2c-a670-0db4f5e5223b",
+    "image": "riftnormal",
+    "latitude": 53.679124,
+    "longitude": 28.957424,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бродецкий перевоз "
+  },
+  {
+    "id": "2ea1e257-7f3e-4ba3-b239-e819957d8c11",
+    "image": "riftnormal",
+    "latitude": 52.655721,
+    "longitude": 29.716021,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Какель "
+  },
+  {
+    "id": "2f35e48b-0b4a-476f-9deb-cd03f93433ad",
+    "image": "riftnormal",
+    "latitude": 53.096056,
+    "longitude": 29.250364,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Поплавец 1 "
+  },
+  {
+    "id": "2fd488e8-d6f5-4b2c-90eb-26d09f5cb9a3",
+    "image": "riftnormal",
+    "latitude": 53.505184,
+    "longitude": 28.959577,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Стодолка "
+  },
+  {
+    "id": "300e0e28-4abe-457e-a725-7a59ecbc124c",
+    "image": "riftnormal",
+    "latitude": 52.630727,
+    "longitude": 29.826288,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Якимова слобода 1 "
+  },
+  {
+    "id": "30884a28-69db-4d0d-a663-08acb83a5690",
+    "image": "riftnormal",
+    "latitude": 53.395157,
+    "longitude": 29.017435,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Елизово 1 "
+  },
+  {
+    "id": "31df9f4d-9962-48a5-ae11-11ad6114463e",
+    "image": "riftnormal",
+    "latitude": 52.662399,
+    "longitude": 29.707425,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Белая гора 2"
+  },
+  {
+    "id": "334e25a0-2196-479b-9e21-7d6c2be62aa2",
+    "image": "riftnormal",
+    "latitude": 52.706071,
+    "longitude": 29.605132,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Грузкое 2"
+  },
+  {
+    "id": "34e0ed64-c3ae-46eb-ac93-9dd33fc7c684",
+    "image": "riftnormal",
+    "latitude": 52.901561,
+    "longitude": 29.340926,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Васильевка 1 "
+  },
+  {
+    "id": "35516436-eac4-446c-a7cb-a0d7ed15ab79",
+    "image": "riftnormal",
+    "latitude": 52.557435,
+    "longitude": 30.141238,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чернейск 1 "
+  },
+  {
+    "id": "380a5753-d804-4345-8455-26f83747cca3",
+    "image": "riftnormal",
+    "latitude": 53.647047,
+    "longitude": 28.934993,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Городище 2 "
+  },
+  {
+    "id": "392ada8e-50cf-470c-b00a-8bab787e5c2b",
+    "image": "riftnormal",
+    "latitude": 53.279754,
+    "longitude": 29.082774,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Голынка 1 "
+  },
+  {
+    "id": "3b97429e-b509-425d-8778-6ba0ebc8ff94",
+    "image": "riftnormal",
+    "latitude": 52.784221,
+    "longitude": 29.49646,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Струга 2"
+  },
+  {
+    "id": "3ddde9b5-8a3c-4d5f-ab30-10c7e5ca3ba2",
+    "image": "riftnormal",
+    "latitude": 52.796458,
+    "longitude": 29.474062,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бельчо 1 "
+  },
+  {
+    "id": "3f4b5589-6636-4e53-a00f-d9106ed95137",
+    "image": "riftnormal",
+    "latitude": 53.3768,
+    "longitude": 29.034525,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Столяры 1 "
+  },
+  {
+    "id": "4033238a-5e73-4426-96aa-6c575be158a4",
+    "image": "riftnormal",
+    "latitude": 52.620438,
+    "longitude": 29.852439,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Якимова слобода 4"
+  },
+  {
+    "id": "4cd5c4d3-4313-4630-8bd0-cda6a2fffb30",
+    "image": "riftnormal",
+    "latitude": 52.699483,
+    "longitude": 29.610465,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Грузкое 3"
+  },
+  {
+    "id": "4e0bb188-06e3-46ab-b2a3-2d4980405bd0",
+    "image": "riftnormal",
+    "latitude": 52.809839,
+    "longitude": 29.433643,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Паричи 2"
+  },
+  {
+    "id": "4f4f7546-b08f-4ad2-a504-8589f0a0cf16",
+    "image": "riftnormal",
+    "latitude": 52.640246,
+    "longitude": 29.752192,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Шатилки 1 "
+  },
+  {
+    "id": "51c5b2c0-d528-4709-a15a-22dea3675746",
+    "image": "riftnormal",
+    "latitude": 53.275705,
+    "longitude": 29.091874,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Голынка 2 "
+  },
+  {
+    "id": "51de70b6-30d8-4722-9534-81d454a30365",
+    "image": "riftnormal",
+    "latitude": 53.036461,
+    "longitude": 29.272425,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лопаты 1 "
+  },
+  {
+    "id": "53d1d603-ee43-4be2-bc91-01e258fc7b10",
+    "image": "riftnormal",
+    "latitude": 52.575539,
+    "longitude": 30.167176,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Старый перевоз "
+  },
+  {
+    "id": "55d22dff-d58f-4a83-b55f-786f61a994bb",
+    "image": "riftnormal",
+    "latitude": 52.80474,
+    "longitude": 29.468194,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бучье 2 "
+  },
+  {
+    "id": "57678e54-ef11-442f-b675-3c461b3f9215",
+    "image": "riftnormal",
+    "latitude": 53.006393,
+    "longitude": 29.282403,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Хустное 3"
+  },
+  {
+    "id": "57a15aaf-448f-41c6-9215-cda8fc1ccbc7",
+    "image": "riftnormal",
+    "latitude": 52.549197,
+    "longitude": 30.240079,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Мартыновское устье 2"
+  },
+  {
+    "id": "5893025f-5ddc-4cea-8227-d85d8c364cba",
+    "image": "riftnormal",
+    "latitude": 53.323654,
+    "longitude": 29.061702,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Косье нижнее"
+  },
+  {
+    "id": "5a13b596-4773-4e15-84be-44fcb2104773",
+    "image": "riftnormal",
+    "latitude": 52.623076,
+    "longitude": 29.898861,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чертянка 2"
+  },
+  {
+    "id": "5a6f2ec8-77f1-496a-8bc2-93d6c9259755",
+    "image": "riftnormal",
+    "latitude": 53.438985,
+    "longitude": 28.976209,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Свислочь "
+  },
+  {
+    "id": "5abea599-5eaf-44da-8d59-91d97cd11d88",
+    "image": "riftnormal",
+    "latitude": 52.560792,
+    "longitude": 30.200496,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Мартыновка 1 "
+  },
+  {
+    "id": "5b76cb24-a4dd-4903-aea0-e4baba881c5b",
+    "image": "riftnormal",
+    "latitude": 52.678774,
+    "longitude": 29.662634,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чирковичи 2"
+  },
+  {
+    "id": "5ba002cb-724a-4d1e-9d43-bbd5e3b4556e",
+    "image": "riftnormal",
+    "latitude": 53.466611,
+    "longitude": 28.959135,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Н. Ловажи "
+  },
+  {
+    "id": "5e572177-7f7b-40bb-b1fd-883c7be27f60",
+    "image": "riftnormal",
+    "latitude": 53.265584,
+    "longitude": 29.092789,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Вербки "
+  },
+  {
+    "id": "615fb1e8-4c08-423d-96dd-31cae14ea93c",
+    "image": "riftnormal",
+    "latitude": 53.152299,
+    "longitude": 29.25484,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бобруйск 2"
+  },
+  {
+    "id": "632c5d9d-ced7-4434-9e5e-e2192b5f9b3e",
+    "image": "riftnormal",
+    "latitude": 53.219412,
+    "longitude": 29.229643,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Луки "
+  },
+  {
+    "id": "65f65fc3-a2cc-4e7f-a74b-1c6c02422c07",
+    "image": "riftnormal",
+    "latitude": 53.101988,
+    "longitude": 29.250151,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Березин. Форштадт 2 "
+  },
+  {
+    "id": "66f0841b-74d4-4817-9d5c-07d720fa3972",
+    "image": "riftnormal",
+    "latitude": 53.527595,
+    "longitude": 28.962524,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Притерпа 1 "
+  },
+  {
+    "id": "68ea584d-d747-4919-b99b-39b3f4f6ab3f",
+    "image": "riftnormal",
+    "latitude": 52.968715,
+    "longitude": 29.352621,
     "currentWaterLevel": 220,
     "waterLevel": 220,
     "description": "Холмы 2"
   },
   {
-    "id": "0c27bfc5-8f85-457d-814f-8d71291c7dcb",
+    "id": "6ac10a2d-b5c4-4707-8f84-13419c045b54",
     "image": "riftnormal",
-    "latitude": 53.324828,
-    "longitude": 30.355393,
+    "latitude": 53.244252,
+    "longitude": 29.15924,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Н. Быхов 2        "
+    "description": "Полумерский плес 1 "
   },
   {
-    "id": "0ffd7e82-42a8-42b9-8b6d-4a6e5b0d1a69",
+    "id": "6bc911a2-93af-40ac-9723-1fd8460a768f",
     "image": "riftnormal",
-    "latitude": 52.197657,
-    "longitude": 30.592529,
+    "latitude": 52.858164,
+    "longitude": 29.370189,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Колочин 1 "
+    "description": "Михайловка 2"
   },
   {
-    "id": "10f6ee85-7153-4f95-b398-61a4c951120e",
+    "id": "6f3e8a5b-0266-498d-bf45-7dbdd034d61b",
     "image": "riftnormal",
-    "latitude": 51.965533,
-    "longitude": 30.806112,
+    "latitude": 53.383103,
+    "longitude": 29.029951,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Мочулы верхние "
+    "description": "Елизово В. "
   },
   {
-    "id": "11d19288-e98d-405d-948d-9d7ba54f08cd",
+    "id": "6f832858-0b46-4bed-ad35-71ee74828813",
     "image": "riftnormal",
-    "latitude": 53.031807,
-    "longitude": 30.030157,
+    "latitude": 52.630896,
+    "longitude": 29.808437,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Лучин       "
+    "description": "Ореховка 2"
   },
   {
-    "id": "149bac6f-74e5-4a47-be9e-2364831bfa5c",
+    "id": "71b9f40a-f291-4351-8700-5a840c90dd3e",
     "image": "riftnormal",
-    "latitude": 53.492101,
-    "longitude": 30.289893,
+    "latitude": 53.730741,
+    "longitude": 28.953232,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Староречье "
+    "description": "Едлино 2 "
   },
   {
-    "id": "16218501-f3b2-482d-a42a-18bc2b028ff3",
+    "id": "7599ea24-c991-4f31-8fba-621ac8564297",
     "image": "riftnormal",
-    "latitude": 52.340789,
-    "longitude": 30.484553,
+    "latitude": 53.652965,
+    "longitude": 28.938294,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Жмуровка "
+    "description": "Городище 1 "
   },
   {
-    "id": "167622d3-b30b-48c7-8842-f17202e9e541",
+    "id": "79f1107d-08ae-4c89-8925-5066f590cc54",
     "image": "riftnormal",
-    "latitude": 51.777503,
-    "longitude": 30.622771,
+    "latitude": 53.135601,
+    "longitude": 29.258539,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Деражичи"
+    "description": "Зеленка "
   },
   {
-    "id": "16ffa6e6-3a6c-486a-9b94-cffcbed6bbdc",
+    "id": "7b70f137-0e54-4f37-bab8-a54868161c7c",
     "image": "riftnormal",
-    "latitude": 52.367679,
-    "longitude": 30.441424,
+    "latitude": 52.683763,
+    "longitude": 29.637835,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Речица 3"
+    "description": "Добрыня "
   },
   {
-    "id": "1733c0e6-7314-439b-bb85-a8c2ad863b2f",
+    "id": "7c87b4e1-1c43-4eba-94e1-53e34627d9dc",
     "image": "riftnormal",
-    "latitude": 52.713242,
-    "longitude": 30.131806,
+    "latitude": 52.806753,
+    "longitude": 29.434265,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Стрешин  1  "
+    "description": "Паричи 3"
   },
   {
-    "id": "1872f7b9-214b-4de9-8685-9d52265d64ce",
+    "id": "7d72a28b-b6fe-4b93-9234-143e35d2e77c",
     "image": "riftnormal",
-    "latitude": 52.232369,
-    "longitude": 30.54809,
+    "latitude": 52.777246,
+    "longitude": 29.503932,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Леваши 1 "
+    "description": "Заостровье "
   },
   {
-    "id": "1aeea95c-f621-46d4-aaf4-b55fa9a5bb9c",
+    "id": "7e8ac11e-f35b-46e0-8697-1959981a77b6",
     "image": "riftnormal",
-    "latitude": 51.937519,
-    "longitude": 30.817533,
+    "latitude": 53.30186,
+    "longitude": 29.068067,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Лоевский 1 "
+    "description": "Красн. Поселок "
   },
   {
-    "id": "1b99ae29-0ea3-477a-891c-29f27a661d6b",
+    "id": "7ed81eb7-ebbe-42d1-b20a-a463d1dc7a49",
     "image": "riftnormal",
-    "latitude": 53.915860003604166,
-    "longitude": 30.448744329482054,
+    "latitude": 52.744187,
+    "longitude": 29.546271,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Студенка"
+    "description": "Брусенка "
   },
   {
-    "id": "1c9c0f88-e8a3-4050-8bd8-b66131b211ba",
+    "id": "86bae26f-76f3-44e4-822a-5cc20e7d2628",
     "image": "riftnormal",
-    "latitude": 53.841700880362104,
-    "longitude": 30.27824588502679,
+    "latitude": 52.559888,
+    "longitude": 30.221972,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Буйничи "
+    "description": "Мартыновка 2"
   },
   {
-    "id": "1cf918b1-2471-4355-813f-7f646a2e4216",
+    "id": "8ca9be73-2a9a-4e36-b636-9d0572e37265",
     "image": "riftnormal",
-    "latitude": 52.604405,
-    "longitude": 30.264682,
+    "latitude": 53.4821,
+    "longitude": 28.947391,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Смычек 2"
+    "description": "Ямное "
   },
   {
-    "id": "1e1ef4a9-9ed3-4698-8301-b274b34443fd",
+    "id": "8d866e9f-be4f-46fa-b222-fdba3ae498dc",
     "image": "riftnormal",
-    "latitude": 54.0376276630169,
-    "longitude": 30.38159382347314,
+    "latitude": 52.685197,
+    "longitude": 29.688794,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Прудки 3"
+    "description": "Синеводы 1 "
   },
   {
-    "id": "1e860340-8d7e-4db6-b809-757423b3a9cb",
+    "id": "93019373-b581-4c3c-a840-ab926f882e2e",
     "image": "riftnormal",
-    "latitude": 53.245653,
-    "longitude": 30.259168,
+    "latitude": 52.632288,
+    "longitude": 29.798627,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Бризгуны "
+    "description": "Ореховка 1 "
   },
   {
-    "id": "1ef5977b-231f-4c27-9e19-531e2d37047a",
+    "id": "94577918-9f56-4f42-8474-61bdc7c1245a",
     "image": "riftnormal",
-    "latitude": 51.946707,
-    "longitude": 30.810016,
+    "latitude": 52.977168,
+    "longitude": 29.299866,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "устье реки Сож"
+    "description": "Волышино "
   },
   {
-    "id": "21efdeaf-8144-4693-ade7-9f1358179289",
+    "id": "9602a956-379b-46a1-822a-464930fc8e85",
     "image": "riftnormal",
-    "latitude": 52.71095,
-    "longitude": 30.16505,
+    "latitude": 52.860416,
+    "longitude": 29.357917,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Шихов"
+    "description": "Михайловка 1 "
   },
   {
-    "id": "22500abb-ec6a-4511-a087-4e7b31a5341d",
+    "id": "960fd4b9-db34-4b81-8346-6860a023aa4a",
     "image": "riftnormal",
-    "latitude": 51.9094,
-    "longitude": 30.762262,
+    "latitude": 52.94569,
+    "longitude": 29.371275,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Красногорский нижний "
+    "description": "Полянки 2"
   },
   {
-    "id": "22888234-81be-43af-8dbe-528036c39f32",
+    "id": "9cbbec8d-b38e-4990-a4dc-2c42880be56f",
     "image": "riftnormal",
-    "latitude": 52.126335,
-    "longitude": 30.690481,
+    "latitude": 52.935043,
+    "longitude": 29.346784,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Звонец 2 "
+    "description": "Королевская слобода "
   },
   {
-    "id": "22974a6f-4eb2-4808-8744-e23f3f777b33",
+    "id": "9d28fafc-b071-411c-a6f1-43d5ddfeca12",
     "image": "riftnormal",
-    "latitude": 51.98815,
-    "longitude": 30.798593,
+    "latitude": 52.643532,
+    "longitude": 29.761824,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Вербуж 1 "
+    "description": "Шатилки 2"
   },
   {
-    "id": "231f154d-697d-4530-8a8a-de92ce23fbfb",
+    "id": "a09b05e7-392a-4853-bb1a-119430c7fb4c",
     "image": "riftnormal",
-    "latitude": 53.251401,
-    "longitude": 30.334831,
+    "latitude": 52.56872,
+    "longitude": 30.150309,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Шапчицы 2"
+    "description": "Чернейск 2"
   },
   {
-    "id": "25faf02a-7f9f-4bcd-95e0-47a1a05cece6",
+    "id": "a0c0bb3d-10b4-4c16-a919-125c86e32d07",
     "image": "riftnormal",
-    "latitude": 51.739934,
-    "longitude": 30.62712,
+    "latitude": 52.649306,
+    "longitude": 29.774579,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Змеи 2"
+    "description": "Сельное "
   },
   {
-    "id": "261c1c05-c21b-45b5-a20a-fa2b65b596be",
+    "id": "a1a7a7ff-d0e6-4873-ba5f-6f14fe9678d2",
     "image": "riftnormal",
-    "latitude": 52.107475,
-    "longitude": 30.698373,
+    "latitude": 53.148021,
+    "longitude": 29.262399,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Звонец 3"
+    "description": "Бобруйск 3"
   },
   {
-    "id": "266ee704-9e56-4c1d-85b0-a12c355ce41e",
+    "id": "a3c3189b-0106-4433-b93f-3991a0aea7dd",
     "image": "riftnormal",
-    "latitude": 52.398176,
-    "longitude": 30.378952,
+    "latitude": 53.796646,
+    "longitude": 28.967144,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Городок 1 "
+    "description": "Светлица 2"
   },
   {
-    "id": "26869670-3acf-45fb-ace5-93bf19e7e3b0",
+    "id": "a9eaf748-e1ce-4ab4-8618-da09c88db4e6",
     "image": "riftnormal",
-    "latitude": 51.814557,
-    "longitude": 30.671892,
+    "latitude": 52.974168,
+    "longitude": 29.347621,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Шаровский 3"
+    "description": "Холмы 1 "
   },
   {
-    "id": "269abffc-2a14-4c91-b339-9a02e786c675",
+    "id": "b0d43d2e-b143-4b46-8b75-475c7a9a906b",
     "image": "riftnormal",
-    "latitude": 53.95290774831006,
-    "longitude": 30.412406486315973,
+    "latitude": 53.226283,
+    "longitude": 29.225365,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Мосток 1"
+    "description": "Щатково 2 "
   },
   {
-    "id": "280787c9-a18e-49cf-9473-ae6faba17994",
+    "id": "b1c7378f-203e-4c00-8c83-aca9c1fc11f5",
     "image": "riftnormal",
-    "latitude": 52.264861,
-    "longitude": 30.54454,
+    "latitude": 52.763377,
+    "longitude": 29.539754,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Боровая 2"
+    "description": "Воротень 2"
   },
   {
-    "id": "2c03dbd6-3568-437d-893f-60a153ba8739",
+    "id": "b21d9aa9-1e96-48c8-808f-472102c7518f",
     "image": "riftnormal",
-    "latitude": 54.134608,
-    "longitude": 30.362664,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Августово"
-  },
-  {
-    "id": "2caed04d-766b-4780-88c6-01fcbd92e28e",
-    "image": "riftnormal",
-    "latitude": 53.578146,
-    "longitude": 30.282248,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Седичи "
-  },
-  {
-    "id": "2cde4a61-fbf0-463d-a19a-0ce22e647925",
-    "image": "riftnormal",
-    "latitude": 53.89096737190411,
-    "longitude": 30.32324758307277,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Дубровенка "
-  },
-  {
-    "id": "2e99b8ef-ce4b-4ea7-9589-6c41d542e895",
-    "image": "riftnormal",
-    "latitude": 52.021138,
-    "longitude": 30.790252,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мохов 1 "
-  },
-  {
-    "id": "2fa0de02-dc4b-474e-9ffd-c24cc5265df7",
-    "image": "riftnormal",
-    "latitude": 52.493404,
-    "longitude": 30.306291,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Глушец "
-  },
-  {
-    "id": "325f0b86-356e-46fa-bb7d-fc723988fcdc",
-    "image": "riftnormal",
-    "latitude": 53.687619,
-    "longitude": 30.291966,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Боровка 1 "
-  },
-  {
-    "id": "32d25f57-63fe-4ba7-92f0-f634635a0e6b",
-    "image": "riftnormal",
-    "latitude": 51.840938,
-    "longitude": 30.703672,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Радульский "
-  },
-  {
-    "id": "33760289-64e5-43c8-b787-f49834da4a04",
-    "image": "riftnormal",
-    "latitude": 52.73475,
-    "longitude": 30.117383,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Стрешин верхн. "
-  },
-  {
-    "id": "347417e4-1094-49b6-8758-5d1074953df1",
-    "image": "riftnormal",
-    "latitude": 52.323402,
-    "longitude": 30.505217,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Бронное "
-  },
-  {
-    "id": "35b785bd-6a54-4f16-a99d-f7989b56eee3",
-    "image": "riftnormal",
-    "latitude": 52.954275,
-    "longitude": 30.069767,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Красногорье 3"
-  },
-  {
-    "id": "36b0d80c-c2ff-4340-bb04-10a56b2b2c8c",
-    "image": "riftnormal",
-    "latitude": 52.578197,
-    "longitude": 30.278182,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Глущик "
-  },
-  {
-    "id": "375915cb-4096-42d3-8604-05cdf17024e4",
-    "image": "riftnormal",
-    "latitude": 53.11443,
-    "longitude": 30.135322,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Зборов  2"
-  },
-  {
-    "id": "377cf1ba-8b7d-4b35-8d70-7bb9ef16e8f0",
-    "image": "riftnormal",
-    "latitude": 52.463372,
-    "longitude": 30.34662,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Унорица 1 "
-  },
-  {
-    "id": "37c3cd6f-8dfa-48a4-a708-2c55dec50736",
-    "image": "riftnormal",
-    "latitude": 53.102005,
-    "longitude": 30.252061,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Гадиловичская простка "
-  },
-  {
-    "id": "38c9f154-e45e-4ef2-8894-ce2c4f0956f8",
-    "image": "riftnormal",
-    "latitude": 54.229502,
-    "longitude": 30.286249,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Кобылка 2"
-  },
-  {
-    "id": "3a4ec7f0-08f2-4abd-b65a-1d4a71361c94",
-    "image": "riftnormal",
-    "latitude": 54.295298,
-    "longitude": 30.268689,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Богушевка"
-  },
-  {
-    "id": "3dbcacd3-e6c7-40b1-848e-60c2c9de461e",
-    "image": "riftnormal",
-    "latitude": 53.47003,
-    "longitude": 30.334801,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Прибор 2"
-  },
-  {
-    "id": "3e1c19af-7e56-4d22-b536-dd588f66a42a",
-    "image": "riftnormal",
-    "latitude": 54.225701,
-    "longitude": 30.294447,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Кобылка 3"
-  },
-  {
-    "id": "3f466e40-3999-40c6-9db2-f8f29ef7b7c8",
-    "image": "riftnormal",
-    "latitude": 53.150148,
-    "longitude": 30.273397,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Вищин 1 "
-  },
-  {
-    "id": "40f224b0-7283-400f-aa18-09101c930323",
-    "image": "riftnormal",
-    "latitude": 53.283341,
-    "longitude": 30.385271,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лазаревичи "
-  },
-  {
-    "id": "42bd63d3-eeb2-469a-9217-538a788d6d4c",
-    "image": "riftnormal",
-    "latitude": 52.440482,
-    "longitude": 30.374079,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Чёрное 1 "
-  },
-  {
-    "id": "440a7958-663a-4434-830e-f624b8ef2727",
-    "image": "riftnormal",
-    "latitude": 53.530999,
-    "longitude": 30.269489,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мокрянка"
-  },
-  {
-    "id": "44f97ec9-d20f-4998-87e7-becfbac22d60",
-    "image": "riftnormal",
-    "latitude": 53.94437442793759,
-    "longitude": 30.422356510260386,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мосток 2"
-  },
-  {
-    "id": "4566ef47-7fb6-4de5-a378-78c690daa975",
-    "image": "riftnormal",
-    "latitude": 53.18802,
-    "longitude": 30.257931,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Кистени  2"
-  },
-  {
-    "id": "47148839-5889-486c-9c9c-14836e7fdfeb",
-    "image": "riftnormal",
-    "latitude": 51.919969,
-    "longitude": 30.829448,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Каменка 1 "
-  },
-  {
-    "id": "483d3f00-8e62-49c7-8a74-c29fa78016a3",
-    "image": "riftnormal",
-    "latitude": 53.441213,
-    "longitude": 30.347164,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Трясна "
-  },
-  {
-    "id": "4893b457-2327-490d-84fa-f8400dffb681",
-    "image": "riftnormal",
-    "latitude": 53.890844646807096,
-    "longitude": 30.416442796834247,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Холмы 1"
-  },
-  {
-    "id": "489b6fbd-06f8-49c7-b45e-4c8c343f906f",
-    "image": "riftnormal",
-    "latitude": 53.93139747952817,
-    "longitude": 30.44231568434529,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Коржичье 1"
-  },
-  {
-    "id": "48ca750d-af15-41c1-90c5-5f20e4fe2274",
-    "image": "riftnormal",
-    "latitude": 53.02001,
-    "longitude": 30.025986,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мурачевка "
-  },
-  {
-    "id": "49233824-9ff7-4e76-bd5a-94047dde30cb",
-    "image": "riftnormal",
-    "latitude": 53.115561,
-    "longitude": 30.282075,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Свержень  1"
-  },
-  {
-    "id": "4a53baed-2b8c-4ae8-ac62-c1eb57dfcbbb",
-    "image": "riftnormal",
-    "latitude": 54.094628,
-    "longitude": 30.373065,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Добрейка 2"
-  },
-  {
-    "id": "4a7e1bd9-6973-4fc7-9382-bbb436743434",
-    "image": "riftnormal",
-    "latitude": 52.373964,
-    "longitude": 30.405317,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Речица 1 "
-  },
-  {
-    "id": "4ad10fae-72d8-43b0-9c4b-171a6315cdaa",
-    "image": "riftnormal",
-    "latitude": 52.534556,
-    "longitude": 30.251075,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Береговая Слобода 2 "
-  },
-  {
-    "id": "4b738de4-f6db-47a0-a17d-f55f8f2a1e99",
-    "image": "riftnormal",
-    "latitude": 53.88958433838026,
-    "longitude": 30.332783071219097,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Троечье"
-  },
-  {
-    "id": "4b94b166-223c-46d8-9054-414c8457174a",
-    "image": "riftnormal",
-    "latitude": 53.405406,
-    "longitude": 30.347473,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Тетерка 1 "
-  },
-  {
-    "id": "4d712345-ebeb-478f-b62f-eed49ee297bf",
-    "image": "riftnormal",
-    "latitude": 52.111253,
-    "longitude": 30.713931,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Звонец 4"
-  },
-  {
-    "id": "4dadbed7-4daa-460b-83dc-48a69b5d2c60",
-    "image": "riftnormal",
-    "latitude": 51.974372,
-    "longitude": 30.801158,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Вербуж 2"
-  },
-  {
-    "id": "4deeedf1-df5c-4f52-8eae-1b679b607799",
-    "image": "riftnormal",
-    "latitude": 53.641118,
-    "longitude": 30.283983,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лядо "
-  },
-  {
-    "id": "4e7175a6-b5c0-4f2b-a473-984454f8ae8a",
-    "image": "riftnormal",
-    "latitude": 52.079393,
-    "longitude": 30.728718,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ляхова Гора 4 "
-  },
-  {
-    "id": "4efed641-3cda-44c8-9cab-fd64db1ab049",
-    "image": "riftnormal",
-    "latitude": 52.353105,
-    "longitude": 30.456561,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Речица угольная"
-  },
-  {
-    "id": "500a4573-5719-4735-942c-ce5f68f14d92",
-    "image": "riftnormal",
-    "latitude": 52.620129,
-    "longitude": 30.243474,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Олба нижняя 4"
-  },
-  {
-    "id": "50450a63-2379-497b-9203-1d0503c08fe2",
-    "image": "riftnormal",
-    "latitude": 52.143667,
-    "longitude": 30.665717,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Холмеч 3"
-  },
-  {
-    "id": "507371c0-b73b-4002-ace0-4a74a07d312b",
-    "image": "riftnormal",
-    "latitude": 53.505577,
-    "longitude": 30.295677,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ксендзова гора "
-  },
-  {
-    "id": "51020ea6-34f0-464d-9add-e9332148ad9c",
-    "image": "riftnormal",
-    "latitude": 52.793651,
-    "longitude": 30.106866,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Проскурни 3"
-  },
-  {
-    "id": "523e2c2c-e2da-4352-b84c-9a142717390e",
-    "image": "riftnormal",
-    "latitude": 53.255877,
-    "longitude": 30.383337,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Меловая  2"
-  },
-  {
-    "id": "5402c556-dad6-4cbd-8119-9983be6bde6a",
-    "image": "riftnormal",
-    "latitude": 53.332885,
-    "longitude": 30.360477,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Н. Быхов 1 "
-  },
-  {
-    "id": "553f846e-9e11-4d27-841d-3db4f799885b",
-    "image": "riftnormal",
-    "latitude": 52.275267,
-    "longitude": 30.544352,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Боровая 1"
-  },
-  {
-    "id": "554fbcf8-eea5-4079-ae70-65273bc97693",
-    "image": "riftnormal",
-    "latitude": 53.197078,
-    "longitude": 30.253963,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Кистени  "
-  },
-  {
-    "id": "55c322d8-06aa-4c51-9f0b-b6050323917b",
-    "image": "riftnormal",
-    "latitude": 52.970867,
-    "longitude": 30.046042,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Красногорье 1 "
-  },
-  {
-    "id": "56b5d89e-b738-49a4-a210-3e95d2ef7cf7",
-    "image": "riftnormal",
-    "latitude": 53.136217,
-    "longitude": 30.284146,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Вищин 2"
-  },
-  {
-    "id": "59168ca0-d346-45fb-a605-161cdc7e2c12",
-    "image": "riftnormal",
-    "latitude": 53.480945,
-    "longitude": 30.326318,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Горшок  "
-  },
-  {
-    "id": "593ba2af-8b54-46b1-a120-eec035a3f308",
-    "image": "riftnormal",
-    "latitude": 52.373667,
-    "longitude": 30.40021,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Кордон "
-  },
-  {
-    "id": "5b5bbdc2-4ea0-4de1-ac40-ef228529474f",
-    "image": "riftnormal",
-    "latitude": 53.083718,
-    "longitude": 30.221449,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ваков "
-  },
-  {
-    "id": "5b618764-9b71-4a79-b85f-693bbbe4fd6f",
-    "image": "riftnormal",
-    "latitude": 52.587609,
-    "longitude": 30.270538,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Церковье 2"
-  },
-  {
-    "id": "5e8324da-ef1c-4ee2-bf6f-e94803ff8711",
-    "image": "riftnormal",
-    "latitude": 52.477241,
-    "longitude": 30.308733,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Глыбово "
-  },
-  {
-    "id": "5ec41617-1d65-4d1b-8aa5-46949842a371",
-    "image": "riftnormal",
-    "latitude": 51.907108,
-    "longitude": 30.798572,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Каменка 2"
-  },
-  {
-    "id": "6092223a-1278-45e0-98c7-b358d19bae3a",
-    "image": "riftnormal",
-    "latitude": 53.335886,
-    "longitude": 30.368882,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Острова 2"
-  },
-  {
-    "id": "61dbf695-f04f-44de-aab6-75cf33590331",
-    "image": "riftnormal",
-    "latitude": 52.684187,
-    "longitude": 30.206737,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Олба В"
-  },
-  {
-    "id": "6254bd7f-a0e4-47d0-b863-66d694ad639b",
-    "image": "riftnormal",
-    "latitude": 54.189196,
-    "longitude": 30.314011,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "В.Заречье"
-  },
-  {
-    "id": "6413ec97-aaaf-4bf4-8c08-bf7d0d4d7a8b",
-    "image": "riftnormal",
-    "latitude": 52.225477,
-    "longitude": 30.558035,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Леваши 2"
-  },
-  {
-    "id": "64ccfb40-eee4-4ce8-99b8-fe1d80414991",
-    "image": "riftnormal",
-    "latitude": 53.304137,
-    "longitude": 30.380201,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "В. Лазаревичи "
-  },
-  {
-    "id": "64f5f58a-31f2-49a2-b2ca-8afc716dc761",
-    "image": "riftnormal",
-    "latitude": 52.138682,
-    "longitude": 30.680631,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Чаплин 1 "
-  },
-  {
-    "id": "6505f392-a38b-460a-88b4-97d30d05c809",
-    "image": "riftnormal",
-    "latitude": 52.769978,
-    "longitude": 30.118619,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Затон 3"
-  },
-  {
-    "id": "65a56bdd-c088-4d3c-bbca-c2b563668a8c",
-    "image": "riftnormal",
-    "latitude": 53.88859936109516,
-    "longitude": 30.3500065699578,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Дебря 2"
-  },
-  {
-    "id": "6828b00f-42a9-4b17-8c80-f3f5335fff71",
-    "image": "riftnormal",
-    "latitude": 54.046847,
-    "longitude": 30.385553,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Прудки 1"
-  },
-  {
-    "id": "695cd7a7-4c91-4325-a2ef-dd05c72885b1",
-    "image": "riftnormal",
-    "latitude": 53.271362,
-    "longitude": 30.382387,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Меловая  1        "
-  },
-  {
-    "id": "6bcbefc5-e07b-4481-83e6-790cacfa4697",
-    "image": "riftnormal",
-    "latitude": 53.618592,
-    "longitude": 30.28806,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Барколабово "
-  },
-  {
-    "id": "6daf561c-72af-4f28-b656-b391691e7d19",
-    "image": "riftnormal",
-    "latitude": 53.635305,
-    "longitude": 30.286612,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лысица 1 "
-  },
-  {
-    "id": "6eb2ecbb-0bca-4ba6-a7db-0bb6ede46bcb",
-    "image": "riftnormal",
-    "latitude": 52.780262,
-    "longitude": 30.118509,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Затон 1 "
-  },
-  {
-    "id": "6f5376a1-5d6f-4f38-9c7c-ae733d51a163",
-    "image": "riftnormal",
-    "latitude": 52.558946,
-    "longitude": 30.256477,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Золотой рог "
-  },
-  {
-    "id": "71d50d39-b4f5-4b56-a25b-9534929d9ca6",
-    "image": "riftnormal",
-    "latitude": 54.315478,
-    "longitude": 30.278416,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Копысь"
-  },
-  {
-    "id": "71e766e8-8c9a-4abf-a004-7d1b416b0aa4",
-    "image": "riftnormal",
-    "latitude": 51.881573,
-    "longitude": 30.722591,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Коловский рукав "
-  },
-  {
-    "id": "72b1d847-4839-4159-bfb5-37e2d8c40ece",
-    "image": "riftnormal",
-    "latitude": 53.469442,
-    "longitude": 30.308565,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Горшок  1"
-  },
-  {
-    "id": "74175fcb-282a-4005-b180-77e965c71e1f",
-    "image": "riftnormal",
-    "latitude": 52.83585,
-    "longitude": 30.102038,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Горделево 2"
-  },
-  {
-    "id": "74bff3fa-eac1-4646-b2e3-a892075ed54f",
-    "image": "riftnormal",
-    "latitude": 52.830997,
-    "longitude": 30.096305,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Горделево 3"
-  },
-  {
-    "id": "754e79a6-3cca-430e-a5a7-e8e9d20ba1d1",
-    "image": "riftnormal",
-    "latitude": 54.068913,
-    "longitude": 30.383051,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Белевичи 1"
-  },
-  {
-    "id": "78c52aa8-b6d8-4b7e-920f-dc702799840b",
-    "image": "riftnormal",
-    "latitude": 53.358622,
-    "longitude": 30.379085,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Обидовичи 3"
-  },
-  {
-    "id": "8090f795-ad2a-43c8-99ae-306a570af180",
-    "image": "riftnormal",
-    "latitude": 54.182148,
-    "longitude": 30.327252,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Заречье"
-  },
-  {
-    "id": "813254ef-eed2-4c1c-8b63-3ccd1097f2c4",
-    "image": "riftnormal",
-    "latitude": 54.041887,
-    "longitude": 30.382978,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Прудки 2"
-  },
-  {
-    "id": "84132282-84db-4f01-9044-dcd1865bbfda",
-    "image": "riftnormal",
-    "latitude": 52.601926,
-    "longitude": 30.284382,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Церковье 1 "
-  },
-  {
-    "id": "86459abd-9b2c-4e1a-b040-c150e32c0582",
-    "image": "riftnormal",
-    "latitude": 52.015769,
-    "longitude": 30.750185,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Сутков 3"
-  },
-  {
-    "id": "86ec7859-5b23-4795-86bd-4ff1bc1b26d2",
-    "image": "riftnormal",
-    "latitude": 52.935779,
-    "longitude": 30.046346,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лебедевка  "
-  },
-  {
-    "id": "8b05a61f-b555-4f22-abcf-d5b54af56474",
-    "image": "riftnormal",
-    "latitude": 52.848355,
-    "longitude": 30.067237,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Синица  2"
-  },
-  {
-    "id": "8c32fc8d-ab33-4836-9537-2e195ab2a339",
-    "image": "riftnormal",
-    "latitude": 54.217775,
-    "longitude": 30.303064,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "фабрика \"Спартак\""
-  },
-  {
-    "id": "8c6a5c82-ea8b-4a7d-a0ad-bf98969c8397",
-    "image": "riftnormal",
-    "latitude": 53.75663792039961,
-    "longitude": 30.26465309840745,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Новоселки 2"
-  },
-  {
-    "id": "8d979716-e61e-4ff9-82e6-1f134ff081d8",
-    "image": "riftnormal",
-    "latitude": 52.285295,
-    "longitude": 30.544902,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Боровая "
-  },
-  {
-    "id": "8daa8d32-fd58-4385-b408-63344044b9e3",
-    "image": "riftnormal",
-    "latitude": 52.971669,
-    "longitude": 30.056872,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Красногорье 2"
-  },
-  {
-    "id": "8db6fe88-0685-4bfc-afcc-09d49cd7300c",
-    "image": "riftnormal",
-    "latitude": 53.222632,
-    "longitude": 30.239954,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "В. Кистени "
-  },
-  {
-    "id": "8eeb2a1f-2ff6-432a-a7b6-54e2b6744c86",
-    "image": "riftnormal",
-    "latitude": 51.789587,
-    "longitude": 30.639829,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Новосёлки 3"
-  },
-  {
-    "id": "9012e07b-9506-4d78-b0ef-5e389e6483fd",
-    "image": "riftnormal",
-    "latitude": 51.863858,
-    "longitude": 30.709794,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Щитцы "
-  },
-  {
-    "id": "905fc2ce-9fee-417e-a558-008b0c244186",
-    "image": "riftnormal",
-    "latitude": 53.102816,
-    "longitude": 30.174197,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Зборов  1 "
-  },
-  {
-    "id": "9253b4a1-e052-4dc6-abe9-b5ed431aa81f",
-    "image": "riftnormal",
-    "latitude": 53.697724,
-    "longitude": 30.299254,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Новая Дача "
-  },
-  {
-    "id": "93a7e9d9-d812-4b22-81e0-494cc92afae6",
-    "image": "riftnormal",
-    "latitude": 52.087942,
-    "longitude": 30.715595,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ляхова Гора 3"
-  },
-  {
-    "id": "93f3d6cb-073d-4e5f-b9b7-690e0cd60227",
-    "image": "riftnormal",
-    "latitude": 52.026099,
-    "longitude": 30.739369,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Сутков 1 "
-  },
-  {
-    "id": "93fd6270-82d6-4df6-9818-d43f6c620621",
-    "image": "riftnormal",
-    "latitude": 53.245938,
-    "longitude": 30.29691,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Виляховка 1 "
-  },
-  {
-    "id": "943547d1-4349-4549-93ed-4ab6b57a5d0a",
-    "image": "riftnormal",
-    "latitude": 52.323818,
-    "longitude": 30.5209,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Отверница "
-  },
-  {
-    "id": "96536012-7d5b-4e7b-bafe-bade22976704",
-    "image": "riftnormal",
-    "latitude": 52.843435,
-    "longitude": 30.074023,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Синица  3"
-  },
-  {
-    "id": "973d43c4-03c5-46ce-ad53-3572c9331461",
-    "image": "riftnormal",
-    "latitude": 52.627319,
-    "longitude": 30.238717,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Олба нижняя 3 "
-  },
-  {
-    "id": "981e2032-0e20-494f-b177-02bfe1c4370d",
-    "image": "riftnormal",
-    "latitude": 52.838248,
-    "longitude": 30.080095,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Горделево 1 "
-  },
-  {
-    "id": "9ab5a830-2303-4d41-ba03-5db6c6ac031e",
-    "image": "riftnormal",
-    "latitude": 53.000517,
-    "longitude": 30.046226,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Малиновка "
-  },
-  {
-    "id": "9bff1318-8509-4752-9deb-a15a95467dc7",
-    "image": "riftnormal",
-    "latitude": 53.432267,
-    "longitude": 30.330056,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Порожек "
-  },
-  {
-    "id": "9c853f78-2ad2-4d59-9cee-6d97af53e219",
-    "image": "riftnormal",
-    "latitude": 52.9178,
-    "longitude": 30.054385,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Жлобинский верхн.  "
-  },
-  {
-    "id": "a036608a-a151-4e6f-b60d-da3ebdd8cffc",
-    "image": "riftnormal",
-    "latitude": 53.386795,
-    "longitude": 30.363722,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Овсяное "
-  },
-  {
-    "id": "a3ec0b75-f1a1-488d-97ac-106874d236bc",
-    "image": "riftnormal",
-    "latitude": 52.68074,
-    "longitude": 30.190021,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Козьмино 2"
-  },
-  {
-    "id": "a48dbd9f-2323-4718-abb0-f82f58d99e88",
-    "image": "riftnormal",
-    "latitude": 53.956737660912424,
-    "longitude": 30.403021989831785,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Полыковичи 2"
-  },
-  {
-    "id": "a5de11b8-8e03-43e2-945f-075112d3fcf9",
-    "image": "riftnormal",
-    "latitude": 53.128749,
-    "longitude": 30.296265,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Свержень  "
-  },
-  {
-    "id": "a63a64da-a029-4e5b-879b-fe9ff0d762e4",
-    "image": "riftnormal",
-    "latitude": 51.757253,
-    "longitude": 30.624436,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Верхне-Змеевская забора"
-  },
-  {
-    "id": "a650cc29-1eae-4111-bbd3-eac727dee2d7",
-    "image": "riftnormal",
-    "latitude": 53.017318,
-    "longitude": 30.056159,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Сельский остров "
-  },
-  {
-    "id": "a7405e29-d9fa-4581-b270-f44a1a7667ab",
-    "image": "riftnormal",
-    "latitude": 52.611637,
-    "longitude": 30.243507,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Олба нижняя 5 "
-  },
-  {
-    "id": "ac1f30b9-70e0-4f70-b829-dbe3711decd7",
-    "image": "riftnormal",
-    "latitude": 52.036434,
-    "longitude": 30.732974,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Переделка 2"
-  },
-  {
-    "id": "aca9de19-a633-4d20-9bc2-b47ec511d465",
-    "image": "riftnormal",
-    "latitude": 53.681931,
-    "longitude": 30.288705,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Боровка 2"
-  },
-  {
-    "id": "ad7b4f77-2b17-4624-966f-3ab161166fcb",
-    "image": "riftnormal",
-    "latitude": 52.299927,
-    "longitude": 30.527772,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Переновая "
-  },
-  {
-    "id": "ad809dd9-e4f9-4bb6-91eb-73f72464cba3",
-    "image": "riftnormal",
-    "latitude": 52.151213,
-    "longitude": 30.655064,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Холмеч 2"
-  },
-  {
-    "id": "addd4b11-33d8-4f9d-92c0-bcea98ee384e",
-    "image": "riftnormal",
-    "latitude": 54.240091,
-    "longitude": 30.285459,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Кобылка 1"
-  },
-  {
-    "id": "ade31b92-9cf0-4ed1-ab09-ffbb79f3bedb",
-    "image": "riftnormal",
-    "latitude": 53.8834153809809,
-    "longitude": 30.30309136365551,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Шелковая фабрика "
-  },
-  {
-    "id": "afd6cb7e-feb1-4767-a08f-3cff76469494",
-    "image": "riftnormal",
-    "latitude": 52.854272,
-    "longitude": 30.099326,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Синица  1 "
-  },
-  {
-    "id": "b17bff61-5ebc-425d-96a1-05fef6398363",
-    "image": "riftnormal",
-    "latitude": 52.01579,
-    "longitude": 30.764946,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Сутков 4"
-  },
-  {
-    "id": "b29803a0-1b8c-4500-be81-ca15a2034c38",
-    "image": "riftnormal",
-    "latitude": 53.646552,
-    "longitude": 30.28054,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Брусы "
-  },
-  {
-    "id": "b4292453-e034-4ef8-b540-9dce34a0868e",
-    "image": "riftnormal",
-    "latitude": 53.042811,
-    "longitude": 30.029141,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Задрутье "
-  },
-  {
-    "id": "b5321554-f302-4778-a7bd-3b9a6886c7a2",
-    "image": "riftnormal",
-    "latitude": 54.145429,
-    "longitude": 30.356919,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Яново"
-  },
-  {
-    "id": "b681efbb-b7c3-40cf-9ab2-1db1fb178c04",
-    "image": "riftnormal",
-    "latitude": 53.660372,
-    "longitude": 30.299463,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Затишье "
-  },
-  {
-    "id": "b9104eaf-d2cb-4b3e-af9b-d3de1af62691",
-    "image": "riftnormal",
-    "latitude": 53.651889,
-    "longitude": 30.293801,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Затишье  1 "
-  },
-  {
-    "id": "b99cd14e-7d61-47e5-ad4e-ca4ade1c45c8",
-    "image": "riftnormal",
-    "latitude": 52.510429,
-    "longitude": 30.271283,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Милоград "
-  },
-  {
-    "id": "badd0233-ac59-4f45-a67d-802e940a9019",
-    "image": "riftnormal",
-    "latitude": 52.013104,
-    "longitude": 30.793207,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мохов 2"
-  },
-  {
-    "id": "bb395298-8e91-4ab1-86e3-aeb8b614f87a",
-    "image": "riftnormal",
-    "latitude": 53.7851431055397,
-    "longitude": 30.274994834606872,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Султановка "
-  },
-  {
-    "id": "bb6c29ca-f3bf-4345-a0a1-6965f71b766a",
-    "image": "riftnormal",
-    "latitude": 52.131782,
-    "longitude": 30.69309,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Чаплин нижний "
-  },
-  {
-    "id": "bb7c9462-9659-4f29-8139-a70907cb85d3",
-    "image": "riftnormal",
-    "latitude": 52.205386,
-    "longitude": 30.580288,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Велин "
-  },
-  {
-    "id": "bd1eee04-7b29-4ffa-a90e-668f1b736dc3",
-    "image": "riftnormal",
-    "latitude": 53.059881,
-    "longitude": 30.036322,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Рогачев 2"
-  },
-  {
-    "id": "bd33d03a-7437-43f7-bc71-3e849e5a11b2",
-    "image": "riftnormal",
-    "latitude": 52.001167,
-    "longitude": 30.77706,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мохов 3"
-  },
-  {
-    "id": "bd3552e7-f387-4918-879b-37ded696171b",
-    "image": "riftnormal",
-    "latitude": 53.545977,
-    "longitude": 30.254618,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Бронное "
-  },
-  {
-    "id": "bda9b3c1-f1cc-4bfe-b638-093fae08398a",
-    "image": "riftnormal",
-    "latitude": 52.774096,
-    "longitude": 30.113516,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Затон 2"
-  },
-  {
-    "id": "bea336fb-e4cb-4ebe-a395-7efaf3edeb00",
-    "image": "riftnormal",
-    "latitude": 53.468931,
-    "longitude": 30.32081,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Прибор 1 "
-  },
-  {
-    "id": "bef0e27f-0917-463a-b2f6-fe220401e502",
-    "image": "riftnormal",
-    "latitude": 53.35862,
-    "longitude": 30.368665,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Обидовичи 4"
-  },
-  {
-    "id": "bf968b12-033f-4c7f-a76d-2f6c0bccf8da",
-    "image": "riftnormal",
-    "latitude": 53.086935,
-    "longitude": 30.253474,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Гадиловичи "
-  },
-  {
-    "id": "c20f80f8-2ae8-402e-94bb-00abef314fec",
-    "image": "riftnormal",
-    "latitude": 52.209665,
-    "longitude": 30.568961,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Белый Берег 2"
-  },
-  {
-    "id": "c251024b-1b09-4aa0-bfca-e1242addbb5e",
-    "image": "riftnormal",
-    "latitude": 53.96061934940876,
-    "longitude": 30.39446534923877,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Полыковичи 1"
-  },
-  {
-    "id": "c32f0963-4bde-4b2b-9884-57cbd5de9208",
-    "image": "riftnormal",
-    "latitude": 51.823951,
-    "longitude": 30.697478,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Шаровский 1 "
-  },
-  {
-    "id": "c3642e71-eee5-4861-8c12-e9038a069fb6",
-    "image": "riftnormal",
-    "latitude": 52.990818,
-    "longitude": 30.037427,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Красногорье верхн. "
-  },
-  {
-    "id": "c4a63af3-460c-4c96-95f6-3db010ea6175",
-    "image": "riftnormal",
-    "latitude": 53.645814,
-    "longitude": 30.298621,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Затишье  2"
-  },
-  {
-    "id": "c4b3985f-89c1-445c-862b-0cb19515cfd5",
-    "image": "riftnormal",
-    "latitude": 52.018433,
-    "longitude": 30.735392,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Сутков 2"
-  },
-  {
-    "id": "c4ee8f49-a42b-49d8-9670-2907fb50d86d",
-    "image": "riftnormal",
-    "latitude": 54.160481,
-    "longitude": 30.352697,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лопотня"
-  },
-  {
-    "id": "c54a5077-546d-41e7-8130-7a6c94bc66d6",
-    "image": "riftnormal",
-    "latitude": 51.92861,
-    "longitude": 30.826922,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лоевский 2"
-  },
-  {
-    "id": "c583218c-f6ee-4834-a7de-1e2f23d5763f",
-    "image": "riftnormal",
-    "latitude": 53.37907,
-    "longitude": 30.365308,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Обидовичи 1 "
-  },
-  {
-    "id": "c5a95d2a-820c-4202-8c0b-782cf9a48338",
-    "image": "riftnormal",
-    "latitude": 52.225405,
-    "longitude": 30.572226,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Белый Берег 1 "
-  },
-  {
-    "id": "c63e5394-0b65-4b62-9a1d-75408895091c",
-    "image": "riftnormal",
-    "latitude": 51.896866,
-    "longitude": 30.7816,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Красногорский 1 "
-  },
-  {
-    "id": "c7f55af6-9e95-4f1b-b265-2e263d924ef1",
-    "image": "riftnormal",
-    "latitude": 54.055551,
-    "longitude": 30.381112,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Белевичи 2"
-  },
-  {
-    "id": "c8b65df4-15cf-46c4-bddd-e151918d5909",
-    "image": "riftnormal",
-    "latitude": 53.635305,
-    "longitude": 30.286612,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Лысица 2"
-  },
-  {
-    "id": "c9801fba-4c84-46ad-8bed-60aac30db557",
-    "image": "riftnormal",
-    "latitude": 51.759964,
-    "longitude": 30.645837,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Нижне-Змеевская забора"
-  },
-  {
-    "id": "cb610517-6fd0-44aa-ba48-72dc6e0f10d0",
-    "image": "riftnormal",
-    "latitude": 51.78933,
-    "longitude": 30.656592,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Новосёлки 2"
-  },
-  {
-    "id": "cc56c109-8654-4586-8982-9538906f920f",
-    "image": "riftnormal",
-    "latitude": 52.611254,
-    "longitude": 30.251232,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Смычек 1 "
-  },
-  {
-    "id": "cd3fc4ca-cc11-499d-8db1-7c6ffda3ea3b",
-    "image": "riftnormal",
-    "latitude": 52.096813,
-    "longitude": 30.715644,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ляхова Гора 2"
-  },
-  {
-    "id": "ce33f37e-2c13-42bf-bda9-ee1cb1ab8b2e",
-    "image": "riftnormal",
-    "latitude": 52.610532,
-    "longitude": 30.277575,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Смычек 3"
-  },
-  {
-    "id": "cf11acd2-7b37-4aa0-ab6b-91aa1d768042",
-    "image": "riftnormal",
-    "latitude": 52.180664,
-    "longitude": 30.615617,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Колочин 2"
-  },
-  {
-    "id": "cf412518-f378-4071-8d04-2df36278420f",
-    "image": "riftnormal",
-    "latitude": 53.24327,
-    "longitude": 30.262562,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Виляховка 2"
-  },
-  {
-    "id": "cfb6fad1-a28f-480a-97e7-fa32826de061",
-    "image": "riftnormal",
-    "latitude": 54.249601,
-    "longitude": 30.272775,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мурованка"
-  },
-  {
-    "id": "d16cb243-3c3a-4ec1-982e-d6da50e6671a",
-    "image": "riftnormal",
-    "latitude": 52.107566,
-    "longitude": 30.704392,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ляхова Гора 1 "
-  },
-  {
-    "id": "d23952e3-b503-4882-bc3b-48c3262ba691",
-    "image": "riftnormal",
-    "latitude": 53.338394,
-    "longitude": 30.376529,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Острова 1 "
-  },
-  {
-    "id": "d2cabec3-f95f-4ce0-9b57-fef61b09ba4e",
-    "image": "riftnormal",
-    "latitude": 52.820994,
-    "longitude": 30.096584,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Проскурни 1 "
-  },
-  {
-    "id": "d2d08e95-db5b-4f45-a8bb-0604408b1415",
-    "image": "riftnormal",
-    "latitude": 53.770290257054846,
-    "longitude": 30.265285775781393,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Новоселки 1 "
-  },
-  {
-    "id": "d4c46d8a-81cb-4057-8c48-c6e186a2b0bb",
-    "image": "riftnormal",
-    "latitude": 52.38969,
-    "longitude": 30.393548,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Городок средний "
-  },
-  {
-    "id": "da5644c9-97ce-46ff-9fa0-a8825f0129a7",
-    "image": "riftnormal",
-    "latitude": 52.706464,
-    "longitude": 30.138644,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Стрешин  2"
-  },
-  {
-    "id": "dc4aaa9b-88f3-4d48-acf9-38ef56de1160",
-    "image": "riftnormal",
-    "latitude": 52.089437,
-    "longitude": 30.724193,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ляхова Гора средняя "
-  },
-  {
-    "id": "e054f3c3-93f5-4c95-b790-138b75a61bb0",
-    "image": "riftnormal",
-    "latitude": 53.71991750633389,
-    "longitude": 30.28546963055888,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Стайки 1 "
-  },
-  {
-    "id": "e0981d78-7924-44ee-ab60-136a849405f4",
-    "image": "riftnormal",
-    "latitude": 52.449917,
-    "longitude": 30.356192,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Унорица 2"
-  },
-  {
-    "id": "e0bfc0bf-21f4-4a70-b328-cb08ce73c1f9",
-    "image": "riftnormal",
-    "latitude": 54.304295,
-    "longitude": 30.273684,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Межники"
-  },
-  {
-    "id": "e0def84e-c80e-46e7-8a94-e363a9e68025",
-    "image": "riftnormal",
-    "latitude": 53.360268,
-    "longitude": 30.359903,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Обидовичи 2"
-  },
-  {
-    "id": "e12d1c7b-46c6-489e-8df7-45f089f2df74",
-    "image": "riftnormal",
-    "latitude": 53.92483324833511,
-    "longitude": 30.439467274206322,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Коржичье 2"
-  },
-  {
-    "id": "e1341a4f-63e9-4445-97db-1c92662454e1",
-    "image": "riftnormal",
-    "latitude": 51.794529,
-    "longitude": 30.664674,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Новосёлки 1"
-  },
-  {
-    "id": "e36af8c2-d570-448c-a32b-4ac5a22fa5b1",
-    "image": "riftnormal",
-    "latitude": 53.084783,
-    "longitude": 30.074215,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Рогачев 1 "
-  },
-  {
-    "id": "e3bc3f16-b574-4319-9eaa-f8911e906a7b",
-    "image": "riftnormal",
-    "latitude": 53.8862278137366,
-    "longitude": 30.36738907099246,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Мышековка"
-  },
-  {
-    "id": "eaec93d4-4ca4-4588-a9f7-5e9c74a99911",
-    "image": "riftnormal",
-    "latitude": 53.88916072810649,
-    "longitude": 30.353329504343947,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Дебря 1"
-  },
-  {
-    "id": "ec40e332-c712-4f95-8a72-20e6d2c5726f",
-    "image": "riftnormal",
-    "latitude": 53.70809211666965,
-    "longitude": 30.30377399159832,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Стайки 3"
-  },
-  {
-    "id": "ee3727af-1278-4fc7-97c5-1f5e80497f52",
-    "image": "riftnormal",
-    "latitude": 53.89423195229598,
-    "longitude": 30.397169661729436,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Холмы 3"
-  },
-  {
-    "id": "ef32b728-a26c-4aaa-a566-4ac850b1dda1",
-    "image": "riftnormal",
-    "latitude": 53.52396,
-    "longitude": 30.26418,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Ст. Быхов "
-  },
-  {
-    "id": "f111d56d-e5ad-46c3-84c2-204171e61943",
-    "image": "riftnormal",
-    "latitude": 53.975477025098925,
-    "longitude": 30.39451319485923,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "В. Полыковичи"
-  },
-  {
-    "id": "f1fdf548-bdbe-4ab7-8e00-4b8ab9913960",
-    "image": "riftnormal",
-    "latitude": 54.108601,
-    "longitude": 30.373081,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Добрейка 1"
-  },
-  {
-    "id": "f315cd6d-0b24-444a-8f4d-09001d26423c",
-    "image": "riftnormal",
-    "latitude": 52.380667,
-    "longitude": 30.397438,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Городок 2"
-  },
-  {
-    "id": "f543e2e3-3d26-4038-be31-cb22b61a53d1",
-    "image": "riftnormal",
-    "latitude": 52.42003,
-    "longitude": 30.379227,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Чёрное 2 "
-  },
-  {
-    "id": "f5466332-9cf2-4e7e-ac9c-3af7bc4ffa7b",
-    "image": "riftnormal",
-    "latitude": 53.318807,
-    "longitude": 30.359643,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Вотня "
-  },
-  {
-    "id": "f57039cd-ba1e-4d8e-b114-614be889b807",
-    "image": "riftnormal",
-    "latitude": 53.706994146470045,
-    "longitude": 30.293962216468913,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Стайки 2"
-  },
-  {
-    "id": "f6b454c1-111c-4c8c-95a3-0bf238b6e70d",
-    "image": "riftnormal",
-    "latitude": 53.24445,
-    "longitude": 30.344523,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Шапчицы 1 "
-  },
-  {
-    "id": "f7e2c55d-336c-4ddf-bd52-622aa809326c",
-    "image": "riftnormal",
-    "latitude": 52.237375,
-    "longitude": 30.569441,
-    "currentWaterLevel": 220,
-    "waterLevel": 220,
-    "description": "Белый Берег верхний "
-  },
-  {
-    "id": "f8745661-4383-4c4d-892f-aeda85bc6a7d",
-    "image": "riftnormal",
-    "latitude": 52.175985,
-    "longitude": 30.622587,
+    "latitude": 53.429235,
+    "longitude": 28.99709,
     "currentWaterLevel": 220,
     "waterLevel": 220,
     "description": "Дворец "
   },
   {
-    "id": "f949ae0f-222e-4587-8867-e40680e85c5d",
+    "id": "ba49db39-a659-4aef-8ffa-a6af81bfa212",
     "image": "riftnormal",
-    "latitude": 53.392512,
-    "longitude": 30.349341,
+    "latitude": 52.722795,
+    "longitude": 29.604327,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Тетерка 2"
+    "description": "Грузкое 1 "
   },
   {
-    "id": "faf271c4-46ec-455a-8de2-d5bf93a6d194",
+    "id": "badefe39-693f-49f8-bca3-3ba88dfd786f",
     "image": "riftnormal",
-    "latitude": 51.821104,
-    "longitude": 30.686632,
+    "latitude": 52.956142,
+    "longitude": 29.372112,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Шаровский 2"
+    "description": "Полянки 1 "
   },
   {
-    "id": "fafbfa78-afea-4e0c-89b4-8e0840e65e59",
+    "id": "bc2deb5c-147a-40f5-bf1b-c8812a098827",
     "image": "riftnormal",
-    "latitude": 52.690034,
-    "longitude": 30.194688,
+    "latitude": 53.445147,
+    "longitude": 28.972895,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Козьмино 1  "
+    "description": "Цыганка "
   },
   {
-    "id": "fc6e8168-8b0d-4d60-900e-125a10b500c8",
+    "id": "bc92c929-acee-43ca-9c3f-5eefc64a96a6",
     "image": "riftnormal",
-    "latitude": 52.377744,
-    "longitude": 30.422119,
+    "latitude": 52.894392,
+    "longitude": 29.336983,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Речица 2"
+    "description": "Васильевка 2"
   },
   {
-    "id": "ffd2bff0-797c-4634-8f86-d7aadb8380a5",
+    "id": "be47f460-99ff-4633-baec-76b5c23bb0f5",
     "image": "riftnormal",
-    "latitude": 51.957562,
-    "longitude": 30.806197,
+    "latitude": 53.17971,
+    "longitude": 29.252927,
     "currentWaterLevel": 220,
     "waterLevel": 220,
-    "description": "Мочулы 2 "
+    "description": "Течка "
+  },
+  {
+    "id": "be6cc0d6-4b08-4bd0-87b7-ea41e6a062a3",
+    "image": "riftnormal",
+    "latitude": 52.589982,
+    "longitude": 29.998253,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Байдачище "
+  },
+  {
+    "id": "bf451d9e-cd3a-457d-b71a-72d12233ad88",
+    "image": "riftnormal",
+    "latitude": 53.233639,
+    "longitude": 29.197485,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Щатково 1 "
+  },
+  {
+    "id": "bff5a5a0-d3aa-43ac-b845-05e644763e6b",
+    "image": "riftnormal",
+    "latitude": 52.646096,
+    "longitude": 29.728039,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Шатилки Верхние "
+  },
+  {
+    "id": "c0603645-cced-4fc6-bbc6-0df19253cb8e",
+    "image": "riftnormal",
+    "latitude": 52.574193,
+    "longitude": 30.03228,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Домайковка "
+  },
+  {
+    "id": "c23513c1-e0be-4863-9c00-0517ca15c694",
+    "image": "riftnormal",
+    "latitude": 52.639222,
+    "longitude": 29.789198,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Куликово 2"
+  },
+  {
+    "id": "c2741f01-42ab-4af2-9e8b-42c1312371d2",
+    "image": "riftnormal",
+    "latitude": 53.234782,
+    "longitude": 29.171192,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Полумерский плес 2"
+  },
+  {
+    "id": "c3035a4d-a709-4a9e-9bbc-dc69645d384d",
+    "image": "riftnormal",
+    "latitude": 52.73066,
+    "longitude": 29.592496,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Здудичи 1  "
+  },
+  {
+    "id": "c50d2833-200d-4fd3-8798-bee9667bed17",
+    "image": "riftnormal",
+    "latitude": 53.052188,
+    "longitude": 29.253091,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Селиба "
+  },
+  {
+    "id": "ca096bdf-0b78-4a35-8402-e4f8b8c401f3",
+    "image": "riftnormal",
+    "latitude": 53.60662,
+    "longitude": 28.925874,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Якшицы "
+  },
+  {
+    "id": "cea640d6-1fe1-4001-bb6a-bcef1430ff0e",
+    "image": "riftnormal",
+    "latitude": 53.120654,
+    "longitude": 29.255812,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Березин. Форштадт 1 "
+  },
+  {
+    "id": "ceb2a558-3220-4605-9e61-0a236adc1970",
+    "image": "riftnormal",
+    "latitude": 52.63313,
+    "longitude": 29.838305,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Якимова слобода 2"
+  },
+  {
+    "id": "ceb50c11-ba35-496f-9539-9621530c76fa",
+    "image": "riftnormal",
+    "latitude": 52.633361,
+    "longitude": 29.846298,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Якимова слобода 3"
+  },
+  {
+    "id": "d125b034-dc47-4fbf-ba7f-fe3fb695b4c9",
+    "image": "riftnormal",
+    "latitude": 52.752971,
+    "longitude": 29.548116,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Колдыбань "
+  },
+  {
+    "id": "d309b6f9-970c-4241-8654-3b8be172897e",
+    "image": "riftnormal",
+    "latitude": 53.196867,
+    "longitude": 29.240866,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Назаровка "
+  },
+  {
+    "id": "d53af0a1-25b3-45cd-a3f5-8de367c37520",
+    "image": "riftnormal",
+    "latitude": 52.689541,
+    "longitude": 29.620333,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Стужки "
+  },
+  {
+    "id": "d5cc9fe8-a9b2-4518-a555-8d5eacfa9a2b",
+    "image": "riftnormal",
+    "latitude": 53.052197,
+    "longitude": 29.265917,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лесники 1 "
+  },
+  {
+    "id": "d65877c6-b01b-4c1d-afd5-e5dc64bb250a",
+    "image": "riftnormal",
+    "latitude": 52.801409,
+    "longitude": 29.498243,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бельчо 3"
+  },
+  {
+    "id": "d948a76f-bc0f-4f9e-921d-6a8b8d76274c",
+    "image": "riftnormal",
+    "latitude": 52.845526,
+    "longitude": 29.3872,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Белица 1 "
+  },
+  {
+    "id": "d9698a39-bc68-4c00-a7a7-5078ecf9425a",
+    "image": "riftnormal",
+    "latitude": 52.597947,
+    "longitude": 29.994252,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Отрубы 2"
+  },
+  {
+    "id": "dc918d2f-2c1b-4bc8-8c0b-95afa5e36c41",
+    "image": "riftnormal",
+    "latitude": 52.68485,
+    "longitude": 29.65177,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чирковичи 1 "
+  },
+  {
+    "id": "de42452a-2559-422e-9cd6-3ff27325a22b",
+    "image": "riftnormal",
+    "latitude": 52.802997,
+    "longitude": 29.481517,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бельчо 2"
+  },
+  {
+    "id": "df4274b6-b224-4e3c-b4c1-1df0bc59caed",
+    "image": "riftnormal",
+    "latitude": 52.55164,
+    "longitude": 30.121599,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чернейские острова "
+  },
+  {
+    "id": "e080e28e-b782-4e82-94c6-f58e87dba7ee",
+    "image": "riftnormal",
+    "latitude": 53.802355,
+    "longitude": 28.970455,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Светлица 1 "
+  },
+  {
+    "id": "e134c0af-6453-4fab-9beb-639a43e0baa5",
+    "image": "riftnormal",
+    "latitude": 52.549966,
+    "longitude": 30.096757,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Гогали "
+  },
+  {
+    "id": "e20e4ce4-81eb-4194-8c4e-7c73c1131df7",
+    "image": "riftnormal",
+    "latitude": 53.014813,
+    "longitude": 29.276372,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Хустное 1 "
+  },
+  {
+    "id": "e2214f08-b9e6-4300-b253-5b5267a6f89b",
+    "image": "riftnormal",
+    "latitude": 52.597214,
+    "longitude": 29.982104,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Отрубы 1 "
+  },
+  {
+    "id": "e4d1aac5-6955-44bf-ab00-7461b9b24137",
+    "image": "riftnormal",
+    "latitude": 52.620644,
+    "longitude": 29.884593,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Чертянка 1 "
+  },
+  {
+    "id": "e6bda3fa-0735-4502-a461-bf1eb22ffe1e",
+    "image": "riftnormal",
+    "latitude": 53.08161,
+    "longitude": 29.256686,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Поплавец 2"
+  },
+  {
+    "id": "e6cea18d-5525-4ce9-b13d-85935240617e",
+    "image": "riftnormal",
+    "latitude": 53.057732,
+    "longitude": 29.255457,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Н. Доманово 2"
+  },
+  {
+    "id": "e8fcbfba-a58c-46c0-a781-b44435cde5a0",
+    "image": "riftnormal",
+    "latitude": 52.671274,
+    "longitude": 29.701161,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Белая гора 1 "
+  },
+  {
+    "id": "e928ab96-25a2-4fe7-ad5f-104cbaa89797",
+    "image": "riftnormal",
+    "latitude": 53.166843,
+    "longitude": 29.240268,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Фандок"
+  },
+  {
+    "id": "eabd9e5d-6886-478e-9211-f7fd2579e64a",
+    "image": "riftnormal",
+    "latitude": 52.552351,
+    "longitude": 30.233074,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Мартыновское устье 1 "
+  },
+  {
+    "id": "eac6187b-f59e-42c2-aa1c-7cb744d7b550",
+    "image": "riftnormal",
+    "latitude": 52.864362,
+    "longitude": 29.347453,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Красновка "
+  },
+  {
+    "id": "eb9a3eb0-da29-4c4b-ad06-ece1ddabf0c0",
+    "image": "riftnormal",
+    "latitude": 52.836769,
+    "longitude": 29.386689,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Белица 2"
+  },
+  {
+    "id": "ee01ffe2-4836-436b-b656-4ea5817ba9bb",
+    "image": "riftnormal",
+    "latitude": 53.570038,
+    "longitude": 28.963037,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Закорки "
+  },
+  {
+    "id": "f0542f66-9982-4670-9af1-babdc61926cb",
+    "image": "riftnormal",
+    "latitude": 52.725761,
+    "longitude": 29.601219,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Здудичи 2"
+  },
+  {
+    "id": "f0bd091c-fe54-4634-975f-78d813ad01cc",
+    "image": "riftnormal",
+    "latitude": 52.803785,
+    "longitude": 29.452996,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бучье 1 "
+  },
+  {
+    "id": "f1528d1b-2120-4cdc-9fd9-bef50305c115",
+    "image": "riftnormal",
+    "latitude": 53.158392,
+    "longitude": 29.25181,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Бобруйск 1 "
+  },
+  {
+    "id": "f2eb75ba-4e8e-42e8-af8f-014e3c84d3b8",
+    "image": "riftnormal",
+    "latitude": 53.717214,
+    "longitude": 28.962926,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Божино "
+  },
+  {
+    "id": "f5da2f05-901a-4a28-9899-d2623bdd96c7",
+    "image": "riftnormal",
+    "latitude": 52.557749,
+    "longitude": 30.063855,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Ветка "
+  },
+  {
+    "id": "f618e991-f19e-4a3a-b7e9-4a2cfc74dafb",
+    "image": "riftnormal",
+    "latitude": 53.743346,
+    "longitude": 28.93787,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Едлино 1 "
+  },
+  {
+    "id": "f672a209-3e52-439b-98d9-c7380c19ab9a",
+    "image": "riftnormal",
+    "latitude": 52.817969,
+    "longitude": 29.432531,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Паричи 1 "
+  },
+  {
+    "id": "f8507f16-8930-4984-89cf-7d6589e200b2",
+    "image": "riftnormal",
+    "latitude": 52.771898,
+    "longitude": 29.523988,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Воротень 1 "
+  },
+  {
+    "id": "f96137ca-8244-4828-8bba-5bcb1b3a216a",
+    "image": "riftnormal",
+    "latitude": 52.561335,
+    "longitude": 30.104695,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Глушица "
+  },
+  {
+    "id": "fc19e5c4-d321-4482-9e15-6f9b5a686943",
+    "image": "riftnormal",
+    "latitude": 53.767687,
+    "longitude": 28.941449,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Каменье "
+  },
+  {
+    "id": "fccaa55b-29c8-4255-9c2f-e48dd6d35fea",
+    "image": "riftnormal",
+    "latitude": 53.066563,
+    "longitude": 29.247539,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Глубокий "
+  },
+  {
+    "id": "feb94e91-3256-4544-95f5-22191b16e8ef",
+    "image": "riftnormal",
+    "latitude": 53.028644,
+    "longitude": 29.271257,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Лопаты 2"
+  },
+  {
+    "id": "ff329136-3550-479c-a796-51cfa5e8eba7",
+    "image": "riftnormal",
+    "latitude": 53.557384,
+    "longitude": 28.957122,
+    "currentWaterLevel": 220,
+    "waterLevel": 220,
+    "description": "Островский перевоз"
   }
 ]
