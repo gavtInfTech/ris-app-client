@@ -466,30 +466,16 @@ export default function PathInformationMap(props) {
         riverSites = allSites.filter((site) => site.river === "Неман");
         riverRifts = props.rifts.filter((rift) => rift.river === "Неман");
         break;
-      case "/path-information/muhavets":
-        setRiver("Мухавец");
-        riverSigns = props.signs.filter((sign) => sign.river === "Мухавец");
-        riverSites = allSites.filter((site) => site.river === "Мухавец");
-        break;
-      case "/path-information/dbk":
-        setRiver("Днепро-Бугский канал");
-        riverSigns = props.signs.filter(
-          (sign) => sign.river === "Днепро-Бугский канал"
-        );
-        riverSites = allSites.filter(
-          (site) => site.river === "Днепро-Бугский канал"
-        );
-        break;
-      case "/path-information/pina":
-        setRiver("Пина");
-        riverSigns = props.signs.filter((sign) => sign.river === "Пина");
-        riverSites = allSites.filter((site) => site.river === "Пина");
-        break;
-      case "/path-information/pripyat":
-        setRiver("Припять");
-        riverSigns = props.signs.filter((sign) => sign.river === "Припять");
+      case "/path-information/pripyat1":
+        setRiver("Припять-Микашевичи");
+        riverSigns = props.signs.filter((sign) => sign.river === "Припять1");
         riverSites = allSites.filter((site) => site.river === "Припять");
-        riverRifts = props.rifts.filter((rift) => rift.river === "Припять");
+        break;
+      case "/path-information/pripyat2":
+        setRiver("Микашевичи-Брест");
+        riverSigns = props.signs.filter((sign) => sign.river === "Припять2");
+        riverSites = allSites.filter((site) => site.river === "Припять");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Припять2");
         break;
       case "/path-information/soj":
         setRiver("Сож");
