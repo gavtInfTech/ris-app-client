@@ -214,7 +214,7 @@ export default function PathInformationPart(props) {
           item.date = new Date(item.date);
         });
         setSignNotices(resSignNotices.data);
-        console.log(resSignNotices.data);
+
         const resSiteAccordances = await api.get(
           "/siteAccordances/getAllByPeriodAndRiver",
           {

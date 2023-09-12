@@ -426,6 +426,7 @@ export default function PathInformationMap(props) {
   const [signs, setSigns] = useState([]);
   const [sites, setSites] = useState([]);
   const [rifts, setRifts] = useState([]);
+  const [alerts, setAlerts] = useState([]);
   const [river, setRiver] = useState("Днепр");
   const [displaySigns, setDisplaySigns] = useState(true);
   const [displayRifts, setDisplayRifts] = useState(false);
@@ -436,6 +437,7 @@ export default function PathInformationMap(props) {
     let riverSigns = [];
     let riverSites = [];
     let riverRifts = [];
+    let riverAlerts = [];
     // eslint-disable-next-line default-case
     switch (pathname) {
       case "/path-information/dnepr":
@@ -443,12 +445,16 @@ export default function PathInformationMap(props) {
         riverSigns = props.signs.filter((sign) => sign.river === "Днепр");
         riverSites = allSites.filter((site) => site.river === "Днепр");
         riverRifts = props.rifts.filter((rift) => rift.river === "Днепр");
+        console.log(props.alerts);
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Днепр");
         break;
       case "/path-information/berezina":
         setRiver("Березина");
         riverSigns = props.signs.filter((sign) => sign.river === "Березина");
         riverSites = allSites.filter((site) => site.river === "Березина");
         riverRifts = props.rifts.filter((rift) => rift.river === "Березина");
+        console.log(props.alerts);
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Березина");
         break;
       case "/path-information/dvina":
         setRiver("Западная Двина");
@@ -459,35 +465,42 @@ export default function PathInformationMap(props) {
         riverRifts = props.rifts.filter(
           (rift) => rift.river === "Западная Двина"
         );
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Западная Двина");
         break;
       case "/path-information/neman":
         setRiver("Неман");
         riverSigns = props.signs.filter((sign) => sign.river === "Неман");
         riverSites = allSites.filter((site) => site.river === "Неман");
         riverRifts = props.rifts.filter((rift) => rift.river === "Неман");
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Неман");
         break;
       case "/path-information/pripyat1":
         setRiver("Припять-Микашевичи");
         riverSigns = props.signs.filter((sign) => sign.river === "Припять1");
         riverSites = allSites.filter((site) => site.river === "Припять");
+        riverRifts = props.rifts.filter((rift) => rift.river === "Припять1");
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Припять1");
         break;
       case "/path-information/pripyat2":
         setRiver("Микашевичи-Брест");
         riverSigns = props.signs.filter((sign) => sign.river === "Припять2");
-        console.log(riverSigns);
         riverSites = allSites.filter((site) => site.river === "Припять");
         riverRifts = props.rifts.filter((rift) => rift.river === "Припять2");
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Припять2");
         break;
       case "/path-information/soj":
         setRiver("Сож");
         riverSigns = props.signs.filter((sign) => sign.river === "Сож");
         riverSites = allSites.filter((site) => site.river === "Сож");
         riverRifts = props.rifts.filter((rift) => rift.river === "Сож");
+        riverAlerts = props.alerts.filter((alert) => alert.river === "Сож");
         break;
     }
+    console.log(riverAlerts);
     setSigns(riverSigns);
     setSites(riverSites);
     setRifts(riverRifts);
+    setAlerts(riverAlerts);
     setIsLoaded(true);
   }, [pathname, props.signs]);
 
@@ -536,9 +549,7 @@ export default function PathInformationMap(props) {
       "<br>Соответсвие места: " +
       (!item.size ? "Соответствует" : "Не соответствует") +
       "<br>Видимость: " +
-      (!item.visibility ? "Соответствует" : "Не соответствует") +
-      "<br>Комментарий: " +
-      item.comment;
+      (!item.visibility ? "Соответствует" : "Не соответствует");
     return (
       <Placemark
         geometry={[item.latitude, item.longitude]}
@@ -573,6 +584,28 @@ export default function PathInformationMap(props) {
           iconLayout: "default#image",
           iconImageHref: `/images/pathInformationImages/rift.png`,
           iconImageSize: [30, 30],
+          iconImageOffset: [-15, -15],
+        }}
+      />
+    );
+  });
+
+  const riverAlertMarks = alerts.map((item) => {
+    let contentBody =
+      "Содержание: " +
+      item.comment +
+      "<br>Дата: " +
+      item.date;
+    return (
+      <Placemark
+        geometry={[item.latitude, item.longitude]}
+        key={item.id}
+        properties={{ balloonContentBody: [contentBody] }}
+        modules={["geoObject.addon.balloon"]}
+        options={{
+          iconLayout: "default#image",
+          iconImageHref: `/images/pathInformationImages/attention.png`,
+          iconImageSize: [50, 50],
           iconImageOffset: [-15, -15],
         }}
       />
@@ -620,6 +653,7 @@ export default function PathInformationMap(props) {
             {polylines}
             {displayRifts && riverRiftsMarks}
             {displaySigns && riverSignsMarks}
+            {riverAlertMarks}
           </Map>
         </YMaps>
       </Box>
