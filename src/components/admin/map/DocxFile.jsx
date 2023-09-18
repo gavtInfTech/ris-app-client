@@ -447,15 +447,15 @@ export default function DocxFile(props) {
                     "5." +
                     (i + 1) +
                     "." +
-                    (j + 1) +
-                    "." +
-                    props.signNotices[j].comment +
-                    " ",
+                    n +
+                    ". " +
+                    "Знак: " + props.signNotices[j].sign + "; километр: " + props.signNotices[j].kilometrage + "; комментарий: " + props.signNotices[j].comment + ".",
                   size: 30,
                 }),
               ],
             })
           );
+          n++;
         }
       }
     }

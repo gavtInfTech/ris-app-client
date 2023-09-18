@@ -142,26 +142,60 @@ export function findSegmentByKilometer(river, startKM, endKM) {
 }
 
 export function getSiteByCoords(river, targetCoords, sites) {
-  let riverCoords = getRiverCoordsAndZeroPointByRiver(river)[0];
-  let sum = getRiverCoordsAndZeroPointByRiver(river)[1];
-
   let closestCoordinateIndex = 0;
   let minDistance = Infinity;
+  let riverCoords;
+  let sum;
+  let riverName;
 
-  for (let i = 0; i < riverCoords.length; i++) {
-    const distance = haversineDistance(riverCoords[i], targetCoords);
-    if (distance < minDistance) {
-      minDistance = distance;
-      closestCoordinateIndex = i;
+  if (river === 'Припять2') {
+    let allRiversCoords = {
+      'Мухавец': getRiverCoordsAndZeroPointByRiver('Мухавец')[0],
+      'Днепро-Бугский канал': getRiverCoordsAndZeroPointByRiver('Днепро-Бугский канал')[0],
+      'Пина': getRiverCoordsAndZeroPointByRiver('Пина')[0],
+      'Микашевичский канал': getRiverCoordsAndZeroPointByRiver('Микашевичский канал')[0],
+      'Горынь': getRiverCoordsAndZeroPointByRiver('Горынь')[0],
+      'Верхний участок реки Припять': getRiverCoordsAndZeroPointByRiver('Верхний участок реки Припять')[0]
+    };
+
+    for (const key in allRiversCoords) {
+      for (let i = 0; i < allRiversCoords[key].length; i++) {
+        const distance = haversineDistance(allRiversCoords[key][i], targetCoords);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestCoordinateIndex = i;
+          riverCoords = allRiversCoords[key];
+          riverName = key;
+        }
+      }
+    }
+  } else {
+    if (river === 'Припять1') {
+      riverCoords = getRiverCoordsAndZeroPointByRiver('Припять')[0];
+      riverName = 'Припять';
+    } else {
+      riverCoords = getRiverCoordsAndZeroPointByRiver(river)[0];
+      riverName = river;
+    }
+
+    for (let i = 0; i < riverCoords.length; i++) {
+      const distance = haversineDistance(riverCoords[i], targetCoords);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCoordinateIndex = i;
+      }
     }
   }
-  
+
+  sum = getRiverCoordsAndZeroPointByRiver(riverName)[1];
   for (let i = 0; i < closestCoordinateIndex; i++) {
     sum += haversineDistance(riverCoords[i], riverCoords[i + 1]);
   }
 
   for (const site of sites) {
-    if (sum >= site.firstKM && sum <= site.secondKM) {
+    console.log(site.name);
+    console.log(sum);
+    if (sum >= site.firstKM && sum <= site.secondKM && riverName === site.river) {
       return site.name;
     }
   }

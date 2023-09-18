@@ -195,7 +195,7 @@ export default function PathInformationPart(props) {
           },
         });
         resAlerts.data.forEach((item) => {
-          item.date = new Date(item.date);
+          item.date = new Date(item.date).toLocaleString().slice(0, 10);
         });
         props.setAlerts(resAlerts.data);
 
@@ -262,9 +262,10 @@ export default function PathInformationPart(props) {
       ) {
         notices.push(
           <Typography className={styles.typography}>
-            5.{i + 1}.{j + 1}. {signNotices[j].comment}{" "}
+            5.{i + 1}.{n}. Знак: {signNotices[j].sign}; километр: {signNotices[j].kilometrage}; комментарий: {signNotices[j].comment}.
           </Typography>
         );
+        n++;
       }
     }
   }
