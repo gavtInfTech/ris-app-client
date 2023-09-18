@@ -14,6 +14,8 @@ export default function PathInformationMenu() {
   const [signs, setSigns] = useState([]);
   const [rifts, setRifts] = useState([]);
   const [alerts, setAlerts] = useState([]);
+  const [sites, setSites] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const getSigns = async () => {
@@ -21,10 +23,13 @@ export default function PathInformationMenu() {
         const resSigns = await api.get("/signs/getAll");
         const resRifts = await api.get("/rifts/getAll");
         const resAlerts = await api.get("/alerts/getAll");
+        const resSites = await api.get("/sites/getAll");
         resAlerts.data.forEach((alert) => {alert.date = new Date(alert.date).toLocaleString().slice(0, 10)})
         setSigns(resSigns.data);
         setRifts(resRifts.data);
         setAlerts(resAlerts.data);
+        setSites(resSites.data);
+        setIsLoaded(true);
       } catch (err) {
         console.log(err);
       }
@@ -33,7 +38,8 @@ export default function PathInformationMenu() {
   }, []);
 
   return (
-    <Box
+    <>
+    { isLoaded && <Box
       sx={{
         bgcolor: "background.paper",
         position: "absolute",
@@ -111,23 +117,9 @@ export default function PathInformationMenu() {
       </AppBar>
 
       <Routes>
-        <Route path="/dnepr" element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />} />
-        <Route
-          path="/berezina"
-          element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />}
-        />
-        <Route path="/dvina" element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />} />
-        <Route path="/neman" element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />} />
-        <Route
-          path="/pripyat1" 
-          element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />}
-        />
-        <Route
-          path="/pripyat2"
-          element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />}
-        />
-        <Route path="/soj" element={<PathInformationMap signs={signs} rifts={rifts} alerts={alerts} />} />
+        <Route path="/*" element={<PathInformationMap allSites={sites} signs={signs} rifts={rifts} alerts={alerts} />} />
       </Routes>
-    </Box>
+    </Box> }
+    </>
   );
 }

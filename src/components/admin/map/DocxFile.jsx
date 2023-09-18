@@ -304,7 +304,40 @@ export default function DocxFile(props) {
       let siteAccordance = props.siteAccordances.find(
         (item) => item.site === site.name
       );
-      if (siteAccordance) {
+      if (siteAccordance === undefined) {
+        rowCells.push(
+          new TableCell({
+            verticalAlign: "center",
+            children: [
+              new Paragraph({
+                alignment: "center",
+                children: [
+                  new TextRun({
+                    text: "-",
+                    size: 27,
+                  }),
+                ],
+              }),
+            ],
+          })
+        );
+        rowCells.push(
+          new TableCell({
+            verticalAlign: "center",
+            children: [
+              new Paragraph({
+                alignment: "center",
+                children: [
+                  new TextRun({
+                    text: "-",
+                    size: 27,
+                  }),
+                ],
+              }),
+            ],
+          })
+        );
+      } else {
         let gab = filteredGabs.find(
           (gab) => gab.date.getDate() === siteAccordance.date.getDate()
         );
@@ -499,9 +532,9 @@ export default function DocxFile(props) {
 
     let signatureRows = [];
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 1; i < 5; i++) {
       let rowCells = [];
-
+      if (props.session['inspector' + i].length === 0) continue;
       rowCells.push(
         new TableCell({
           borders: {
@@ -553,7 +586,7 @@ export default function DocxFile(props) {
               },
               children: [
                 new TextRun({
-                  text: "заместитель начальника отдела путевых работ и инфраструктуры внутренних водных путей государственного учреждения «Государственная администрация водного транспорта» В.С.Джига",
+                  text: props.session['inspector' + i] ,
                   size: 24,
                 }),
               ],
@@ -669,7 +702,7 @@ export default function DocxFile(props) {
                     props.session.inspector3 +
                     ", " +
                     props.session.inspector4 +
-                    ", ",
+                    ".",
                   size: 30,
                 }),
               ],

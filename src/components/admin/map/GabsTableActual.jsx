@@ -7,17 +7,20 @@ export default function GabsTableActual(props) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    let sites = props.sites;
     let rows = [];
-
-    sites.forEach((site) => {
+    console.log(props.sites);
+    props.sites.forEach((site) => {
       let rowCells = [];
-      rowCells.push(<td>{site.name}</td>);
+      rowCells.push(<td style={{textAlign: 'start'}}>{site.name}</td>);
       let filteredGabs = props.gabs.filter((gab) => gab.site === site.name);
       let siteAccordance = props.siteAccordances.find((item) => item.site === site.name);
-      if (siteAccordance) {
+      if (siteAccordance === undefined) {
+        rowCells.push(<td>-</td>);
+        rowCells.push(<td>-</td>);
+      } else {
         let gab = filteredGabs.find((gab) => gab.date.getDate() === siteAccordance.date.getDate());
-        if (!gab) {
+      
+        if (gab === undefined) {
           rowCells.push(<td>-</td>);
           rowCells.push(<td>-</td>);
         } else {
@@ -35,7 +38,7 @@ export default function GabsTableActual(props) {
       rows.push(<tr>{rowCells}</tr>);
     });
     setRows(rows);
-  }, [props.gabs]);
+  }, []);
 
   return (
     <table className={styles.table}>

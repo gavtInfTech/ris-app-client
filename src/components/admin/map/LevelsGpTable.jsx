@@ -6,7 +6,7 @@ import styles from "./style.module.css";
 export default function LevelsGpTable(props) {
   const [headerCells, setHeaderCells] = useState([]);
   const [rows, setRows] = useState([]);
- 
+  console.log(props.levelsGp);
   useEffect(() => {
     let currentDate = new Date(props.session.startDate);
     let hydroposts = [];

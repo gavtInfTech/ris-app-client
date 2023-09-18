@@ -136,7 +136,6 @@ export default function PathInformationPart(props) {
   const [session, setSession] = useState();
   const [sites, setSites] = useState([]);
   const [siteAccordances, setSiteAccordances] = useState([]);
-  const [alerts, setAlerts] = useState([]);
   const [signNotices, setSignNotices] = useState([]);
   const [levelsGp, setLevelsGp] = useState([]);
   const [gabs, setGabs] = useState([]);
@@ -148,21 +147,21 @@ export default function PathInformationPart(props) {
   useEffect(() => {
     const getData = async () => {
       try {
+        setSites(props.sites);
+
         const resSession = await api.get("/sessions/getByMonth", {
           params: { month: monthToNumber(month), river: props.river },
         });
-        if (resSession.data === "") setSession(null);
-        else
+        if (resSession.data === "") {
+          setSession(null);
+          props.setAlerts([]);
+        } else
           setSession({
             ...resSession.data,
             startDate: new Date(resSession.data.startDate),
             endDate: new Date(resSession.data.endDate),
           });
-
-        const resSites = await api.get("/sites/getAllByRiver", {
-          params: { river: props.river },
-        });
-        setSites(resSites.data.sort(customComparator));
+          console.log(resSession.data);
 
         const resLevelsGp = await api.get("/levelsGp/getAllByPeriodAndRiver", {
           params: {
@@ -198,7 +197,7 @@ export default function PathInformationPart(props) {
         resAlerts.data.forEach((item) => {
           item.date = new Date(item.date);
         });
-        setAlerts(resAlerts.data);
+        props.setAlerts(resAlerts.data);
 
         const resSignNotices = await api.get(
           "/signNotices/getAllByPeriodAndRiver",
@@ -229,17 +228,18 @@ export default function PathInformationPart(props) {
           item.date = new Date(item.date);
         });
         setSiteAccordances(resSiteAccordances.data);
-
+        console.log(resSiteAccordances.data);
         setIsLoaded(true);
       } catch (err) {
         console.log(err);
       }
     };
     getData();
-  }, [month, props.river]);
-
+  }, [month, props.river, props.sites]);
+  
   const handleMonthChange = (event) => {
     let value = event.target.value;
+    setIsLoaded(false);
     setMonth(value);
   };
 
@@ -269,11 +269,11 @@ export default function PathInformationPart(props) {
     }
   }
 
-  if (alerts.length > 0) {
-    for (let i = 0; i < alerts.length; i++) {
+  if (props.alerts.length > 0) {
+    for (let i = 0; i < props.alerts.length; i++) {
       notices.push(
         <Typography className={styles.typography}>
-          5.{i + 1 + sites.length}. {alerts[i].comment}{" "}
+          5.{i + 1 + sites.length}. {props.alerts[i].comment}{" "}
         </Typography>
       );
     }
@@ -306,13 +306,13 @@ export default function PathInformationPart(props) {
           </MenuItem>
         ))}
       </TextField>
-      {!Boolean(session) && (
+      {!Boolean(session) && 
         <Typography sx={{ fontSize: 20, mt: "10vh", textAlign: "center" }}>
           За выбранный месяц на реке {props.river} осмотра не проводилось.
         </Typography>
-      )}
+      }
 
-      {Boolean(session) && isLoaded && (
+      {Boolean(session) && isLoaded && 
         <Box
           sx={{
             display: "flex",
@@ -374,11 +374,11 @@ export default function PathInformationPart(props) {
             sites={sites}
             siteAccordances={siteAccordances}
             gabs={gabs}
-            alerts={alerts}
+            alerts={props.alerts}
             signNotices={signNotices}
           />
         </Box>
-      )}
+      }
     </Box>
   );
 }

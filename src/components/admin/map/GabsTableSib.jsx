@@ -9,7 +9,6 @@ export default function GabsTableSib(props) {
  
   useEffect(() => {
     let currentDate = new Date(props.session.startDate);
-    let sites = props.sites;
     let rows = [];
     let headerCells = [];
     
@@ -24,11 +23,11 @@ export default function GabsTableSib(props) {
     }
     setHeaderCells(headerCells);
 
-    sites.forEach((site) => {
+    props.sites.forEach((site) => {
       let siteAccordance = props.siteAccordances.find((item) => item.site === site.name);
       currentDate = new Date(props.session.startDate);
       let rowCells = [];
-      rowCells.push(<td>{site.name}</td>);
+      rowCells.push(<td style={{textAlign: 'start'}}>{site.name}</td>);
       let filteredGabs = props.gabs.filter(
         (gab) => gab.site === site.name
       );
@@ -48,7 +47,7 @@ export default function GabsTableSib(props) {
       rows.push(<tr>{rowCells}</tr>);
     });
     setRows(rows);
-  }, [props.gabs]);
+  }, []);
 
   return (
     <table className={styles.table}>
