@@ -21,19 +21,19 @@ import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { api } from "../../../axiosConfig";
 
 function customComparator(a, b) {
-    const A = a.name.split(" ")[0].split(".");
-    const B = b.name.split(" ")[0].split(".");
-  
-    for (let i = 0; i < Math.max(A.length, B.length); i++) {
-      const partA = parseInt(A[i]) || 0;
-      const partB = parseInt(B[i]) || 0;
-  
-      if (partA !== partB) {
-        return partA - partB;
-      }
+  const A = a.name.split(" ")[0].split(".");
+  const B = b.name.split(" ")[0].split(".");
+
+  for (let i = 0; i < Math.max(A.length, B.length); i++) {
+    const partA = parseInt(A[i]) || 0;
+    const partB = parseInt(B[i]) || 0;
+
+    if (partA !== partB) {
+      return partA - partB;
     }
-    return 0;
   }
+  return 0;
+}
 
 const rivers = [
   "Днепр",
@@ -256,30 +256,32 @@ export default function Sites() {
   ];
 
   return (
-    <DataGrid
-      getRowHeight={() => "auto"}
-      sx={{
-        [`& .${gridClasses.cell}`]: {
-          py: 2,
-        },
-        height: 700,
-        maxWidth: 1060,
-      }}
-      rows={rows}
-      columns={columns}
-      editMode="row"
-      rowModesModel={rowModesModel}
-      onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-      onRowEditStart={handleRowEditStart}
-      onRowEditStop={handleRowEditStop}
-      processRowUpdate={processRowUpdate}
-      components={{
-        Toolbar: EditToolbar,
-      }}
-      componentsProps={{
-        toolbar: { setRows, setRowModesModel },
-      }}
-      experimentalFeatures={{ newEditingApi: true }}
-    />
+    <Box sx={{ display: "flex", justifyContent: "center", pt: "10px" }}>
+      <DataGrid
+        getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            py: 2,
+          },
+          height: 700,
+          maxWidth: 1060,
+        }}
+        rows={rows}
+        columns={columns}
+        editMode="row"
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+        onRowEditStart={handleRowEditStart}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
+        components={{
+          Toolbar: EditToolbar,
+        }}
+        componentsProps={{
+          toolbar: { setRows, setRowModesModel },
+        }}
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+    </Box>
   );
 }

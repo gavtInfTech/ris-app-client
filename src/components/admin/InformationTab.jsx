@@ -11,10 +11,8 @@ import Dislocation from "./dislocation/Dislocation";
 import { Link, useLocation, Route, Routes } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import Sib from "../sib/Sib";
-import Sites from "./sites/Sites";
 import styles from "./style.module.css";
 import { useMediaQuery } from '@mui/material';
-import ProtectedRoute from '../../ProtectedRoute';
 
 export default function InformationTab() {
   const { auth } = useContext(AuthContext);
@@ -103,13 +101,6 @@ export default function InformationTab() {
             to={`/admin-${rolePath}/informationTab/sib`}
             component={Link}
           />
-          {auth.role === "Администратор" && <Tab
-            sx={{ height: 60, fontSize: 14 }}
-            label="Участки"
-            value={`/admin-${rolePath}/informationTab/sites`}
-            to={`/admin-${rolePath}/informationTab/sites`}
-            component={Link}
-          />}
         </Tabs>
 
         <Box className={styles.tabPanel}>
@@ -173,9 +164,6 @@ export default function InformationTab() {
             <Route path="/dislocation" element={<Dislocation />} />
             <Route path="/notices" element={<NoticeMain />} />
             <Route path="/sib" element={<Sib />} />
-            <Route element={ <ProtectedRoute role="Администратор" /> } >
-              <Route path="/sites" element={<Sites />} />
-            </Route>
           </Routes>
         </Box>
       </Box>
