@@ -53,7 +53,7 @@ export default function FullWidthTabs() {
           />
           {auth.role === "Администратор" && (
             <Tab
-              sx={{ height: 60, fontSize: 14 }}
+              sx={{ width: 300, height: 70, fontSize: 14 }}
               label="Участки"
               value={`/admin-main/sites`}
               to={`/admin-main/sites`}
