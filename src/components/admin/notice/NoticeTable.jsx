@@ -92,7 +92,7 @@ export default function NoticeTable(props) {
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
-          <PopupEdit data={props.data} changeData={props.changeData} id={id} />,
+          <PopupEdit data={props.data} changeData={props.changeData} id={id} sites={props.sites} />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"

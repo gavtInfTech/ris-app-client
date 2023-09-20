@@ -20,12 +20,12 @@ import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { Button } from "@mui/material";
 
 export default function NoticeForm(props) {
+  const [sites, setSites] = useState(props.sites);
   const { auth } = useContext(AuthContext);
   const { setMessage } = useContext(MessageContext);
   const { addData } = props;
-
+  console.log(sites);
   const rivers = auth.info.siteRivers;
-  const sites = auth.info.siteGroups;
 
   const [state, setState] = useState({
     noticeInfo: {
@@ -108,7 +108,7 @@ export default function NoticeForm(props) {
     }));
   };
 
-  const setSites = (river) => {
+  const setSitesByRiver = (river) => {
     // eslint-disable-next-line default-case
     switch (river) {
       case "Днепр":
@@ -116,7 +116,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.dnepr,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Березина":
@@ -124,7 +124,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.berezina,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Сож":
@@ -132,7 +132,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.soj,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Неман":
@@ -140,7 +140,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.neman,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Мухавец":
@@ -148,7 +148,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.muhavets,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Днепро-Бугский канал":
@@ -156,7 +156,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.dnepBug,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Пина":
@@ -164,7 +164,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.pina,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Верхний участок реки Припять":
@@ -172,7 +172,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.upperPripyat,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Припять":
@@ -180,7 +180,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.pripyat,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Микашевичский канал":
@@ -188,7 +188,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.mikashevichskiCanal,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Горынь":
@@ -196,7 +196,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.gorin,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Западная Двина":
@@ -204,7 +204,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.zapDvina,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Туровский затон":
@@ -212,7 +212,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.turovskiZaton,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Августовский канал":
@@ -220,7 +220,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.avgustovskiCanal,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
       case "Свислочь":
@@ -228,7 +228,7 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.svisloch,
+          sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
     }
@@ -254,7 +254,7 @@ export default function NoticeForm(props) {
 
         sites: [...prevState.sites],
       }));
-      setSites(value);
+      setSitesByRiver(value);
     }
   };
 

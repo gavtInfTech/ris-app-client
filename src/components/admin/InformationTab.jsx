@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useState, useEffect } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -13,8 +13,26 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Sib from "../sib/Sib";
 import styles from "./style.module.css";
 import { useMediaQuery } from '@mui/material';
+import { api } from '../../axiosConfig';
+
+function customComparator(a, b) {
+  const A = a.name.split(" ")[0].split(".");
+  const B = b.name.split(" ")[0].split(".");
+
+  for (let i = 0; i < Math.max(A.length, B.length); i++) {
+    const partA = parseInt(A[i]) || 0;
+    const partB = parseInt(B[i]) || 0;
+
+    if (partA !== partB) {
+      return partA - partB;
+    }
+  }
+  return 0;
+}
 
 export default function InformationTab() {
+  const [sites, setSites] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const { auth } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   let info = auth.info;
@@ -22,8 +40,23 @@ export default function InformationTab() {
   let value;
   let rolePath = auth.rolePath;
 
+  useEffect(() => { 
+    const getData = async () => {
+      try {
+        const res = await api.get("/sites/getAll");
+        setSites(res.data.sort(customComparator));
+        setIsLoaded(true);
+      } catch (err) { 
+        console.log(err)
+        setIsLoaded(true);
+      }
+    }   
+    getData();
+  }, [])
+
+  console.log(sites)
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  setAnchorElUser(event.currentTarget); 
   };
 
   const handleCloseUserMenu = () => {
@@ -42,8 +75,8 @@ export default function InformationTab() {
   }
 
   return (
-    <div>
-      <Box
+    <>
+      {isLoaded && <Box
         sx={{
           bgcolor: "background.paper",
           display: "flex",
@@ -152,7 +185,8 @@ export default function InformationTab() {
             <Route
               path="/gabs"
               element={info.siteRivers.map((river) => {
-                return <RiverAccordionDepth river={river} />;
+                let riverSites = sites.filter(site => site.river === river && (auth.role === 'Администратор' || auth.organisation === site.organisation));
+                return <RiverAccordionDepth river={river} sites={riverSites} />;
               })}
             />
             <Route
@@ -162,11 +196,11 @@ export default function InformationTab() {
               })}
             />
             <Route path="/dislocation" element={<Dislocation />} />
-            <Route path="/notices" element={<NoticeMain />} />
+            <Route path="/notices" element={<NoticeMain sites={sites} />} />
             <Route path="/sib" element={<Sib />} />
           </Routes>
         </Box>
-      </Box>
-    </div>
+      </Box> }
+    </>
   );
 }

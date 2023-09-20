@@ -3,9 +3,23 @@ import styles from './style.module.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { siteGroups } from '../admin/adminInfo'
 import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
 import { api } from '../../axiosConfig';
+
+function customComparator(a, b) {
+  const A = a.name.split(" ")[0].split(".");
+  const B = b.name.split(" ")[0].split(".");
+
+  for (let i = 0; i < Math.max(A.length, B.length); i++) {
+    const partA = parseInt(A[i]) || 0;
+    const partB = parseInt(B[i]) || 0;
+
+    if (partA !== partB) {
+      return partA - partB;
+    }
+  }
+  return 0;
+}
 
 const emptyObj = {
     planDepth: '—',
@@ -62,8 +76,9 @@ const theme = createTheme({
     },
   });
 
-export default function Sib () {
+export default function MainGabs () {
   const [data, setData] = useState([]);
+  const [sites, setSites] = useState([]);
   const [date, setDate] = useState('');
 
   useEffect(() => {
@@ -76,6 +91,9 @@ export default function Sib () {
   useEffect(() => {
     const getData = async () => {
       try {
+        const resSites = await api.get("/sites/getAll");
+        setSites(resSites.data.sort(customComparator));
+
         const res = await api.get("/gabs/getAllByDate", { params: { date: new Date(date) } });
         res.data.forEach((item) => {
           item.date = new Date(item.date);
@@ -94,14 +112,12 @@ export default function Sib () {
     }, [date])
 
     let rows = [];
-    for (var key in siteGroups) {
-      // eslint-disable-next-line no-loop-func
-      siteGroups[key].map((site) => {
-          let rowData = data.find((dat) => (dat.site === site));
-          if (rowData === undefined) rows.push({site: site, river: keyToRiver(key), ...emptyObj});
-           else rows.push(rowData);
-      })
-    }
+    sites.map((site) => {
+      let rowData = data.find((dat) => dat.site === site.name);
+      if (rowData === undefined)
+        rows.push({ site: site.name, river: site.river, ...emptyObj });
+      else rows.push(rowData);
+    });
 
     const handleChangeDate = (event) => {
       setDate(event.target.value);

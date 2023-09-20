@@ -4,10 +4,9 @@ import {MontserratLight} from './font';
 import {MontserratBold} from './font';
 import {hydroposts} from '../waterLevels/levelsGp/data';
 import {hydronodes} from '../waterLevels/levelsGu/data';
-import { siteGroups } from '../admin/adminInfo';
 import { bridgeGroups } from '../admin/adminInfo'
 
-const generateSib = (doc, date, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData) => {
+const generateSib = (doc, date, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData, sites) => {
 
   date = new Date(date).toLocaleString().slice(0, 10);
   let currentY;
@@ -91,14 +90,13 @@ function keyToRiver(key) {
 }
 
 let gabsRows = [];
-for (var key in siteGroups) {
-  // eslint-disable-next-line no-loop-func
-  siteGroups[key].map((site) => {
-      let rowData = gabsData.find((dat) => (dat.site === site));
-      if (rowData === undefined) gabsRows.push({site: site, river: keyToRiver(key), ...emptyObj});
-       else gabsRows.push(rowData);
-  })
-}
+sites.map((site) => {
+  let rowData = gabsData.find((dat) => dat.site === site.name);
+  if (rowData === undefined)
+  gabsRows.push({ site: site.name, river: site.river, ...emptyObj });
+  else gabsRows.push(rowData);
+});
+
 const gabsRowsByRiver = (river) => {
 let filteredRows = gabsRows.filter((row) => ( row.river === river ));
 let rows = filteredRows.map((row) => {
@@ -429,7 +427,7 @@ const noticesRowsByRiver = (river) => {
    
 }
 
-export const generatePdfFileByDate = (date, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData) => {
+export const generatePdfFileByDate = (date, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData, sites) => {
 
   var doc = new jsPDF();
     doc.addFileToVFS("MontserratLight.ttf", MontserratLight);
@@ -438,12 +436,12 @@ export const generatePdfFileByDate = (date, levelsGpData, levelsGuData, gabsData
     doc.addFont("MontserratBold.ttf", "Montserrat", "bold");
     doc.setFont("Montserrat");
 
-    generateSib(doc, date, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData);
+    generateSib(doc, date, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData, sites);
 
     doc.save(`СИБ за ${new Date(date).toLocaleString().slice(0, 10)}.pdf`);
   };
 
-  export const generatePdfFileByPeriod = (startPeriod, endPeriod, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData) => {
+  export const generatePdfFileByPeriod = (startPeriod, endPeriod, levelsGpData, levelsGuData, gabsData, dislocationsData, bridgesData, noticesData, sites) => {
     
     startPeriod = new Date(startPeriod.getFullYear(), startPeriod.getMonth(), startPeriod.getDate(), 0, 0, 0);
     endPeriod = new Date(endPeriod.getFullYear(), endPeriod.getMonth(), endPeriod.getDate(), 0, 0, 0); 
@@ -464,7 +462,7 @@ export const generatePdfFileByDate = (date, levelsGpData, levelsGuData, gabsData
         let dislocations = dislocationsData.filter((item) => (item.date >= startDate && item.date <= endDate));
         let bridges = bridgesData.filter((item) => (item.date >= startDate && item.date <= endDate));
         let notices = noticesData.filter((item) => (item.date >= startDate && item.date <= endDate));
-        generateSib(doc, date, levelsGp, levelsGu, gabs, dislocations, bridges, notices);
+        generateSib(doc, date, levelsGp, levelsGu, gabs, dislocations, bridges, notices, sites);
         if (date.getTime() !== endPeriod.getTime()) doc.addPage();
       }
       doc.save(`СИБ за период с ${startPeriod.toLocaleString().slice(0, 10)} по ${endPeriod.toLocaleString().slice(0, 10)}.pdf`);

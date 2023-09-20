@@ -53,6 +53,12 @@ const rivers = [
   "Свислочь",
 ];
 
+const organisations = [
+  "РУ ЭСП \"Днепро-Бугский водный путь\"",
+  "РУ Днепро-Двинское предприятие водных путей \"Белводпуть\"",
+  "РУ Днепро-Березинское предприятие водных путей"
+]
+
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
   const { auth } = useContext(AuthContext);
@@ -170,7 +176,7 @@ export default function Sites() {
     } else {
       try {
         let res = await api.post("/sites/add", newRow);
-        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)).sort(customComparator));
       } catch (err) {
         console.log(err.response.data);
         setUpdateFlag(false);
@@ -187,6 +193,14 @@ export default function Sites() {
       headerName: "Название участка",
       width: 400,
       editable: true,
+    },
+    { 
+      field: 'organisation', 
+      headerName: 'Название предприятия', 
+      type: 'singleSelect',
+      valueOptions: organisations,
+      width: 300, 
+      editable: true 
     },
     {
       field: "river",
@@ -264,7 +278,7 @@ export default function Sites() {
             py: 2,
           },
           height: 700,
-          maxWidth: 1060,
+          maxWidth: 1360,
         }}
         rows={rows}
         columns={columns}

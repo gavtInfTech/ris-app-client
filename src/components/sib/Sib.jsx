@@ -42,7 +42,7 @@ const theme = createTheme({
   });
 
 export default function Sib () {
-
+  const [sites, setSites] = useState([]);
   const [date, setDate] = useState(() => {
     let todayDate = new Date();
     const dateParts = todayDate.toLocaleString().slice(0, 10).split('.');
@@ -58,14 +58,31 @@ export default function Sib () {
   const [bridgesDataByDate, setBridgesDataByDate] = useState([]);
   const [noticesDataByDate, setNoticesDataByDate] = useState([]);
 
+  function customComparator(a, b) {
+    const A = a.name.split(" ")[0].split(".");
+    const B = b.name.split(" ")[0].split(".");
+  
+    for (let i = 0; i < Math.max(A.length, B.length); i++) {
+      const partA = parseInt(A[i]) || 0;
+      const partB = parseInt(B[i]) || 0;
+  
+      if (partA !== partB) {
+        return partA - partB;
+      }
+    }
+    return 0;
+  }
+
   useEffect(() => {
     const getData = async () => {
       try {
+          const resSites = await api.get("/sites/getAll");
+          setSites(resSites.data.sort(customComparator));
+
           const resLevelsGp = await api.get("/levelsGp/getAllByDate", { params: { date: new Date(date) } });
           resLevelsGp.data.forEach((item) => {
             item.date = new Date(item.date);
           })
-          console.log(resLevelsGp.data)
           setLevelsGpDataByDate(resLevelsGp.data);
 
           const resLevelsGu = await api.get("/levelsGu/getAllByDate", { params: { date: new Date(date) } });
@@ -180,7 +197,7 @@ export default function Sib () {
           return {...doc, cause: cause};
           })
 
-      generatePdfFileByPeriod(new Date(startPeriod), new Date(endPeriod), levelsGpDataByPeriod, levelsGuDataByPeriod, gabsDataByPeriod, dislocationsDataByPeriod, bridgesDataByPeriod, noticesDataByPeriod)
+      generatePdfFileByPeriod(new Date(startPeriod), new Date(endPeriod), levelsGpDataByPeriod, levelsGuDataByPeriod, gabsDataByPeriod, dislocationsDataByPeriod, bridgesDataByPeriod, noticesDataByPeriod, sites)
     } catch (err) { 
       console.log(err)
     }
@@ -241,7 +258,7 @@ export default function Sib () {
                 variant="contained"  
                 type='submit'
                 sx={{margin: "10px", width: '120px'}}
-                onClick={() => generatePdfFileByDate(date, levelsGpDataByDate, levelsGuDataByDate, gabsDataByDate, dislocationsDataByDate, bridgesDataByDate, noticesDataByDate)}
+                onClick={() => generatePdfFileByDate(date, levelsGpDataByDate, levelsGuDataByDate, gabsDataByDate, dislocationsDataByDate, bridgesDataByDate, noticesDataByDate, sites)}
                 >
                     Скачать 
             </Button>
@@ -278,7 +295,7 @@ export default function Sib () {
             <div id='tablesContainer' className={styles.tablesContainer}>
               <TableLevelsGp data={levelsGpDataByDate} />
               <TableLevelsGu data={levelsGuDataByDate} />
-              <TableGabs data={gabsDataByDate} />
+              <TableGabs data={gabsDataByDate} sites={sites} />
               <TableDislocations data={dislocationsDataByDate} />
               <TableBridges data={bridgesDataByDate} />
               <TableNotices data={noticesDataByDate} />

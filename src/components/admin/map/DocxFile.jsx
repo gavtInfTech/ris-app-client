@@ -344,8 +344,10 @@ export default function DocxFile(props) {
         if (!gab) {
           rowCells.push(
             new TableCell({
+              verticalAlign: "center",
               children: [
                 new Paragraph({
+                  alignment: "center",
                   children: [
                     new TextRun({
                       text: "-",
@@ -358,8 +360,10 @@ export default function DocxFile(props) {
           );
           rowCells.push(
             new TableCell({
+              verticalAlign: "center",
               children: [
                 new Paragraph({
+                  alignment: "center",
                   children: [
                     new TextRun({
                       text: "-",
