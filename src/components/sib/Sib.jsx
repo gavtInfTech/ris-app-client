@@ -14,6 +14,7 @@ import TextField from '@mui/material/TextField';
 import { saveAs } from 'file-saver';
 import {generatePdfFileByDate, generatePdfFileByPeriod} from './generatePdfFile';
 import { api } from '../../axiosConfig';
+import { customComparator } from '../vvp/siteMethods';
 
 require("jspdf-autotable");
 
@@ -57,21 +58,6 @@ export default function Sib () {
   const [dislocationsDataByDate, setDislocationsDataByDate] = useState([]);
   const [bridgesDataByDate, setBridgesDataByDate] = useState([]);
   const [noticesDataByDate, setNoticesDataByDate] = useState([]);
-
-  function customComparator(a, b) {
-    const A = a.name.split(" ")[0].split(".");
-    const B = b.name.split(" ")[0].split(".");
-  
-    for (let i = 0; i < Math.max(A.length, B.length); i++) {
-      const partA = parseInt(A[i]) || 0;
-      const partB = parseInt(B[i]) || 0;
-  
-      if (partA !== partB) {
-        return partA - partB;
-      }
-    }
-    return 0;
-  }
 
   useEffect(() => {
     const getData = async () => {

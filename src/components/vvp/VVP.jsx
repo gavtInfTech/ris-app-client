@@ -11,7 +11,7 @@ import {
 import { api } from "../../axiosConfig";
 import { hydroposts } from "../waterLevels/levelsGp/data";
 import { hydronodes } from "../waterLevels/levelsGu/data";
-import { findSegmentByKilometer } from "./qwes";
+import { findSegmentByKilometer } from "./siteMethods";
 
 const rivers = [
   {

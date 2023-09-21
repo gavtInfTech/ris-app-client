@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import LevelsGpTable from "./LevelsGpTable";
 import GabsTableSib from "./GabsTableSib";
 import GabsTableActual from "./GabsTableActual";
-import { getSiteByCoords } from "../../vvp/qwes";
+import { getSiteByCoords } from "../../vvp/siteMethods";
 import DocxFile from "./DocxFile";
 
 function customComparator(a, b) {

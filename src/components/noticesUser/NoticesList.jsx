@@ -27,23 +27,19 @@ export default function NoticesList(props) {
         <Accordion sx={{ mt: 1 }} key={doc.id}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{}}>
             <Typography sx={{ ml: "20px", fontSize: "17px" }}>
-              {" "}
               ({doc.date.toLocaleString().slice(0, 17)}) – {doc.site}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{}}>
               <Typography className={Style.typography}>
-                <p className={Style.p}>Река:</p>
-                {doc.river}
+                <p className={Style.p}>Река: {doc.river}</p>
               </Typography>
               <Typography className={Style.typography}>
-                <p className={Style.p}>Причины:</p>
-                {doc.cause}
+                <p className={Style.p}>Причины:  {doc.cause}</p>
               </Typography>
               <Typography className={Style.typography}>
-                <p className={Style.p}>Содержание:</p>
-                {doc.content}
+                <p className={Style.p}>Содержание:  {doc.content}</p>
               </Typography>
             </Box>
           </AccordionDetails>

@@ -19,21 +19,7 @@ import { randomId } from "@mui/x-data-grid-generator";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { api } from "../../../axiosConfig";
-
-function customComparator(a, b) {
-  const A = a.name.split(" ")[0].split(".");
-  const B = b.name.split(" ")[0].split(".");
-
-  for (let i = 0; i < Math.max(A.length, B.length); i++) {
-    const partA = parseInt(A[i]) || 0;
-    const partB = parseInt(B[i]) || 0;
-
-    if (partA !== partB) {
-      return partA - partB;
-    }
-  }
-  return 0;
-}
+import { customComparator } from "../../vvp/siteMethods";
 
 const rivers = [
   "Днепр",

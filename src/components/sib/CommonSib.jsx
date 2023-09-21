@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 import {generatePdfFileByDate, generatePdfFileByPeriod} from './generatePdfFile';
 import { api } from '../../axiosConfig';
 import Box from '@mui/material/Box';
+import { customComparator } from '../vvp/siteMethods';
 
 require("jspdf-autotable");
 
@@ -42,7 +43,7 @@ const theme = createTheme({
     },
   });
 
-export default function Sib () {
+export default function CommonSib () {
 
   const [date, setDate] = useState(() => {
     let todayDate = new Date();
@@ -50,6 +51,7 @@ export default function Sib () {
     const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
     return formattedDate;
   });
+  const [sites, setSites] = useState([]) ;
   const [startPeriod, setStartPeriod] = useState();
   const [endPeriod, setEndPeriod] = useState();
   const [levelsGpDataByDate, setLevelsGpDataByDate] = useState([]);
@@ -62,6 +64,9 @@ export default function Sib () {
   useEffect(() => {
     const getData = async () => {
       try {
+          const resSites = await api.get("/sites/getAll");
+          setSites(resSites.data.sort(customComparator));
+
           const resLevelsGp = await api.get("/levelsGp/getAllByDate", { params: { date: new Date(date) } });
           resLevelsGp.data.forEach((item) => {
             item.date = new Date(item.date);
@@ -241,7 +246,7 @@ export default function Sib () {
             <div id='tablesContainer' className={styles.tablesContainer}>
               <TableLevelsGp data={levelsGpDataByDate} />
               <TableLevelsGu data={levelsGuDataByDate} />
-              <TableGabs data={gabsDataByDate} />
+              <TableGabs data={gabsDataByDate} sites={sites}/>
               <TableDislocations data={dislocationsDataByDate} />
               <TableBridges data={bridgesDataByDate} />
               <TableNotices data={noticesDataByDate} />

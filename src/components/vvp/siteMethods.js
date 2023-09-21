@@ -120,6 +120,22 @@ function getRiverCoordsAndZeroPointByRiver(river) {
   return [riverCoords, zeroPoint];
 }
 
+
+export function customComparator(a, b) {
+  const A = a.name.split(" ")[0].split(".");
+  const B = b.name.split(" ")[0].split(".");
+
+  for (let i = 0; i < Math.max(A.length, B.length); i++) {
+    const partA = parseInt(A[i]) || 0;
+    const partB = parseInt(B[i]) || 0;
+
+    if (partA !== partB) {
+      return partA - partB;
+    }
+  }
+  return 0;
+}
+
 export function findSegmentByKilometer(river, startKM, endKM) {
   let startIndex = null;
   let endIndex = null;

@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import styles from "./style.module.css";
 import { numberToCaseMonth } from "./numberToCaseMonth";
-import { getSiteByCoords } from "../../vvp/qwes";
+import { getSiteByCoords } from "../../vvp/siteMethods";
 import {
   Document,
   Packer,
