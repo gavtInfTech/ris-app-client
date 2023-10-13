@@ -4,7 +4,6 @@ import { AuthContext } from "./contexts/AuthContext";
 
 export default function ProtectedRoute(props) {
     const {auth} = useContext(AuthContext);
-    console.log(auth);
     if (auth.role === props.role || auth.organisation === props.organisation) {
         return <Outlet />;
     } else return <Navigate to={'/login'} />

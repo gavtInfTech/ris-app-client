@@ -192,7 +192,7 @@ export default function VVP() {
         propertyObject.balloonContentBody +
         "<br>Причина уведомления: " +
         notice.cause +
-        "<br>Содержание: " +
+        "<br>Содержание: " + 
         notice.content;
       propertyObject.balloonContentFooter = "Дата: " + notice.date;
     }
