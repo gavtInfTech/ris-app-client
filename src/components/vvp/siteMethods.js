@@ -209,8 +209,6 @@ export function getSiteByCoords(river, targetCoords, sites) {
   }
 
   for (const site of sites) {
-    console.log(site.name);
-    console.log(sum);
     if (sum >= site.firstKM && sum <= site.secondKM && riverName === site.river) {
       return site.name;
     }

@@ -14,6 +14,8 @@ import { useLocation } from "react-router-dom";
 import { findSegmentByKilometer } from "../../vvp/siteMethods";
 import PathInformationPart from "./PathInformationPart";
 import { customComparator } from "../../vvp/siteMethods";
+import MarhsrutnikInformationPart from "./Marshrutnik/MarhsrutnikInformationPart";
+
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
@@ -277,7 +279,11 @@ export default function PathInformationMap(props) {
 
   return (
     <>
-      { isLoaded && <Box className={styles.container}>
+    {isLoaded ? (
+        pathname === "/path-information/marshrutnik" ? (
+          <MarhsrutnikInformationPart />
+        ) : (
+         <Box className={styles.container}>
         <Box
           sx={{ maxHeight: contentHeight + "px" }}
           className={styles.infoPart}
@@ -308,7 +314,12 @@ export default function PathInformationMap(props) {
             </Map>
           </YMaps>
         </Box>
-      </Box> }
+      </Box>
+          )
+      ) : (
+        <p>Компонент загружается...</p>
+      )}
+
     </>
   );
 }

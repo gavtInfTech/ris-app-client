@@ -23,6 +23,7 @@ export default function FullWidthTabs() {
   else if (pathname.includes("spravka")) value = `/admin-${rolePath}/spravka`;
   else if (pathname.includes("clients")) value = "/admin-main/clients";
   else if (pathname.includes("sites")) value = "/admin-main/sites";
+  else if (pathname.includes("marshrutnik")) value = "/admin-main/marshrutnik";
   else value = "/admin-main/users";
 
   return (

@@ -13,22 +13,12 @@ import {
   GridActionsCellItem,
   gridClasses,
 } from "@mui/x-data-grid";
-import { api } from "../../../axiosConfig";
+import { api } from "../../../../axiosConfig";
 import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
-import { MessageContext } from "../../../contexts/MessageContext.jsx";
+import { MessageContext } from "../../../../contexts/MessageContext";
 
-const organisations = [
-  "Государственная администрация водного транспорта",
-  'РУ ЭСП "Днепро-Бугский водный путь"',
-  'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
-  "РУ Днепро-Березинское предприятие водных путей",
-];
 
-const roles = [
-  'Диспетчер',
-  'Путевик',
-];
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -36,12 +26,12 @@ function EditToolbar(props) {
   const handleClick = () => {
     const id = randomId();
     setRows((oldRows) => [
-      ...oldRows,
-      { id, username: null, password: null, organisation: null },
+      { id, name: null, category: null, shore: null, distance: null }, // Новая строка
+      ...oldRows, // Существующие строки
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "fio" },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
     }));
   };
 
@@ -59,17 +49,67 @@ EditToolbar.propTypes = {
   setRows: PropTypes.func.isRequired,
 };
 
-export default function Depth(props) {
+export default function MarhsrutnikInformationPart(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const [updateFlag, setUpdateFlag] = useState(false);
   const { setMessage } = useContext(MessageContext);
+  const scores = ["-","Л","П"]
 
+  const categoryData = [
+    "База отдыха", "Гидроузел", "Гидропост",
+     "Граница", "Инфраструктура", "Канал", 
+     "Карьер", "ЛЭП", "Мост", 
+     "Мост а/д", "Мост ж/д", 
+     "Населенный пункт", "Озеро", "Остров",
+      "Перекат", "Порт", "Предприятия", 
+      "Причал", "Пристань", "Паром", 
+      "Паромная переправа", "Ручей", 
+      "Рыбацкий стан", "Санаторий", 
+      "Стоянка", "Старица", "Трубопровод", 
+      "Устье", "Хутор", "Шлюз", "Затон"
+  ];
+
+  const riversArray = [
+    "Припять",
+    "Припять",
+    "Днепровско-Бугский канал",
+    "Шлюзованный участок реки Мухавец",
+    "Западная Двина",
+    "Нёман",
+    "Августовский канал",
+    "Сож",
+    "Березина",
+    "Припять",
+    "Припять",
+    "Припять",
+    "Припять",
+    "Днепр"
+  ];
+  
+  const riversArrayOptions = [
+    "Августовский канал",
+    "Березина",
+    "Днепр",
+    "Днепровско-Бугский канал",
+    "Западная Двина",
+    "Нёман",
+    "Припять",
+    "Сож",
+    "Шлюзованный участок реки Мухавец"
+  ];
+  
+
+  
+  
   useEffect(() => {
     const getRows = async () => {
       try {
-        const res = await api.get("/auth/getAllUsers");
-        setRows(res.data);
+        console.log("HERE DATA");
+        const res = await api.get("/marshrutnik/getAll");
+        const updatedRows = res.data.map(row => ({ ...row, code_riv: riversArray[Number(row.code_riv) - 1] }));
+        updatedRows.sort((a, b) => a.code_riv.localeCompare(b.code_riv));
+        setRows(updatedRows);
       } catch (err) {
         console.log(err);
       }
@@ -97,7 +137,7 @@ export default function Depth(props) {
 
   const handleDeleteClick = (id) => async () => {
     try {
-      let res = await api.delete("/auth/delete/" + id);
+      await api.delete("/marshrutnik/delete/" + id);
       setRows(rows.filter((row) => row.id !== id));
     } catch (err) {
       console.log(err.response.data);
@@ -112,39 +152,41 @@ export default function Depth(props) {
     });
 
     const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.organisation === null) {
+    if (editedRow.name === null) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = async (newRow) => {
-    if (newRow.organisation === null) {
+    if (newRow.name === null || newRow.name.length === 0) {
       setMessage(() => ({
         open: true,
-        messageText: "Поле Название предприятия не заполненно.",
-        severity: "error",
-      }));
-      return;
-    }
-
-    if (newRow.username === null || newRow.username.length === 0) {
-      setMessage(() => ({
-        open: true,
-        messageText: "Поле Имя пользователя не заполнено.",
+        messageText: "Поле ФИО не заполненно.",
         severity: "error",
       }));
       return;
     }
 
     if (
-      newRow.password === null ||
-      newRow.password.length === 0 ||
-      newRow.password.length < 6
+      newRow.category === null ||
+      newRow.category.length === 0 
     ) {
       setMessage(() => ({
         open: true,
         messageText:
-          "Поле Пароль не заполнено либо слишком короткий пароль (минимум 6 симолов).",
+          "Поле категория не заполнено.",
+        severity: "error",
+      }));
+      return;
+    }
+
+    if (
+      newRow.shore === null ||
+      newRow.shore.length === 0
+    ) {
+      setMessage(() => ({
+        open: true,
+        messageText: "Поле берег не заполнено.",
         severity: "error",
       }));
       return;
@@ -152,7 +194,7 @@ export default function Depth(props) {
 
     if (updateFlag) {
       try {
-        let res = await api.post("/auth/change", newRow);
+        await api.post("/marshrutnik/change", {...newRow, code_riv: riversArray.indexOf(newRow.code_riv)});
         setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       } catch (err) {
         setMessage(() => ({
@@ -164,7 +206,7 @@ export default function Depth(props) {
       }
     } else {
       try {
-        let res = await api.post("/auth/registration", newRow);
+        await api.post("/marshrutnik/add", {...newRow, code_riv: riversArray.indexOf(newRow.code_riv)});
         setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       } catch (err) {
         setMessage(() => ({
@@ -182,39 +224,55 @@ export default function Depth(props) {
 
   const columns = [
     {
-      field: "organisation",
-      headerName: "Название предприятия",
-      type: "singleSelect",
-      valueOptions: organisations,
-      width: 400,
-      editable: true,
-    },
-    {
-      field: "role",
-      headerName: "Роль",
-      type: "singleSelect",
-      valueOptions: roles,
-      width: 300,
-      editable: true,
-    },
-    {
-      field: "username",
-      headerName: "Имя пользователя",
+      field: "name",
+      headerName: "Наименование объекта",
       type: "string",
       width: 300,
       editable: true,
     },
     {
-      field: "password",
-      headerName: "Пароль",
-      width: 220,
+      field: "category",
+      headerName: "Категория",
+      valueOptions: categoryData,
+      type: "singleSelect",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "shore",
+      headerName: "Берег",
+      valueOptions: scores,
+      type: "singleSelect",
+      width: 120,
+      editable: true,
+    },
+    {
+      field: "distance",
+      headerName: "Расстояние от устья",
+      type: "string",
+      width: 300,
+      editable: true,
+    },
+    {
+      field: "marshrutnik_number",
+      headerName: "№ в маршрутнике",
+      type: "string",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "code_riv",
+      headerName: "Река",
+      valueOptions: riversArrayOptions,
+      type: "singleSelect",
+      width: 150,
       editable: true,
     },
     {
       field: "actions",
       type: "actions",
       headerName: "Действия",
-      width: 100,
+      width: 120,
       cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -257,31 +315,31 @@ export default function Depth(props) {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", pt: "10px" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-        onRowEditStart={handleRowEditStart}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        experimentalFeatures={{ newEditingApi: true }}
-        getRowHeight={() => "auto"}
-        sx={{
-          [`& .${gridClasses.cell}`]: {
-            py: 1,
-          },
-          maxWidth: 1340,
-          height: 700,
-        }}
-        components={{
-          Toolbar: EditToolbar,
-        }}
-        componentsProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-      />
-    </Box>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+          onRowEditStart={handleRowEditStart}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          experimentalFeatures={{ newEditingApi: true }}
+          getRowHeight={() => "auto"}
+          sx={{
+            [`& .${gridClasses.cell}`]: {
+              py: 1,
+            },
+            maxWidth: 1350,
+            height: 700,
+          }}
+          components={{
+            Toolbar: EditToolbar,
+          }}
+          componentsProps={{
+            toolbar: { setRows, setRowModesModel },
+          }}
+        />
+      </Box>
   );
 }

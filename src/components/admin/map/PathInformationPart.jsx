@@ -152,6 +152,7 @@ export default function PathInformationPart(props) {
         const resSession = await api.get("/sessions/getByMonth", {
           params: { month: monthToNumber(month), river: props.river },
         });
+        console.log(resSession);
         if (resSession.data === "") {
           setSession(null);
           props.setAlerts([]);
@@ -198,20 +199,17 @@ export default function PathInformationPart(props) {
           item.date = new Date(item.date).toLocaleString().slice(0, 10);
         });
         props.setAlerts(resAlerts.data);
-
+        
         const resSignNotices = await api.get(
           "/signNotices/getAllByPeriodAndRiver",
           {
             params: {
-              startPeriod: new Date(resSession.data.startDate),
-              endPeriod: new Date(resSession.data.endDate),
+              session: resSession.data.id,
               river: props.river,
             },
           }
         );
-        resSignNotices.data.forEach((item) => {
-          item.date = new Date(item.date);
-        });
+        console.log(resSignNotices);
         setSignNotices(resSignNotices.data);
 
         const resSiteAccordances = await api.get(
