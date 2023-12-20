@@ -70,7 +70,7 @@ export default function Login() {
           color: "black",
         }}
         alt="Иконка якоря"
-        src="/yakor.png"
+        src="/yakor3.png"
       />
 
       <Typography sx={{ mt: 2, mb: 1 }}>Войдите в систему или</Typography>

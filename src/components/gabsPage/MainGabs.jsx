@@ -131,7 +131,7 @@ export default function MainGabs () {
   return (
     <ThemeProvider theme={theme}>
         <div className={styles.container} >
-            <Typography sx={{fontSize: 19}} >Глубины на лимитирующих перекатах на <span> </span>
+            <Typography sx={{fontSize: 19}} >Габариты на лимитирующих перекатах на <span> </span>
              {
               <TextField
                 name="date"

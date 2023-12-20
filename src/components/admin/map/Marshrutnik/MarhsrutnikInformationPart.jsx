@@ -71,20 +71,23 @@ export default function MarhsrutnikInformationPart(props) {
   ];
 
   const riversArray = [
-    "Припять",
-    "Припять",
-    "Днепровско-Бугский канал",
-    "Шлюзованный участок реки Мухавец",
-    "Западная Двина",
-    "Нёман",
-    "Августовский канал",
-    "Сож",
+    "Днепр",
     "Березина",
+    "Сож",
     "Припять",
-    "Припять",
-    "Припять",
-    "Припять",
-    "Днепр"
+    "Горынь",
+    "Западная Двина",
+    "Неман",
+    "Пина",
+    "Днепро-Бугский канал",
+    "Мухавец",
+    "Августовский канал",
+    "Верхний участок реки Припять",
+    "Микашевичский канал",
+    "Туровский затон",
+    "Свислочь",
+    "Припять1",
+    "Припять2"
   ];
   
   const riversArrayOptions = [
@@ -95,8 +98,7 @@ export default function MarhsrutnikInformationPart(props) {
     "Западная Двина",
     "Нёман",
     "Припять",
-    "Сож",
-    "Шлюзованный участок реки Мухавец"
+    "Сож"
   ];
   
 
@@ -107,7 +109,8 @@ export default function MarhsrutnikInformationPart(props) {
       try {
         console.log("HERE DATA");
         const res = await api.get("/marshrutnik/getAll");
-        const updatedRows = res.data.map(row => ({ ...row, code_riv: riversArray[Number(row.code_riv) - 1] }));
+        console.log(res);
+        const updatedRows = res.data.map(row => ({ ...row, code_riv: row.river.name }));
         updatedRows.sort((a, b) => a.code_riv.localeCompare(b.code_riv));
         setRows(updatedRows);
       } catch (err) {
@@ -194,7 +197,7 @@ export default function MarhsrutnikInformationPart(props) {
 
     if (updateFlag) {
       try {
-        await api.post("/marshrutnik/change", {...newRow, code_riv: riversArray.indexOf(newRow.code_riv)});
+        await api.post("/marshrutnik/change", {...newRow, code_riv: newRow.code_riv});
         setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       } catch (err) {
         setMessage(() => ({
@@ -206,7 +209,7 @@ export default function MarhsrutnikInformationPart(props) {
       }
     } else {
       try {
-        await api.post("/marshrutnik/add", {...newRow, code_riv: riversArray.indexOf(newRow.code_riv)});
+        await api.post("/marshrutnik/add", {...newRow, code_riv: newRow.code_riv});
         setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
       } catch (err) {
         setMessage(() => ({

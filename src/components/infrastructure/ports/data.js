@@ -27,20 +27,6 @@ export const ports = [
   },
   { 
     id: 3, 
-    name: 'Речной порт Могилев',  
-    year: 1976, 
-    river: 'река Днепр', 
-    coast: 'Левый', 
-    place: '1508 км от устья р.Днепр', 
-    length: 760, 
-    coords: [53.86979955176414,30.291209499999987],
-    address: '212021, г. Могилев, ул. Кутепова, 28',
-    telephone: '+375 222 32-29-70',
-    email: 'rechport@mogilev.by',
-    website: 'http://www.parohodstvo.by/'
-  },
-  { 
-    id: 4, 
     name: 'Речной порт Речица',  
     year: 1944, 
     river: 'река Днепр', 
@@ -54,7 +40,7 @@ export const ports = [
     website: 'http://www.parohodstvo.by/index.php?option=com_rspagebuilder&view=page&id=75&Itemid=230'
   },
   { 
-    id: 5, 
+    id: 4, 
     name: 'Речной порт Брест',  
     year: 1950, 
     river: 'река Муховец', 
@@ -68,7 +54,7 @@ export const ports = [
     website: 'http://www.parohodstvo.by/index.php?option=com_rspagebuilder&view=page&id=81&Itemid=224'
   },
   { 
-    id: 6, name: 'Речной порт Пинск',  
+    id: 5, name: 'Речной порт Пинск',  
     year: 1939, 
     river: 'река Пина', 
     coast: 'Левый', 
@@ -81,7 +67,7 @@ export const ports = [
     website: 'http://www.parohodstvo.by/index.php?option=com_rspagebuilder&view=page&id=80&Itemid=225'
   },
   { 
-    id: 7, 
+    id: 6, 
     name: 'Речной порт Мозырь',  
     year: 1963, 
     river: 'река Припять', 
@@ -95,7 +81,7 @@ export const ports = [
     website: 'http://www.parohodstvo.by/index.php?option=com_rspagebuilder&view=page&id=79&Itemid=227'
   },
   { 
-    id: 8, 
+    id: 7, 
     name: 'Речной порт Микашевичи',  
     year: 1978, 
     river: ' Микашевичский канал', 

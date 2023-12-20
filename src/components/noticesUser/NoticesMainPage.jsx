@@ -48,7 +48,7 @@ export default function NoticesMainPage() {
         <button className={Style.btn}>
           <Link to={"/limit"}>
             <img src="/images/depth.png" alt="limit"></img>
-            <br></br>Глубины<br></br>
+            <br></br>Габариты<br></br>
             на лимитирующих <br></br>
             перекатах
           </Link>

@@ -30,7 +30,7 @@ export default function NoticesList(props) {
           <AccordionSummary>
             { doc.cause.includes('Изменение СНО') &&  <Icon sx={{width: "30px", height: "40px"}}> <img src="/images/sno.png" /></Icon> }
             { doc.cause.includes('Метеологические условия') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/weatherNotices.png" /></Icon> }
-            { doc.cause.includes('Опасно для жизни') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/dangerous.png" /></Icon> }
+            { doc.cause.includes('Путевые работы') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/dangerous.png" /></Icon> }
             <Typography sx={{ ml: "20px", fontSize: "17px", display: "flex", alignItems: "center" }}>
               ({doc.date.toLocaleString().slice(0, 17)}) – {doc.site}
             </Typography>

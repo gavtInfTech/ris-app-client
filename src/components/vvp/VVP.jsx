@@ -45,7 +45,6 @@ export default function VVP() {
   const [map, setMap] = useState(mapState);
   const [dataGp, setDataGp] = useState([]);
   const [dataGu, setDataGu] = useState([]);
-  const [currentNotices, setCurrentNotices] = useState([]);
   const [sites, setSites] = useState([]);
 
   useEffect(() => {
@@ -66,12 +65,6 @@ export default function VVP() {
         });
         setDataGu(resGu.data);
 
-        const resNotices = await api.get("/notices/getCurrentNotices");
-        resNotices.data.forEach((item) => {
-          let date = new Date(item.date);
-          item.date = date.toLocaleString().slice(0, 10);
-        });
-        setCurrentNotices(resNotices.data);
       } catch (err) {
         console.log(err);
       }
@@ -181,21 +174,11 @@ export default function VVP() {
 
   const polylines = sites.map((site) => {
     let isBalloonOpen = false;
-    let notice = currentNotices.find((notice) => notice.site === site.name);
-    let color = notice ? "#ff6f00" : "#0000ff";
+    let color =  "#0000ff";
     let propertyObject = {
       balloonContentBody:
         "<b>Река: " + site.river + "<br>Участок: " + site.name + "</b>",
     };
-    if (notice) {
-      propertyObject.balloonContentBody =
-        propertyObject.balloonContentBody +
-        "<br>Причина уведомления: " +
-        notice.cause +
-        "<br>Содержание: " + 
-        notice.content;
-      propertyObject.balloonContentFooter = "Дата: " + notice.date;
-    }
     return (
       <Polyline
         geometry={findSegmentByKilometer(site.river, site.firstKM, site.secondKM)}
@@ -236,7 +219,7 @@ export default function VVP() {
       />
     );
   });
-
+  
   return (
     <div className={styles.container}>
       <YMaps>

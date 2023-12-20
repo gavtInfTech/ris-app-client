@@ -47,7 +47,7 @@ export default function NoticesUser(props) {
           cause += "Метеологические условия; ";
         }
         if (doc.cause3) {
-          cause += "Опасно для жизни; ";
+          cause += "Путевые работы; ";
         }
         return { ...doc, id: doc.id, cause: cause };
       })

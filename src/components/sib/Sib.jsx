@@ -109,7 +109,7 @@ export default function Sib () {
               let cause = "";
               if (doc.cause1) {cause += "Изменение СНО; " }
               if (doc.cause2) {cause += "Метеологические условия; " }
-              if (doc.cause3) {cause += "Опасно для жизни; " }
+              if (doc.cause3) {cause += "Путевые работы; " }
               
               return {...doc, cause: cause};
               }))
@@ -178,7 +178,7 @@ export default function Sib () {
           let cause = "";
           if (doc.cause1) {cause += "Изменение СНО; " }
           if (doc.cause2) {cause += "Метеологические условия; " }
-          if (doc.cause3) {cause += "Опасно для жизни; " }
+          if (doc.cause3) {cause += "Путевые работы; " }
           
           return {...doc, cause: cause};
           })

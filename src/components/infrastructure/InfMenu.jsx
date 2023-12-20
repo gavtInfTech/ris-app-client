@@ -7,7 +7,7 @@ export default function Gidroteh () {
         <div className={styles.container}>
             <button className={styles.btn}><Link to={'/gateways'}>
                 <img src="/images/gateway.png" alt="gateways" ></img>
-                <br></br>Шлюзы
+                <br></br>Перечень судоходных гидротехнических сооружений
                 </Link>
             </button>
           

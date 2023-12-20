@@ -388,7 +388,7 @@ export default function PopupEdit(props) {
                         name="cause3"
                       />
                     }
-                    label="Опасно для жизни"
+                    label="Путевые работы"
                   />
                 </FormGroup>
               </FormControl>

@@ -21,7 +21,7 @@ export default function Shluzi(props) {
       headerName: 'Местоположение на реке(канале)', 
     },
     { field: 'date', 
-      headerName: 'Год ввода в эксплуатацию', 
+      headerName: 'Год ввода постройки', 
     },
     {
       field: 'amount',

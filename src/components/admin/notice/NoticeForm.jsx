@@ -26,12 +26,23 @@ export default function NoticeForm(props) {
   const { addData } = props;
   console.log(sites);
   const rivers = auth.info.siteRivers;
+  function getCurrentDateTime() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // месяц начинается с 0
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+  
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
 
   const [state, setState] = useState({
     noticeInfo: {
       river: "",
       site: "",
-      date: "",
+      date: getCurrentDateTime(),
       cause1: false,
       cause2: false,
       cause3: false,
@@ -123,7 +134,7 @@ export default function NoticeForm(props) {
         setState((prevState) => ({
           noticeInfo: {
             ...prevState.noticeInfo,
-          },
+          },  
           sites: sites.filter(site => site.river === river).map(site => site.name),
         }));
         break;
@@ -314,10 +325,11 @@ export default function NoticeForm(props) {
             <TextField
               sx={{ width: 180 }}
               name="date"
-              type={"datetime-local"}
+              type={"text"}
               value={state.noticeInfo.date}
               onChange={handleChange}
               variant="standard"
+              disabled
             />
 
             <FormControl
@@ -360,7 +372,7 @@ export default function NoticeForm(props) {
                       name="cause3"
                     />
                   }
-                  label="Опасно для жизни"
+                  label="Путевые работы"
                 />
               </FormGroup>
             </FormControl>

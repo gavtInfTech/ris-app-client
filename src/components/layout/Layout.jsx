@@ -60,7 +60,7 @@ export default function Layout() {
         </Box>
 
         <Box className={styles.header_section}>
-          <Avatar sx={{ mr: 1, ml: 1 }} src="/yakor.png" />
+          <Avatar sx={{ mr: 1, ml: 1 }} src="/yakor3.png" />
           <Link
             className={styles.mainLink}
             to={"/"}
@@ -120,7 +120,7 @@ export default function Layout() {
       </main>
 
       <footer className={styles.footer}>
-        Администрация водного транспорта
+        Государственная администрация водного транспорта
       </footer>
 
       <Snackbar
