@@ -52,7 +52,6 @@ export default function VVP() {
       try {
         const resSites = await api.get("/sites/getAll");
         setSites(resSites.data);
-
         const resGp = await api.get("/levelsGp/getAll");
         resGp.data.forEach((item) => {
           item.date = new Date(item.date);
