@@ -22,6 +22,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
+import { forbiddenTime } from "../Time/forbiddenTime";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -54,6 +55,13 @@ export default function Bridge(props) {
   const [rowModesModel, setRowModesModel] = useState({});
   const [updateFlag, setUpdateFlag] = useState(false);
   const { message, setMessage } = useContext(MessageContext);
+  const [isEditAllowed, setIsEditAllowed] = useState(true);
+  const [forceReload, setForceReload] = useState(false);
+  
+  useEffect(() => {
+    const currentTime = new Date();
+    setIsEditAllowed(currentTime < forbiddenTime);
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -64,13 +72,29 @@ export default function Bridge(props) {
         res.data.forEach((item) => {
           item.date = new Date(item.date);
         });
-        setRows(res.data.sort((a, b) => a.date.getTime() - b.date.getTime()));
+        let ready = res.data.sort((a, b) => a.date.getTime() - b.date.getTime());
+        const filteredReady = ready.filter((row) => {
+          // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
+          const hasChange = ready.some((changeRow) => changeRow.id === row.id + '_change');
+        
+          // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
+          return !hasChange;
+          
+        });
+        setRows(filteredReady);
+        if (!isEditAllowed){
+          setMessage(() => ({
+            open: true,
+            messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
+            severity: "warning",
+          }));
+        }
       } catch (err) {
         console.log(err);
       }
     };
     getData();
-  }, []);
+  }, [forceReload]);
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -81,6 +105,20 @@ export default function Bridge(props) {
   };
 
   const handleEditClick = (id) => () => {
+    const row = rows.find((row) => row.id === id);
+    const today = new Date().toDateString();
+    
+    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    if (row.date.toDateString() !== today) {
+      // Если не равно, выводим сообщение и не выполняем действие
+      setMessage(() => ({
+        open: true,
+        messageText: "Редактирование прошлых дат запрещено.",
+        severity: "warning",
+      }));
+      return;
+    }
+  
     setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
@@ -90,9 +128,23 @@ export default function Bridge(props) {
   };
 
   const handleDeleteClick = (id) => async () => {
+    const row = rows.find((row) => row.id === id);
+    const today = new Date().toDateString();
+  
+    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    if (row.date.toDateString() !== today) {
+      // Если не равно, выводим сообщение и не выполняем действие
+      setMessage(() => ({
+        open: true,
+        messageText: "Удаление прошлых дат запрещено.",
+        severity: "warning",
+      }));
+      return;
+    }
+  
     try {
-      let res = await api.delete("/bridges/delete/" + id);
-      setRows(rows.filter((row) => row.id !== id));
+      isEditAllowed ? await api.delete(`/bridges/delete/${id}`) : await api.post(`/bridges/deleteWithConfirm/${id}`);
+      setForceReload((prev) => !prev);
     } catch (err) {
       console.log(err.response.data);
     }
@@ -123,10 +175,17 @@ export default function Bridge(props) {
     const updatedRow = { ...newRow, river: props.river, bridge: props.bridge };
     if (updateFlag) {
       try {
-        let res = await api.post("/bridges/change", updatedRow);
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
+      if (isEditAllowed){
+        let res = await api.post("/bridges/change",{...updatedRow, typeOfChange: "Изменено", confirmation: isEditAllowed });
+      }
+      else{
+        await api.post("/bridges/change", {...updatedRow, 
+          id: updatedRow.id.includes("_change") ? updatedRow.id : updatedRow.id + "_change", 
+          typeOfChange: "Изменено", 
+          confirmation: isEditAllowed }
         );
+      }
+      setForceReload((prev) => !prev);
       } catch (err) {
         setMessage(() => ({
           open: true,
@@ -137,10 +196,8 @@ export default function Bridge(props) {
       }
     } else {
       try {
-        let res = await api.post("/bridges/add", updatedRow);
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-        );
+        let res = await api.post("/bridges/add", {...updatedRow,  typeOfChange: "Добавлено", confirmation: isEditAllowed });
+        setForceReload((prev) => !prev);
       } catch (err) {
         setMessage((prevState) => ({
           open: true,
@@ -213,6 +270,20 @@ export default function Bridge(props) {
         ];
       },
     },
+    {
+      field: "typeOfChange",
+      headerName: "Тип изменения",
+      type: "number",
+      width: 120,
+      editable: false,
+    },
+    {
+      field: "confirmation",
+      headerName: "Статус",
+      type: "boolean",
+      width: 120,
+      editable: false,
+    }
   ];
 
   return (
@@ -243,7 +314,8 @@ export default function Bridge(props) {
                 py: 2,
               },
               height: 600,
-              maxWidth: 445,
+              maxWidth: 750,
+              ml: "10px"
             }}
             components={{
               Toolbar: EditToolbar,

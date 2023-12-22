@@ -71,7 +71,7 @@ export default function NoticeForm(props) {
     } else {
       try {
         let id = randomId();
-        let res = await api.post("/notices/add", {
+        await api.post("/notices/add", {
           ...state.noticeInfo,
           id: id,
         });

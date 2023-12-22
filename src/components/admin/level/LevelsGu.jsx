@@ -12,10 +12,12 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import clsx from "clsx";
 import PropTypes from "prop-types";
+import { forbiddenTime } from "../Time/forbiddenTime";
 import {
   GridRowModes,
   GridToolbarContainer,
   GridActionsCellItem,
+  gridClasses
 } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
@@ -64,6 +66,13 @@ export default function LevelsGuAdmin(props) {
   const [rowModesModel, setRowModesModel] = useState({});
   const [updateFlag, setUpdateFlag] = useState(false);
   const { setMessage } = useContext(MessageContext);
+  const [forceReload, setForceReload] = useState(false);
+  const [isEditAllowed, setIsEditAllowed] = useState(true);
+
+  useEffect(() => {
+    const currentTime = new Date();
+    setIsEditAllowed(currentTime < forbiddenTime);
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -74,13 +83,28 @@ export default function LevelsGuAdmin(props) {
         res.data.forEach((item) => {
           item.date = new Date(item.date);
         });
-        setRows(res.data.sort((a, b) => a.date.getTime() - b.date.getTime()));
+        let ready = res.data.sort((a, b) => a.date.getTime() - b.date.getTime());
+        const filteredReady = ready.filter((row) => {
+          // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
+          const hasChange = ready.some((changeRow) => changeRow.id === row.id + '_change');
+        
+          // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
+          return !hasChange;
+        });
+        setRows(filteredReady);
+        if (!isEditAllowed){
+          setMessage(() => ({
+            open: true,
+            messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
+            severity: "warning",
+          }));
+        }
       } catch (err) {
         console.log(err);
       }
     };
     getData();
-  }, []);
+  }, [forceReload]);
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -91,21 +115,49 @@ export default function LevelsGuAdmin(props) {
   };
 
   const handleEditClick = (id) => () => {
+    const row = rows.find((row) => row.id === id);
+    const today = new Date().toDateString();
+    
+    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    if (row.date.toDateString() !== today) {
+      // Если не равно, выводим сообщение и не выполняем действие
+      setMessage(() => ({
+        open: true,
+        messageText: "Редактирование прошлых дат запрещено.",
+        severity: "warning",
+      }));
+      return;
+    }
+  
     setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+  
+  const handleDeleteClick = (id) => async () => {
+    const row = rows.find((row) => row.id === id);
+    const today = new Date().toDateString();
+  
+    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    if (row.date.toDateString() !== today) {
+      // Если не равно, выводим сообщение и не выполняем действие
+      setMessage(() => ({
+        open: true,
+        messageText: "Удаление прошлых дат запрещено.",
+        severity: "warning",
+      }));
+      return;
+    }
+  
+    try {
+      isEditAllowed ? await api.delete(`/levelsGu/delete/${id}`) : await api.post(`/levelsGu/deleteWithConfirm/${id}`);
+      setForceReload((prev) => !prev);
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
-  const handleDeleteClick = (id) => async () => {
-    try {
-      let res = await api.delete("/levelsGu/delete/" + id);
-      setRows(rows.filter((row) => row.id !== id));
-    } catch (err) {
-      console.log(err.response.data);
-    }
   };
 
   const handleCancelClick = (id) => () => {
@@ -144,20 +196,25 @@ export default function LevelsGuAdmin(props) {
 
     if (updateFlag) {
       try {
-        let res = await api.post("/levelsGu/change", updatedRow);
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-        );
+        if (isEditAllowed){
+            await api.post("/levelsGu/change", {...updatedRow, typeOfChange: "Изменено", confirmation: isEditAllowed });
+        }
+        else{
+            await api.post("/levelsGu/change", {...updatedRow, 
+            id: updatedRow.id.includes("_change") ? updatedRow.id : updatedRow.id + "_change", 
+            typeOfChange: "Изменено", 
+            confirmation: isEditAllowed }
+          );
+        }
+        setForceReload((prev) => !prev);
       } catch (err) {
         console.log(err.response.data);
         return;
       }
     } else {
       try {
-        let res = await api.post("/levelsGu/add", updatedRow);
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-        );
+        let res = await api.post("/levelsGu/add", {...updatedRow,  typeOfChange: "Добавлено", confirmation: isEditAllowed });
+        setForceReload((prev) => !prev);
       } catch (err) {
         setMessage((prevState) => ({
           open: true,
@@ -178,7 +235,7 @@ export default function LevelsGuAdmin(props) {
       headerName: "Дата",
       type: "date",
       width: 120,
-      editable: true,
+      editable: false,
     },
     {
       field: "level1",
@@ -275,6 +332,20 @@ export default function LevelsGuAdmin(props) {
         ];
       },
     },
+    {
+      field: "typeOfChange",
+      headerName: "Тип изменения",
+      type: "number",
+      width: 120,
+      editable: false,
+    },
+    {
+      field: "confirmation",
+      headerName: "Статус",
+      type: "boolean",
+      width: 120,
+      editable: false,
+    }
   ];
 
   return (
@@ -291,7 +362,8 @@ export default function LevelsGuAdmin(props) {
       <AccordionDetails>
         <Box
           sx={{
-        
+            height: 600,
+            maxWidth: 1150,
             "& .super-app.negative": {
               backgroundColor: "#d47483",
               color: "#1a3e72",
@@ -309,27 +381,30 @@ export default function LevelsGuAdmin(props) {
             },
           }}
         >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            editMode="row"
-            rowModesModel={rowModesModel}
-            onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-            onRowEditStart={handleRowEditStart}
-            onRowEditStop={handleRowEditStop}
-            processRowUpdate={processRowUpdate}
-            components={{
-              Toolbar: EditToolbar,
-            }}
-            componentsProps={{
-              toolbar: { setRows, setRowModesModel },
-            }}
-            experimentalFeatures={{ newEditingApi: true }}
-            sx={{
-              height: 600,
-              maxWidth: 910,
-            }}
-          />
+         <DataGrid
+  rows={rows}
+  columns={columns}
+  editMode="row"
+  rowModesModel={rowModesModel}
+  onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+  onRowEditStart={handleRowEditStart}
+  onRowEditStop={handleRowEditStop}
+  processRowUpdate={processRowUpdate}
+  components={{
+    Toolbar: EditToolbar,
+  }}
+  componentsProps={{
+    toolbar: { setRows, setRowModesModel },
+  }}
+  experimentalFeatures={{ newEditingApi: true }}
+  sx={{
+    [`& .${gridClasses.cell}`]: {
+      ml: "1px"
+    },
+  }}
+/>
+
+        
         </Box>
       </AccordionDetails>
     </Accordion>
