@@ -19,6 +19,7 @@ import { randomId } from '@mui/x-data-grid-generator';
 import { AuthContext } from "../../../contexts/AuthContext";
 import { MessageContext } from '../../../contexts/MessageContext.jsx';
 import { api } from '../../../axiosConfig';
+import { forbiddenTime } from "../Time/forbiddenTime";
 
 const organisations = [
   "РУ ЭСП \"Днепро-Бугский водный путь\"",
@@ -65,6 +66,14 @@ export default function Dislocation() {
   const {auth} = useContext(AuthContext);
   const [updateFlag, setUpdateFlag] = useState(false);
   const {setMessage} = useContext(MessageContext);
+  const [isEditAllowed, setIsEditAllowed] = useState(true);
+  const [forceReload, setForceReload] = useState(false);
+ 
+  useEffect(() => {
+    const currentTime = new Date();
+    setIsEditAllowed(currentTime < forbiddenTime);
+  }, []);
+
 useEffect(() => {
   const getData = async () => {
       try {
@@ -72,14 +81,29 @@ useEffect(() => {
         res.data.forEach((item) => {
           item.date = new Date(item.date);
         })
-        setRows(res.data.sort((a, b) => a.date.getTime() - b.date.getTime()));
+        let ready = res.data.sort((a, b) => a.date.getTime() - b.date.getTime());
+        const filteredReady = ready.filter((row) => {
+          // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
+        const hasChange = ready.some((changeRow) => changeRow.id === row.id + '_change');
+        
+          // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
+          return !hasChange;
+        });
+        setRows(filteredReady);
+        if (!isEditAllowed){
+          setMessage(() => ({
+            open: true,
+            messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
+            severity: "warning",
+          }));
+        }
       } catch (err) { 
         console.log(err)
       }
   }   
 
   getData();
-  }, [])
+  }, [forceReload])
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -90,6 +114,20 @@ useEffect(() => {
   };
 
   const handleEditClick = (id) => () => {
+    const row = rows.find((row) => row.id === id);
+    const today = new Date().toDateString();
+    
+    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    if (row.date.toDateString() !== today) {
+      // Если не равно, выводим сообщение и не выполняем действие
+      setMessage(() => ({
+        open: true,
+        messageText: "Редактирование прошлых дат запрещено.",
+        severity: "warning",
+      }));
+      return;
+    }
+  
     setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
@@ -99,11 +137,25 @@ useEffect(() => {
   };
 
   const handleDeleteClick = (id) => async () => {
+    const row = rows.find((row) => row.id === id);
+    const today = new Date().toDateString();
+  
+    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    if (row.date.toDateString() !== today) {
+      // Если не равно, выводим сообщение и не выполняем действие
+      setMessage(() => ({
+        open: true,
+        messageText: "Удаление прошлых дат запрещено.",
+        severity: "warning",
+      }));
+      return;
+    }
+  
     try {
-      let res = await api.delete('/dislocation/delete/' + id);
-      setRows(rows.filter((row) => row.id !== id));
-    } catch(err) {
-      console.log(err.response.data)
+      isEditAllowed ? await api.delete(`/dislocation/delete/${id}`) : await api.post(`/dislocation/deleteWithConfirm/${id}`);
+      setForceReload((prev) => !prev);
+    } catch (err) {
+      console.log(err.response.data);
     }
   };
 
@@ -135,8 +187,16 @@ useEffect(() => {
    
     if(updateFlag) {
       try {
-        let res = await api.post('/dislocation/change', newRow);
-        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+        if (isEditAllowed){
+          await api.post('/dislocation/change',  {...newRow, typeOfChange: "Изменено", confirmation: isEditAllowed });
+        }
+        else{
+          await api.post("/dislocation/change", {...newRow, 
+            id: newRow.id.includes("_change") ? newRow.id : newRow.id + "_change",
+            typeOfChange: "Изменено", 
+            confirmation: isEditAllowed });
+        }
+        setForceReload((prev) => !prev);
       } catch(err) {
         console.log(err.response.data);
         setUpdateFlag(false);
@@ -144,8 +204,8 @@ useEffect(() => {
       }
     } else {
       try {
-        let res = await api.post('/dislocation/add', newRow);
-        setRows(rows.map((row) => (row.id === newRow.id ? newRow : row)));
+        let res = await api.post('/dislocation/add', {...newRow, typeOfChange: "Добавлено", confirmation: isEditAllowed });
+        setForceReload((prev) => !prev);
       } catch(err) {
         console.log(err.response.data);
         setUpdateFlag(false);
@@ -171,7 +231,7 @@ useEffect(() => {
     {
       field: 'riverName',
       headerName: 'Наименование реки и № участка*',
-      width: 250,
+      width: 225,
       editable: true,
     },
     {
@@ -190,7 +250,7 @@ useEffect(() => {
       field: 'date',
       headerName: 'Дата начала работы',
       type: 'date',
-      width: 160,
+      width: 150,
       editable: true,
     },
     {
@@ -236,6 +296,20 @@ useEffect(() => {
         ];
       },
     },
+    {
+      field: "typeOfChange",
+      headerName: "Тип изменения",
+      type: "number",
+      width: 120,
+      editable: false,
+    },
+    {
+      field: "confirmation",
+      headerName: "Статус",
+      type: "boolean",
+      width: 150,
+      editable: false,
+    }
   ];
 
   if (auth.role === "Администратор") {
@@ -257,7 +331,7 @@ useEffect(() => {
           py: 2,
         },
         height: 700,
-        maxWidth: 1520
+        maxWidth: 1600
       }}
       rows={rows}
       columns={columns}

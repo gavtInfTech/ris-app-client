@@ -25,7 +25,7 @@ export default function RiverAccordionDepth(props) {
         backgroundColor: "#ebf4fc",
         mb: "5px",
         boxShadow: "0px 1px 1px #b4b8c2",
-        maxWidth: 1250
+        maxWidth: 1450
       }}
     >
       <AccordionSummary
