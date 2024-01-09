@@ -26,6 +26,9 @@ import { coordsGorin } from "./FairwayGorin";
 import { zeroPointGorin } from "./FairwayGorin";
 import { coordsTurov } from "./FairwayTurov";
 import { zeroPointTurov } from "./FairwayTurov";
+import { zeroPointSvisloch } from "./FairwaySvisloch";
+import { coordsSvisloch } from "./FairwaySvisloch";
+
 const coords = [];
 
 coords.forEach((coord) => {
@@ -115,6 +118,10 @@ function getRiverCoordsAndZeroPointByRiver(river) {
       riverCoords = coordsAvgCanal;
       zeroPoint = zeroPointAvgCanal;
       break;
+    case 'Свислочь': 
+      riverCoords = coordsSvisloch;
+      zeroPoint = zeroPointSvisloch;
+      break;
   }
 
   return [riverCoords, zeroPoint];
@@ -171,7 +178,8 @@ export function getSiteByCoords(river, targetCoords, sites) {
       'Пина': getRiverCoordsAndZeroPointByRiver('Пина')[0],
       'Микашевичский канал': getRiverCoordsAndZeroPointByRiver('Микашевичский канал')[0],
       'Горынь': getRiverCoordsAndZeroPointByRiver('Горынь')[0],
-      'Верхний участок реки Припять': getRiverCoordsAndZeroPointByRiver('Верхний участок реки Припять')[0]
+      'Верхний участок реки Припять': getRiverCoordsAndZeroPointByRiver('Верхний участок реки Припять')[0],
+      'Свислочь': getRiverCoordsAndZeroPointByRiver('Свислочь')[0],
     };
 
     for (const key in allRiversCoords) {

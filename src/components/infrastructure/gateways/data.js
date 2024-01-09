@@ -183,12 +183,12 @@ export const gateways = [
         id: 16,
         sluz: 'Судоходный г/у Немново',
         location: 'Августовский канал',
-        date: '—',
-        amount: '—',
-        length: '—',
-        width: '—',
-        napor: '—',
-        depth: '—',
+        date: '1829',
+        amount: 4,
+        length: 356.14,
+        width: 6.2,
+        napor: 11.5,
+        depth: '2.16/1.0/1.0/0.95/1.0',
         coords: [53.869459, 23.757462]
     },
     {
