@@ -11,6 +11,7 @@ import Clients from "./users/Clients";
 import { AuthContext } from "../../contexts/AuthContext";
 import ProtectedRoute from "../../ProtectedRoute";
 import Sites from "./sites/Sites";
+import ConfirmPage from "./confirmPage/ConfirmPage";
 
 export default function FullWidthTabs() {
   const { pathname } = useLocation();
@@ -24,6 +25,7 @@ export default function FullWidthTabs() {
   else if (pathname.includes("clients")) value = "/admin-main/clients";
   else if (pathname.includes("sites")) value = "/admin-main/sites";
   else if (pathname.includes("marshrutnik")) value = "/admin-main/marshrutnik";
+  else if (pathname.includes("confirmPage")) value = "/admin-main/confirmPage";
   else value = "/admin-main/users";
 
   return (
@@ -79,6 +81,15 @@ export default function FullWidthTabs() {
               component={Link}
             />
           )}
+          {auth.role === "Администратор" && (
+            <Tab
+              sx={{ width: 300, fontSize: 14 }}
+              label="Подтверждение"
+              value="/admin-main/confirmPage"
+              to="/admin-main/confirmPage"
+              component={Link}
+            />
+          )}
         </Tabs>
       </AppBar>
 
@@ -93,6 +104,9 @@ export default function FullWidthTabs() {
           </Route>
           <Route element={<ProtectedRoute role="Администратор" />}>
             <Route path="/clients" element={<Clients />} />
+          </Route>
+          <Route element={<ProtectedRoute role="Администратор" />}>
+            <Route path="/confirmPage" element={<ConfirmPage/>} />
           </Route>
         </Routes>
       </Box>

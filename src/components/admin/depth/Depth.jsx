@@ -23,6 +23,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { forbiddenTime } from "../Time/forbiddenTime";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -60,10 +61,25 @@ export default function Depth(props) {
   const { setMessage } = useContext(MessageContext);
   const [isEditAllowed, setIsEditAllowed] = useState(true);
   const [forceReload, setForceReload] = useState(false);
+  const { auth } = useContext(AuthContext);
+  const organisations = {
+    'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+    'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
+    "РУ Днепро-Березинское предприятие водных путей": 3,
+    "Государственная администрация водного транспорта": 4,
+  };
+
+  function getNumber(organisationName) {
+    return organisations[organisationName] || null;
+  }
 
   useEffect(() => {
     const currentTime = new Date();
-    setIsEditAllowed(currentTime < forbiddenTime);
+    if (auth.role === "Администратор") {
+      setIsEditAllowed(true);
+    } else {
+      setIsEditAllowed(currentTime < forbiddenTime);
+    }
   }, []);
 
   useEffect(() => {
@@ -77,16 +93,20 @@ export default function Depth(props) {
           if (item.forecastDate !== null)
             item.forecastDate = new Date(item.forecastDate);
         });
-         let ready = res.data.sort((a, b) => a.date.getTime() - b.date.getTime());
-         const filteredReady = ready.filter((row) => {
+        let ready = res.data.sort(
+          (a, b) => a.date.getTime() - b.date.getTime()
+        );
+        const filteredReady = ready.filter((row) => {
           // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
-         const hasChange = ready.some((changeRow) => changeRow.id === row.id + '_change');
-        
+          const hasChange = ready.some(
+            (changeRow) => changeRow.id === row.id + "_change"
+          );
+
           // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
           return !hasChange;
         });
         setRows(filteredReady);
-        if (!isEditAllowed){
+        if (!isEditAllowed) {
           setMessage(() => ({
             open: true,
             messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
@@ -111,21 +131,27 @@ export default function Depth(props) {
 
   const handleEditClick = (id) => () => {
     const row = rows.find((row) => row.id === id);
-    const today = new Date().toDateString();
-    
-    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
-    if (row.date.toDateString() !== today) {
-      // Если не равно, выводим сообщение и не выполняем действие
+    const today = new Date();
+
+    if (row.date.toDateString() !== today.toDateString()) {
+      if (auth.role === "Администратор") {
+        setUpdateFlag(true);
+        setRowModesModel({
+          ...rowModesModel,
+          [id]: { mode: GridRowModes.Edit },
+        });
+        return;
+      }
       setMessage(() => ({
         open: true,
         messageText: "Редактирование прошлых дат запрещено.",
         severity: "warning",
       }));
       return;
+    } else {
+      setUpdateFlag(true);
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     }
-  
-    setUpdateFlag(true);
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
   const handleSaveClick = (id) => () => {
@@ -134,27 +160,39 @@ export default function Depth(props) {
 
   const handleDeleteClick = (id) => async () => {
     const row = rows.find((row) => row.id === id);
-    const today = new Date().toDateString();
-  
-    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
-    if (row.date.toDateString() !== today) {
-      // Если не равно, выводим сообщение и не выполняем действие
+    const today = new Date();
+
+    if (row.date.toDateString() !== today.toDateString()) {
+      if (auth.role === "Администратор") {
+        setUpdateFlag(true);
+        try {
+          isEditAllowed
+            ? await api.delete(`/gabs/delete/${id}`)
+            : await api.post(`/gabs/deleteWithConfirm/${id}`);
+          setForceReload((prev) => !prev);
+        } catch (err) {
+          console.log(err.response.data);
+        }
+        return;
+      }
       setMessage(() => ({
         open: true,
-        messageText: "Удаление прошлых дат запрещено.",
+        messageText: "Редактирование прошлых дат запрещено.",
         severity: "warning",
       }));
       return;
-    }
-  
-    try {
-      isEditAllowed ? await api.delete(`/gabs/delete/${id}`) : await api.post(`/gabs/deleteWithConfirm/${id}`);
-      setForceReload((prev) => !prev);
-    } catch (err) {
-      console.log(err.response.data);
+    } else {
+      try {
+        isEditAllowed
+          ? await api.delete(`/gabs/delete/${id}`)
+          : await api.post(`/gabs/deleteWithConfirm/${id}`);
+        setForceReload((prev) => !prev);
+      } catch (err) {
+        console.log(err.response.data);
+      }
     }
   };
-  
+
   const handleCancelClick = (id) => () => {
     setUpdateFlag(false);
     setRowModesModel({
@@ -180,15 +218,23 @@ export default function Depth(props) {
     const updatedRow = { ...newRow, site: props.site };
     if (updateFlag) {
       try {
-        if (isEditAllowed){
-           await api.post("/gabs/change", {...updatedRow, typeOfChange: "Изменено", confirmation: isEditAllowed });
-        }
-        else{
-          await api.post("/gabs/change", {...updatedRow, 
-            id: updatedRow.id.includes("_change") ? updatedRow.id : updatedRow.id + "_change",
-            typeOfChange: "Изменено", 
-            confirmation: isEditAllowed });
-          
+        if (isEditAllowed) {
+          await api.post("/gabs/change", {
+            ...updatedRow,
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation)
+          });
+        } else {
+          await api.post("/gabs/change", {
+            ...updatedRow,
+            id: updatedRow.id.includes("_change")
+              ? updatedRow.id
+              : updatedRow.id + "_change",
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation),
+          });
         }
         setRows(
           rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
@@ -203,7 +249,12 @@ export default function Depth(props) {
       }
     } else {
       try {
-        await api.post("/gabs/add", {...updatedRow, typeOfChange: "Добавлено", confirmation: isEditAllowed });
+        await api.post("/gabs/add", {
+          ...updatedRow,
+          typeOfChange: "Добавлено",
+          confirmation: isEditAllowed,
+          organisation: getNumber(auth.organisation)
+        });
         setForceReload((prev) => !prev);
       } catch (err) {
         setMessage(() => ({
@@ -324,7 +375,7 @@ export default function Depth(props) {
       type: "boolean",
       width: 120,
       editable: false,
-    }
+    },
   ];
 
   return (

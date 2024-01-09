@@ -23,7 +23,7 @@ import { randomId } from "@mui/x-data-grid-generator";
 import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { forbiddenTime } from "../Time/forbiddenTime";
-
+import { AuthContext } from "../../../contexts/AuthContext";
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
@@ -31,7 +31,7 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, difference: 0, date: new Date(), level1: null, level2: null }
+      { id, difference: 0, date: new Date(), level1: null, level2: null },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -60,10 +60,26 @@ export default function LevelsGpAdmin(props) {
   const { setMessage } = useContext(MessageContext);
   const [isEditAllowed, setIsEditAllowed] = useState(true);
   const [forceReload, setForceReload] = useState(false);
- 
+  const { auth } = useContext(AuthContext);
+
+  const organisations = {
+    "РУ ЭСП \"Днепро-Бугский водный путь\"": 1,
+    "РУ Днепро-Двинское предприятие водных путей \"Белводпуть\"": 2,
+    "РУ Днепро-Березинское предприятие водных путей": 3,
+    "Государственная администрация водного транспорта": 4
+  }
+
+  function getNumber(organisationName) {
+    return organisations[organisationName] || null;
+}
+
   useEffect(() => {
     const currentTime = new Date();
-    setIsEditAllowed(currentTime < forbiddenTime);
+    if (auth.role === "Администратор") {
+      setIsEditAllowed(true);
+    } else {
+      setIsEditAllowed(currentTime < forbiddenTime);
+    }
   }, []);
 
   useEffect(() => {
@@ -77,16 +93,20 @@ export default function LevelsGpAdmin(props) {
           item.difference = Number(item.difference);
         });
 
-        let ready = res.data.sort((a, b) => a.date.getTime() - b.date.getTime());
+        let ready = res.data.sort(
+          (a, b) => a.date.getTime() - b.date.getTime()
+        );
         const filteredReady = ready.filter((row) => {
           // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
-          const hasChange = ready.some((changeRow) => changeRow.id === row.id + '_change');
-        
+          const hasChange = ready.some(
+            (changeRow) => changeRow.id === row.id + "_change"
+          );
+
           // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
           return !hasChange;
         });
         setRows(filteredReady);
-        if (!isEditAllowed){
+        if (!isEditAllowed) {
           setMessage(() => ({
             open: true,
             messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
@@ -96,7 +116,6 @@ export default function LevelsGpAdmin(props) {
       } catch (err) {
         console.log(err);
       }
-
     };
 
     getData();
@@ -116,47 +135,66 @@ export default function LevelsGpAdmin(props) {
 
   const handleEditClick = (id) => () => {
     const row = rows.find((row) => row.id === id);
-    const today = new Date().toDateString();
-    
-    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
-    if (row.date.toDateString() !== today) {
-      // Если не равно, выводим сообщение и не выполняем действие
+    const today = new Date();
+    console.log(auth.role);
+
+    if (row.date.toDateString() !== today.toDateString()) {
+      if (auth.role === "Администратор") {
+        setUpdateFlag(true);
+        setRowModesModel({
+          ...rowModesModel,
+          [id]: { mode: GridRowModes.Edit },
+        });
+        return;
+      }
       setMessage(() => ({
         open: true,
         messageText: "Редактирование прошлых дат запрещено.",
         severity: "warning",
       }));
       return;
+    } else {
+      setUpdateFlag(true);
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     }
-  
-    setUpdateFlag(true);
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
-  
+
   const handleDeleteClick = (id) => async () => {
     const row = rows.find((row) => row.id === id);
-    const today = new Date().toDateString();
-  
+    const today = new Date();
+    console.log(auth.role !== "Администратор");
+
     // Проверка, что значение в столбце "Дата" равно сегодняшней дате
-    if (row.date.toDateString() !== today) {
-      // Если не равно, выводим сообщение и не выполняем действие
+    if (row.date.toDateString() !== today.toDateString()) {
+      if (auth.role === "Администратор") {
+        setUpdateFlag(true);
+        try {
+          isEditAllowed
+            ? await api.delete(`/levelsGp/delete/${id}`)
+            : await api.post(`/levelsGp/deleteWithConfirm/${id}`);
+          setForceReload((prev) => !prev);
+        } catch (err) {
+          console.log(err.response.data);
+        }
+        return;
+      }
       setMessage(() => ({
         open: true,
         messageText: "Удаление прошлых дат запрещено.",
         severity: "warning",
       }));
       return;
-    }
-  
-    try {
-      isEditAllowed ? await api.delete(`/levelsGp/delete/${id}`) : await api.post(`/levelsGp/deleteWithConfirm/${id}`);
-      setForceReload((prev) => !prev);
-    } catch (err) {
-      console.log(err.response.data);
+    } else {
+      try {
+        isEditAllowed
+          ? await api.delete(`/levelsGp/delete/${id}`)
+          : await api.post(`/levelsGp/deleteWithConfirm/${id}`);
+        setForceReload((prev) => !prev);
+      } catch (err) {
+        console.log(err.response.data);
+      }
     }
   };
-  
-  
 
   const handleCancelClick = (id) => () => {
     setUpdateFlag(false);
@@ -187,7 +225,7 @@ export default function LevelsGpAdmin(props) {
       river: props.river,
       hydropost: props.hydropost,
     };
-    
+
     let updatedRows = rows.map((row) =>
       row.id === updatedRow.id ? updatedRow : row
     );
@@ -210,15 +248,23 @@ export default function LevelsGpAdmin(props) {
         hydropostData[index + 1].level1 - hydropostData[index].level1;
 
       try {
-        if (isEditAllowed){
-          let res = await api.post("/levelsGp/change", {...hydropostData[index + 1], typeOfChange: "Изменено", confirmation: isEditAllowed });
-        }
-        else{
-          let res = await api.post("/levelsGp/change", {...hydropostData[index + 1], 
-            id: hydropostData[index + 1].id.includes("_change") ? hydropostData[index + 1].id : hydropostData[index + 1].id + "_change", 
-            typeOfChange: "Изменено", 
-            confirmation: isEditAllowed }
-          );
+        if (isEditAllowed) {
+          let res = await api.post("/levelsGp/change", {
+            ...hydropostData[index + 1],
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation),
+          });
+        } else {
+          let res = await api.post("/levelsGp/change", {
+            ...hydropostData[index + 1],
+            id: hydropostData[index + 1].id.includes("_change")
+              ? hydropostData[index + 1].id
+              : hydropostData[index + 1].id + "_change",
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation)
+          });
         }
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -229,14 +275,23 @@ export default function LevelsGpAdmin(props) {
 
     if (updateFlag) {
       try {
-        if (isEditAllowed){
-          await api.post("/levelsGp/change", {...updatedRow, typeOfChange: "Изменено", confirmation: isEditAllowed });
-        }
-        else{
-          await api.post("/levelsGp/change", {...updatedRow, 
-           id: updatedRow.id.includes("_change") ? updatedRow.id : updatedRow.id + "_change",
-           typeOfChange: "Изменено", 
-           confirmation: isEditAllowed });
+        if (isEditAllowed) {
+          await api.post("/levelsGp/change", {
+            ...updatedRow,
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation)
+          });
+        } else {
+          await api.post("/levelsGp/change", {
+            ...updatedRow,
+            id: updatedRow.id.includes("_change")
+              ? updatedRow.id
+              : updatedRow.id + "_change",
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation)
+          });
         }
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -245,7 +300,12 @@ export default function LevelsGpAdmin(props) {
       }
     } else {
       try {
-        await api.post("/levelsGp/add", {...updatedRow, typeOfChange: "Добавлено", confirmation: isEditAllowed });
+        await api.post("/levelsGp/add", {
+          ...updatedRow,
+          typeOfChange: "Добавлено",
+          confirmation: isEditAllowed,
+          organisation: getNumber(auth.organisation)
+        });
         setForceReload((prev) => !prev);
       } catch (err) {
         setMessage(() => ({
@@ -356,7 +416,7 @@ export default function LevelsGpAdmin(props) {
       type: "boolean",
       width: 120,
       editable: false,
-    }
+    },
   ];
 
   return (
@@ -393,11 +453,11 @@ export default function LevelsGpAdmin(props) {
           }}
         >
           <DataGrid
-          initialState={{
-            sorting: {
-              sortModel: [{ field: 'date', sort: 'desc' }],
-            },
-          }}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
             rows={rows}
             columns={columns}
             editMode="row"
