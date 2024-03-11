@@ -24,6 +24,8 @@ import MainTab from "./components/admin/MainTab";
 import MainTabClient from "./components/client/MainTabClient";
 import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
 import PathInformationMenu from "./components/admin/PathInformationMenu";
+import { AuthContext } from "./contexts/AuthContext";
+
 // const PathInformationMenu = lazy(() => import("./components/admin/PathInformationMenu"));
 // const MainTabClient = lazy(() => import("./components/client/MainTabClient")); 
 // const MainTab = lazy(() => import("./components/admin/MainTab"));
@@ -85,6 +87,39 @@ export default function App() {
             }
           >
             <Route path="/admin-dvinskoe/*" element={<MainTab />}></Route>
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                organisation={
+                  'Нижне - Припятский'
+                }
+              />
+            }
+          >
+            <Route path="/admin-nijnepripyat/*" element={<MainTab />}></Route>
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                organisation={
+                  'Гродненский участок'
+                }
+              />
+            }
+          >
+            <Route path="/admin-grodnenskiy/*" element={<MainTab />}></Route>
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                organisation={
+                  'Витебскводтранс'
+                }
+              />
+            }
+          >
+            <Route path="/admin-vitebskvodtrans/*" element={<MainTab />}></Route>
           </Route>
           <Route element={<ProtectedRoute role="Клиент" />}>
             <Route path="/client/*" element={<MainTabClient />}></Route>

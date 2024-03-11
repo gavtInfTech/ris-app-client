@@ -18,15 +18,23 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { useMediaQuery } from "@mui/material";
+import { Button, useMediaQuery } from "@mui/material";
 import styles from "./style.module.css";
-import { ConstructionOutlined } from "@mui/icons-material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
-const organisations = [
-  'РУ ЭСП "Днепро-Бугский водный путь"',
-  'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
-  "РУ Днепро-Березинское предприятие водных путей",
-];
+const organisations = {
+  'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+  'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
+  "РУ Днепро-Березинское предприятие водных путей": 3,
+  "Государственная администрация водного транспорта": 4,
+  "Нижне - Припятский": 5,
+  "Гродненский участок": 6,
+  "Витебскводтранс": 7,
+};
 
 function Table(props) {
   const [rows, setRows] = useState([]);
@@ -36,7 +44,11 @@ function Table(props) {
   const { setMessage } = useContext(MessageContext);
   const [isEditAllowed, setIsEditAllowed] = useState(true);
   const [forceReload, setForceReload] = useState(false);
-
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogBody, setDialogBody] = useState("");
+  const [isAccept, setIsAccept] = useState(true);
+  const [actualId, setActualId] = useState("");
   useEffect(() => {
     const currentTime = new Date();
     if (auth.role === "Администратор") {
@@ -55,11 +67,23 @@ function Table(props) {
       minute: "numeric",
       second: "numeric",
     };
-
-    return new Intl.DateTimeFormat("ru-RU", options).format(
+  
+    const formattedDate = new Intl.DateTimeFormat("ru-RU", options).format(
       new Date(dateString)
     );
+  
+    // Check if the time is 00:00:00 and exclude it if true
+    if (formattedDate.endsWith(" 00:00:00")) {
+      const newDate = formattedDate.split(" ")[0]; // Extracting only the date part
+      return newDate.replace(",", "");
+    }
+  
+    // Return the formatted date without any modifications
+    return formattedDate;
   }
+  
+  
+  
   useEffect(() => {
     const getData = async () => {
       try {
@@ -89,12 +113,17 @@ function Table(props) {
           mergedData.push(...res.data.levelGps);
         }
 
+        // Проверяем, есть ли данные в res.data.levelGps, и если да, добавляем их в массив
+        if (res.data.levelGus && res.data.levelGus.length > 0) {
+          mergedData.push(...res.data.levelGus);
+        }
         const processedData = mergedData.map((item) => {
           const id = item.id;
 
           if (id.includes("_change")) {
             return;
           }
+
           console.log(item);
           console.log("THIS IS ITEM", item);
           const before = item
@@ -121,10 +150,10 @@ function Table(props) {
                       prefix = "Гидропост: ";
                       break;
                     case "level1":
-                      prefix = "Уровень 1: ";
+                      prefix = "Уровень воды над 0 графом: ";
                       break;
                     case "level2":
-                      prefix = "Уровень 2: ";
+                      prefix = "Уровень воды над ПГ: ";
                       break;
                     case "difference":
                       prefix = "Различие: ";
@@ -178,8 +207,11 @@ function Table(props) {
           const changeItem = mergedData.find(
             (change) => change.id === `${id}_change`
           );
+
           const typeOfRequest = changeItem
-            ? changeItem.typeOfChange
+            ? changeItem.confirmation == false
+              ? item.typeOfChange + ", затем изменено"
+              : changeItem.confirmation
             : item.typeOfChange;
 
           // Determine the 'after' value based on the presence of '_change' item
@@ -207,10 +239,10 @@ function Table(props) {
                       prefix = "Гидропост: ";
                       break;
                     case "level1":
-                      prefix = "Уровень 1: ";
+                      prefix = "Уровень воды над 0 графом: ";
                       break;
                     case "level2":
-                      prefix = "Уровень 2: ";
+                      prefix = "Уровень воды над ПГ: ";
                       break;
                     case "difference":
                       prefix = "Различие: ";
@@ -265,6 +297,7 @@ function Table(props) {
         const filteredProcessedData = processedData.filter(
           (item) => item !== undefined
         );
+        console.log("THIS IS DATA", filteredProcessedData);
         setRows(filteredProcessedData);
         console.log(processedData);
       } catch (err) {
@@ -284,33 +317,66 @@ function Table(props) {
   };
 
   const handleAcceptClick = (id) => async () => {
-    let actionsForAccept = {
-      "Добавлено": "confirmAdd",
-      "Изменено": "confirmChange",
-      "Удалено": "confirmDelete",
-    };
-    const row = rows.find((row) => row.id === id);
-    try {
-      await api.post(
-        `/confirmation/${actionsForAccept[row.typeOfRequest]}/${id}`
-      );
-      console.log( `/confirmation/${actionsForAccept[row.typeOfRequest]}/${id}`)
-      setForceReload((prev) => !prev);
-    } catch (err) {
-      console.log(err.response.data);
-    }
-    return;
+    setActualId(id);
+    setDialogTitle("Вы уверены, что хотите подтвердить запрос от организации?");
+    setDialogBody(
+      "Данное действие подтвердит внесение организацией изменений после 11:00. Если не уверены, обратитесь к руководству!"
+    );
+    setIsAccept(true);
+    setDialogOpen(true);
   };
 
   const handleRejectClick = (id) => async () => {
+    setActualId(id);
+    setDialogTitle("Вы уверены, что хотите отменить запрос от организации?");
+    setDialogBody(
+      "Данное действие отменит внесение организацией изменений после 11:00. Если не уверены, обратитесь к руководству!"
+    );
+    setIsAccept(false);
+    setDialogOpen(true);
+  };
+
+  const acceptAction = async () => {
+                  let actionsForAccept = {
+                    Добавлено: "confirmAdd",
+                    Изменено: "confirmChange",
+                    Удалено: "confirmDelete",
+                    "Добавлено, затем изменено": "confirmChange",
+                  };
+    const row = rows.find((row) => row.id === actualId);
     try {
-      await api.delete(
-        `/confirmation/reject/${id}`
+      await api.post(
+        `/confirmation/${actionsForAccept[row.typeOfRequest]}/${actualId}`
       );
+      setMessage(() => ({
+        open: true,
+        messageText: `Успешно подтверждено!`,
+        severity: "success",
+      }));
+      setDialogOpen(false);
       setForceReload((prev) => !prev);
     } catch (err) {
       console.log(err.response.data);
     }
+  };
+
+  const rejectAction = async () => {
+    try {
+      await api.delete(`/confirmation/reject/${actualId}`);
+      setMessage(() => ({
+        open: true,
+        messageText: `Успешно отклонено!`,
+        severity: "success",
+      }));
+      setDialogOpen(false);
+      setForceReload((prev) => !prev);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   let columns = [
@@ -359,28 +425,49 @@ function Table(props) {
   ];
 
   return (
-    <DataGrid
-      getRowHeight={() => "auto"}
-      sx={{
-        [`& .${gridClasses.cell}`]: {
-          py: 2,
-        },
-        height: 700,
-        maxWidth: 1000,
-        minWidth: 1000,
-      }}
-      rows={rows}
-      columns={columns}
-      editMode="row"
-      rowModesModel={rowModesModel}
-      onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-      onRowEditStart={handleRowEditStart}
-      onRowEditStop={handleRowEditStop}
-      componentsProps={{
-        toolbar: { setRows, setRowModesModel },
-      }}
-      experimentalFeatures={{ newEditingApi: true }}
-    />
+    <Box>
+      <DataGrid
+        getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            py: 2,
+          },
+          height: 700,
+          maxWidth: 1000,
+          minWidth: 1000,
+        }}
+        rows={rows}
+        columns={columns}
+        editMode="row"
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+        onRowEditStart={handleRowEditStart}
+        onRowEditStop={handleRowEditStop}
+        componentsProps={{
+          toolbar: { setRows, setRowModesModel },
+        }}
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{dialogTitle}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {dialogBody}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Отменить</Button>
+          <Button onClick={isAccept ? acceptAction : rejectAction} autoFocus>
+            Подтвердить
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
 
@@ -448,6 +535,18 @@ export default function ConfirmPage() {
             label="РУ Днепро-Березинское предприятие водных путей"
             {...a11yProps(2)}
           />
+            <Tab
+            label="Нижне - Припятский"
+            {...a11yProps(3)}
+          />
+            <Tab
+            label="Гродненский участок"
+            {...a11yProps(4)}
+          />
+            <Tab
+            label="Витебскводтранс"
+            {...a11yProps(5)}
+          />
         </Tabs>
       </Box>
       {/* DataGrid centered on the page */}
@@ -460,6 +559,15 @@ export default function ConfirmPage() {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
           <Table organisationId={3} />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={3}>
+          <Table organisationId={5} />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={4}>
+          <Table organisationId={6} />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={5}>
+          <Table organisationId={7} />
         </CustomTabPanel>
       </Box>
     </Box>

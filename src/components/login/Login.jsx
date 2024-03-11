@@ -13,7 +13,9 @@ import * as bugskoeInfo from "../admin/bugskoeInfo";
 import * as dvinskoeInfo from "../admin/dvinskoeInfo";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
-
+import * as nijPrivInfo from "../admin/nijnePripytskiyInfo"
+import * as grodnenskoeInfo from "../admin/grodnenskiyInfo"
+import * as vitebskoeInfo from "../admin/VitebskVodTransInfo"
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
   const [message, setMessage] = useState("");
@@ -53,6 +55,30 @@ export default function Login() {
               rolePath: "berezinskoe",
             });
             navigate("/admin-berezinskoe/informationTab/levels/levelsGp");
+            break;
+          case "Нижне - Припятский":
+            setAuth({
+              ...res.data,
+              info: nijPrivInfo,
+              rolePath: "nijnepripyat",
+            });
+            navigate("/admin-nijnepripyat/informationTab/levels/levelsGp");
+            break;
+          case "Гродненский участок":
+            setAuth({
+              ...res.data,
+              info: grodnenskoeInfo,
+              rolePath: "grodnenskiy",
+            });
+            navigate("/admin-grodnenskiy/informationTab/levels/levelsGp");
+            break;
+          case "Витебскводтранс":
+            setAuth({
+              ...res.data,
+              info: vitebskoeInfo,
+              rolePath: "vitebskvodtrans",
+            });
+            navigate("/admin-vitebskvodtrans/informationTab/levels/levelsGp");
             break;
         }
       }

@@ -11,7 +11,7 @@ export const hydroposts = [
         square: 20800,
         openDate: '02.08.1876',
         closeDate: 'Действует',
-        coords: [53.894548, 30.330654]
+        coords: [53.892371, 30.328854]
     },
     {
         id: 2,
@@ -25,7 +25,7 @@ export const hydroposts = [
         square: 30300,
         openDate: '20.03.1877',
         closeDate: 'Действует',
-        coords: [52.892256, 30.037822]
+        coords: [52.890176, 30.061389]
     },
     {
         id: 3,
@@ -39,7 +39,7 @@ export const hydroposts = [
         square: 58200,
         openDate: '13.08.1894',
         closeDate: 'Действует',
-        coords: [52.371556, 30.386566]
+        coords: [52.373092, 30.393768]
     },
     {
         id: 4,
@@ -67,7 +67,7 @@ export const hydroposts = [
         square: 10800,
         openDate: '13.04.1878',
         closeDate: 'Действует',
-        coords: [ 53.834601, 28.994249]
+        coords: [53.830068, 29.001767]
     },
     {
         id: 6,
@@ -81,7 +81,7 @@ export const hydroposts = [
         square: 20300,
         openDate: '13.11.1876',
         closeDate: 'Действует',
-        coords: [53.145597, 29.225538]
+        coords: [53.142632, 29.265672]
     },
     {
         id: 7,
@@ -95,7 +95,7 @@ export const hydroposts = [
         square: 23300,
         openDate: '13.03.1921',
         closeDate: 'Действует',
-        coords: [52.633056, 29.7484835]
+        coords: [52.636915, 29.755913]
     },
     {
         id: 8,
@@ -109,7 +109,7 @@ export const hydroposts = [
         square: 17700,
         openDate: '13.01.1896',
         closeDate: 'Действует',
-        coords: [53.446019, 31.004526 ]
+        coords: [53.441656, 31.009670]
     },
     {
         id: 9,
@@ -123,7 +123,7 @@ export const hydroposts = [
         square: 38900,
         openDate: '13.04.1898',
         closeDate: 'Действует',
-        coords: [52.424160, 31.0142812]
+        coords: [52.432339, 31.023014]
     },
     {
         id: 10,
@@ -137,7 +137,7 @@ export const hydroposts = [
         square: '—',
         openDate: '07.10.1978',
         closeDate: 'Действует',
-        coords: [52.111406, 26.102473 ]
+        coords: [52.110327, 26.105559]
     },
     {
         id: 11,
@@ -151,7 +151,7 @@ export const hydroposts = [
         square: '—',
         openDate: '—',
         closeDate: 'Действует',
-        coords: [52.139560, 26.801964],
+        coords: [52.141879, 26.799388],
     },
     {
         id: 12,
@@ -165,7 +165,7 @@ export const hydroposts = [
         square: 74000,
         openDate: '01.09.1930',
         closeDate: 'Действует',
-        coords: [ 52.063605, 27.820079]
+        coords: [52.080071, 27.823397]
     },
     {
         id: 13,
@@ -193,7 +193,7 @@ export const hydroposts = [
         square: 101000,
         openDate: '03.06.1876',
         closeDate: 'Действует',
-        coords: [52.049019, 29.267301]
+        coords: [52.053438, 29.262778]
     },
     {
         id: 15,
@@ -249,7 +249,7 @@ export const hydroposts = [
         square: 27300,
         openDate: '13.07.1876',
         closeDate: 'Действует',
-        coords: [55.184217, 30.202878]
+        coords: [ 55.184864, 30.198034]
     },
     {
         id: 19,
@@ -263,7 +263,7 @@ export const hydroposts = [
         square: 41700,
         openDate: '16.09.1936',
         closeDate: 'Действует',
-        coords: [55.485576, 28.768349 ]
+        coords: [55.482126, 28.775850]
     },
     {
         id: 20,
@@ -277,6 +277,6 @@ export const hydroposts = [
         square: 33600,
         openDate: '01.01.1877',
         closeDate: 'Действует',
-        coords: [53.677839, 23.829529]
+        coords: [53.673344, 23.825154]
     },
 ]

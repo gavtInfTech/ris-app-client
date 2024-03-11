@@ -24,10 +24,8 @@ export default function MenuListComposition() {
     setAnchorElUser(null);
     if (auth.role === "Администратор")
       navigate("/admin-main/informationTab/levels/levelsGp");
-    else if (auth.role === "Клиент")
-      navigate("/client/sib")
-    else if (auth.role === "Путевик")
-      navigate("/path-information/dnepr");
+    else if (auth.role === "Клиент") navigate("/client/sib");
+    else if (auth.role === "Путевик") navigate("/path-information/dnepr");
     else {
       switch (auth.organisation) {
         case 'РУ ЭСП "Днепро-Бугский водный путь"':
@@ -38,6 +36,15 @@ export default function MenuListComposition() {
           break;
         case "РУ Днепро-Березинское предприятие водных путей":
           navigate("/admin-berezinskoe/informationTab/levels/levelsGp");
+          break;
+        case "Нижне - Припятский":
+          navigate("/admin-nijnepripyat/informationTab/levels/levelsGp");
+          break;
+        case "Гродненский участок":
+          navigate("/admin-grodnenskiy/informationTab/levels/levelsGp");
+          break;
+        case "Витебскводтранс":
+          navigate("/admin-vitebskvodtrans/informationTab/levels/levelsGp");
           break;
       }
     }

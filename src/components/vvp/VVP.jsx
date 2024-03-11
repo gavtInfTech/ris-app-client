@@ -20,7 +20,7 @@ const rivers = [
   },
   {
     data: { content: "Днепр" },
-    coords: [51.4839, 29.9883],
+    coords: [52.9181, 30.0463],
   },
   {
     data: { content: "Западная Двина" },
@@ -37,6 +37,18 @@ const rivers = [
   {
     data: { content: "Свислочь" },
     coords: [53.925347, 27.534352],
+  },
+  {
+    data: { content: "Днепро-Бугский канал" },
+    coords: [52.03699, 25.16339],
+  },
+  {
+    data: { content: "Мухавец" },
+    coords: [52.191919, 24.128263],
+  },
+  {
+    data: { content: "Пина" },
+    coords: [52.079142, 25.774201],
   },
 ];
 
@@ -63,7 +75,6 @@ export default function VVP() {
           item.date = new Date(item.date);
         });
         setDataGu(resGu.data);
-
       } catch (err) {
         console.log(err);
       }
@@ -173,14 +184,18 @@ export default function VVP() {
 
   const polylines = sites.map((site) => {
     let isBalloonOpen = false;
-    let color =  "#0000ff";
+    let color = "#0000ff";
     let propertyObject = {
       balloonContentBody:
         "<b>Река: " + site.river + "<br>Участок: " + site.name + "</b>",
     };
     return (
       <Polyline
-        geometry={findSegmentByKilometer(site.river, site.firstKM, site.secondKM)}
+        geometry={findSegmentByKilometer(
+          site.river,
+          site.firstKM,
+          site.secondKM
+        )}
         properties={propertyObject}
         modules={["geoObject.addon.balloon"]}
         options={{
@@ -218,7 +233,7 @@ export default function VVP() {
       />
     );
   });
-  
+
   return (
     <div className={styles.container}>
       <YMaps>

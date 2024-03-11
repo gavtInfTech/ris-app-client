@@ -265,7 +265,7 @@ export default function NoticesUser(props) {
         open={open}
       >
         <DialogTitle sx={{ alignSelf: "center" }}>
-          Фильтрация уведомлений
+          Фильтрация извещений
         </DialogTitle>
 
         <IconButton

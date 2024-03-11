@@ -11,7 +11,7 @@ export default function Gidroteh () {
                 </Link>
             </button>
           
-            <button className={styles.btn}><Link to={'/bridges'}>
+            <button className={styles.btn}><Link to={'/bridgeGabs'}>
                 <img src="/images/bridge.png" alt="bridges" ></img>
                 <br></br>Мосты
                 </Link>

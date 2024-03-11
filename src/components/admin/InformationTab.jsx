@@ -171,7 +171,7 @@ export default function InformationTab() {
             <Route
               path="/gabs"
               element={info.siteRivers.map((river) => {
-                let riverSites = sites.filter(site => site.river === river && (auth.role === 'Администратор' || auth.organisation === site.organisation));
+                let riverSites = sites.filter(site => site.river === river);
                 return <RiverAccordionDepth river={river} sites={riverSites} />;
               })}
             />

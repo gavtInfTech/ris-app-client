@@ -69,19 +69,28 @@ export default function Sib () {
           resLevelsGp.data.forEach((item) => {
             item.date = new Date(item.date);
           })
-          setLevelsGpDataByDate(resLevelsGp.data);
+
+          const filteredresLevelsGp = resLevelsGp.data.filter((item) => item.confirmation === true);
+
+          setLevelsGpDataByDate(filteredresLevelsGp);
 
           const resLevelsGu = await api.get("/levelsGu/getAllByDate", { params: { date: new Date(date) } });
           resLevelsGu.data.forEach((item) => {
               item.date = new Date(item.date);
             })
-          setLevelsGuDataByDate(resLevelsGu.data);
+          
+          const filteredresLevelsGu = resLevelsGu.data.filter((item) => item.confirmation === true);
+
+          setLevelsGuDataByDate(filteredresLevelsGu);
 
           const resGabs = await api.get("/gabs/getAllByDate", { params: { date: new Date(date) } });
           resGabs.data.forEach((item) => {
             item.date = new Date(item.date);
           })
-          setGabsDataByDate(resGabs.data.map((doc) => ({...doc, 
+
+          const filteredresGabs = resGabs.data.filter((item) => item.confirmation === true);
+
+          setGabsDataByDate(filteredresGabs.map((doc) => ({...doc, 
               planDepth: doc.planDepth !== null ? doc.planDepth : "—",
               date: new Date(doc.date),
               limitedRoll: doc.limitedRoll !== null ? doc.limitedRoll : "—",
@@ -92,13 +101,17 @@ export default function Sib () {
           resDislocations.data.forEach((item) => {
             item.date = new Date(item.date);
           })
-          setDislocationsDataByDate(resDislocations.data);
+          const filteredresDislocations = resDislocations.data.filter((item) => item.confirmation === true);
+
+          setDislocationsDataByDate(filteredresDislocations);
 
           const resBridges = await api.get("/bridges/getAllByDate", { params: { date: new Date(date) } });
           resBridges.data.forEach((item) => {
             item.date = new Date(item.date);
           })
-          setBridgesDataByDate(resBridges.data);
+          const filteredresBridges = resBridges.data.filter((item) => item.confirmation === true);
+          
+          setBridgesDataByDate(filteredresBridges);
 
           const resNotices = await api.get("/notices/getAllByDate", { params: { date: new Date(date) } });
           resNotices.data.forEach((item) => {

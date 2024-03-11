@@ -61,13 +61,35 @@ export default function LevelsGpAdmin(props) {
   const [isEditAllowed, setIsEditAllowed] = useState(true);
   const [forceReload, setForceReload] = useState(false);
   const { auth } = useContext(AuthContext);
-
+  const { hydropost } = props;
+  const basicZeroGraphLevel = {
+    "Могилев": 65,
+    "Жлобин": 50,
+    "Речица": 44,
+    "Лоев": 74,
+    "Бобруйск": 1,
+    "Светлогорск": 396,
+    "Славгород": 50,
+    "Гомель": 40,
+    "Пинск": 101,
+    "Коробье": 127,
+    "Черничи": 222,
+    "Петриков": 438,
+    "Мозырь": 80,
+    "Наровля": 79,
+    "Сураж": 60,
+    "Витебск": 41,
+    "Гродно": 40,
+  };
   const organisations = {
-    "РУ ЭСП \"Днепро-Бугский водный путь\"": 1,
-    "РУ Днепро-Двинское предприятие водных путей \"Белводпуть\"": 2,
+    'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+    'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
     "РУ Днепро-Березинское предприятие водных путей": 3,
-    "Государственная администрация водного транспорта": 4
-  }
+    "Государственная администрация водного транспорта": 4,
+    "Нижне - Припятский": 5,
+    "Гродненский участок": 6,
+    "Витебскводтранс": 7,
+  };
 
   function getNumber(organisationName) {
     return organisations[organisationName] || null;
@@ -211,7 +233,7 @@ export default function LevelsGpAdmin(props) {
 
   const processRowUpdate = async (newRow) => {
     console.log(newRow);
-    if (newRow.level1 === null || newRow.level2 === null) {
+    if (newRow.level1 === null) {
       setMessage(() => ({
         open: true,
         messageText: "Заполнены не все обязательные поля!",
@@ -222,6 +244,7 @@ export default function LevelsGpAdmin(props) {
 
     const updatedRow = {
       ...newRow,
+      level2: newRow.level1 - basicZeroGraphLevel[hydropost],
       river: props.river,
       hydropost: props.hydropost,
     };
@@ -341,7 +364,7 @@ export default function LevelsGpAdmin(props) {
       headerName: "Уровень воды над ПГ",
       type: "number",
       width: 180,
-      editable: true,
+      editable: false,
     },
     {
       field: "difference",

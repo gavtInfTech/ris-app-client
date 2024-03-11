@@ -8,6 +8,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
+import ReplayIcon from "@mui/icons-material/Replay";
 import PropTypes from "prop-types";
 import {
   GridRowModes,
@@ -25,6 +26,9 @@ const organisations = [
   'РУ ЭСП "Днепро-Бугский водный путь"',
   'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
   "РУ Днепро-Березинское предприятие водных путей",
+  "Нижне - Припятский",
+  "Гродненский участок",
+  "Витебскводтранс",
 ];
 
 function EditToolbar(props) {
@@ -38,6 +42,18 @@ function EditToolbar(props) {
     else {
       organisation = auth.organisation;
     }
+
+    // Set the date to the current date and time
+    const currentDate = new Date();
+    const formattedCurrentDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+      currentDate.getHours(),
+      currentDate.getMinutes(),
+      currentDate.getSeconds()
+    );
+
     setRows((oldRows) => [
       ...oldRows,
       {
@@ -48,7 +64,7 @@ function EditToolbar(props) {
         riverName: "",
         distance: "",
         place: "",
-        date: null,
+        date: formattedCurrentDate,
       },
     ]);
     setRowModesModel((oldModel) => ({
@@ -132,6 +148,35 @@ export default function Dislocation() {
 
   const handleRowEditStop = (params, event) => {
     event.defaultMuiPrevented = true;
+  };
+  const handlerReplayClick = (id) => async () => {
+    try {
+      const findObjectById = (array, id) => {
+        return array.find((obj) => obj.id === id);
+      };
+      const notice = findObjectById(rows, id);
+
+      if (!notice) {
+        console.error("Notice with the specified ID not found.");
+        return;
+      }
+      try {
+        let res = await api.post("/dislocation/add", {
+          ...notice,
+          id: randomId(),
+          date: new Date(),
+          typeOfChange: "Добавлено",
+          confirmation: isEditAllowed,
+        });
+        setForceReload((prev) => !prev);
+      } catch (err) {
+        console.log(err.response.data);
+        setUpdateFlag(false);
+        return;
+      }
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+    }
   };
 
   const handleEditClick = (id) => () => {
@@ -351,6 +396,12 @@ export default function Dislocation() {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
+          <GridActionsCellItem
+            icon={<ReplayIcon />}
+            label="Повторить"
+            onClick={handlerReplayClick(id)}
+            color="inherit"
+          />,
         ];
       },
     },
@@ -386,6 +437,11 @@ export default function Dislocation() {
 
   return (
     <DataGrid
+      initialState={{
+        sorting: {
+          sortModel: [{ field: "date", sort: "desc" }],
+        },
+      }}
       getRowHeight={() => "auto"}
       sx={{
         [`& .${gridClasses.cell}`]: {

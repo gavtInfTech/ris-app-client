@@ -10,6 +10,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ReplayIcon from "@mui/icons-material/Replay";
 import { Box } from "@mui/system";
 import PropTypes from "prop-types";
 import {
@@ -32,7 +33,7 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, date: new Date(), depth: null, width: null },
+      { id, date: new Date(), depth: null, width: null, forecastDate: null }, // Добавляем значение по умолчанию для forecastDate
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -67,8 +68,10 @@ export default function Depth(props) {
     'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
     "РУ Днепро-Березинское предприятие водных путей": 3,
     "Государственная администрация водного транспорта": 4,
+    "Нижне - Припятский": 5,
+    "Гродненский участок": 6,
+    Витебскводтранс: 7,
   };
-
   function getNumber(organisationName) {
     return organisations[organisationName] || null;
   }
@@ -154,6 +157,40 @@ export default function Depth(props) {
     }
   };
 
+  const handlerReplayClick = (id) => async () => {
+    try {
+      const findObjectById = (array, id) => {
+        return array.find((obj) => obj.id === id);
+      };
+      const gab = findObjectById(rows, id);
+
+      if (!gab) {
+        console.error("Notice with the specified ID not found.");
+        return;
+      }
+      try {
+        await api.post("/gabs/add", {
+          ...gab,
+          id: randomId(),
+          date: new Date(),
+          typeOfChange: "Добавлено",
+          confirmation: isEditAllowed,
+        });
+        setForceReload((prev) => !prev);
+      } catch (err) {
+        setMessage(() => ({
+          open: true,
+          messageText: err.response.data,
+          severity: "error",
+        }));
+        console.log(err.response.data);
+        return;
+      }
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+    }
+  };
+
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
@@ -223,7 +260,7 @@ export default function Depth(props) {
             ...updatedRow,
             typeOfChange: "Изменено",
             confirmation: isEditAllowed,
-            organisation: getNumber(auth.organisation)
+            organisation: getNumber(auth.organisation),
           });
         } else {
           await api.post("/gabs/change", {
@@ -253,7 +290,7 @@ export default function Depth(props) {
           ...updatedRow,
           typeOfChange: "Добавлено",
           confirmation: isEditAllowed,
-          organisation: getNumber(auth.organisation)
+          organisation: getNumber(auth.organisation),
         });
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -274,7 +311,7 @@ export default function Depth(props) {
     {
       field: "planDepth",
       headerName: "Плановая глубина",
-      type: "number",
+      type: "string",
       width: 140,
       editable: true,
     },
@@ -287,7 +324,7 @@ export default function Depth(props) {
     },
     {
       field: "limitedRoll",
-      headerName: "Лимитирующий перекат",
+      headerName: "Лимитирующий участок, перекат",
       width: 250,
       editable: true,
     },
@@ -359,6 +396,12 @@ export default function Depth(props) {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
+          <GridActionsCellItem
+            icon={<ReplayIcon />}
+            label="Повторить"
+            onClick={handlerReplayClick(id)}
+            color="inherit"
+          />,
         ];
       },
     },
@@ -390,6 +433,11 @@ export default function Depth(props) {
       <AccordionDetails>
         <Typography>
           <DataGrid
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
             rows={rows}
             columns={columns}
             editMode="row"

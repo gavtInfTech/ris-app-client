@@ -72,7 +72,7 @@ export default function TableGabs(props) {
                 Дата
               </TableCell>
               <TableCell rowSpan={2} align="center">
-                Лимитирующий перекат
+                Лимитирующий участок, перекат
               </TableCell>
               <TableCell rowSpan={2} align="center">
                 Глубина, см

@@ -65,7 +65,7 @@ export default function Layout() {
             className={styles.mainLink}
             to={"/"}
           >
-            РИАС РБ
+            РИС РБ
           </Link>
           <Link className={styles.link} to={"/notices"}>
             Для судоводителей

@@ -65,6 +65,9 @@ export default function Bridge(props) {
     'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
     "РУ Днепро-Березинское предприятие водных путей": 3,
     "Государственная администрация водного транспорта": 4,
+    "Нижне - Припятский": 5,
+    "Гродненский участок": 6,
+    "Витебскводтранс": 7,
   };
 
   function getNumber(organisationName) {
@@ -72,6 +75,7 @@ export default function Bridge(props) {
   }
 
   useEffect(() => {
+    console.log(auth);
     const currentTime = new Date();
     if (auth.role === "Администратор") {
       setIsEditAllowed(true);
@@ -352,6 +356,11 @@ export default function Bridge(props) {
       <AccordionDetails>
         <Typography>
           <DataGrid
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
             rows={rows}
             columns={columns}
             editMode="row"
