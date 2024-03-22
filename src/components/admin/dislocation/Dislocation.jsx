@@ -31,6 +31,12 @@ const organisations = [
   "Витебскводтранс",
 ];
 
+const status = [
+  'В процессе выполнения',
+  'Выполнена',
+  "Однодневная",
+];
+
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
   const { auth } = useContext(AuthContext);
@@ -59,12 +65,14 @@ function EditToolbar(props) {
       {
         id,
         organisation: organisation,
-        number: "",
-        typeOfWork: "",
-        riverName: "",
-        distance: "",
-        place: "",
+        number: "-",
+        typeOfWork: "-",
+        riverName: "-",
+        distance: "-",
+        place: "-",
+        date_start: formattedCurrentDate,
         date: formattedCurrentDate,
+        date_end: formattedCurrentDate,
       },
     ]);
     setRowModesModel((oldModel) => ({
@@ -113,6 +121,8 @@ export default function Dislocation() {
         });
         res.data.forEach((item) => {
           item.date = new Date(item.date);
+          item.date_start = new Date(item.date_start);
+          item.date_end = new Date(item.date_end);
         });
         let ready = res.data.sort(
           (a, b) => a.date.getTime() - b.date.getTime()
@@ -161,10 +171,19 @@ export default function Dislocation() {
         return;
       }
       try {
+        const currentDate = new Date();
+        const formattedCurrentDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate(),
+          currentDate.getHours(),
+          currentDate.getMinutes(),
+          currentDate.getSeconds()
+        );
+
         let res = await api.post("/dislocation/add", {
           ...notice,
           id: randomId(),
-          date: new Date(),
           typeOfChange: "Добавлено",
           confirmation: isEditAllowed,
         });
@@ -183,26 +202,26 @@ export default function Dislocation() {
     const row = rows.find((row) => row.id === id);
     const today = new Date();
 
-    // Проверка, что значение в столбце "Дата" равно сегодняшней дате
-    if (row.date.toDateString() !== today.toDateString()) {
-      if (auth.role === "Администратор") {
-        setUpdateFlag(true);
-        setRowModesModel({
-          ...rowModesModel,
-          [id]: { mode: GridRowModes.Edit },
-        });
-        return;
-      }
-      setMessage(() => ({
-        open: true,
-        messageText: "Редактирование прошлых дат запрещено.",
-        severity: "warning",
-      }));
-      return;
-    } else {
+    // // Проверка, что значение в столбце "Дата" равно сегодняшней дате
+    // if (row.date.toDateString() !== today.toDateString()) {
+    //   if (auth.role === "Администратор") {
+    //     setUpdateFlag(true);
+    //     setRowModesModel({
+    //       ...rowModesModel,
+    //       [id]: { mode: GridRowModes.Edit },
+    //     });
+    //     return;
+    //   }
+    //   setMessage(() => ({
+    //     open: true,
+    //     messageText: "Редактирование прошлых дат запрещено.",
+    //     severity: "warning",
+    //   }));
+    //   return;
+    // } else {
       setUpdateFlag(true);
       setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-    }
+    // }
   };
 
   const handleSaveClick = (id) => () => {
@@ -266,7 +285,9 @@ export default function Dislocation() {
       newRow.riverName === "" ||
       newRow.distance === "" ||
       newRow.place === "" ||
-      newRow.date === null
+      newRow.date_start === null ||
+      newRow.date_end === null ||
+      newRow.statusOfWork === null
     ) {
       setMessage(() => ({
         open: true,
@@ -278,6 +299,21 @@ export default function Dislocation() {
 
     if (updateFlag) {
       try {
+        const currentDate = new Date();
+
+        // Предположим, что newRow.date_start содержит дату в формате 'год-месяц-день 00:00:00'
+        // Преобразуем строку даты в объект JavaScript Date
+        const startDate = new Date(newRow.date_start);
+        const endDate = new Date(newRow.date_end);
+        
+        // Заменяем время в startDate на текущее время
+        startDate.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+        endDate.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+        
+        // Обновляем date_start в newRow
+        newRow.date_start = startDate.toISOString();
+        newRow.date_end = endDate.toISOString();
+
         if (isEditAllowed) {
           await api.post("/dislocation/change", {
             ...newRow,
@@ -320,6 +356,13 @@ export default function Dislocation() {
 
   let columns = [
     {
+      field: "date",
+      headerName: "Дата публикации",
+      type: "date",
+      width: 150,
+      editable: auth.role === "Администратор" ? true : false,
+    },
+    {
       field: "number",
       headerName: "№ судна / партии",
       width: 140,
@@ -350,10 +393,25 @@ export default function Dislocation() {
       editable: true,
     },
     {
-      field: "date",
+      field: "date_start",
       headerName: "Дата начала работы",
       type: "date",
       width: 150,
+      editable: true,
+    },
+    {
+      field: "date_end",
+      headerName: "Дата конца работы",
+      type: "date",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "statusOfWork",
+      headerName: "Статус Работы",
+      type: "singleSelect",
+      valueOptions: status,
+      width: 300,
       editable: true,
     },
     {
@@ -396,12 +454,12 @@ export default function Dislocation() {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<ReplayIcon />}
-            label="Повторить"
-            onClick={handlerReplayClick(id)}
-            color="inherit"
-          />,
+          // <GridActionsCellItem
+          //   icon={<ReplayIcon />}
+          //   label="Повторить"
+          //   onClick={handlerReplayClick(id)}
+          //   color="inherit"
+          // />,
         ];
       },
     },

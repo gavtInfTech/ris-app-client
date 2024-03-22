@@ -205,7 +205,7 @@ export default function MainGabs() {
                     Дата
                   </TableCell>
                   <TableCell rowSpan={2} align="center">
-                    Лимитирующий перекат
+                    Лимитирующий участок, перекат
                   </TableCell>
                   <TableCell rowSpan={2} align="center">
                     Глубина, см
@@ -291,7 +291,7 @@ export default function MainGabs() {
                     sx={{ fontWeight: "bold" }}
                   >
                     6. Днепро - Бугский канал &#40;г.Кобрин &#40;слияние реки
-                    Мухавец и ДБК&#41; - слияние ДБК и реки Пина&#41;
+                    Мухавец и Днепро-Бугский канал&#41; - слияние Днепро-Бугский канал и реки Пина&#41;
                   </TableCell>
                 </TableRow>
                 {riverRows("Днепро-Бугский канал")}
@@ -302,7 +302,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    7. река Пина &#40;слияние ДБК и реки Пина - г.Пинск
+                    7. река Пина &#40;слияние Днепро-Бугский канал и реки Пина - г.Пинск
                     &#40;слияние реки Пина и реки Припять&#41; - знак
                     "запрещение прохода"&#41;
                   </TableCell>

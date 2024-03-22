@@ -78,6 +78,9 @@ export default function LevelsGuAdmin(props) {
     "Нижне - Припятский": 5,
     "Гродненский участок": 6,
     "Витебскводтранс": 7,
+    "Нижне - Припятский": 5,
+    "Гродненский участок": 6,
+    Витебскводтранс: 7,
   };
 
   function getNumber(organisationName) {
@@ -235,6 +238,70 @@ export default function LevelsGuAdmin(props) {
       hydronode: props.hydronode,
     };
 
+    let updatedRows = rows.map((row) =>
+      row.id === updatedRow.id ? updatedRow : row
+    );
+
+    let hydronodeData = updatedRows.filter(
+      (row) => row.hydronode === updatedRow.hydronode
+    );
+
+    hydronodeData.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    //Index - это id строки в таблице
+    let index = hydronodeData.findIndex((item) => item.id === updatedRow.id);
+    let differenceLevel1;
+    let differenceLevel2;
+
+    // hydronodeData.filter((item) =>!item.id.includes("_change"))
+    if (index - 1 < 0) {
+      differenceLevel1 = 0;
+      differenceLevel2 = 0;
+      updatedRow.level1Change = differenceLevel1;
+      updatedRow.level2Change = differenceLevel2;
+    } else {
+      differenceLevel1 =
+        hydronodeData[index].level1 - hydronodeData[index - 1].level1;
+
+      differenceLevel2 =
+        hydronodeData[index].level2 - hydronodeData[index - 1].level2;
+
+      updatedRow.level1Change = differenceLevel1;
+      updatedRow.level2Change = differenceLevel2;
+    }
+    if (hydronodeData[index + 1] !== undefined) {
+      hydronodeData[index + 1].level1Change =
+        hydronodeData[index + 1].level1 - hydronodeData[index].level1;
+
+      hydronodeData[index + 1].level2Change =
+        hydronodeData[index + 1].level2 - hydronodeData[index].level2;
+
+      try {
+        if (isEditAllowed) {
+          let res = await api.post("/levelsGu/change", {
+            ...hydronodeData[index + 1],
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation),
+          });
+        } else {
+          let res = await api.post("/levelsGu/change", {
+            ...hydronodeData[index + 1],
+            id: hydronodeData[index + 1].id.includes("_change")
+              ? hydronodeData[index + 1].id
+              : hydronodeData[index + 1].id + "_change",
+            typeOfChange: "Изменено",
+            confirmation: isEditAllowed,
+            organisation: getNumber(auth.organisation),
+          });
+        }
+        setForceReload((prev) => !prev);
+      } catch (err) {
+        console.log(err.response.data);
+        return;
+      }
+    }
+
     if (updateFlag) {
       try {
         if (isEditAllowed) {
@@ -242,7 +309,7 @@ export default function LevelsGuAdmin(props) {
             ...updatedRow,
             typeOfChange: "Изменено",
             confirmation: isEditAllowed,
-            organisation: getNumber(auth.organisation)
+            organisation: getNumber(auth.organisation),
           });
         } else {
           await api.post("/levelsGu/change", {
@@ -252,7 +319,7 @@ export default function LevelsGuAdmin(props) {
               : updatedRow.id + "_change",
             typeOfChange: "Изменено",
             confirmation: isEditAllowed,
-            organisation: getNumber(auth.organisation)
+            organisation: getNumber(auth.organisation),
           });
         }
         setForceReload((prev) => !prev);
@@ -266,7 +333,7 @@ export default function LevelsGuAdmin(props) {
           ...updatedRow,
           typeOfChange: "Добавлено",
           confirmation: isEditAllowed,
-          organisation: getNumber(auth.organisation)
+          organisation: getNumber(auth.organisation),
         });
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -289,7 +356,7 @@ export default function LevelsGuAdmin(props) {
       headerName: "Дата",
       type: "date",
       width: 120,
-      editable: false,
+      editable:  auth.role === "Администратор" ? true : false,
     },
     {
       field: "level1",
@@ -309,7 +376,7 @@ export default function LevelsGuAdmin(props) {
       field: "level1Change",
       headerName: "Изменение ВБ",
       type: "string",
-      editable: true,
+      editable: false,
       cellClassName: (params) => {
         if (params.row.level1Change === null) {
           return "";
@@ -328,7 +395,7 @@ export default function LevelsGuAdmin(props) {
       field: "level2Change",
       headerName: "Изменение НБ",
       type: "string",
-      editable: true,
+      editable: false,
       cellClassName: (params) => {
         if (params.row.level2Change === null) {
           return "";
@@ -439,7 +506,7 @@ export default function LevelsGuAdmin(props) {
             initialState={{
               sorting: {
                 sortModel: [{ field: "date", sort: "desc" }],
-              },
+              }
             }}
             rows={rows}
             columns={columns}

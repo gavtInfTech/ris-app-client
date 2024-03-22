@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import styles from "./style.module.css";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
 const emptyObj = {
   planDepth: "—",
@@ -23,6 +25,8 @@ const emptyObj = {
 
 export default function TableGabs(props) {
   let rows = [];
+  const { auth } = useContext(AuthContext);
+  let index = 0;
   props.sites.map((site) => {
     let rowData = props.data.find((dat) => dat.site === site.name);
     if (rowData === undefined)
@@ -90,125 +94,23 @@ export default function TableGabs(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                1. река Днепр &#40;дер.Левки &#40;воздушный переход&#41; - н.п.
-                Любеч &#40;граница Белводпуть - Укрводпуть&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Днепр")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                2. река Березина &#40;г.Березино &#40;Березино - пристань&#41; -
-                устье реки Березина
-              </TableCell>
-            </TableRow>
-            {riverRows("Березина")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                3. река Сож &#40;г.Славгород &#40;Славгород - город&#41; - устье
-                реки Сож&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Сож")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                4. река Неман &#40;деревня Яблоново &#40;вход в затон&#41; -
-                граница с Литовской Республикой&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Неман")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                5. река Мухавец &#40;г.Брест &#40;речной порт Брест&#41; -
-                г.Кобрин &#40;слияние реки Мухавец и Днепро-Бугского канала&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Мухавец")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                6. Днепро - Бугский канал &#40;г.Кобрин &#40;слияние реки
-                Мухавец и ДБК&#41; - слияние ДБК и реки Пина&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Днепро-Бугский канал")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                7. река Пина &#40;слияние ДБК и реки Пина - г.Пинск &#40;слияние
-                реки Пина и реки Припять&#41; - знак "запрещение прохода"&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Пина")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                8. верхний участок реки Припять &#40;7 км реки Припять -
-                г.Пинск, слияние реки Припять и реки Пина&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Верхний участок реки Припять")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                9. река Припять &#40;г.Пинск &#40;слияние реки Пина и реки
-                Припять&#41; - перекат Усовский-1 &#40;граница с
-                Украиной&#41;&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Припять")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                10. Микашевичский канал &#40;устье Микашевичского канала -
-                речной порт Микашевичи&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Микашевичский канал")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                11. река Горынь &#40;перекат Комора-2 - устье реки Горынь&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Горынь")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                12. река Западная Двина &#40;деревня Сураж - Полоцкая
-                гидроэлектростанция&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Западная Двина")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                13. Туровский затон &#40;г.Туров &#40;вход в затон&#41; -
-                г.Туров &#40;причал&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Туровский затон")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                14. Августовский канал &#40;Граница с Республикой Польша - устье
-                Августовского канала &#40;слияние с рекой Неман&#41;&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Августовский канал")}
-
-            <TableRow>
-              <TableCell align="left" colSpan={8} sx={{ fontWeight: "bold" }}>
-                15. река Свислочь &#40;Минская кольцевая автомобильная дорога -
-                переулок Канатный&#41;
-              </TableCell>
-            </TableRow>
-            {riverRows("Свислочь")}
+            {auth.info.sibDistricts.map((riverName) => {
+              const rows = [];
+              rows.push(
+                <TableRow>
+                  <TableCell
+                    align="left"
+                    colSpan={8}
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {riverName}
+                  </TableCell>
+                </TableRow>
+              );
+              rows.push(riverRows(auth.info.siteRivers[index]));
+              index = index + 1;
+              return rows;
+            })}
           </TableBody>
         </Table>
       </TableContainer>

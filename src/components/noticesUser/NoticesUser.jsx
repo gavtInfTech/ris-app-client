@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { rivers, sites } from "./info";
-import { Button, DialogContent } from "@mui/material";
+import { Button, DialogContent, Typography } from "@mui/material";
 import Subscription from "./Subscription";
 import { api } from "../../axiosConfig";
 import Style from "./style.module.css";
@@ -254,6 +254,9 @@ export default function NoticesUser(props) {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <Typography sx={{fontSize: 23, textAlign: "center", marginBottom: 2}}>
+      Извещения для судоводителей
+      </Typography>
       <Button onClick={handleOpen} className={Style.btnFilter}>
         <FilterAltIcon className={Style.filterIcon} />
       </Button>
@@ -323,7 +326,7 @@ export default function NoticesUser(props) {
 
           <Box className={Style.defaultContainer}>
             <Box sx={{ m: 3 }}>
-              <p>Уведомления с: </p>
+              <p>Извещения с: </p>
               <TextField
                 name="date1"
                 type="datetime-local"
@@ -333,7 +336,7 @@ export default function NoticesUser(props) {
               />
             </Box>
             <Box sx={{ m: 3 }}>
-              <p>Уведомления по: </p>
+              <p>Извещения по: </p>
               <TextField
                 name="date2"
                 type="datetime-local"

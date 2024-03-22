@@ -14,11 +14,19 @@ export default function RiverAccordionDepth(props) {
   const handleClick = () => {
     setIsOpen(true);
   };
+  let depths = []
 
-  const depths = props.sites.map((site) => {
+  depths = props.sites.map((site) => {
     return <Depth river={props.river} site={site.name} />;
-  });
+})
 
+  if(auth.organisation == "Нижне - Припятский"){
+    const filteredDepths = props.sites.filter((item)=> item.organisation === auth.organisation);
+     depths = filteredDepths.map((site) => {
+      return <Depth river={props.river} site={site.name} />;
+    });
+  }
+ 
   return (
     <Accordion
       sx={{

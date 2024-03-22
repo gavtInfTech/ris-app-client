@@ -13,7 +13,7 @@ export const hydronodes = [
     {
         id: 2,
         hydronode: 'Судоходный г/у №2 Переруб',
-        river: 'ДБК',
+        river: 'Днепро-Бугский канал',
         date: '—',
         level1: '—',
         level2: '—',
@@ -24,7 +24,7 @@ export const hydronodes = [
     {
         id: 3,
         hydronode: 'Судоходный г/у №3 Рагодощ',
-        river: 'ДБК',
+        river: 'Днепро-Бугский канал',
         date: '—',
         level1: '—',
         level2: '—',
@@ -35,7 +35,7 @@ export const hydronodes = [
     {
         id: 4,
         hydronode: 'Судоходный г/у №4 Овзичи',
-        river: 'ДБК',
+        river: 'Днепро-Бугский канал',
         date: '—',
         level1: '—',
         level2: '—',
@@ -46,7 +46,7 @@ export const hydronodes = [
     {
         id: 5,
         hydronode: 'Судоходный г/у №5 Ляховичи',
-        river: 'ДБК',
+        river: 'Днепро-Бугский канал',
         date: '—',
         level1: '—',
         level2: '—',
@@ -57,7 +57,7 @@ export const hydronodes = [
     {
         id: 6,
         hydronode: 'Судоходный г/у Кобрин',
-        river: 'ДБК',
+        river: 'Днепро-Бугский канал',
         date: '—',
         level1: '—',
         level2: '—',

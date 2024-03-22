@@ -1,97 +1,104 @@
-import {React} from 'react';
-import {hydronodes} from '../waterLevels/levelsGu/data'
-import { Table, TableRow,TableCell,TableHead,TableBody, TableContainer } from "@mui/material";
-import { Typography } from '@mui/material';
-import styles from './style.module.css';
+import { React, useContext } from "react";
+import { hydronodes } from "../waterLevels/levelsGu/data";
+import {
+  Table,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableBody,
+  TableContainer,
+} from "@mui/material";
+import { Typography } from "@mui/material";
+import styles from "./style.module.css";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function TableLevelsGu(props) {
-    const data = props.data;
+  const data = props.data;
+  const { auth } = useContext(AuthContext);
 
-      let rows = hydronodes.map((row) => {
-        let rowData = data.find((dat) => (dat.hydronode === row.hydronode));
-        if (rowData === undefined) return {...row};
-        return {
-          ...row,
-          level1: rowData.level1,
-          level2: rowData.level2,
-          level1Change: rowData.level1Change === "-" ? '—' : rowData.level1Change,
-          level2Change: rowData.level2Change === "-" ? '—' : rowData.level2Change,
-          date: rowData.date.toLocaleString().slice(0, 10),
-        };
-      })
+  let rows = hydronodes.map((row) => {
+    let rowData = data.find((dat) => dat.hydronode === row.hydronode);
+    if (rowData === undefined) return { ...row };
+    return {
+      ...row,
+      level1: rowData.level1,
+      level2: rowData.level2,
+      level1Change: rowData.level1Change === "-" ? "—" : rowData.level1Change,
+      level2Change: rowData.level2Change === "-" ? "—" : rowData.level2Change,
+      date: rowData.date.toLocaleString().slice(0, 10),
+    };
+  });
 
-      const riverRows = (river) => {
-        let filteredRows = rows.filter((row) => ( row.river === river ));
-        let riverRows = filteredRows.map((row) => {
-          return (
-              <TableRow >
-                  <TableCell align="left">{row.hydronode}</TableCell>
-                  <TableCell align="center">{row.level1}</TableCell>
-                  <TableCell align="center">{row.level2}</TableCell>
-                  <TableCell align="center">{row.level1Change}</TableCell>
-                  <TableCell align="center">{row.level2Change}</TableCell>
-              </TableRow>
-          )
-        })
-          return riverRows;
-      }
-      
+  const riverRows = (river) => {
+    let filteredRows = rows.filter((row) => row.river === river);
+    let riverRows = filteredRows.map((row) => {
       return (
-        <>
-            <Typography sx={{fontSize: 18, alignSelf: 'start'}}>2. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ НА 8 УТРА</Typography>
-            <TableContainer sx={{marginBottom: 5}}>
-            <Table id='levelsGuTable' className={styles.table} size="small">
-                <TableHead>
-                    <TableRow>
-                        <TableCell rowSpan={2} align="center">Наименование рек каналов и гидроузлов</TableCell>
-                        <TableCell colSpan={2} align="center">Уровни воды над проектным горизонтом, см</TableCell>
-                        <TableCell colSpan={2} align="center">Изменение уровня за сутки, см</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell align="center">ВБ</TableCell>
-                        <TableCell align="center">НБ</TableCell>
-                        <TableCell align="center">ВБ</TableCell>
-                        <TableCell align="center">НБ</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>р. Припять</TableCell>
-                    </TableRow>
-                    {riverRows("Припять")}
+        <TableRow>
+          <TableCell align="left">{row.hydronode}</TableCell>
+          <TableCell align="center">{row.level1}</TableCell>
+          <TableCell align="center">{row.level2}</TableCell>
+          <TableCell align="center">{row.level1Change}</TableCell>
+          <TableCell align="center">{row.level2Change}</TableCell>
+        </TableRow>
+      );
+    });
+    return riverRows;
+  };
 
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>р. Пина</TableCell>
-                    </TableRow>
-                    {riverRows("Пина")}
-
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>ДБК</TableCell>
-                    </TableRow>
-                    {riverRows("ДБК")}
-
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>р. Мухавец</TableCell>
-                    </TableRow>
-                    {riverRows("Мухавец")}
-
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>р. Западная Двина</TableCell>
-                    </TableRow>
-                    {riverRows("Западная Двина")}
-
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>р. Неман</TableCell>
-                    </TableRow>
-                    {riverRows("Неман")}
-
-                    <TableRow >
-                        <TableCell align="left" colSpan={6} sx={{fontWeight: 'bold'}}>Августовский канал</TableCell>
-                    </TableRow>
-                    {riverRows("Августовский канал")}
-                </TableBody>
-            </Table>
-            </TableContainer>
-        </>
-    )
+  return (
+    <>
+      <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
+        2. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ НА 8 УТРА
+      </Typography>
+      <TableContainer sx={{ marginBottom: 5 }}>
+        <Table id="levelsGuTable" className={styles.table} size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell rowSpan={2} align="center">
+                Наименование рек каналов и гидроузлов
+              </TableCell>
+              <TableCell colSpan={2} align="center">
+                Уровни воды над проектным горизонтом, см
+              </TableCell>
+              <TableCell colSpan={2} align="center">
+                Изменение уровня за сутки, см
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="center">ВБ</TableCell>
+              <TableCell align="center">НБ</TableCell>
+              <TableCell align="center">ВБ</TableCell>
+              <TableCell align="center">НБ</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {auth.info.hydronodeRivers.map((riverName) => {
+              const rows = [];
+              rows.push(
+                <TableRow key={riverName}>
+                  <TableCell
+                    align="left"
+                    colSpan={6}
+                    sx={{ fontWeight: "bold" }}
+                  >
+                     {[
+                      "Днепро-Бугский канал",
+                      "Микашевичский канал",
+                      "Туровский затон",
+                      "Августовский канал",
+                      "Верхний участок реки Припять",
+                    ].includes(riverName)
+                      ? riverName
+                      : `р. ${riverName}`}
+                  </TableCell>
+                </TableRow>
+              );
+              rows.push(...riverRows(riverName));
+              return rows;
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
 }

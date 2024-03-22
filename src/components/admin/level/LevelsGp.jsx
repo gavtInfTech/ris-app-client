@@ -349,7 +349,7 @@ export default function LevelsGpAdmin(props) {
       field: "date",
       headerName: "Дата",
       type: "date",
-      editable: false,
+      editable:  auth.role === "Администратор" ? true : false,
       width: 120,
     },
     {
@@ -364,7 +364,7 @@ export default function LevelsGpAdmin(props) {
       headerName: "Уровень воды над ПГ",
       type: "number",
       width: 180,
-      editable: false,
+      editable:  auth.role === "Администратор" ? true : false,
     },
     {
       field: "difference",

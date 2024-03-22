@@ -10,10 +10,14 @@ import PopupEdit from "./PopupEdit.jsx";
 import style from "../style.module.css";
 import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
+import clsx from "clsx";
+import { TextField } from "@mui/material";
+import { AuthContext } from "../../../contexts/AuthContext.jsx";
 
 export default function NoticeTable(props) {
   const [rows, setRows] = useState([]);
   const { setMessage } = useContext(MessageContext);
+  const { auth } = useContext(AuthContext);
 
   console.log("DATA:", props.data);
   useEffect(() => {
@@ -29,7 +33,6 @@ export default function NoticeTable(props) {
         if (doc.cause3) {
           cause += "Путевые работы; ";
         }
-
         return { ...doc, cause: cause };
       })
     );
@@ -45,6 +48,14 @@ export default function NoticeTable(props) {
 
   const handleDeleteClick = (id) => async () => {
     try {
+      if (auth.role != "Администратор") {
+        setMessage(() => ({
+          open: true,
+          messageText: "Удалять извещения может только администратор!",
+          severity: "warning",
+        }));  
+        return;
+      }
       let res = await api.delete("/notices/delete/" + id);
       props.deleteData(id);
     } catch (err) {
@@ -86,7 +97,7 @@ export default function NoticeTable(props) {
 
       setMessage(() => ({
         open: true,
-        messageText: "Уведомление успешно обновлено!",
+        messageText: "Извещение успешно обновлено!",
         severity: "success",
       }));
       
@@ -117,14 +128,14 @@ export default function NoticeTable(props) {
     },
     {
       field: "date",
-      headerName: "Дата",
+      headerName: "Дата публикации",
       type: "dateTime",
       width: 150,
-      editable: true,
+      editable: false,
     },
     {
       field: "cause",
-      headerName: "Причина уведомления",
+      headerName: "Причина извещения",
       type: "string",
       width: 200,
       editable: true,
@@ -135,6 +146,37 @@ export default function NoticeTable(props) {
       type: "string",
       width: 350,
       editable: true,
+    },
+    {
+      field: "date_start",
+      headerName: "Действует с:",
+      type: "date",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "date_end",
+      headerName: "Действует по:",
+      type: "date",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "status",
+      headerName: "Статус:",
+      type: "string",
+      width: 150,
+      editable: true,
+      cellClassName: (params) => {
+        if (params.value === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          negative: params.value == "Завершено",
+          positive: params.value == "Действует",
+        });
+      },
     },
     {
       field: "actions",
@@ -151,19 +193,37 @@ export default function NoticeTable(props) {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-          icon={<ReplayIcon />}
-          label="Повторить"
-          onClick={handlerReplayClick(id)}
-          color="inherit"
-        />,
+        //   <GridActionsCellItem
+        //   icon={<ReplayIcon />}
+        //   label="Повторить"
+        //   onClick={handlerReplayClick(id)}
+        //   color="inherit"
+        // />,
         ];
       },
     },
   ];
 
   return (
-    <Typography>
+    <Box
+    sx={{
+      "& .super-app.negative": {
+        backgroundColor: "#d47483",
+        color: "#1a3e72",
+        fontWeight: "600",
+      },
+      "& .super-app.positive": {
+        backgroundColor: "rgba(157, 255, 118, 0.49)",
+        color: "#1a3e72",
+        fontWeight: "600",
+      },
+      "& .super-app.default": {
+        backgroundColor: "rgba(114, 163, 255, 0.49)",
+        color: "#1a3e72",
+        fontWeight: "600",
+      },
+    }}
+  >
       <DataGrid
         rows={rows}
         columns={columns}
@@ -183,6 +243,6 @@ export default function NoticeTable(props) {
           maxWidth: 1240,
         }}
       />
-    </Typography>
+    </Box>
   );
 }

@@ -31,6 +31,8 @@ export default function PopupEdit(props) {
       river: "",
       site: "",
       date: "",
+      date_start: "",
+      date_end: "",
       cause1: false,
       cause2: false,
       cause3: false,
@@ -40,23 +42,31 @@ export default function PopupEdit(props) {
     sites: [],
   });
   const rivers = auth.info.siteRivers;
-
+  const noticeStatus = ["Действует", "Завершено"]
   const handleClick = (event) => {
     const notice = props.data.find((doc) => doc.id === props.id);
+    
 
-    const date = notice.date;
+   function formatDate(noticeDate) {
+    const date = new Date(noticeDate);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+    
 
+
+    console.log("THIS IS NOTIIICE!", notice)
     setState((prevState) => ({
       noticeInfo: {
         ...notice,
-        date: formattedDate,
-      },
+        date: formatDate(notice.date),
+        date_start: formatDate(notice.date_start),
+        date_end: formatDate(notice.date_end)
+     },
       sites: [...prevState.sites],
     }));
     setAnchorEl(event.currentTarget);
@@ -200,6 +210,9 @@ export default function PopupEdit(props) {
       state.noticeInfo.river === "" ||
       state.noticeInfo.site === "" ||
       state.noticeInfo.date === "" ||
+      state.noticeInfo.date_start === "" ||
+      state.noticeInfo.date_end === "" ||
+      state.noticeInfo.status === "" ||
       (state.noticeInfo.cause1 === false &&
         state.noticeInfo.cause2 === false &&
         state.noticeInfo.cause3 === false) ||
@@ -233,6 +246,8 @@ export default function PopupEdit(props) {
         river: "",
         site: "",
         date: "",
+        date_start: "",
+        date_end: "",
         cause1: false,
         cause2: false,
         cause3: false,
@@ -289,7 +304,7 @@ export default function PopupEdit(props) {
       />
       <Dialog fullWidth='true'  sx={{ '& .MuiDialog-paper': {  maxWidth: 750 } }} onClose={handleClose} open={open}>
         <DialogTitle sx={{ m: 0, p: 2 }}>
-          Изменение уведомления
+          Изменение извещения
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -339,7 +354,7 @@ export default function PopupEdit(props) {
               </TextField>
 
               <TextField
-                sx={{ width: 180 }}
+                sx={{ width: 180, mb: 2}}
                 label="Дата"
                 name="date"
                 type={"datetime-local"}
@@ -347,14 +362,45 @@ export default function PopupEdit(props) {
                 onChange={handleChange}
                 variant="standard"
               />
-
+            <TextField
+              sx={{ width: 180, mb: 3 }}
+              name="date_start"
+              type={"datetime-local"}
+              value={state.noticeInfo.date_start}
+              onChange={handleChange}
+              variant="standard"
+              label="Действует с"
+            />
+            <TextField
+              sx={{ width: 180, mb: 3}}
+              name="date_end"
+              type={"datetime-local"}
+              value={state.noticeInfo.date_end}
+              onChange={handleChange}
+              variant="standard"
+              label="Действует по"
+            />
+                <TextField
+              name="status"
+              select
+              label="Статус на данный момент"
+              value={state.noticeInfo.status}
+              onChange={handleChange}
+              variant="standard"
+            >
+              {noticeStatus.map((status) => (
+                <MenuItem key={status} value={status}>
+                  {status}
+                </MenuItem>
+              ))}
+            </TextField>
               <FormControl
                 sx={{ mt: 3, ml: 1, width: 240 }}
                 component="fieldset"
                 variant="standard"
               >
                 <FormLabel sx={{ mb: 1 }} component="legend">
-                  Причина уведомления
+                  Причина извещения
                 </FormLabel>
                 <FormGroup>
                   <FormControlLabel
@@ -380,7 +426,7 @@ export default function PopupEdit(props) {
                     label="Метеологические условия"
                   />
                   <FormControlLabel
-                    sx={{ mb: 1 }}
+                    sx={{ mb: 3 }}
                     control={
                       <Checkbox
                         checked={state.noticeInfo.cause3}

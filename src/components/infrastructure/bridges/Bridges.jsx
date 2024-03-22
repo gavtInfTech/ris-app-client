@@ -27,7 +27,7 @@ export default function Shluzi(props) {
     },
     {
       field: "height",
-      headerName: "Подмостовые габариты",
+      headerName: "Подмостовые габариты, м",
       width: "180",
       type: "number",
     },

@@ -23,6 +23,8 @@ export default function NoticeMain(props) {
         const res = await api.get("/notices/getAll");
         res.data.forEach((item) => {
           item.date = new Date(item.date);
+          item.date_start = new Date(item.date_start);
+          item.date_end = new Date(item.date_end);
         });
         setData(
           filterNotices(
@@ -38,11 +40,15 @@ export default function NoticeMain(props) {
 
   const addData = (notice, id) => {
     notice.date = new Date(notice.date);
+    notice.date_start = new Date(notice.date_start);
+    notice.date_end = new Date(notice.date_end);
     setData((data) => [{ ...notice, id: id }, ...data]);
   };
 
   const changeData = (notice, id) => {
     notice.date = new Date(notice.date);
+    notice.date_start = new Date(notice.date_start);
+    notice.date_end = new Date(notice.date_end);
     setData(data.map((doc) => (doc.id === id ? notice : doc)));
   };
 

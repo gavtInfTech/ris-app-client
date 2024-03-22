@@ -29,13 +29,13 @@ export default function NoticeForm(props) {
   function getCurrentDateTime() {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // месяц начинается с 0
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const hours = String(currentDate.getHours()).padStart(2, '0');
-    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-  
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // месяц начинается с 0
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
+    return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
   }
 
   const [state, setState] = useState({
@@ -43,15 +43,18 @@ export default function NoticeForm(props) {
       river: "",
       site: "",
       date: getCurrentDateTime(),
+      date_start: new Date(),
+      date_end: new Date(),
       cause1: false,
       cause2: false,
       cause3: false,
       content: "",
+      status: "",
     },
 
-    sites: [],
+    sites: ["Выберите Реку!"],
   });
-
+  const noticeStatus = ["Действует", "Завершено"]
   const sendForm = async (event) => {
     event.preventDefault();
     if (
@@ -74,6 +77,7 @@ export default function NoticeForm(props) {
         await api.post("/notices/add", {
           ...state.noticeInfo,
           id: id,
+          date_end: state.date_end ? state.date_end : new Date()
         });
         addData(state.noticeInfo, id);
         setMessage(() => ({
@@ -97,11 +101,14 @@ export default function NoticeForm(props) {
       noticeInfo: {
         river: "",
         site: "",
-        date: "",
+        date: getCurrentDateTime(),
+        date_start: getCurrentDateTime(),
+        date_end: getCurrentDateTime(),
         cause1: false,
         cause2: false,
         cause3: false,
         content: "",
+        status: "",
       },
 
       sites: [],
@@ -127,15 +134,19 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Березина":
         setState((prevState) => ({
           noticeInfo: {
             ...prevState.noticeInfo,
-          },  
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          },
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Сож":
@@ -143,7 +154,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Неман":
@@ -151,7 +164,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Мухавец":
@@ -159,7 +174,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Днепро-Бугский канал":
@@ -167,7 +184,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Пина":
@@ -175,7 +194,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Верхний участок реки Припять":
@@ -183,7 +204,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Припять":
@@ -191,7 +214,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Микашевичский канал":
@@ -199,7 +224,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Горынь":
@@ -207,7 +234,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Западная Двина":
@@ -215,7 +244,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Туровский затон":
@@ -223,7 +254,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Августовский канал":
@@ -231,7 +264,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Свислочь":
@@ -239,7 +274,9 @@ export default function NoticeForm(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
     }
@@ -285,13 +322,13 @@ export default function NoticeForm(props) {
           id="panel1a-header"
         >
           <Typography sx={{ ml: "20px", fontSize: 17 }}>
-            Форма добавления уведомлений
+            Форма добавления извещений
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={Style.accordionDetails}>
           <form className={Style.form} onSubmit={sendForm}>
             <TextField
-              sx={{mb: 2}}
+              sx={{ mb: 2 }}
               name="river"
               select
               label="Река"
@@ -307,7 +344,7 @@ export default function NoticeForm(props) {
             </TextField>
 
             <TextField
-              sx={{mb: 2}}
+              sx={{ mb: 2 }}
               name="site"
               select
               label="Участок реки"
@@ -323,22 +360,56 @@ export default function NoticeForm(props) {
             </TextField>
 
             <TextField
-              sx={{ width: 180 }}
+              sx={{ width: 180, marginTop: 3, marginBottom: 3 }}
               name="date"
               type={"text"}
               value={state.noticeInfo.date}
               onChange={handleChange}
               variant="standard"
               disabled
+              label="Дата публикации извещения"
             />
-
+            <TextField
+              sx={{ width: 180, marginBottom: 3 }}
+              name="date_start"
+              type={"date"}
+              value={state.noticeInfo.date_start}
+              onChange={handleChange}
+              variant="standard"
+              label="Действует с"
+            />
+                 <TextField
+              sx={{ mb: 2 }}
+              name="status"
+              select
+              label="Статус на данный момент"
+              value={state.noticeInfo.status}
+              onChange={handleChange}
+              variant="standard"
+            >
+              {noticeStatus.map((status) => (
+                <MenuItem key={status} value={status}>
+                  {status}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              sx={{ width: 180 }}
+              name="date_end"
+              type={"date"}
+              value={state.noticeInfo.date_end}
+              onChange={handleChange}
+              variant="standard"
+              label="Действует по"
+            />
+            <Typography sx={{fontSize: 12}}>*если не известна дата конца, не указывайте</Typography>
             <FormControl
               sx={{ mt: 3, ml: 1, width: 240 }}
               component="fieldset"
               variant="standard"
             >
               <FormLabel sx={{ mb: 1 }} component="legend">
-                Причина уведомления
+                Причина извещения
               </FormLabel>
               <FormGroup>
                 <FormControlLabel
@@ -378,7 +449,6 @@ export default function NoticeForm(props) {
             </FormControl>
 
             <TextField
-              
               name="content"
               label="Содержание"
               value={state.noticeInfo.content}

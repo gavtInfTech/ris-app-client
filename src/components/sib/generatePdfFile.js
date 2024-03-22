@@ -157,7 +157,7 @@ const generateSib = (
         row.riverName,
         row.distance,
         row.place,
-        row.date.toLocaleString().slice(0, 10),
+        row.date_start.toLocaleString().slice(0, 10).split("-").reverse().join("."),
       ];
     });
     return rows;
@@ -377,12 +377,12 @@ const generateSib = (
       ...levelsGuRowsByRiver("Пина"),
       [
         {
-          content: "ДБК",
+          content: "Днепро-Бугский канал",
           colSpan: 3,
           styles: { halign: "left", fontStyle: "bold" },
         },
       ],
-      ...levelsGuRowsByRiver("ДБК"),
+      ...levelsGuRowsByRiver("Днепро-Бугский канал"),
       [
         {
           content: "р. Мухавец",
@@ -489,7 +489,7 @@ const generateSib = (
       [
         {
           content:
-            "6. Днепро - Бугский канал (г.Кобрин (слияние реки Мухавец и ДБК) - слияние ДБК и реки Пина)",
+            "6. Днепро - Бугский канал (г.Кобрин (слияние реки Мухавец и Днепро-Бугский канал) - слияние Днепро-Бугский канал и реки Пина)",
           colSpan: 8,
           styles: { halign: "left", fontStyle: "bold" },
         },
@@ -498,7 +498,7 @@ const generateSib = (
       [
         {
           content:
-            '7. река Пина (слияние ДБК и реки Пина - г.Пинск (слияние реки Пина и реки Припять) - знак "запрещение прохода")',
+            '7. река Пина (слияние Днепро-Бугский канал и реки Пина - г.Пинск (слияние реки Пина и реки Припять) - знак "запрещение прохода")',
           colSpan: 8,
           styles: { halign: "left", fontStyle: "bold" },
         },
@@ -692,12 +692,12 @@ const generateSib = (
       ...bridgeRowsByRiver("Августовский канал"),
       [
         {
-          content: "ДБК",
+          content: "Днепро-Бугский канал",
           colSpan: 2,
           styles: { halign: "left", fontStyle: "bold" },
         },
       ],
-      ...bridgeRowsByRiver("ДБК"),
+      ...bridgeRowsByRiver("Днепро-Бугский канал"),
       [
         {
           content: "р. Припять",
@@ -730,7 +730,7 @@ const generateSib = (
       [
         { content: "Наименование рек и участков" },
         { content: "Время" },
-        { content: "Причина уведомления" },
+        { content: "Причина извещения" },
         { content: "Содержание" },
       ],
     ],

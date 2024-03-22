@@ -274,7 +274,7 @@ export default function Bridge(props) {
       headerName: "Дата",
       type: "date",
       width: 120,
-      editable: true,
+      editable:  auth.role === "Администратор" ? true : false,
     },
     {
       field: "height",

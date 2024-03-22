@@ -32,7 +32,7 @@ export default function NoticesList(props) {
             { doc.cause.includes('Метеологические условия') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/weatherNotices.png" /></Icon> }
             { doc.cause.includes('Путевые работы') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/put1.png" /></Icon> }
             <Typography sx={{ ml: "20px", fontSize: "17px", display: "flex", alignItems: "center" }}>
-              ({doc.date.toLocaleString().slice(0, 17)}) – {doc.site}
+              ({doc.date.toLocaleString().slice(0, 17)}) – {doc.site} – Действует с: {new Date(doc.date_start).toLocaleDateString("ru-Ru")} по {new Date(doc.date_end).toLocaleDateString("ru-Ru")}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>

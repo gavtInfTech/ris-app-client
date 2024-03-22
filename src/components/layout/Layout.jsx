@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import CookieConsentSnackbar from './CookieConsentSnackbar'
+import { Typography } from "@mui/material";
 
 function Alert(props) {
   return <MuiAlert elevation={1} variant="filled" {...props} />;
@@ -65,7 +66,7 @@ export default function Layout() {
             className={styles.mainLink}
             to={"/"}
           >
-            РИС РБ
+              РИС РБ<Typography sx={{fontSize: 12, marginTop: 1}}>Речные информационные службы</Typography>
           </Link>
           <Link className={styles.link} to={"/notices"}>
             Для судоводителей
@@ -120,7 +121,7 @@ export default function Layout() {
       </main>
 
       <footer className={styles.footer}>
-        Государственная администрация водного транспорта
+        <a href="https://gawt.by/" target="_blank" rel="noopener noreferrer">Государственная администрация водного транспорта</a>
       </footer>
 
       <Snackbar

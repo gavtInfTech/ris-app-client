@@ -89,36 +89,33 @@ export default function Depth(props) {
     const getRows = async () => {
       try {
         const res = await api.get("/gabs/getAllBySite", {
-          params: { site: props.site },
+            params: { site: props.site },
         });
-        res.data.forEach((item) => {
-          item.date = new Date(item.date);
-          if (item.forecastDate !== null)
-            item.forecastDate = new Date(item.forecastDate);
+        const filteredData = res.data.map(item => {
+            // Преобразуем даты из строк в объекты типа Date
+            item.date = item.date ? new Date(item.date) : null;
+            item.forecastDate = item.forecastDate ? new Date(item.forecastDate) : null;
+            return item;
         });
-        let ready = res.data.sort(
-          (a, b) => a.date.getTime() - b.date.getTime()
-        );
-        const filteredReady = ready.filter((row) => {
-          // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
-          const hasChange = ready.some(
-            (changeRow) => changeRow.id === row.id + "_change"
-          );
+        
+        // Фильтруем объекты, исключая те, у которых дата равна null
+        const filteredReady = filteredData.filter(row => row.date !== null);
+        
+        // Сортируем отфильтрованные данные
+        const sortedData = filteredReady.sort((a, b) => a.date.getTime() - b.date.getTime());
 
-          // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
-          return !hasChange;
-        });
-        setRows(filteredReady);
+        setRows(sortedData);
+
         if (!isEditAllowed) {
-          setMessage(() => ({
-            open: true,
-            messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
-            severity: "warning",
-          }));
+            setMessage(() => ({
+                open: true,
+                messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
+                severity: "warning",
+            }));
         }
-      } catch (err) {
+    } catch (err) {
         console.log(err);
-      }
+    }
     };
 
     getRows();
@@ -255,6 +252,23 @@ export default function Depth(props) {
     const updatedRow = { ...newRow, site: props.site };
     if (updateFlag) {
       try {
+        const currentDate = new Date();
+
+        // Предположим, что newRow.date_start содержит дату в формате 'год-месяц-день 00:00:00'
+        // Преобразуем строку даты в объект JavaScript Date
+        if (updatedRow.forecastDate){
+          const startDate = new Date(updatedRow.forecastDate);
+        
+          // Заменяем время в startDate на текущее время
+          startDate.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+          
+          // Обновляем date_start в newRow
+          updatedRow.forecastDate = startDate.toISOString();
+        }
+        else{
+          updatedRow.forecastDate = null;
+        }
+
         if (isEditAllowed) {
           await api.post("/gabs/change", {
             ...updatedRow,
@@ -271,6 +285,7 @@ export default function Depth(props) {
             typeOfChange: "Изменено",
             confirmation: isEditAllowed,
             organisation: getNumber(auth.organisation),
+            forecastDate: new Date(updatedRow.forecastDate)
           });
         }
         setRows(
@@ -291,6 +306,7 @@ export default function Depth(props) {
           typeOfChange: "Добавлено",
           confirmation: isEditAllowed,
           organisation: getNumber(auth.organisation),
+          forecastDate: updatedRow.forecastDate ? new Date(updatedRow.forecastDate) : null,
         });
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -320,7 +336,7 @@ export default function Depth(props) {
       headerName: "Дата",
       type: "date",
       width: 120,
-      editable: false,
+      editable:  auth.role === "Администратор" ? true : false,
     },
     {
       field: "limitedRoll",

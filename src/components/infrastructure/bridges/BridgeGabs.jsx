@@ -30,7 +30,7 @@ export default function BridgeGabs() {
     { field: "date", headerName: "Дата последнего измерения", width: "210" },
     {
       field: "height",
-      headerName: "Подмостовые габариты",
+      headerName: "Подмостовые габариты, м",
       width: "180",
       type: "number",
     },

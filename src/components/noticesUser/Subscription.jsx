@@ -102,7 +102,7 @@ export default function Subscription(props) {
           <Typography
             sx={{ ml: "20px", fontSize: "17px", textAlign: "center" }}
           >
-            Подписка на уведомления
+            Подписка на извещения
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
