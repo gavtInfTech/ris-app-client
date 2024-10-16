@@ -20,7 +20,7 @@ export default function RiverAccordionDepth(props) {
     return <Depth river={props.river} site={site.name} />;
 })
 
-  if(auth.organisation == "Нижне - Припятский"){
+  if(auth.organisation == 'Филиал \"Нижне-Припятский\" г. Мозырь'){
     const filteredDepths = props.sites.filter((item)=> item.organisation === auth.organisation);
      depths = filteredDepths.map((site) => {
       return <Depth river={props.river} site={site.name} />;

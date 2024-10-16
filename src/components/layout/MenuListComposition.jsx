@@ -28,7 +28,7 @@ export default function MenuListComposition() {
     else if (auth.role === "Путевик") navigate("/path-information/dnepr");
     else {
       switch (auth.organisation) {
-        case 'РУ ЭСП "Днепро-Бугский водный путь"':
+        case 'РУЭСП "Днепро-Бугский водный путь"':
           navigate("/admin-bugskoe/informationTab/levels/levelsGp");
           break;
         case 'РУ Днепро-Двинское предприятие водных путей "Белводпуть"':
@@ -37,14 +37,17 @@ export default function MenuListComposition() {
         case "РУ Днепро-Березинское предприятие водных путей":
           navigate("/admin-berezinskoe/informationTab/levels/levelsGp");
           break;
-        case "Нижне - Припятский":
+        case 'Филиал \"Нижне-Припятский\" г. Мозырь':
           navigate("/admin-nijnepripyat/informationTab/levels/levelsGp");
           break;
-        case "Гродненский участок":
+        case 'Филиал \"Гродненский участок\" г. Гродно':
           navigate("/admin-grodnenskiy/informationTab/levels/levelsGp");
           break;
-        case "Витебскводтранс":
+        case 'Филиал \"Витебскводтранс\" г. Витебск':
           navigate("/admin-vitebskvodtrans/informationTab/levels/levelsGp");
+          break;
+          case "Белорусское речное пароходство":
+          navigate("/admin-parahodstvo/informationTab/spravkaorabote");
           break;
       }
     }

@@ -12,10 +12,21 @@ import { Typography } from "@mui/material";
 import styles from "./style.module.css";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import * as adminInfo from "../admin/adminInfo";
 
 export default function TableLevelsGp(props) {
   const data = props.data;
+  const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
+
+  let informationData; 
+  if(allInfo){
+    informationData = adminInfo;
+  }
+  else{
+    informationData = auth.info;
+
+  }
 
   console.log(hydroposts);
   let rows = hydroposts.map((row) => {
@@ -39,6 +50,7 @@ export default function TableLevelsGp(props) {
           <TableCell align="center">{row.level1}</TableCell>
           <TableCell align="center">{row.level2}</TableCell>
           <TableCell align="center">{row.difference}</TableCell>
+          <TableCell colSpan={2} align="center" sx={row.difference == 0 ? {backgroundColor: "#BAD2FF"} : row.difference == "—" ? {} :  row.difference > 0 ? { backgroundColor: "#CFFFBC"} : { backgroundColor: "#D47483"} }>{row.difference == 0 ? "►" : row.difference == "—" ? "—" : row.difference > 0 ? "▲" : "▼"}</TableCell>
         </TableRow>
       );
     });
@@ -60,8 +72,8 @@ export default function TableLevelsGp(props) {
               <TableCell colSpan={2} align="center">
                 Уровни воды, см
               </TableCell>
-              <TableCell rowSpan={2} align="center">
-                Прибыло (+), <br /> убыло (-)
+              <TableCell colSpan={2} rowSpan={2} align="center">
+                Прибыло (+), <br /> убыло (-), см
               </TableCell>
             </TableRow>
             <TableRow>
@@ -70,13 +82,13 @@ export default function TableLevelsGp(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {auth.info.hydropostRivers.map((riverName) => {
+            {informationData.hydropostRivers.map((riverName) => {
               const rows = [];
               rows.push(
                 <TableRow key={riverName}>
                   <TableCell
                     align="left"
-                    colSpan={4}
+                    colSpan={5}
                     sx={{ fontWeight: "bold" }}
                   >
                      {[

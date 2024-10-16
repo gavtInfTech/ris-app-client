@@ -25,8 +25,44 @@ import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { Box } from "@mui/system";
 import { AuthContext } from "../../../contexts/AuthContext";
+
+ //Добавить в БД гидропосты, исправить
+ const basicLevels = {
+  "Судоходный г/у №12 Стахово":[520, 247, 130.78, 128.05],
+  "Судоходный г/у №11 Качановичи": [442, 222, 133.35, 131.15],
+
+  "Судоходный г/у №1 Дубой": [500, 260, 136.00, 133.60],
+
+  "Судоходный г/у №2 Переруб": [390, 176, 138.10, 136.00],
+  "Судоходный г/у №3 Рагодощ": [385, 195, 139.90, 138.10],
+  "Судоходный г/у №4 Овзичи": [380, 200, 141.70, 139.90],
+  "Судоходный г/у №5 Ляховичи": [410, 217, 143.60, 141.70],
+  "Судоходный г/у Кобрин": [790, 255, 143.60, 138.25],
+
+  "Судоходный г/у №8 Залузье": [485, 250, 138.25, 136.25],
+  "Судоходный г/у №9 Новосады": [420, 181, 135,90, 133.50],
+  "Судоходный г/у №10 Тришин": [415, 275, 133.50, 132.10],
+  "Брест плотина": [275, 190, 132.10, 131.25],
+
+  "Судоходный шлюз Витебская ГЭС": [0, 41, 139, 123.68],
+
+  "Гродненская ГЭС":[0, 40, 102, 91.71],
+  "Полоцкая ГЭС": [0,0, 118, 0],
+
+  "Белорусская часть г/у Кужинец":[248, 190, 103.20, 100.3],
+  "Судоходный г/у Волкушек":[240, 130, 100.3, 96.3],
+  "Судоходный г/у Домбровка":[260, 120, 96.3, 93],
+  "Судоходный г/у Немново":[225, 165, 93, 0],
+}
+
+function getBasicLevels(hydronode) {
+return basicLevels[hydronode] || null;
+}
+
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
+  const { hydronode } = props;
+ 
 
   const handleClick = () => {
     const id = randomId();
@@ -35,8 +71,14 @@ function EditToolbar(props) {
       {
         id,
         date: new Date(),
+        level1_basic_reuka: getBasicLevels(hydronode)[0],
+        level2_basic_reuka: getBasicLevels(hydronode)[1],
+        level1_basic_mbc: getBasicLevels(hydronode)[2],
+        level2_basic_mbc: getBasicLevels(hydronode)[3],
         level1: null,
         level2: null,
+        level1_VBChange: null,
+        level2_NBChange: null,
         level1Change: null,
         level2Change: null,
       },
@@ -59,6 +101,7 @@ function EditToolbar(props) {
 EditToolbar.propTypes = {
   setRowModesModel: PropTypes.func.isRequired,
   setRows: PropTypes.func.isRequired,
+  hydronode: PropTypes.string.isRequired,
 };
 
 export default function LevelsGuAdmin(props) {
@@ -69,18 +112,21 @@ export default function LevelsGuAdmin(props) {
   const [forceReload, setForceReload] = useState(false);
   const [isEditAllowed, setIsEditAllowed] = useState(true);
   const { auth } = useContext(AuthContext);
+  const { hydronode } = props;
 
+
+//Такая же херня
   const organisations = {
-    'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+    'РУЭСП "Днепро-Бугский водный путь"': 1,
     'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
     "РУ Днепро-Березинское предприятие водных путей": 3,
     "Государственная администрация водного транспорта": 4,
-    "Нижне - Припятский": 5,
-    "Гродненский участок": 6,
-    "Витебскводтранс": 7,
-    "Нижне - Припятский": 5,
-    "Гродненский участок": 6,
-    Витебскводтранс: 7,
+    'Филиал \"Нижне-Припятский\" г. Мозырь': 5,
+    'Филиал \"Гродненский участок\" г. Гродно': 6,
+    'Филиал \"Витебскводтранс\" г. Витебск': 7,
+    'Филиал \"Нижне-Припятский\" г. Мозырь': 5,
+    'Филиал \"Гродненский участок\" г. Гродно': 6,
+    'Филиал \"Витебскводтранс\" г. Витебск': 7,
   };
 
   function getNumber(organisationName) {
@@ -236,7 +282,9 @@ export default function LevelsGuAdmin(props) {
       ...newRow,
       river: props.river,
       hydronode: props.hydronode,
-    };
+      level1_VBChange: parseFloat((newRow.level1_basic_reuka == 0 ? (newRow.level1 - newRow.level1_basic_mbc) * 100 : newRow.level1 - newRow.level1_basic_reuka).toFixed(0)),
+      level2_NBChange: parseFloat((newRow.level2_basic_reuka == 0 ? (newRow.level2 - newRow.level2_basic_mbc) * 100 : newRow.level2 - newRow.level2_basic_reuka).toFixed(0)),
+    };    
 
     let updatedRows = rows.map((row) =>
       row.id === updatedRow.id ? updatedRow : row
@@ -247,34 +295,43 @@ export default function LevelsGuAdmin(props) {
     );
 
     hydronodeData.sort((a, b) => a.date.getTime() - b.date.getTime());
+    
 
     //Index - это id строки в таблице
     let index = hydronodeData.findIndex((item) => item.id === updatedRow.id);
     let differenceLevel1;
     let differenceLevel2;
-
     // hydronodeData.filter((item) =>!item.id.includes("_change"))
     if (index - 1 < 0) {
       differenceLevel1 = 0;
       differenceLevel2 = 0;
       updatedRow.level1Change = differenceLevel1;
       updatedRow.level2Change = differenceLevel2;
+
     } else {
-      differenceLevel1 =
-        hydronodeData[index].level1 - hydronodeData[index - 1].level1;
+      if (newRow.level1_basic_reuka == 0){
+        differenceLevel1 = parseFloat((hydronodeData[index].level1 - hydronodeData[index - 1].level1) * 100).toFixed(0)
+      }
+      else{
+        differenceLevel1 = parseFloat(hydronodeData[index].level1 - hydronodeData[index - 1].level1).toFixed(0)
+      }
 
-      differenceLevel2 =
-        hydronodeData[index].level2 - hydronodeData[index - 1].level2;
-
+      if( newRow.level2_basic_reuka == 0) {
+        differenceLevel2 = parseFloat((hydronodeData[index].level2 - hydronodeData[index - 1].level2) * 100).toFixed(0)
+      }
+      else{
+        differenceLevel2 = parseFloat(hydronodeData[index].level2 - hydronodeData[index - 1].level2).toFixed(0)
+      }
+      
       updatedRow.level1Change = differenceLevel1;
       updatedRow.level2Change = differenceLevel2;
     }
     if (hydronodeData[index + 1] !== undefined) {
       hydronodeData[index + 1].level1Change =
-        hydronodeData[index + 1].level1 - hydronodeData[index].level1;
+        parseFloat(hydronodeData[index + 1].level1 - hydronodeData[index].level1);
 
-      hydronodeData[index + 1].level2Change =
-        hydronodeData[index + 1].level2 - hydronodeData[index].level2;
+      hydronodeData[index + 1].level2Change = parseFloat(
+        hydronodeData[index + 1].level2 - hydronodeData[index].level2).toFixed(0);
 
       try {
         if (isEditAllowed) {
@@ -359,22 +416,148 @@ export default function LevelsGuAdmin(props) {
       editable:  auth.role === "Администратор" ? true : false,
     },
     {
+      field: "level1_basic_reuka",
+      headerName: `ПУ над "0" рейки, ВБ (см)`,
+      type: "string",
+      width: 120,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          default_up:
+           getBasicLevels(hydronode)[0] != 0,
+        });
+      },
+      editable: auth.role === "Администратор" ? true : false,
+    },
+    {
+      field: "level2_basic_reuka",
+      headerName: `ПУ над "0" рейки, НБ (см)`,
+      type: "string",
+      width: 120,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          default:
+           getBasicLevels(hydronode)[1] != 0,
+        });
+      },
+      editable: auth.role === "Администратор" ? true : false,
+    },
+    {
+      field: "level1_basic_mbc",
+      headerName: `ПУ, ВБ (мБС)`,
+      type: "string",
+      width: 120,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          default_up:
+            getBasicLevels(hydronode)[0] == 0 && getBasicLevels(hydronode)[2] != 0,
+        });
+      },
+      editable: auth.role === "Администратор" ? true : false,
+    },
+    {
+      field: "level2_basic_mbc",
+      headerName: "ПУ, НБ (мБС)",
+      type: "string",
+      width: 120,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          default:
+            getBasicLevels(hydronode)[1] == 0 && getBasicLevels(hydronode)[3] != 0,
+        });
+      },
+      editable: auth.role === "Администратор" ? true : false,
+    },
+    {
       field: "level1",
-      headerName: "Уровень воды над ПГ, ВБ (см)",
+      headerName: getBasicLevels(hydronode)[0] != 0 ? `Уровень воды над "0" рейки, ВБ (см)`: `Уровень воды над ПУ, ВБ (мБС)`,
       type: "string",
       width: 220,
       editable: true,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          bold:
+           true,
+        });
+      },
     },
     {
       field: "level2",
-      headerName: "Уровень воды над ПГ, НБ (см)",
+      headerName:getBasicLevels(hydronode)[1] != 0 ? `Уровень воды над "0" рейки, НБ (см)`: `Уровень воды над ПУ, НБ (мБС)`,
       type: "string",
       width: 220,
       editable: true,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          bold:
+           true,
+        });
+      },
+    },
+    {
+      field: "level1_VBChange",
+      headerName: "Уровень воды над ПУ, ВБ (см)",
+      type: "string",
+      editable: false,
+      cellClassName: (params) => {
+        if (params.row.level1Change === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          negative: params.row.level1_VBChange < 0,
+          positive: params.row.level1_VBChange > 0,
+          default:
+            params.row.level1_VBChange === "0" || params.row.level1_VBChange === "-" || params.row.level1_VBChange === parseFloat(0).toFixed(0),
+        });
+      },
+      width: 115,
+    },
+    {
+      field: "level2_NBChange",
+      headerName: "Уровень воды над ПУ, НБ (см)",
+      type: "string",
+      editable: false,
+      cellClassName: (params) => {
+        if (params.row.level2_NBChange === null) {
+          return "";
+        }
+
+        return clsx("super-app", {
+          negative: params.row.level2_NBChange < 0,
+          positive: params.row.level2_NBChange > 0,
+          default:
+            params.row.level2_NBChange === "0" || params.row.level2_NBChange === "-" || params.row.level2_NBChange === parseFloat(0).toFixed(0),
+        });
+      },
+      width: 115,
     },
     {
       field: "level1Change",
-      headerName: "Изменение ВБ",
+      headerName: "Изменение ВБ, см",
       type: "string",
       editable: false,
       cellClassName: (params) => {
@@ -386,14 +569,14 @@ export default function LevelsGuAdmin(props) {
           negative: params.row.level1Change < 0,
           positive: params.row.level1Change > 0,
           default:
-            params.row.level1Change === "0" || params.row.level1Change === "-",
+            params.row.level1Change === "0" || params.row.level1Change === "-" || params.row.level1Change === parseFloat(0).toFixed(0),
         });
       },
       width: 115,
     },
     {
       field: "level2Change",
-      headerName: "Изменение НБ",
+      headerName: "Изменение НБ, см",
       type: "string",
       editable: false,
       cellClassName: (params) => {
@@ -405,7 +588,7 @@ export default function LevelsGuAdmin(props) {
           negative: params.row.level2Change < 0,
           positive: params.row.level2Change > 0,
           default:
-            params.row.level2Change === "0" || params.row.level2Change === "-",
+            params.row.level2Change === "0" || params.row.level2Change === "-" || params.row.level2Change === parseFloat(0).toFixed(0),
         });
       },
       width: 115,
@@ -484,7 +667,7 @@ export default function LevelsGuAdmin(props) {
         <Box
           sx={{
             height: 600,
-            maxWidth: 1150,
+            maxWidth: "100%",
             "& .super-app.negative": {
               backgroundColor: "#d47483",
               color: "#1a3e72",
@@ -500,6 +683,14 @@ export default function LevelsGuAdmin(props) {
               color: "#1a3e72",
               fontWeight: "600",
             },
+            "& .super-app.default_up": {
+              backgroundColor: "rgba(114, 163, 255, 0.65)",
+              color: "#1a3e72",
+              fontWeight: "600",
+            },
+            "& .super-app.bold": {
+              fontWeight: "600",
+            }
           }}
         >
           <DataGrid
@@ -520,7 +711,7 @@ export default function LevelsGuAdmin(props) {
               Toolbar: EditToolbar,
             }}
             componentsProps={{
-              toolbar: { setRows, setRowModesModel },
+              toolbar: { setRows, setRowModesModel, hydronode},
             }}
             experimentalFeatures={{ newEditingApi: true }}
             sx={{

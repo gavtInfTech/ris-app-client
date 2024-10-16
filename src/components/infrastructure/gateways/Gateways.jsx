@@ -106,7 +106,7 @@ export default function Shluzi(props) {
       row.width +
       "<br> Напор: " +
       row.napor +
-      "<br> Глубина на пороге (ВГ/НГ): " +
+      "<br> Глубина на пороге (ВГ/НГ), м: " +
       row.depth;
 
     return (

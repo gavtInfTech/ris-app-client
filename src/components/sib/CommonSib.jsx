@@ -19,6 +19,8 @@ import {
 import { api } from "../../axiosConfig";
 import Box from "@mui/material/Box";
 import { customComparator } from "../vvp/siteMethods";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
 require("jspdf-autotable");
 
@@ -62,6 +64,7 @@ export default function CommonSib() {
   const [dislocationsDataByDate, setDislocationsDataByDate] = useState([]);
   const [bridgesDataByDate, setBridgesDataByDate] = useState([]);
   const [noticesDataByDate, setNoticesDataByDate] = useState([]);
+  const { auth } = useContext(AuthContext);
 
   useEffect(() => {
     const getData = async () => {
@@ -153,7 +156,7 @@ export default function CommonSib() {
               cause += "Изменение СНО; ";
             }
             if (doc.cause2) {
-              cause += "Метеологические условия; ";
+              cause += "Гидрометеорологические условия; ";
             }
             if (doc.cause3) {
               cause += "Путевые работы; ";
@@ -270,7 +273,7 @@ export default function CommonSib() {
           cause += "Изменение СНО; ";
         }
         if (doc.cause2) {
-          cause += "Метеологические условия; ";
+          cause += "Гидрометеорологические условия; ";
         }
         if (doc.cause3) {
           cause += "Путевые работы; ";
@@ -407,12 +410,12 @@ export default function CommonSib() {
             }
           </Typography>
         <div id="tablesContainer" className={styles.tablesContainer}>
-          <TableLevelsGp data={levelsGpDataByDate} />
-          <TableLevelsGu data={levelsGuDataByDate} />
-          <TableGabs data={gabsDataByDate} sites={sites} />
-          <TableDislocations data={dislocationsDataByDate} />
-          <TableBridges data={bridgesDataByDate} />
-          <TableNotices data={noticesDataByDate} />
+          <TableLevelsGp allInfo={true} data={levelsGpDataByDate} />
+          <TableLevelsGu allInfo={true} data={levelsGuDataByDate} />
+          <TableGabs allInfo={true} data={gabsDataByDate} sites={sites} />
+          <TableDislocations allInfo={true} data={dislocationsDataByDate} />
+          <TableBridges allInfo={true} data={bridgesDataByDate} />
+          <TableNotices allInfo={true} data={noticesDataByDate} />
         </div>
       </Box>
     </ThemeProvider>

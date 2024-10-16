@@ -8,6 +8,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
+import ReplayIcon from "@mui/icons-material/Replay";
 import PropTypes from "prop-types";
 import {
   GridRowModes,
@@ -20,8 +21,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { api } from "../../../axiosConfig";
 import { forbiddenTime } from "../Time/forbiddenTime";
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const organisations = [
   'РУЭСП "Днепро-Бугский водный путь"',
@@ -33,27 +32,17 @@ const organisations = [
 ];
 
 const status = ["В процессе выполнения", "Выполнена", "Однодневная"];
-const workType = ["Дноочищение(на путевых работах)",
-"Дноуглубление(на путевых работах)",
-"Изыскания(на путевых работах)",
-"Траление(на путевых работах)",
-"Дноочищение(на других работах)",
-"Дноуглубление(на других работах)",
-"Изыскания(на других работах)",
-"Траление(на других работах)",
-"Прочие на других работах",
-"Отстой флота",
-"Ожидание фронта работ",
-"Изъятие нерудных строительных материалов (НСМ)",
-"Ремонтные работы",
-"Работы по содержанию СГТС",
-"Выходной",
-]
+
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
   const { auth } = useContext(AuthContext);
   const handleClick = () => {
     const id = randomId();
+    let organisation;
+    if (auth.role === "Администратор") organisation = null;
+    else {
+      organisation = auth.organisation;
+    }
 
     // Set the date to the current date and time
     const currentDate = new Date();
@@ -70,8 +59,8 @@ function EditToolbar(props) {
       ...oldRows,
       {
         id,
-        organisation: props.organisation,
-        number: props.ship,
+        organisation: organisation,
+        number: "",
         typeOfWork: "-",
         riverName: "-",
         distance: "-",
@@ -79,6 +68,7 @@ function EditToolbar(props) {
         date_start: formattedCurrentDate,
         date: formattedCurrentDate,
         date_end: formattedCurrentDate,
+        dopInfo: "-",
       },
     ]);
     setRowModesModel((oldModel) => ({
@@ -99,11 +89,9 @@ function EditToolbar(props) {
 EditToolbar.propTypes = {
   setRowModesModel: PropTypes.func.isRequired,
   setRows: PropTypes.func.isRequired,
-  ship: PropTypes.string,
-  organisation: PropTypes.string,
 };
 
-export default function Dislocation(props) {
+export default function Spravka(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const { auth } = useContext(AuthContext);
@@ -111,22 +99,20 @@ export default function Dislocation(props) {
   const { setMessage } = useContext(MessageContext);
   const [isEditAllowed, setIsEditAllowed] = useState(true);
   const [forceReload, setForceReload] = useState(false);
-  const [rowEditable, setRowEditable] = useState(true);
-  const ship = props.ship;
-  const organisation = props.organisation;
+
   useEffect(() => {
     const currentTime = new Date();
     if (auth.role === "Администратор") {
       setIsEditAllowed(true);
     } else {
-      setIsEditAllowed(currentTime < forbiddenTime);
+      setIsEditAllowed(true);
     }
   }, []);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await api.get("/dislocation/getAllByOrganisation", {
+        const res = await api.get("/spravka/getAllByOrganisation", {
           params: { organisationName: props.organisation },
         });
         res.data.forEach((item) => {
@@ -147,9 +133,7 @@ export default function Dislocation(props) {
           return !hasChange;
         });
 
-        const filteredByShip = filteredReady.filter((row) => row.number == props.ship);
-
-        setRows(filteredByShip);
+        setRows(filteredReady);
         if (!isEditAllowed) {
           setMessage(() => ({
             open: true,
@@ -194,13 +178,11 @@ export default function Dislocation(props) {
           currentDate.getSeconds()
         );
 
-        let res = await api.post("/dislocation/add", {
+        let res = await api.post("/spravka/add", {
           ...notice,
           id: randomId(),
-          typeOfChange: "Добавлено",
-          confirmation: isEditAllowed,
-          date_start: new Date(notice.date_start),
-          date_end: new Date(notice.date_end)
+          date: new Date(notice.date_start),
+          organisation: props.organisation,
         });
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -217,39 +199,13 @@ export default function Dislocation(props) {
     const row = rows.find((row) => row.id === id);
     const today = new Date();
 
-    // // Проверка, что значение в столбце "Дата" равно сегодняшней дате
-    if (row.date.toDateString() !== today.toDateString()) {
-      if (auth.role === "Администратор") {
-        setUpdateFlag(true);
-        setRowModesModel({
-          ...rowModesModel,
-          [id]: { mode: GridRowModes.Edit },
-        });
-        return;
-      }
-      else{
-        setRowEditable(false);
-        setRowModesModel({
-          ...rowModesModel,
-          [id]: { mode: GridRowModes.Edit },
-        });
-        setMessage(() => ({
-          open: true,
-          messageText: "Разрешено изменение даты конца работы!",
-          severity: "warning",
-        }));
-      }
-  
-      return;
-    } else {
     setUpdateFlag(true);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-    }
+    // }
   };
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    setRowEditable(true);
   };
 
   const handleDeleteClick = (id) => async () => {
@@ -262,8 +218,8 @@ export default function Dislocation(props) {
         setUpdateFlag(true);
         try {
           isEditAllowed
-            ? await api.delete(`/dislocation/delete/${id}`)
-            : await api.post(`/dislocation/deleteWithConfirm/${id}`);
+            ? await api.delete(`/spravka/delete/${id}`)
+            : await api.post(`/spravka/delete/${id}`);
           setForceReload((prev) => !prev);
         } catch (err) {
           console.log(err.response.data);
@@ -272,15 +228,15 @@ export default function Dislocation(props) {
       }
       setMessage(() => ({
         open: true,
-        messageText: "Удаление прошлых дат запрещено.",
+        messageText: "Редактирование прошлых дат запрещено.",
         severity: "warning",
       }));
       return;
     } else {
       try {
         isEditAllowed
-          ? await api.delete(`/dislocation/delete/${id}`)
-          : await api.post(`/dislocation/deleteWithConfirm/${id}`);
+          ? await api.delete(`/spravka/delete/${id}`)
+          : await api.post(`/spravka/delete/${id}`);
         setForceReload((prev) => !prev);
       } catch (err) {
         console.log(err.response.data);
@@ -289,7 +245,6 @@ export default function Dislocation(props) {
   };
 
   const handleCancelClick = (id) => () => {
-    setRowEditable(true);
     setUpdateFlag(false);
     setRowModesModel({
       ...rowModesModel,
@@ -302,65 +257,20 @@ export default function Dislocation(props) {
   };
 
   const processRowUpdate = async (newRow) => {
-    console.log(newRow);
-    if (
-      newRow.organisation === null ||
-      newRow.number === "" ||
-      newRow.typeOfWork === "" ||
-      newRow.riverName === "" ||
-      newRow.distance === "" ||
-      newRow.place === "" ||
-      newRow.date_start === null ||
-      newRow.date_end === null ||
-      newRow.statusOfWork === null
-    ) {
-      setMessage(() => ({
-        open: true,
-        messageText: "Заполнены не все обязательные поля!",
-        severity: "error",
-      }));
-      return;
-    }
-
     if (updateFlag) {
       try {
-        const currentDate = new Date();
-
-        // Предположим, что newRow.date_start содержит дату в формате 'год-месяц-день 00:00:00'
-        // Преобразуем строку даты в объект JavaScript Date
-        const startDate = new Date(newRow.date_start);
-        const endDate = new Date(newRow.date_end);
-
-        // Заменяем время в startDate на текущее время
-        startDate.setHours(
-          currentDate.getHours(),
-          currentDate.getMinutes(),
-          currentDate.getSeconds()
-        );
-        endDate.setHours(
-          currentDate.getHours(),
-          currentDate.getMinutes(),
-          currentDate.getSeconds()
-        );
-
-        // Обновляем date_start в newRow
-        newRow.date_start = startDate.toISOString();
-        newRow.date_end = endDate.toISOString();
-
         if (isEditAllowed) {
-          await api.post("/dislocation/change", {
+          await api.post("/spravka/change", {
             ...newRow,
-            typeOfChange: "Изменено",
-            confirmation: isEditAllowed,
+            organisation: props.organisation,
           });
         } else {
-          await api.post("/dislocation/change", {
+          await api.post("/spravka/change", {
             ...newRow,
             id: newRow.id.includes("_change")
               ? newRow.id
               : newRow.id + "_change",
-            typeOfChange: "Изменено",
-            confirmation: isEditAllowed,
+            organisation: props.organisation,
           });
         }
         setForceReload((prev) => !prev);
@@ -371,10 +281,9 @@ export default function Dislocation(props) {
       }
     } else {
       try {
-        let res = await api.post("/dislocation/add", {
+        let res = await api.post("/spravka/add", {
           ...newRow,
-          typeOfChange: "Добавлено",
-          confirmation: isEditAllowed,
+          organisation: props.organisation,
         });
         setForceReload((prev) => !prev);
       } catch (err) {
@@ -396,56 +305,68 @@ export default function Dislocation(props) {
       editable: auth.role === "Администратор" ? true : false,
     },
     {
-      field: "number",
-      headerName: "№ судна / партии",
-      width: 140,
-      editable: false,
-    },
-    {
-      field: "typeOfWork",
-      headerName: "Вид работы",
-      type: "singleSelect",
-      valueOptions: workType,
+      field: "number_in_exploitation",
+      headerName: "Количество судов в эксплуатации",
       width: 250,
-      editable: rowEditable,
+      editable: true,
     },
     {
-      field: "riverName",
-      headerName: "Наименование реки и № участка*",
-      width: 225,
-      editable: rowEditable,
-    },
-    {
-      field: "distance",
-      headerName: "Км от устья",
-      width: 100,
-      editable: rowEditable,
-    },
-    {
-      field: "place",
-      headerName: "Место дислокации	",
-      width: 200,
-      editable: rowEditable,
-    },
-    {
-      field: "date_start",
-      headerName: "Дата начала работы",
-      type: "date",
-      width: 150,
-      editable: rowEditable,
-    },
-    {
-      field: "date_end",
-      headerName: "Дата конца работы",
-      type: "date",
+      field: "number_in_otstoy",
+      headerName: "На отстое",
       width: 150,
       editable: true,
     },
     {
-      field: "statusOfWork",
-      headerName: "Статус Работы",
-      type: "singleSelect",
-      valueOptions: status,
+      field: "volume_gryzov",
+      headerName: "Объем перевозок грузов, тыс. тонн",
+      width: 225,
+      editable: true,
+    },
+    {
+      field: "volume_passashirov",
+      headerName: "Объем перевозок пассажиров, чел.",
+      width: 225,
+      editable: true,
+    },
+    {
+      field: "volume_dnouglubitelnih",
+      headerName: "Объем дноуглубительных работ, нормо-кубометро-часов",
+      width: 200,
+      editable: true,
+    },
+    {
+      field: "volume_izvlecheniya",
+      headerName: "Объем извлеченных нерудных строительных материалов, тыс. тонн",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "number_avariy",
+      headerName: "Наличие аварий",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "number_avariynih_proichestviy",
+      headerName: "Наличие аварийных происшествий",
+      width: 300,
+      editable: true,
+    },
+    {
+      field: "brak_in_work",
+      headerName: "Брак в работе",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "osobie_transportnie",
+      headerName: "Особые транспортные аварийные случаи",
+      width: 300,
+      editable: true,
+    },
+    {
+      field: "dopInfo",
+      headerName: "Дополнительная информация",
       width: 300,
       editable: true,
     },
@@ -489,38 +410,36 @@ export default function Dislocation(props) {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
+          // <GridActionsCellItem
+          //   icon={<ReplayIcon />}
+          //   label="Повторить"
+          //   onClick={handlerReplayClick(id)}
+          //   color="inherit"
+          // />,
         ];
       },
     },
-    {
-      field: "typeOfChange",
-      headerName: "Тип изменения",
-      type: "number",
-      width: 120,
-      editable: false,
-    },
-    {
-      field: "confirmation",
-      headerName: "Статус",
-      type: "boolean",
-      width: 150,
-      editable: false,
-    },
   ];
 
+  // if (auth.role === "Администратор") {
+  //   columns = [
+  //     {
+  //       field: "organisation",
+  //       headerName: "Название предприятия",
+  //       type: "singleSelect",
+  //       valueOptions: organisations,
+  //       width: 300,
+  //       editable: true,
+  //     },
+  //     ...columns,
+  //   ];
+  // }
+
   return (
-    <Accordion>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
-        <Typography sx={{ ml: "20px", fontSize: 17 }}>{props.ship}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
         <Box
           sx={{
             height: "100%",
+            backgroundColor: "white",
             maxWidth: "100%",
             "& .super-app.negative": {
               backgroundColor: "#d47483",
@@ -565,12 +484,10 @@ export default function Dislocation(props) {
               Toolbar: EditToolbar,
             }}
             componentsProps={{
-              toolbar: { setRows, setRowModesModel, ship, organisation },
+              toolbar: { setRows, setRowModesModel },
             }}
             experimentalFeatures={{ newEditingApi: true }}
           />
         </Box>
-      </AccordionDetails>
-    </Accordion>
   );
 }

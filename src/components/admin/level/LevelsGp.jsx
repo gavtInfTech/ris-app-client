@@ -62,6 +62,7 @@ export default function LevelsGpAdmin(props) {
   const [forceReload, setForceReload] = useState(false);
   const { auth } = useContext(AuthContext);
   const { hydropost } = props;
+  console.log("THIS IS HYDROPOST NAME", hydropost)
   const basicZeroGraphLevel = {
     "Могилев": 65,
     "Жлобин": 50,
@@ -80,15 +81,16 @@ export default function LevelsGpAdmin(props) {
     "Сураж": 60,
     "Витебск": 41,
     "Гродно": 40,
+    "ст. Горынь" : 220,
   };
   const organisations = {
-    'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+    'РУЭСП "Днепро-Бугский водный путь"': 1,
     'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
     "РУ Днепро-Березинское предприятие водных путей": 3,
     "Государственная администрация водного транспорта": 4,
-    "Нижне - Припятский": 5,
-    "Гродненский участок": 6,
-    "Витебскводтранс": 7,
+    'Филиал \"Нижне-Припятский\" г. Мозырь': 5,
+    'Филиал \"Гродненский участок\" г. Гродно': 6,
+    'Филиал \"Витебскводтранс\" г. Витебск': 7,
   };
 
   function getNumber(organisationName) {
@@ -244,7 +246,7 @@ export default function LevelsGpAdmin(props) {
 
     const updatedRow = {
       ...newRow,
-      level2: newRow.level1 - basicZeroGraphLevel[hydropost],
+      level2: newRow.level1 - (basicZeroGraphLevel[hydropost] ? basicZeroGraphLevel[hydropost] : 0),
       river: props.river,
       hydropost: props.hydropost,
     };
@@ -368,7 +370,7 @@ export default function LevelsGpAdmin(props) {
     },
     {
       field: "difference",
-      headerName: "Прибыло (+), убыло (-)",
+      headerName: "Прибыло (+), убыло (-), см",
       type: "number",
       cellClassName: (params) => {
         if (params.value === null) {

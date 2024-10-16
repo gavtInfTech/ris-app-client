@@ -175,7 +175,7 @@ export default function MainGabs() {
     <ThemeProvider theme={theme}>
       <div className={styles.container}>
         <Typography sx={{ fontSize: 19 }}>
-          Габариты на лимитирующих перекатах на <span> </span>
+          Габариты на лимитирующих пер.тах на <span> </span>
           {
             <TextField
               name="date"
@@ -199,13 +199,13 @@ export default function MainGabs() {
                     Наименование рек и участков
                   </TableCell>
                   <TableCell rowSpan={2} align="center">
-                    Плановая глубина
+                    Плановая глубина, см
                   </TableCell>
                   <TableCell rowSpan={2} align="center">
                     Дата
                   </TableCell>
                   <TableCell rowSpan={2} align="center">
-                    Лимитирующий участок, перекат
+                    Лимитирующий участок, пер.т
                   </TableCell>
                   <TableCell rowSpan={2} align="center">
                     Глубина, см
@@ -219,7 +219,7 @@ export default function MainGabs() {
                 </TableRow>
                 <TableRow>
                   <TableCell align="center">Дата</TableCell>
-                  <TableCell align="center">Глубина</TableCell>
+                  <TableCell align="center">Глубина, см</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -229,7 +229,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    1. река Днепр &#40;дер.Левки &#40;воздушный переход&#41; -
+                    1. р. Днепр &#40;дер.Левки &#40;воздушный переход&#41; -
                     н.п. Любеч &#40;граница Белводпуть - Укрводпуть&#41;
                   </TableCell>
                 </TableRow>
@@ -241,7 +241,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    2. река Березина &#40;г.Березино &#40;Березино -
+                    2. р. Березина &#40;г.Березино &#40;Березино -
                     пристань&#41; - устье реки Березина
                   </TableCell>
                 </TableRow>
@@ -253,7 +253,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    3. река Сож &#40;г.Славгород &#40;Славгород - город&#41; -
+                    3. р. Сож &#40;г.Славгород &#40;Славгород - город&#41; -
                     устье реки Сож&#41;
                   </TableCell>
                 </TableRow>
@@ -265,7 +265,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    4. река Неман &#40;деревня Яблоново &#40;вход в затон&#41; -
+                    4. р. Неман &#40;деревня Яблоново &#40;вход в затон&#41; -
                     граница с Литовской Республикой&#41;
                   </TableCell>
                 </TableRow>
@@ -277,7 +277,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    5. река Мухавец &#40;г.Брест &#40;речной порт Брест&#41; -
+                    5. р. Мухавец &#40;г.Брест &#40;речной порт Брест&#41; -
                     г.Кобрин &#40;слияние реки Мухавец и Днепро-Бугского
                     канала&#41;
                   </TableCell>
@@ -302,7 +302,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    7. река Пина &#40;слияние Днепро-Бугский канал и реки Пина - г.Пинск
+                    7. р. Пина &#40;слияние Днепро-Бугский канал и реки Пина - г.Пинск
                     &#40;слияние реки Пина и реки Припять&#41; - знак
                     "запрещение прохода"&#41;
                   </TableCell>
@@ -327,8 +327,8 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    9. река Припять &#40;г.Пинск &#40;слияние реки Пина и реки
-                    Припять&#41; - перекат Усовский-1 &#40;граница с
+                    9. р. Припять &#40;г.Пинск &#40;слияние реки Пина и реки
+                    Припять&#41; - пер.т Усовский-1 &#40;граница с
                     Украиной&#41;&#41;
                   </TableCell>
                 </TableRow>
@@ -352,7 +352,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    11. река Горынь &#40;перекат Комора-2 - устье реки
+                    11. р. Горынь &#40;пер.т Комора-2 - устье реки
                     Горынь&#41;
                   </TableCell>
                 </TableRow>
@@ -364,7 +364,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    12. река Западная Двина &#40;деревня Сураж - Полоцкая
+                    12. р. Западная Двина &#40;деревня Сураж - Полоцкая
                     гидроэлектростанция&#41;
                   </TableCell>
                 </TableRow>
@@ -401,7 +401,7 @@ export default function MainGabs() {
                     colSpan={8}
                     sx={{ fontWeight: "bold" }}
                   >
-                    15. река Свислочь &#40;Минская кольцевая автомобильная
+                    15. р. Свислочь &#40;Минская кольцевая автомобильная
                     дорога - переулок Канатный&#41;
                   </TableCell>
                 </TableRow>

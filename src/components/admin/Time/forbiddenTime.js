@@ -1,6 +1,6 @@
 const FT = new Date();
 
-FT.setHours(17, 0, 0, 0); // Устанавливаем разрешенное время редактирования
+FT.setHours(11, 0, 0, 0); // Устанавливаем разрешенное время редактирования
 
 
 export const forbiddenTime = FT;

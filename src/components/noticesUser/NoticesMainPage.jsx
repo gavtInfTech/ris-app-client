@@ -10,22 +10,22 @@ export default function NoticesMainPage() {
     <div className={Style.container}>
       <div className={Style.item1}>
         <button className={Style.btn}>
-          <Link to={"/levelsMenu"}>
+          <Link to={"/levelsGp"}>
             <img src="/images/levelGp.png" alt="mlevel"></img>
-            <br />Уровни воды
+            <br/>Уровни воды на 
+            <br/>
+            гидропостах
           </Link>
         </button>
       </div>
 
       <div className={Style.item2}>
         <button className={Style.btn}>
-          <Link to={"/sib"}>
-            <img src="/images/sib.png" alt="meteo"></img>
-            <br/>Сводный
+          <Link to={"/LevelsGu"}>
+            <img src="/images/levelGu.png" alt="mlevelgu"></img>
+            <br/>Уровни воды на 
             <br/>
-            инфрмационный
-            <br/>
-            бюллетень
+            гидроузлах
           </Link>
         </button>
       </div>

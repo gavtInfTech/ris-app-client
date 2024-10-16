@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import styles from "./style.module.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
+import * as adminInfo from "../admin/adminInfo";
 
 const emptyObj = {
   planDepth: "—",
@@ -26,6 +27,15 @@ const emptyObj = {
 export default function TableGabs(props) {
   let rows = [];
   const { auth } = useContext(AuthContext);
+  const allInfo = props.allInfo;
+  let informationData; 
+  if(allInfo){
+    informationData = adminInfo;
+  }
+  else{
+    informationData = auth.info;
+
+  }
   let index = 0;
   props.sites.map((site) => {
     let rowData = props.data.find((dat) => dat.site === site.name);
@@ -70,7 +80,7 @@ export default function TableGabs(props) {
                 Наименование рек и участков
               </TableCell>
               <TableCell rowSpan={2} align="center">
-                Плановая глубина
+                Плановая глубина, см
               </TableCell>
               <TableCell rowSpan={2} align="center">
                 Дата
@@ -90,11 +100,11 @@ export default function TableGabs(props) {
             </TableRow>
             <TableRow>
               <TableCell align="center">Дата</TableCell>
-              <TableCell align="center">Глубина</TableCell>
+              <TableCell align="center">Глубина, см</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {auth.info.sibDistricts.map((riverName) => {
+            {informationData.sibDistricts.map((riverName) => {
               const rows = [];
               rows.push(
                 <TableRow>
@@ -107,7 +117,7 @@ export default function TableGabs(props) {
                   </TableCell>
                 </TableRow>
               );
-              rows.push(riverRows(auth.info.siteRivers[index]));
+              rows.push(riverRows(informationData.siteRivers[index]));
               index = index + 1;
               return rows;
             })}

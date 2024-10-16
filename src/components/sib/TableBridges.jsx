@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import styles from "./style.module.css";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import * as adminInfo from "../admin/adminInfo";
 
 function keyToRiver(key) {
   // eslint-disable-next-line default-case
@@ -28,33 +29,55 @@ function keyToRiver(key) {
       return "Августовский канал";
     case "dbk":
       return "Днепро-Бугский канал";
+    case "pina":
+      return "Пина";
+    case "vpripyat":
+      return "Верхний участок реки Припять";
     case "pripyat":
       return "Припять";
     case "zapDvina":
       return "Западная Двина";
+    case "muhavets":
+      return "Мухавец";
   }
 }
 
-export default function TableGabs(props) {
+export default function TableBridges(props) {
   const data = props.data;
+  const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
-  let rows = [];
-  for (var key in bridgeGroups) {
-    // eslint-disable-next-line no-loop-func
-    bridgeGroups[key].map((bridge) => {
-      let rowData = data.find((item) => item.bridge === bridge);
-      if (rowData === undefined)
-        rows.push({ bridge: bridge, river: keyToRiver(key), height: "—" });
-      else rows.push(rowData);
-    });
+
+  let informationData; 
+  if(allInfo){
+    informationData = adminInfo;
   }
+  else{
+    informationData = auth.info;
+
+  }
+
+  let rows = [];
+  Object.keys(informationData.bridgeGroups).forEach((key) => {
+    informationData.bridgeGroups[key].forEach((bridge) => {
+      const rowData = data.find((item) => item.bridge === bridge.name);
+      rows.push({
+        bridge: bridge.name,
+        river: keyToRiver(key),
+        height: rowData ? rowData.height : "—",
+        kilometr: bridge.kilometr || "—",
+        rsu: bridge.rsu || "—",
+      });
+    });
+  });
 
   const riverRows = (river) => {
     let filteredRows = rows.filter((row) => row.river === river);
     let riverRows = filteredRows.map((row) => {
       return (
-        <TableRow>
+        <TableRow key={row.bridge}>
           <TableCell align="left">{row.bridge}</TableCell>
+          <TableCell align="center">{row.kilometr}</TableCell>
+          <TableCell align="center">{row.rsu}</TableCell>
           <TableCell align="center">{row.height}</TableCell>
         </TableRow>
       );
@@ -75,12 +98,18 @@ export default function TableGabs(props) {
                 Наименование рек и мостов
               </TableCell>
               <TableCell rowSpan={2} align="center">
+                Километр реки/канала
+              </TableCell>
+              <TableCell rowSpan={2} align="center">
+                Высота подмостового габарита над РСУ, м
+              </TableCell>
+              <TableCell rowSpan={2} align="center">
                 Текущая высота пролета, м
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {auth.info.bridgeRivers.map((riverName) => {
+            {informationData.bridgeRivers.map((riverName) => {
               const rows = [];
               rows.push(
                 <TableRow key={riverName}>

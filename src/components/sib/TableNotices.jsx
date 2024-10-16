@@ -13,6 +13,7 @@ import styles from "./style.module.css";
 import { api } from "../../axiosConfig";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
+import * as adminInfo from "../admin/adminInfo";
 
 const emptyObj = {
   planDepth: "—",
@@ -62,10 +63,29 @@ function keyToRiver(key) {
 
 export default function TableNotices(props) {
   const data = props.data;
+  const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
+  let informationData; 
+  if(allInfo){
+    informationData = adminInfo;
+  }
+  else{
+    informationData = auth.info;
 
+  }
   const riverRows = (river) => {
-    let filteredRows = data.filter((row) => row.river === river);
+    let filteredRows = data.filter(
+      (row) =>
+        row.river === river &&
+        (row.organisation == auth.organisation ||
+          auth.organisation ==
+            "Государственная администрация водного транспорта" ||
+          !auth.organisation ||
+          allInfo ||
+          (auth.organisation == `РУЭСП "Днепро-Бугский водный путь"` &&
+            row.river == "Западная Двина"))
+    );
+
     if (filteredRows.length === 0) return;
     const riverRows = filteredRows.map((row) => {
       return (
@@ -107,8 +127,8 @@ export default function TableNotices(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {auth.info.siteRivers.map((river)=>{
-                return riverRows(river)
+            {informationData.siteRivers.map((river) => {
+              return riverRows(river);
             })}
           </TableBody>
         </Table>

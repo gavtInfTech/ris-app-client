@@ -197,5 +197,15 @@ export const hydronodes = [
         level2Change: '—',
         coords: [53.869459, 23.757462]
     },
-
+    {
+        id: 19,
+        hydronode: 'Полоцкая ГЭС',
+        river: 'Западная Двина',
+        date: '—',
+        level1: '—',
+        level2: '—',
+        level1Change: '—',
+        level2Change: '—',
+        coords: [55.432690, 28.946521]
+    },
 ]

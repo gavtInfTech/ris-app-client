@@ -71,7 +71,7 @@ export default function App() {
           <Route
             element={
               <ProtectedRoute
-                organisation={'РУ ЭСП "Днепро-Бугский водный путь"'}
+                organisation={'РУЭСП "Днепро-Бугский водный путь"'}
               />
             }
           >
@@ -92,7 +92,7 @@ export default function App() {
             element={
               <ProtectedRoute
                 organisation={
-                  'Нижне - Припятский'
+                  'Филиал \"Нижне-Припятский\" г. Мозырь'
                 }
               />
             }
@@ -103,7 +103,7 @@ export default function App() {
             element={
               <ProtectedRoute
                 organisation={
-                  'Гродненский участок'
+                  'Филиал \"Гродненский участок\" г. Гродно'
                 }
               />
             }
@@ -114,12 +114,23 @@ export default function App() {
             element={
               <ProtectedRoute
                 organisation={
-                  'Витебскводтранс'
+                  'Филиал \"Витебскводтранс\" г. Витебск'  
                 }
               />
             }
           >
             <Route path="/admin-vitebskvodtrans/*" element={<MainTab />}></Route>
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                organisation={
+                  'Белорусское речное пароходство'
+                }
+              />
+            }
+          >
+            <Route path="/admin-parahodstvo/*" element={<MainTab />}></Route>
           </Route>
           <Route element={<ProtectedRoute role="Клиент" />}>
             <Route path="/client/*" element={<MainTabClient />}></Route>

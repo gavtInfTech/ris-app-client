@@ -71,6 +71,9 @@ export default function Layout() {
           <Link className={styles.link} to={"/notices"}>
             Для судоводителей
           </Link>
+          <Link className={styles.link} to={"/sib"}>
+            Сводный информационный бюллетень
+          </Link>
           <Link className={styles.link} to={"/gabarit"}>
             Сроки навигации
           </Link>
@@ -101,6 +104,11 @@ export default function Layout() {
           <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
             <Link to={"/notices"}>
               Для судоводителей
+            </Link>
+          </MenuItem>
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
+            <Link to={"/sib"}>
+              Сводный информационный бюллетень
             </Link>
           </MenuItem>
           <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>

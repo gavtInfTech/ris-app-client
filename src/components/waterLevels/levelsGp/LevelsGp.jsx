@@ -79,7 +79,7 @@ import { api } from '../../../axiosConfig';
     },
     {
       field: 'difference',
-      headerName: 'Прибыло (+), убыло (-)',
+      headerName: 'Прибыло (+), убыло (-), см',
       type: 'string',
       cellClassName: (params) => {
      
@@ -144,7 +144,7 @@ import { api } from '../../../axiosConfig';
     "<br> Река: " + row.river + 
     "<br> Уровень воды над 0 граф: " + row.level1 + 
     "<br> Уровень воды над ПГ: " + row.level2 +
-    "<br> Прибыло (+), убыло (-): " + row.difference
+    "<br> Прибыло (+), убыло (-), см: " + row.difference
 
     return (
         <Placemark geometry={row.coords} key={row.id} properties={{balloonContentBody: [contentBody]} } modules={['geoObject.addon.balloon']}

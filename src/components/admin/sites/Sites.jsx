@@ -40,10 +40,12 @@ const rivers = [
 ];
 
 const organisations = [
-  "РУ ЭСП \"Днепро-Бугский водный путь\"",
+  "РУЭСП \"Днепро-Бугский водный путь\"",
   "РУ Днепро-Двинское предприятие водных путей \"Белводпуть\"",
   "РУ Днепро-Березинское предприятие водных путей",
-  "Нижне - Припятский"
+  'Филиал \"Нижне-Припятский\" г. Мозырь',
+  'Филиал \"Витебскводтранс\" г. Витебск',
+  'Филиал \"Гродненский участок\" г. Гродно'
 ]
 
 function EditToolbar(props) {
@@ -195,6 +197,13 @@ export default function Sites() {
       type: "singleSelect",
       valueOptions: rivers,
       width: 230,
+      editable: true,
+    },
+    {
+      field: "length",
+      headerName: "Протяженность",
+      type: "number",
+      width: 160,
       editable: true,
     },
     {

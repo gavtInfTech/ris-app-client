@@ -28,7 +28,7 @@ export default function NoticeTable(props) {
           cause += "Изменение СНО; ";
         }
         if (doc.cause2) {
-          cause += "Метеологические условия; ";
+          cause += "Гидрометеорологические условия; ";
         }
         if (doc.cause3) {
           cause += "Путевые работы; ";

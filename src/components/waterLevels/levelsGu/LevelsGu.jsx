@@ -39,8 +39,8 @@ export default function LevelsGp(props) {
 
     return {
       ...row,
-      level1: lastRecord.level1,
-      level2: lastRecord.level2,
+      level1: lastRecord.level1_VBChange,
+      level2: lastRecord.level2_NBChange,
       level1Change: lastRecord.level1Change === "-" ? '—' : lastRecord.level1Change,
       level2Change: lastRecord.level2Change === "-" ? '—' : lastRecord.level2Change,
       date: lastRecord.date.toLocaleString().slice(0, 10),

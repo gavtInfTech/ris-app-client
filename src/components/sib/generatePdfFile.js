@@ -5,6 +5,10 @@ import { MontserratBold } from "./font";
 import { hydroposts } from "../waterLevels/levelsGp/data";
 import { hydronodes } from "../waterLevels/levelsGu/data";
 import { bridgeGroups } from "../admin/adminInfo";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
+import { shapka } from "./shapka";
+import { podval } from "./podval";
 
 const generateSib = (
   doc,
@@ -15,11 +19,11 @@ const generateSib = (
   dislocationsData,
   bridgesData,
   noticesData,
-  sites
+  sites,
+  adminInfo
 ) => {
   date = new Date(date).toLocaleString().slice(0, 10);
   let currentY;
-
   // Работа с данными о гидропостах
 
   let levelsGpRows = hydroposts.map((row) => {
@@ -36,8 +40,24 @@ const generateSib = (
 
   const levelsGpRowsByRiver = (river) => {
     let filteredRows = levelsGpRows.filter((row) => row.river === river);
+
     let rows = filteredRows.map((row) => {
-      return [row.hydropost, row.level1, row.level2, row.difference];
+      let differenceStyle =
+        row.difference == 0
+          ? "▷"
+          : row.difference == "—"
+          ? "—"
+          : row.difference > 0
+          ? "▲"
+          : "▼";
+      let differenceCellStyle = { content: differenceStyle };
+      return [
+        row.hydropost,
+        row.level1,
+        row.level2,
+        row.difference,
+        differenceCellStyle,
+      ];
     });
     return rows;
   };
@@ -49,8 +69,8 @@ const generateSib = (
     if (rowData === undefined) return { ...row };
     return {
       ...row,
-      level1: rowData.level1,
-      level2: rowData.level2,
+      level1: rowData.level1_VBChange,
+      level2: rowData.level2_NBChange,
       level1Change: rowData.level1Change === "-" ? "—" : rowData.level1Change,
       level2Change: rowData.level2Change === "-" ? "—" : rowData.level2Change,
       date: rowData.date.toLocaleString().slice(0, 10),
@@ -96,7 +116,7 @@ const generateSib = (
         return "Неман";
       case "muhavets":
         return "Мухавец";
-      case "dnepBug":
+      case "dbk":
         return "Днепро-Бугский канал";
       case "pina":
         return "Пина";
@@ -112,13 +132,39 @@ const generateSib = (
         return "Западная Двина";
       case "turovskiZaton":
         return "Туровский затон";
-      case "avgustovskiCanal":
+      case "avgCanal":
         return "Августовский канал";
       case "svisloch":
         return "Свислочь";
     }
   }
-
+  function keyToRiverBridges(key) {
+    // eslint-disable-next-line default-case
+    switch (key) {
+      case "dnepr":
+        return "Днепр";
+      case "berezina":
+        return "Березина";
+      case "soj":
+        return "Сож";
+      case "neman":
+        return "Неман";
+      case "avgCanal":
+        return "Августовский канал";
+      case "dbk":
+        return "Днепро-Бугский канал";
+      case "pripyat":
+        return "Пина";
+      case "vpripyat":
+        return "Верхний участок реки Припять";
+      case "zapDvina":
+        return "Припять";
+      case "pina":
+        return "Западная Двина";
+      case "muhavets":
+        return "Мухавец";
+    }
+  }
   let gabsRows = [];
   sites.map((site) => {
     let rowData = gabsData.find((dat) => dat.site === site.name);
@@ -157,7 +203,12 @@ const generateSib = (
         row.riverName,
         row.distance,
         row.place,
-        row.date_start.toLocaleString().slice(0, 10).split("-").reverse().join("."),
+        row.date_start
+          .toLocaleString()
+          .slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("."),
       ];
     });
     return rows;
@@ -165,26 +216,38 @@ const generateSib = (
 
   // Работа с данными о габаритах подмостовых переходов
 
-  let bridgeRows = [];
-  for (var key in bridgeGroups) {
-    // eslint-disable-next-line no-loop-func
-    bridgeGroups[key].map((bridge) => {
-      let rowData = bridgesData.find((item) => item.bridge === bridge);
-      if (rowData === undefined)
-        bridgeRows.push({
-          bridge: bridge,
-          river: keyToRiver(key),
-          height: "—",
-        });
-      else bridgeRows.push(rowData);
-    });
-  }
-
   const bridgeRowsByRiver = (river) => {
+    let bridgeRows = [];
+
+    for (var key in bridgeGroups) {
+      bridgeGroups[key].forEach((bridgeGroup) => {
+        let rowData = bridgesData.find(
+          (item) => item.bridge === bridgeGroup.name
+        );
+
+        if (rowData === undefined) {
+          bridgeRows.push({
+            bridge: bridgeGroup.name,
+            river: keyToRiverBridges(key),
+            height: "—",
+            kilometr: bridgeGroup.kilometr || "—",
+            rsu: bridgeGroup.rsu || "—",
+          });
+        } else {
+          bridgeRows.push({
+            ...rowData,
+            kilometr: bridgeGroup.kilometr || "—",
+            rsu: bridgeGroup.rsu || "—",
+          });
+        }
+      });
+    }
+
     let filteredRows = bridgeRows.filter((row) => row.river === river);
     let rows = filteredRows.map((row) => {
-      return [row.bridge, row.height];
+      return [row.bridge, row.kilometr, row.rsu, row.height];
     });
+
     return rows;
   };
 
@@ -231,7 +294,8 @@ const generateSib = (
 
   doc.setFont(undefined, "bold");
   doc.setFontSize(12);
-  doc.text("СВОДНЫЙ ИНФОРМАЦИОННЫЙ БЮЛЛЕТЕНЬ", 105, 15, {
+  doc.addImage(shapka, "PNG", 23, 5);
+  doc.text("СВОДНЫЙ ИНФОРМАЦИОННЫЙ БЮЛЛЕТЕНЬ", 105, 30, {
     maxWidth: 200,
     font: "bold",
     align: "center",
@@ -240,13 +304,13 @@ const generateSib = (
   doc.text(
     `По внутренним водным путям Республики Беларусь на ${date}`,
     105,
-    25,
+    40,
     { maxWidth: 200, align: "center" }
   );
   doc.text(
     "1. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ ПО ОСНОВНЫМ ГИДРОПОСТАМ НА 8 ЧАСОВ УТРА",
-    15,
-    40,
+    10,
+    50,
     { maxWidth: 180 }
   );
 
@@ -254,83 +318,55 @@ const generateSib = (
     theme: "plain",
     styles: styles,
     headStyles: headStyles,
+    didParseCell: function (data) {
+      if (data.cell.text[0] == "▲") {
+        data.cell.styles.fillColor = [207, 255, 188];
+      }
+      if (data.cell.text[0] == "▼") {
+        data.cell.styles.fillColor = [212, 116, 131];
+      }
+      if (data.cell.text[0] == "▷") {
+        data.cell.styles.fillColor = [186, 210, 255];
+      }
+    },
     head: [
       [
         {
           content: "Наименование рек каналов и гидроузлов",
           rowSpan: 2,
-          styles: { cellWidth: 75 },
+          styles: { cellWidth: 65 },
         },
         { content: "Уровни воды над проектным горизонтом, см", colSpan: 2 },
-        { content: "Прибыло (+), убыло (-)", rowSpan: 2 },
+        { content: "Прибыло (+), убыло (-), см", colSpan: 2, rowSpan: 2 },
       ],
       [
-        { content: "ВБ", styles: { cellWidth: 36 } },
-        { content: "НБ", styles: { cellWidth: 36 } },
+        { content: `Над "0" граф.`, styles: { cellWidth: 36 } },
+        { content: "Над проектным горизонтом", styles: { cellWidth: 36 } },
       ],
     ],
 
-    body: [
-      [
+    body: adminInfo.hydropostRivers.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
         {
-          content: "р. Днепр",
-          colSpan: 4,
+          content: [
+            "Днепро-Бугский канал",
+            "Микашевичский канал",
+            "Туровский затон",
+            "Августовский канал",
+            "Верхний участок реки Припять",
+          ].includes(riverName)
+            ? riverName
+            : `р. ${riverName}`,
+          colSpan: 6,
           styles: { halign: "left", fontStyle: "bold" },
         },
-      ],
-      ...levelsGpRowsByRiver("Днепр"),
-      [
-        {
-          content: "р. Березина",
-          colSpan: 4,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGpRowsByRiver("Березина"),
-      [
-        {
-          content: "р. Сож",
-          colSpan: 4,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGpRowsByRiver("Сож"),
-      [
-        {
-          content: "р. Припять",
-          colSpan: 4,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGpRowsByRiver("Припять"),
-      [
-        {
-          content: "р. Горынь",
-          colSpan: 4,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGpRowsByRiver("Горынь"),
-      [
-        {
-          content: "р. Западная Двина",
-          colSpan: 4,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGpRowsByRiver("Западная Двина"),
-      [
-        {
-          content: "р. Неман",
-          colSpan: 4,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGpRowsByRiver("Неман"),
-    ],
-    startY: 48,
+      ]);
+      rows.push(...levelsGpRowsByRiver(riverName));
+      return rows;
+    }),
+    startY: 58,
   });
-
   doc.addPage();
   currentY = doc.lastAutoTable.finalY;
   doc.text("2. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ НА 8 УТРА", 15, 15, {
@@ -358,64 +394,26 @@ const generateSib = (
       ],
     ],
 
-    body: [
-      [
+    body: adminInfo.hydronodeRivers.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
         {
-          content: "р. Припять",
-          colSpan: 3,
+          content: [
+            "Днепро-Бугский канал",
+            "Микашевичский канал",
+            "Туровский затон",
+            "Августовский канал",
+            "Верхний участок реки Припять",
+          ].includes(riverName)
+            ? riverName
+            : `р. ${riverName}`,
+          colSpan: 4,
           styles: { halign: "left", fontStyle: "bold" },
         },
-      ],
-      ...levelsGuRowsByRiver("Припять"),
-      [
-        {
-          content: "р. Пина",
-          colSpan: 3,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGuRowsByRiver("Пина"),
-      [
-        {
-          content: "Днепро-Бугский канал",
-          colSpan: 3,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGuRowsByRiver("Днепро-Бугский канал"),
-      [
-        {
-          content: "р. Мухавец",
-          colSpan: 3,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGuRowsByRiver("Мухавец"),
-      [
-        {
-          content: "р. Западная Двина",
-          colSpan: 3,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGuRowsByRiver("Западная Двина"),
-      [
-        {
-          content: "р. Неман",
-          colSpan: 3,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGuRowsByRiver("Неман"),
-      [
-        {
-          content: "Августовский канал",
-          colSpan: 3,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...levelsGuRowsByRiver("Августовский канал"),
-    ],
+      ]);
+      rows.push(...levelsGuRowsByRiver(riverName));
+      return rows;
+    }),
     startY: 18,
   });
 
@@ -440,142 +438,18 @@ const generateSib = (
       [{ content: "Дата" }, { content: "Глубина" }],
     ],
 
-    body: [
-      [
+    body: adminInfo.sibDistricts.flatMap((riverName, index) => {
+      const rows = [];
+      rows.push([
         {
-          content:
-            "1. река Днепр (дер.Левки (воздушный переход) - н.п. Любеч (граница Белводпуть - Укрводпуть)",
+          content: `${riverName}`,
           colSpan: 8,
           styles: { halign: "left", fontStyle: "bold" },
         },
-      ],
-      ...gabsRowsByRiver("Днепр"),
-      [
-        {
-          content:
-            "2. река Березина (г.Березино (Березино - пристань) - устье реки Березина",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Березина"),
-      [
-        {
-          content:
-            "3. река Сож (г.Славгород (Славгород - город) - устье реки Сож)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Сож"),
-      [
-        {
-          content:
-            "4. река Неман (деревня Яблоново (вход в затон) - граница с Литовской Республикой)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Неман"),
-      [
-        {
-          content:
-            "5. река Мухавец (г.Брест (речной порт Брест) - г.Кобрин (слияние реки Мухавец и Днепро-Бугского канала)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Мухавец"),
-      [
-        {
-          content:
-            "6. Днепро - Бугский канал (г.Кобрин (слияние реки Мухавец и Днепро-Бугский канал) - слияние Днепро-Бугский канал и реки Пина)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Днепро-Бугский канал"),
-      [
-        {
-          content:
-            '7. река Пина (слияние Днепро-Бугский канал и реки Пина - г.Пинск (слияние реки Пина и реки Припять) - знак "запрещение прохода")',
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Пина"),
-      [
-        {
-          content:
-            "8. верхний участок реки Припять (7 км реки Припять - г.Пинск, слияние реки Припять и реки Пина)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Верхний участок реки Припять"),
-      [
-        {
-          content:
-            "9. река Припять (г.Пинск (слияние реки Пина и реки Припять) - перекат Усовский-1 (граница с Украиной))",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Припять"),
-      [
-        {
-          content:
-            "10. Микашевичский канал (устье Микашевичского канала - речной порт Микашевичи)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Микашевичский канал"),
-      [
-        {
-          content: "11. река Горынь (перекат Комора-2 - устье реки Горынь)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Горынь"),
-      [
-        {
-          content:
-            "12. река Западная Двина (деревня Сураж - Полоцкая гидроэлектростанция)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Западная Двина"),
-      [
-        {
-          content:
-            "13. Туровский затон (г.Туров (вход в затон) - г.Туров (причал)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Туровский затон"),
-      [
-        {
-          content:
-            "14. Августовский канал (Граница с Республикой Польша - устье Августовского канала (слияние с рекой Неман))",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Августовский канал"),
-      [
-        {
-          content:
-            "15. река Свислочь (Минская кольцевая автомобильная дорога - переулок Канатный)",
-          colSpan: 8,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...gabsRowsByRiver("Свислочь"),
-    ],
+      ]);
+      rows.push(...gabsRowsByRiver(adminInfo.siteRivers[index]));
+      return rows;
+    }),
     startY: 18,
   });
 
@@ -601,36 +475,18 @@ const generateSib = (
       ],
     ],
 
-    body: [
-      [
+    body: adminInfo.sibOrganizations.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
         {
-          content: 'РУ ЭСП "Днепро-Бугский водный путь"',
-          colSpan: 6,
+          content: `${riverName}`,
+          colSpan: 8,
           styles: { halign: "left", fontStyle: "bold" },
         },
-      ],
-      ...dislocationRowsByRiver('РУ ЭСП "Днепро-Бугский водный путь"'),
-      [
-        {
-          content: 'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
-          colSpan: 6,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...dislocationRowsByRiver(
-        'РУ Днепро-Двинское предприятие водных путей "Белводпуть"'
-      ),
-      [
-        {
-          content: "РУ Днепро-Березинское предприятие водных путей",
-          colSpan: 6,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...dislocationRowsByRiver(
-        "РУ Днепро-Березинское предприятие водных путей"
-      ),
-    ],
+      ]);
+      rows.push(...dislocationRowsByRiver(riverName));
+      return rows;
+    }),
     startY: 18,
   });
 
@@ -645,76 +501,32 @@ const generateSib = (
     head: [
       [
         { content: "Наименование рек и мостов" },
+        { content: "Километр реки/канала" },
+        { content: "Высота подмостового габарита над РСУ, м" },
         { content: "Текущая высота пролета, м" },
       ],
     ],
 
-    body: [
-      [
+    body: adminInfo.bridgeRivers.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
         {
-          content: "р. Днепр",
+          content: [
+            "Днепро-Бугский канал",
+            "Микашевичский канал",
+            "Туровский затон",
+            "Августовский канал",
+            "Верхний участок реки Припять",
+          ].includes(riverName)
+            ? riverName
+            : `р. ${riverName}`,
           colSpan: 2,
           styles: { halign: "left", fontStyle: "bold" },
         },
-      ],
-      ...bridgeRowsByRiver("Днепр"),
-      [
-        {
-          content: "р. Березина",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Березина"),
-      [
-        {
-          content: "р. Сож",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Сож"),
-      [
-        {
-          content: "р. Неман",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Неман"),
-      [
-        {
-          content: "Августовский канал",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Августовский канал"),
-      [
-        {
-          content: "Днепро-Бугский канал",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Днепро-Бугский канал"),
-      [
-        {
-          content: "р. Припять",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Припять"),
-      [
-        {
-          content: "р. Западная Двина",
-          colSpan: 2,
-          styles: { halign: "left", fontStyle: "bold" },
-        },
-      ],
-      ...bridgeRowsByRiver("Западная Двина"),
-    ],
+      ]);
+      rows.push(...bridgeRowsByRiver(riverName));
+      return rows;
+    }),
     startY: 18,
   });
 
@@ -735,28 +547,456 @@ const generateSib = (
       ],
     ],
 
-    body: [
-      ...noticesRowsByRiver("Днепр"),
-      ...noticesRowsByRiver("Березина"),
-      ...noticesRowsByRiver("Сож"),
-      ...noticesRowsByRiver("Неман"),
-      ...noticesRowsByRiver("Мухавец"),
-      ...noticesRowsByRiver("Днепро-Бугский канал"),
-      ...noticesRowsByRiver("Пина"),
-      ...noticesRowsByRiver("Верхний участок реки Припять"),
-      ...noticesRowsByRiver("Припять"),
-      ...noticesRowsByRiver("Микашевичский канал"),
-      ...noticesRowsByRiver("Горынь"),
-      ...noticesRowsByRiver("Западная Двина"),
-      ...noticesRowsByRiver("Туровский затон"),
-      ...noticesRowsByRiver("Августовский канал"),
-      ...noticesRowsByRiver("Свислочь"),
-    ],
+    body: adminInfo.siteRivers.flatMap((river) => noticesRowsByRiver(river)),
     startY: 18,
   });
+  if (doc.autoTable.previous.finalY > 250) {
+    doc.addPage();
+    doc.addImage(podval, "PNG", 22, 10);
+  } else {
+    doc.addImage(podval, "PNG", 22, doc.autoTable.previous.finalY + 10);
+  }
+  return doc;
+};
+
+const generateLevelsGP = (doc, levelsGpData, adminInfo) => {
+  let currentY;
+
+  // Функция для работы с данными о гидропостах
+  const levelsGpRowsByRiver = (river) => {
+    let filteredRows = levelsGpData.filter((row) => row.river.name === river);
+
+    let rows = filteredRows.map((row) => {
+      let differenceStyle =
+        row.difference == 0
+          ? "▷"
+          : row.difference == "—"
+          ? "—"
+          : row.difference > 0
+          ? "▲"
+          : "▼";
+
+      let differenceCellStyle = { content: differenceStyle };
+
+      // Преобразование даты в формат ru-RU
+      let formattedDate = new Date(row.date).toLocaleDateString("ru-RU");
+
+      return [
+        row.hydropost,
+        formattedDate, // Используем отформатированную дату
+        row.level1,
+        row.level2,
+        row.difference,
+        differenceCellStyle,
+      ];
+    });
+    return rows;
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  var styles = {
+    lineWidth: 0.1,
+    lineColor: "#9e9d9d",
+    font: "Montserrat",
+    fontSize: 9,
+  };
+
+  var headStyles = {
+    halign: "center",
+    valign: "middle",
+    font: "Montserrat",
+    fontStyle: "bold",
+  };
+
+  doc.setFont(undefined, "bold");
+  doc.setFontSize(12);
+
+  doc.text("СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ ПО ОСНОВНЫМ ГИДРОПОСТАМ", 10, 50, {
+    maxWidth: 180,
+  });
+
+  autoTable(doc, {
+    theme: "plain",
+    styles: styles,
+    headStyles: headStyles,
+    didParseCell: function (data) {
+      if (data.cell.text[0] == "▲") {
+        data.cell.styles.fillColor = [207, 255, 188];
+      }
+      if (data.cell.text[0] == "▼") {
+        data.cell.styles.fillColor = [212, 116, 131];
+      }
+      if (data.cell.text[0] == "▷") {
+        data.cell.styles.fillColor = [186, 210, 255];
+      }
+    },
+    head: [
+      [
+        {
+          content: "Наименование рек каналов и гидроузлов",
+          rowSpan: 2,
+          styles: { cellWidth: 40 },
+        },
+        {
+          content: "Выбранный промежуток времени",
+          styles: { cellWidth: 26 },
+          rowSpan: 2,
+        },
+        { content: "Уровни воды над проектным горизонтом, см", colSpan: 2 },
+        {
+          content: "Прибыло (+), убыло (-), см",
+          styles: { cellWidth: 26 },
+          colSpan: 2,
+          rowSpan: 2,
+        },
+      ],
+      [
+        { content: `Над "0" граф.`, styles: { cellWidth: 26 } },
+        { content: "Над проектным горизонтом", styles: { cellWidth: 26 } },
+      ],
+    ],
+
+    body: adminInfo.hydropostRivers.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
+        {
+          content: [
+            "Днепро-Бугский канал",
+            "Микашевичский канал",
+            "Туровский затон",
+            "Августовский канал",
+            "Верхний участок реки Припять",
+          ].includes(riverName)
+            ? riverName
+            : `р. ${riverName}`,
+          colSpan: 6,
+          styles: { halign: "left", fontStyle: "bold" },
+        },
+      ]);
+      rows.push(...levelsGpRowsByRiver(riverName));
+      return rows;
+    }),
+    startY: 58,
+  });
+
+  if (doc.autoTable.previous.finalY > 250) {
+    doc.addPage();
+    doc.addImage(podval, "PNG", 22, 10);
+  } else {
+    doc.addImage(podval, "PNG", 22, doc.autoTable.previous.finalY + 10);
+  }
+  return doc;
+};
+
+const generateLevelsGU = (doc, levelsGuData, adminInfo) => {
+  const levelsGuRowsByRiver = (river) => {
+    let filteredRows = levelsGuData.filter((row) => row.river.name === river);
+    let rows = filteredRows.map((row) => {
+      return [
+        row.hydronode,
+        row.date.toLocaleString("ru-RU", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+        row.level1_VBChange,
+        row.level2_NBChange,
+        row.level1Change === "-" ? "—" : row.level1Change,
+        row.level2Change === "-" ? "—" : row.level2Change,
+      ];
+    });
+    return rows;
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  var styles = {
+    lineWidth: 0.1,
+    lineColor: "#9e9d9d",
+    font: "Montserrat",
+    fontSize: 8, // Уменьшил размер шрифта
+    cellPadding: 2, // Уменьшил отступы внутри ячеек
+  };
+
+  var headStyles = {
+    halign: "center",
+    valign: "middle",
+    font: "Montserrat",
+    fontStyle: "bold",
+    fillColor: [240, 240, 240], // Светлый фон для заголовков
+  };
+
+  doc.setFont(undefined, "bold");
+  doc.setFontSize(10); // Уменьшил размер шрифта заголовка
+
+  doc.text("СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ", 15, 15, {
+    maxWidth: 180,
+  });
+
+  autoTable(doc, {
+    theme: "plain",
+    styles: styles,
+    headStyles: headStyles,
+    head: [
+      [
+        {
+          content: "Наименование рек каналов и гидроузлов",
+          rowSpan: 2,
+          styles: { cellWidth: 50 }, // Сократил ширину
+        },
+        {
+          content: "Дата",
+          rowSpan: 2,
+          styles: { cellWidth: 20 }, // Сократил ширину
+        },
+        { content: "Уровни воды над проектным горизонтом, см", colSpan: 2 },
+        { content: "Изменение уровня за сутки, см", colSpan: 2 },
+      ],
+      [
+        { content: "ВБ", styles: { cellWidth: 30 } }, // Сократил ширину
+        { content: "НБ", styles: { cellWidth: 30 } }, // Сократил ширину
+        { content: "ВБ", styles: { cellWidth: 30 } }, // Сократил ширину
+        { content: "НБ", styles: { cellWidth: 30 } }, // Сократил ширину
+      ],
+    ],
+
+    body: adminInfo.hydronodeRivers.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
+        {
+          content: [
+            "Днепро-Бугский канал",
+            "Микашевичский канал",
+            "Туровский затон",
+            "Августовский канал",
+            "Верхний участок реки Припять",
+          ].includes(riverName)
+            ? riverName
+            : `р. ${riverName}`,
+          colSpan: 6,
+          styles: { halign: "left", fontStyle: "bold" },
+        },
+      ]);
+      rows.push(...levelsGuRowsByRiver(riverName));
+      return rows;
+    }),
+    startY: 20,
+    margin: { top: 20, left: 10, right: 10 }, // Добавил отступы
+    pageBreak: "auto", // Автоматически добавлять страницы
+    tableWidth: "auto", // Автоматическая ширина таблицы
+  });
+
+  // Проверка на добавление подвала в зависимости от конечного положения таблицы
+  if (doc.autoTable.previous.finalY > 250) {
+    doc.addPage();
+    doc.addImage(podval, "PNG", 22, 10);
+  } else {
+    doc.addImage(podval, "PNG", 22, doc.autoTable.previous.finalY + 10);
+  }
 
   return doc;
 };
+
+const generateLevelsGabs = (doc, levelsGuData, adminInfo) => {
+  const gabsRowsByRiver = (river) => {
+    let filteredRows = levelsGuData.filter((row) => row.river === river);
+
+    filteredRows.sort((a, b) => {
+      // Сначала сортировка по номеру участка
+      const sectionComparison =
+        parseFloat(a.site.split(" ")[0]) - parseFloat(b.site.split(" ")[0]);
+      if (sectionComparison !== 0) {
+        return sectionComparison;
+      }
+
+      // Если номера участков одинаковы, сортировка по дате
+      return new Date(a.date) - new Date(b.date);
+    });
+
+    let rows = filteredRows.map((row) => {
+      // Приведение даты к формату ru-RU
+      const formattedDate = new Date(row.date).toLocaleDateString("ru-RU");
+      const formattedForecastDate = row.forecastDate
+        ? new Date(row.forecastDate).toLocaleDateString("ru-RU")
+        : "";
+
+      return [
+        row.site,
+        row.planDepth,
+        formattedDate,
+        row.limitedRoll,
+        row.depth,
+        row.width,
+        formattedForecastDate,
+        row.forecastDepth,
+      ];
+    });
+
+    return rows;
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  var styles = {
+    lineWidth: 0.1,
+    lineColor: "#9e9d9d",
+    font: "Montserrat",
+    fontSize: 8, // Уменьшил размер шрифта
+    cellPadding: 2, // Уменьшил отступы внутри ячеек
+  };
+
+  var headStyles = {
+    halign: "center",
+    valign: "middle",
+    font: "Montserrat",
+    fontStyle: "bold",
+    fillColor: [240, 240, 240], // Светлый фон для заголовков
+  };
+
+  doc.setFont(undefined, "bold");
+  doc.setFontSize(10); // Уменьшил размер шрифта заголовка
+
+  doc.text("НАИМЕНЬШИЕ ГАБАРИТЫ СУДОВОГО ХОДА", 15, 15);
+  autoTable(doc, {
+    theme: "plain",
+    styles: styles,
+    rowPageBreak: "avoid",
+    headStyles: headStyles,
+    head: [
+      [
+        { content: "Наименование рек и участков", rowSpan: 2 },
+        { content: "Плановая глубина", rowSpan: 2 },
+        { content: "Дата", rowSpan: 2 },
+        { content: "Лимитирующий участок, перекат", rowSpan: 2 },
+        { content: "Глубина, см", rowSpan: 2 },
+        { content: "Ширина, м", rowSpan: 2 },
+        { content: "Прогноз", colSpan: 2 },
+      ],
+      [{ content: "Дата" }, { content: "Глубина" }],
+    ],
+
+    body: adminInfo.sibDistricts.flatMap((riverName, index) => {
+      const rows = [];
+      rows.push([
+        {
+          content: `${riverName}`,
+          colSpan: 8,
+          styles: { halign: "left", fontStyle: "bold" },
+        },
+      ]);
+      rows.push(...gabsRowsByRiver(adminInfo.siteRivers[index]));
+      return rows;
+    }),
+    startY: 20,
+    margin: { top: 20, left: 10, right: 10 }, // Добавил отступы
+    pageBreak: "auto", // Автоматически добавлять страницы
+    tableWidth: "auto", // Автоматическая ширина таблицы
+  });
+
+  // Проверка на добавление подвала в зависимости от конечного положения таблицы
+  if (doc.autoTable.previous.finalY > 250) {
+    doc.addPage();
+    doc.addImage(podval, "PNG", 22, 10);
+  } else {
+    doc.addImage(podval, "PNG", 22, doc.autoTable.previous.finalY + 10);
+  }
+
+  return doc;
+};
+
+const generateDislocation = (doc, dislocationsData, adminInfo) => {
+  //фильтрация по организациям
+  const dislocationRowsByRiver = (organisation) => {
+    let filteredRows = dislocationsData.filter(
+      (item) => item.organisation === organisation
+    );
+    let rows = filteredRows.map((row) => {
+      return [
+        row.number,
+        row.typeOfWork,
+        row.riverName,
+        row.distance,
+        row.place,
+        row.date_start
+          .toLocaleString()
+          .slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("."),
+      ];
+    });
+    return rows;
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  var styles = {
+    lineWidth: 0.1,
+    lineColor: "#9e9d9d",
+    font: "Montserrat",
+    fontSize: 8, // Уменьшил размер шрифта
+    cellPadding: 2, // Уменьшил отступы внутри ячеек
+  };
+
+  var headStyles = {
+    halign: "center",
+    valign: "middle",
+    font: "Montserrat",
+    fontStyle: "bold",
+    fillColor: [240, 240, 240], // Светлый фон для заголовков
+  };
+
+  doc.setFont(undefined, "bold");
+  doc.setFontSize(10); // Уменьшил размер шрифта заголовка
+
+  doc.text("4. ДИСЛОКАЦИЯ ТЕХНИЧЕСКОГО ФЛОТА И ИЗЫСКАТЕЛЬСКИХ ПАРТИЙ", 15, 15);
+  autoTable(doc, {
+    theme: "plain",
+    styles: styles,
+    rowPageBreak: "avoid",
+    headStyles: headStyles,
+    head: [
+      [
+        { content: "№ судна/партии", rowSpan: 2 },
+        { content: "Вид работы", rowSpan: 2 },
+        { content: "Место работы", colSpan: 3 },
+        { content: "Дата начала работы", rowSpan: 2 },
+      ],
+      [
+        { content: "Наименование реки и № участка" },
+        { content: "Км от устья" },
+        { content: "Место дислокации" },
+      ],
+    ],
+
+    body: adminInfo.sibOrganizations.flatMap((riverName) => {
+      const rows = [];
+      rows.push([
+        {
+          content: `${riverName}`,
+          colSpan: 8,
+          styles: { halign: "left", fontStyle: "bold" },
+        },
+      ]);
+      rows.push(...dislocationRowsByRiver(riverName));
+      return rows;
+    }),
+    startY: 18,
+  });
+
+  // Проверка на добавление подвала в зависимости от конечного положения таблицы
+  if (doc.autoTable.previous.finalY > 250) {
+    doc.addPage();
+    doc.addImage(podval, "PNG", 22, 10);
+  } else {
+    doc.addImage(podval, "PNG", 22, doc.autoTable.previous.finalY + 10);
+  }
+
+  return doc;
+};
+
+
 
 export const generatePdfFileByDate = (
   date,
@@ -766,7 +1006,8 @@ export const generatePdfFileByDate = (
   dislocationsData,
   bridgesData,
   noticesData,
-  sites
+  sites,
+  adminInfo
 ) => {
   var doc = new jsPDF();
   doc.addFileToVFS("MontserratLight.ttf", MontserratLight);
@@ -784,7 +1025,8 @@ export const generatePdfFileByDate = (
     dislocationsData,
     bridgesData,
     noticesData,
-    sites
+    sites,
+    adminInfo
   );
 
   doc.save(`СИБ за ${new Date(date).toLocaleString().slice(0, 10)}.pdf`);
@@ -799,7 +1041,8 @@ export const generatePdfFileByPeriod = (
   dislocationsData,
   bridgesData,
   noticesData,
-  sites
+  sites,
+  adminInfo
 ) => {
   startPeriod = new Date(
     startPeriod.getFullYear(),
@@ -856,13 +1099,15 @@ export const generatePdfFileByPeriod = (
       (item) => item.date >= startDate && item.date <= endDate
     );
     let dislocations = dislocationsData.filter(
-      (item) => item.date >= startDate && item.date <= endDate
+      (item) => startDate >= item.date_start && startDate <= item.date_end
     );
+
     let bridges = bridgesData.filter(
       (item) => item.date >= startDate && item.date <= endDate
     );
+
     let notices = noticesData.filter(
-      (item) => item.date >= startDate && item.date <= endDate
+      (item) => endDate >= item.date_start && startDate <= item.date_end
     );
     generateSib(
       doc,
@@ -872,13 +1117,170 @@ export const generatePdfFileByPeriod = (
       gabs,
       dislocations,
       bridges,
-      notices,
-      sites
+      noticesData,
+      sites,
+      adminInfo
     );
     if (date.getTime() !== endPeriod.getTime()) doc.addPage();
   }
   doc.save(
     `СИБ за период с ${startPeriod.toLocaleString().slice(0, 10)} по ${endPeriod
+      .toLocaleString()
+      .slice(0, 10)}.pdf`
+  );
+};
+
+export const generatePdfFileByPeriodLevelsGP = (
+  startPeriod,
+  endPeriod,
+  levelsGpData,
+  adminInfo
+) => {
+  startPeriod = new Date(
+    startPeriod.getFullYear(),
+    startPeriod.getMonth(),
+    startPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+  endPeriod = new Date(
+    endPeriod.getFullYear(),
+    endPeriod.getMonth(),
+    endPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+
+  var doc = new jsPDF();
+  doc.addFileToVFS("MontserratLight.ttf", MontserratLight);
+  doc.addFileToVFS("MontserratBold.ttf", MontserratBold);
+  doc.addFont("MontserratLight.ttf", "Montserrat", "normal");
+  doc.addFont("MontserratBold.ttf", "Montserrat", "bold");
+  doc.setFont("Montserrat");
+
+  generateLevelsGP(doc, levelsGpData, adminInfo);
+
+  doc.save(
+    `Гидропосты за период с ${startPeriod
+      .toLocaleString()
+      .slice(0, 10)} по ${endPeriod.toLocaleString().slice(0, 10)}.pdf`
+  );
+};
+
+export const generatePdfFileByPeriodLevelsGU = (
+  startPeriod,
+  endPeriod,
+  levelsGuData,
+  adminInfo
+) => {
+  startPeriod = new Date(
+    startPeriod.getFullYear(),
+    startPeriod.getMonth(),
+    startPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+  endPeriod = new Date(
+    endPeriod.getFullYear(),
+    endPeriod.getMonth(),
+    endPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+
+  var doc = new jsPDF();
+  doc.addFileToVFS("MontserratLight.ttf", MontserratLight);
+  doc.addFileToVFS("MontserratBold.ttf", MontserratBold);
+  doc.addFont("MontserratLight.ttf", "Montserrat", "normal");
+  doc.addFont("MontserratBold.ttf", "Montserrat", "bold");
+  doc.setFont("Montserrat");
+
+  generateLevelsGU(doc, levelsGuData, adminInfo);
+
+  doc.save(
+    `Гидроузлы за период с ${startPeriod
+      .toLocaleString()
+      .slice(0, 10)} по ${endPeriod.toLocaleString().slice(0, 10)}.pdf`
+  );
+};
+
+export const generatePdfFileByPeriodGabs = (
+  startPeriod,
+  endPeriod,
+  levelsGabsData,
+  adminInfo
+) => {
+  startPeriod = new Date(
+    startPeriod.getFullYear(),
+    startPeriod.getMonth(),
+    startPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+  endPeriod = new Date(
+    endPeriod.getFullYear(),
+    endPeriod.getMonth(),
+    endPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+
+  var doc = new jsPDF();
+  doc.addFileToVFS("MontserratLight.ttf", MontserratLight);
+  doc.addFileToVFS("MontserratBold.ttf", MontserratBold);
+  doc.addFont("MontserratLight.ttf", "Montserrat", "normal");
+  doc.addFont("MontserratBold.ttf", "Montserrat", "bold");
+  doc.setFont("Montserrat");
+
+  generateLevelsGabs(doc, levelsGabsData, adminInfo);
+
+  doc.save(
+    `Габариты с ${startPeriod.toLocaleString().slice(0, 10)} по ${endPeriod
+      .toLocaleString()
+      .slice(0, 10)}.pdf`
+  );
+};
+
+export const generatePdfFileByPeriodDislocation = (
+  startPeriod,
+  endPeriod,
+  dislocationData,
+  adminInfo
+) => {
+  startPeriod = new Date(
+    startPeriod.getFullYear(),
+    startPeriod.getMonth(),
+    startPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+  endPeriod = new Date(
+    endPeriod.getFullYear(),
+    endPeriod.getMonth(),
+    endPeriod.getDate(),
+    0,
+    0,
+    0
+  );
+
+  var doc = new jsPDF();
+  doc.addFileToVFS("MontserratLight.ttf", MontserratLight);
+  doc.addFileToVFS("MontserratBold.ttf", MontserratBold);
+  doc.addFont("MontserratLight.ttf", "Montserrat", "normal");
+  doc.addFont("MontserratBold.ttf", "Montserrat", "bold");
+  doc.setFont("Montserrat");
+
+  generateDislocation(doc, dislocationData, adminInfo);
+
+  doc.save(
+    `Дислокация с ${startPeriod.toLocaleString().slice(0, 10)} по ${endPeriod
       .toLocaleString()
       .slice(0, 10)}.pdf`
   );

@@ -15,7 +15,7 @@ import { findSegmentByKilometer } from "../../vvp/siteMethods";
 import PathInformationPart from "./PathInformationPart";
 import { customComparator } from "../../vvp/siteMethods";
 import MarhsrutnikInformationPart from "./Marshrutnik/MarhsrutnikInformationPart";
-
+import Sib from "../../sib/Sib";
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
@@ -279,47 +279,63 @@ export default function PathInformationMap(props) {
 
   return (
     <>
-    {isLoaded ? (
+      {isLoaded ? (
         pathname === "/path-information/marshrutnik" ? (
           <MarhsrutnikInformationPart />
+        ) : pathname === "/path-information/sib" ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              pt: "10px",
+              maxHeight: "100%",
+              overflow: "auto",
+            }}
+          >
+            <Sib></Sib>
+          </Box>
         ) : (
-         <Box className={styles.container}>
-        <Box
-          sx={{ maxHeight: contentHeight + "px" }}
-          className={styles.infoPart}
-        >
-          <PathInformationPart sites={sites} river={river} alerts={alerts} setAlerts={setAlerts} />
-        </Box>
-        <Box className={styles.mapPart}>
-          <YMaps>
-            <Map state={map} className={styles.map}>
-              <ListBox data={{ content: "Фильтрация" }}>
-                <ListBoxItem
-                  data={{ content: "Знаки" }}
-                  state={{ selected: displaySigns }}
-                  options={{ selectOnClick: true }}
-                  onClick={() => setDisplaySigns(!displaySigns)}
-                />
-                <ListBoxItem
-                  data={{ content: "Перекаты" }}
-                  state={{ selected: displayRifts }}
-                  options={{ selectOnClick: true }}
-                  onClick={() => setDisplayRifts(!displayRifts)}
-                />
-              </ListBox>
-              {polylines}
-              {displayRifts && riverRiftsMarks}
-              {displaySigns && riverSignsMarks}
-              {riverAlertMarks}
-            </Map>
-          </YMaps>
-        </Box>
-      </Box>
-          )
+          <Box className={styles.container}>
+            <Box
+              sx={{ maxHeight: contentHeight + "px" }}
+              className={styles.infoPart}
+            >
+              <PathInformationPart
+                sites={sites}
+                river={river}
+                alerts={alerts}
+                setAlerts={setAlerts}
+              />
+            </Box>
+            <Box className={styles.mapPart}>
+              <YMaps>
+                <Map state={map} className={styles.map}>
+                  <ListBox data={{ content: "Фильтрация" }}>
+                    <ListBoxItem
+                      data={{ content: "Знаки" }}
+                      state={{ selected: displaySigns }}
+                      options={{ selectOnClick: true }}
+                      onClick={() => setDisplaySigns(!displaySigns)}
+                    />
+                    <ListBoxItem
+                      data={{ content: "Перекаты" }}
+                      state={{ selected: displayRifts }}
+                      options={{ selectOnClick: true }}
+                      onClick={() => setDisplayRifts(!displayRifts)}
+                    />
+                  </ListBox>
+                  {polylines}
+                  {displayRifts && riverRiftsMarks}
+                  {displaySigns && riverSignsMarks}
+                  {riverAlertMarks}
+                </Map>
+              </YMaps>
+            </Box>
+          </Box>
+        )
       ) : (
         <p>Компонент загружается...</p>
       )}
-
     </>
   );
 }

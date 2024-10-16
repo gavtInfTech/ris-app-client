@@ -1,4 +1,4 @@
-import { React, useContext } from "react";
+import { React, useContext, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -12,10 +12,13 @@ import { AuthContext } from "../../contexts/AuthContext";
 import ProtectedRoute from "../../ProtectedRoute";
 import Sites from "./sites/Sites";
 import ConfirmPage from "./confirmPage/ConfirmPage";
+import { api } from "../../axiosConfig";
+import { useState } from "react";
 
 export default function FullWidthTabs() {
   const { pathname } = useLocation();
   const { auth } = useContext(AuthContext);
+  const [isConfirms, setIsConfirms] = useState(false);
   let value;
   let rolePath = auth.rolePath;
   console.log(pathname);
@@ -27,6 +30,22 @@ export default function FullWidthTabs() {
   else if (pathname.includes("marshrutnik")) value = "/admin-main/marshrutnik";
   else if (pathname.includes("confirmPage")) value = "/admin-main/confirmPage";
   else value = "/admin-main/users";
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await api.get(
+          `/confirmation/getAll`
+        );
+        console.log("RESSS DATA!", res.data);
+        res.data ? setIsConfirms(true) : setIsConfirms(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getData();
+  });
 
   return (
     <Box sx={{ bgcolor: "background.paper", height: "100%" }}>
@@ -51,7 +70,7 @@ export default function FullWidthTabs() {
             sx={{ width: 300, height: 70, fontSize: 14 }}
             label="Текущая информация"
             value={`/admin-${rolePath}/informationTab`}
-            to={`/admin-${rolePath}/informationTab/levels/levelsGp`}
+            to={ auth.organisation == "Белорусское речное пароходство" ? `/admin-${rolePath}/informationTab/spravkaorabote` : `/admin-${rolePath}/informationTab/levels/levelsGp`}
             component={Link}
           />
           {auth.role === "Администратор" && (
@@ -83,7 +102,7 @@ export default function FullWidthTabs() {
           )}
           {auth.role === "Администратор" && (
             <Tab
-              sx={{ width: 300, fontSize: 14 }}
+              sx={{ width: 300, fontSize: 14,  color: isConfirms ? "red" : "white" }}
               label="Подтверждение"
               value="/admin-main/confirmPage"
               to="/admin-main/confirmPage"

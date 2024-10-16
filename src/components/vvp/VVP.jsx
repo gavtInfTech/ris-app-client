@@ -130,7 +130,7 @@ export default function VVP() {
       item.level2 +
       "<br> Дата последнего измерения: " +
       item.date +
-      "<br> Прибыло (+), убыло (-): " +
+      "<br> Прибыло (+), убыло (-), см: " +
       item.difference;
 
     return (

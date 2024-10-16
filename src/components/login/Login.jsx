@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import * as nijPrivInfo from "../admin/nijnePripytskiyInfo"
 import * as grodnenskoeInfo from "../admin/grodnenskiyInfo"
 import * as vitebskoeInfo from "../admin/VitebskVodTransInfo"
+import * as parahodstvo from "../admin/parahodstvo"
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
   const [message, setMessage] = useState("");
@@ -40,7 +41,7 @@ export default function Login() {
         navigate("/path-information/dnepr");
       } else {
         switch (res.data.organisation) {
-          case 'РУ ЭСП "Днепро-Бугский водный путь"':
+          case 'РУЭСП "Днепро-Бугский водный путь"':
             setAuth({ ...res.data, info: bugskoeInfo, rolePath: "bugskoe" });
             navigate("/admin-bugskoe/informationTab/levels/levelsGp");
             break;
@@ -56,7 +57,7 @@ export default function Login() {
             });
             navigate("/admin-berezinskoe/informationTab/levels/levelsGp");
             break;
-          case "Нижне - Припятский":
+          case 'Филиал \"Нижне-Припятский\" г. Мозырь':
             setAuth({
               ...res.data,
               info: nijPrivInfo,
@@ -64,7 +65,7 @@ export default function Login() {
             });
             navigate("/admin-nijnepripyat/informationTab/levels/levelsGp");
             break;
-          case "Гродненский участок":
+          case 'Филиал \"Гродненский участок\" г. Гродно':
             setAuth({
               ...res.data,
               info: grodnenskoeInfo,
@@ -72,13 +73,21 @@ export default function Login() {
             });
             navigate("/admin-grodnenskiy/informationTab/levels/levelsGp");
             break;
-          case "Витебскводтранс":
+          case 'Филиал \"Витебскводтранс\" г. Витебск':
             setAuth({
               ...res.data,
               info: vitebskoeInfo,
               rolePath: "vitebskvodtrans",
             });
             navigate("/admin-vitebskvodtrans/informationTab/levels/levelsGp");
+            break;
+            case "Белорусское речное пароходство":
+            setAuth({
+              ...res.data,
+              info: parahodstvo,
+              rolePath: "parahodstvo",
+            });
+            navigate("/admin-parahodstvo/informationTab/spravkaorabote");
             break;
         }
       }

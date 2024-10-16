@@ -7,6 +7,7 @@ import * as dvinskoeInfo from "../components/admin/dvinskoeInfo";
 import * as nijPrivInfo from "../components/admin/nijnePripytskiyInfo";
 import * as grodnenskoeInfo from "../components/admin/grodnenskiyInfo";
 import * as vitebskoeInfo from "../components/admin/VitebskVodTransInfo";
+import * as parahodstvoInfo from "../components/admin/parahodstvo";
 
 export const AuthContext = createContext(null);
 
@@ -30,7 +31,7 @@ export function AuthProvider(props) {
         } else if (res.data.role === "Клиент" || res.data.role === "Путевик") {
           setAuth({ ...res.data });
         } else if (
-          res.data.organisation === 'РУ ЭСП "Днепро-Бугский водный путь"'
+          res.data.organisation === 'РУЭСП "Днепро-Бугский водный путь"'
         ) {
           setAuth({ ...res.data, info: bugskoeInfo, rolePath: "bugskoe" });
         } else if (
@@ -51,23 +52,30 @@ export function AuthProvider(props) {
             info: berezinskoeInfo,
             rolePath: "berezinskoe",
           });
-        } else if (res.data.organisation === "Нижне - Припятский") {
+        } else if (res.data.organisation === 'Филиал \"Нижне-Припятский\" г. Мозырь') {
           setAuth({
             ...res.data,
             info: nijPrivInfo,
             rolePath: "nijnepripyat",
           });
-        } else if (res.data.organisation === "Витебскводтранс") {
+        } else if (res.data.organisation === 'Филиал \"Витебскводтранс\" г. Витебск') {
           setAuth({
             ...res.data,
             info: vitebskoeInfo,
             rolePath: "vitebskvodtrans",
           });
-        } else if (res.data.organisation === "Гродненский участок") {
+        } else if (res.data.organisation === 'Филиал \"Гродненский участок\" г. Гродно') {
           setAuth({
             ...res.data,
             info: grodnenskoeInfo,
             rolePath: "grodnenskiy",
+          });
+        }
+        else if (res.data.organisation === "Белорусское речное пароходство") {
+          setAuth({
+            ...res.data,
+            info: parahodstvoInfo,
+            rolePath: "parahodstvo",
           });
         }
         setIsLoading(false);

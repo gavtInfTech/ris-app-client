@@ -120,6 +120,13 @@ export default function PathInformationMenu() {
             to={`/path-information/marshrutnik`}
             component={Link}
           />
+           <Tab
+            sx={{ width: 200, height: 70, fontSize: 14 }}
+            label="CИБ"
+            value={`/path-information/sib`}
+            to={`/path-information/sib`}
+            component={Link}
+          />
         </Tabs>
       </AppBar>
 

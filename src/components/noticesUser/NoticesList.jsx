@@ -11,7 +11,7 @@ import  Icon  from "@mui/material/Icon";
 
 export default function NoticesList(props) {
   const { data } = props;
-  const itemsPerPage = 12;
+  const itemsPerPage = 8;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -29,7 +29,7 @@ export default function NoticesList(props) {
         <Accordion sx={{ mt: 1 }} key={doc.id}>
           <AccordionSummary>
             { doc.cause.includes('Изменение СНО') &&  <Icon sx={{width: "30px", height: "40px"}}> <img src="/images/sno.png" /></Icon> }
-            { doc.cause.includes('Метеологические условия') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/weatherNotices.png" /></Icon> }
+            { (doc.cause.includes('Гидрометеорологические условия') || doc.cause.includes('Гидрометеорологические условия'))  && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/weatherNotices.png" /></Icon> }
             { doc.cause.includes('Путевые работы') && <Icon sx={{width: "40px", height: "40px"}}> <img src="/images/put1.png" /></Icon> }
             <Typography sx={{ ml: "20px", fontSize: "17px", display: "flex", alignItems: "center" }}>
               ({doc.date.toLocaleString().slice(0, 17)}) – {doc.site} – Действует с: {new Date(doc.date_start).toLocaleDateString("ru-Ru")} по {new Date(doc.date_end).toLocaleDateString("ru-Ru")}

@@ -64,13 +64,13 @@ export default function Depth(props) {
   const [forceReload, setForceReload] = useState(false);
   const { auth } = useContext(AuthContext);
   const organisations = {
-    'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+    'РУЭСП "Днепро-Бугский водный путь"': 1,
     'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
     "РУ Днепро-Березинское предприятие водных путей": 3,
     "Государственная администрация водного транспорта": 4,
-    "Нижне - Припятский": 5,
-    "Гродненский участок": 6,
-    Витебскводтранс: 7,
+    'Филиал \"Нижне-Припятский\" г. Мозырь': 5,
+    'Филиал \"Гродненский участок\" г. Гродно': 6,
+    'Филиал \"Витебскводтранс\" г. Витебск': 7,
   };
   function getNumber(organisationName) {
     return organisations[organisationName] || null;
@@ -104,14 +104,26 @@ export default function Depth(props) {
         // Сортируем отфильтрованные данные
         const sortedData = filteredReady.sort((a, b) => a.date.getTime() - b.date.getTime());
 
-        setRows(sortedData);
+
+
+        const finalMassiv = sortedData.filter((row) => {
+          // Проверяем, есть ли в массиве ready элемент с аналогичным id, но с припиской "_change"
+          const hasChange = sortedData.some(
+            (changeRow) => changeRow.id === row.id + "_change"
+          );
+
+          // Возвращаем элемент, если для него нет соответствующего id с припиской "_change"
+          return !hasChange;
+        });
+
+        setRows(finalMassiv);
 
         if (!isEditAllowed) {
-            setMessage(() => ({
-                open: true,
-                messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
-                severity: "warning",
-            }));
+          setMessage(() => ({
+            open: true,
+            messageText: `Изменения после ${forbiddenTime.getHours()}:00 должны подтверждаться Администрацией!`,
+            severity: "warning",
+          }));
         }
     } catch (err) {
         console.log(err);
@@ -285,12 +297,10 @@ export default function Depth(props) {
             typeOfChange: "Изменено",
             confirmation: isEditAllowed,
             organisation: getNumber(auth.organisation),
-            forecastDate: new Date(updatedRow.forecastDate)
+            forecastDate: updatedRow.forecastDate ? new Date(updatedRow.forecastDate) : null
           });
+          setForceReload((prev) => !prev);
         }
-        setRows(
-          rows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-        );
       } catch (err) {
         setMessage(() => ({
           open: true,
@@ -326,7 +336,7 @@ export default function Depth(props) {
   const columns = [
     {
       field: "planDepth",
-      headerName: "Плановая глубина",
+      headerName: "Плановая глубина, см",
       type: "string",
       width: 140,
       editable: true,

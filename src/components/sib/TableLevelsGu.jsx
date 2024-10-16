@@ -11,18 +11,27 @@ import {
 import { Typography } from "@mui/material";
 import styles from "./style.module.css";
 import { AuthContext } from "../../contexts/AuthContext";
+import * as adminInfo from "../admin/adminInfo";
 
 export default function TableLevelsGu(props) {
   const data = props.data;
+  const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
+  let informationData; 
+  if(allInfo){
+    informationData = adminInfo;
+  }
+  else{
+    informationData = auth.info;
 
+  }
   let rows = hydronodes.map((row) => {
     let rowData = data.find((dat) => dat.hydronode === row.hydronode);
     if (rowData === undefined) return { ...row };
     return {
       ...row,
-      level1: rowData.level1,
-      level2: rowData.level2,
+      level1_VBChange: rowData.level1_VBChange,
+      level2_NBChange: rowData.level2_NBChange,
       level1Change: rowData.level1Change === "-" ? "—" : rowData.level1Change,
       level2Change: rowData.level2Change === "-" ? "—" : rowData.level2Change,
       date: rowData.date.toLocaleString().slice(0, 10),
@@ -35,8 +44,8 @@ export default function TableLevelsGu(props) {
       return (
         <TableRow>
           <TableCell align="left">{row.hydronode}</TableCell>
-          <TableCell align="center">{row.level1}</TableCell>
-          <TableCell align="center">{row.level2}</TableCell>
+          <TableCell align="center">{row.level1_VBChange}</TableCell>
+          <TableCell align="center">{row.level2_NBChange}</TableCell>
           <TableCell align="center">{row.level1Change}</TableCell>
           <TableCell align="center">{row.level2Change}</TableCell>
         </TableRow>
@@ -72,7 +81,7 @@ export default function TableLevelsGu(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {auth.info.hydronodeRivers.map((riverName) => {
+            {informationData.hydronodeRivers.map((riverName) => {
               const rows = [];
               rows.push(
                 <TableRow key={riverName}>

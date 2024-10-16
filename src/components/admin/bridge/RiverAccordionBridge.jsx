@@ -9,24 +9,32 @@ import Bridge from "./Bridge.jsx";
 import { AuthContext } from "../../../contexts/AuthContext.jsx";
 
 const getBridges = (river, bridgeGroups) => {
+  const extractNames = (group) => group.map((bridge) => bridge.name);
+
   // eslint-disable-next-line default-case
   switch (river) {
     case "Днепр":
-      return bridgeGroups.dnepr;
+      return extractNames(bridgeGroups.dnepr);
     case "Березина":
-      return bridgeGroups.berezina;
+      return extractNames(bridgeGroups.berezina);
     case "Сож":
-      return bridgeGroups.soj;
+      return extractNames(bridgeGroups.soj);
     case "Неман":
-      return bridgeGroups.neman;
+      return extractNames(bridgeGroups.neman);
     case "Августовский канал":
-      return bridgeGroups.avgCanal;
+      return extractNames(bridgeGroups.avgCanal);
     case "Днепро-Бугский канал":
-      return bridgeGroups.dbk;
+      return extractNames(bridgeGroups.dbk);
     case "Припять":
-      return bridgeGroups.pripyat;
+      return extractNames(bridgeGroups.pripyat);
+    case "Пина":
+      return extractNames(bridgeGroups.pina);
+    case "Верхний участок реки Припять":
+      return extractNames(bridgeGroups.vpripyat);
     case "Западная Двина":
-      return bridgeGroups.zapDvina;
+      return extractNames(bridgeGroups.zapDvina);
+    case "Мухавец":
+      return extractNames(bridgeGroups.muhavets);
   }
 };
 

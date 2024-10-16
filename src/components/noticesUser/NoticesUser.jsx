@@ -8,17 +8,21 @@ import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { rivers, sites } from "./info";
-import { Button, DialogContent, Typography } from "@mui/material";
+import { Button, Chip, DialogContent, Typography } from "@mui/material";
 import Subscription from "./Subscription";
 import { api } from "../../axiosConfig";
 import Style from "./style.module.css";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { useRef } from "react";
+import { customComparator } from "../vvp/siteMethods";
 
 export default function NoticesUser(props) {
   const [open, setOpen] = useState(false);
-  const [mainData, setMainData] = useState([]);
+  const [disabled, setDisabled] = useState(true);
+  const [filterApply, setFilterApply] = useState(false);
   const [data, setData] = useState([]);
+  const [mainData, setMainData] = useState([]);
   const [state, setState] = useState({
     noticeInfo: {
       river: "",
@@ -26,9 +30,9 @@ export default function NoticesUser(props) {
       date1: "",
       date2: "",
     },
-
     sites: [],
   });
+  const previousFilters = useRef({});
 
   const getData = async () => {
     try {
@@ -37,20 +41,21 @@ export default function NoticesUser(props) {
       res.data.forEach((item) => {
         item.date = new Date(item.date);
       });
-     
+
       res.data = res.data.map((doc) => {
         let cause = "";
         if (doc.cause1) {
           cause += "Изменение СНО; ";
         }
         if (doc.cause2) {
-          cause += "Метеологические условия; ";
+          cause += "Гидрометеорологические условия; ";
         }
         if (doc.cause3) {
           cause += "Путевые работы; ";
         }
         return { ...doc, id: doc.id, cause: cause };
-      })
+      });
+
       setMainData(res.data.sort((a, b) => b.date.getTime() - a.date.getTime()));
       setData(res.data.sort((a, b) => b.date.getTime() - a.date.getTime()));
     } catch (err) {
@@ -59,46 +64,57 @@ export default function NoticesUser(props) {
   };
 
   useEffect(() => {
-    getData();
+    const fetchData = async () => {
+      await getData();
+    };
+    fetchData();
   }, []);
 
   const handleOpen = () => {
     setOpen(true);
+    previousFilters.current = { ...state.noticeInfo };
   };
 
   const handleClose = () => {
     setOpen(false);
+    if (!filterApply) {
+      setState((prevState) => ({
+        ...prevState,
+        noticeInfo: { ...previousFilters.current.noticeInfo },
+      }));
+    }
   };
 
   const setFilter = () => {
-    let copiOfMainData = mainData;
+    setFilterApply(true);
+    let filteredData = mainData.filter((note) => {
+      if (state.noticeInfo.river && note.river !== state.noticeInfo.river) {
+        return false;
+      }
+      if (state.noticeInfo.site && note.site !== state.noticeInfo.site) {
+        return false;
+      }
+      if (
+        state.noticeInfo.date1 &&
+        new Date(note.date_start) >= new Date(state.noticeInfo.date1)
+      ) {
+        return false;
+      }
+      if (
+        state.noticeInfo.date2 &&
+        new Date(note.date_end) <= new Date(state.noticeInfo.date2)
+      ) {
+        return false;
+      }
+      return true;
+    });
 
-    if (state.noticeInfo.river !== "") {
-      copiOfMainData = copiOfMainData.filter(
-        (note) => note.river === state.noticeInfo.river
-      );
-    }
-    if (state.noticeInfo.site !== "") {
-      copiOfMainData = copiOfMainData.filter(
-        (note) => note.site === state.noticeInfo.site
-      );
-    }
-    if (state.noticeInfo.date1 !== "") {
-      copiOfMainData = copiOfMainData.filter(
-        (note) => note.date > new Date(state.noticeInfo.date1)
-      );
-    }
-    if (state.noticeInfo.date2 !== "") {
-      copiOfMainData = copiOfMainData.filter(
-        (note) => note.date < new Date(state.noticeInfo.date2)
-      );
-    }
-    setData(copiOfMainData);
+    setData(filteredData);
     setOpen(false);
   };
 
   const unsetFilter = () => {
-    getData();
+    setData(mainData);
     setState({
       noticeInfo: {
         river: "",
@@ -106,135 +122,88 @@ export default function NoticesUser(props) {
         date1: "",
         date2: "",
       },
-
       sites: [],
     });
+    setFilterApply(false);
     setOpen(false);
   };
 
-  const setSites = (river) => {
-    // eslint-disable-next-line default-case
-    switch (river) {
-      case rivers[0]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site1,
-        }));
-        break;
-      case rivers[1]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site2,
-        }));
-        break;
-      case rivers[2]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site3,
-        }));
-        break;
-      case rivers[3]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site4,
-        }));
-        break;
-      case rivers[4]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site5,
-        }));
-        break;
-      case rivers[5]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site6,
-        }));
-        break;
-      case rivers[6]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site7,
-        }));
-        break;
-      case rivers[7]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site8,
-        }));
-        break;
-      case rivers[8]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site9,
-        }));
-        break;
-      case rivers[9]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site10,
-        }));
-        break;
-      case rivers[10]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site11,
-        }));
-        break;
-      case rivers[11]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site12,
-        }));
-        break;
-      case rivers[12]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site13,
-        }));
-        break;
-      case rivers[13]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site14,
-        }));
-        break;
-      case rivers[14]:
-        setState((prevState) => ({
-          noticeInfo: {
-            ...prevState.noticeInfo,
-          },
-          sites: sites.site15,
-        }));
-        break;
+  const unsetFilterRiver = () => {
+    setData(mainData);
+    setState((prevState) => ({
+      noticeInfo: {
+        ...prevState.noticeInfo,
+        river: "",
+        site: "",
+      },
+      sites: [],
+    }));
+    setOpen(false);
+    setFilter();
+  };
+
+  const unsetFilterSite = () => {
+    setData(mainData);
+    setState((prevState) => ({
+      noticeInfo: {
+        ...prevState.noticeInfo,
+        site: "",
+      },
+      sites: [],
+    }));
+    setFilter();
+    setOpen(false);
+  };
+
+  const unsetFilterDate1 = () => {
+    setData(mainData);
+    setState((prevState) => ({
+      noticeInfo: {
+        ...prevState.noticeInfo,
+        date1: "",
+      },
+      sites: [],
+    }));
+    setFilter();
+    setOpen(false);
+  };
+
+  const unsetFilterDate2 = () => {
+    setState((prevState) => ({
+      noticeInfo: {
+        ...prevState.noticeInfo,
+        date2: "",
+      },
+      sites: [],
+    }));
+    setFilter();
+    setOpen(false);
+  };
+
+  const getSites = async (river) => {
+    const res = await api.get("sites/getAllByRiver/", {
+      params: { river: river },
+    });
+    let filteredData = res.data.sort(customComparator);
+    return filteredData.map((site) => site.name);
+  };
+
+  const handleChangeRiver = async (event) => {
+    let value = event.target.value;
+    let name = event.target.name;
+    setDisabled(true);
+    try {
+      const sites = await getSites(value);
+      setState((prevState) => ({
+        noticeInfo: {
+          ...prevState.noticeInfo,
+          [name]: value,
+        },
+        sites: sites,
+      }));
+      setDisabled(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -246,17 +215,24 @@ export default function NoticesUser(props) {
         ...prevState.noticeInfo,
         [name]: value,
       },
-
       sites: [...prevState.sites],
     }));
-    setSites(value);
   };
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography sx={{fontSize: 23, textAlign: "center", marginBottom: 2}}>
-      Извещения для судоводителей
+      <Typography sx={{ fontSize: 23, textAlign: "center", marginBottom: 2 }}>
+        Извещения для судоводителей
       </Typography>
+      {filterApply && !open && (
+  <Chip
+    sx={{ mb: 1 }}
+    label={`${state.noticeInfo.river}${state.noticeInfo.site ?  ","  + state.noticeInfo.site : ""} ${state.noticeInfo.date1 ? "," + new Date(state.noticeInfo.date1).toLocaleDateString("ru-Ru") : ""}${state.noticeInfo.date2 ?  " - " + new Date(state.noticeInfo.date2).toLocaleDateString("ru-Ru") : ""}`}
+    variant="outlined"
+    onDelete={unsetFilter}
+  />
+)}
+
       <Button onClick={handleOpen} className={Style.btnFilter}>
         <FilterAltIcon className={Style.filterIcon} />
       </Button>
@@ -272,17 +248,17 @@ export default function NoticesUser(props) {
         </DialogTitle>
 
         <IconButton
-        aria-label="close"
-        onClick={handleClose}
-        sx={{
-          position: "absolute",
-          right: 8,
-          top: 8,
-          color: (theme) => theme.palette.grey[500],
-        }}
-      >
-        <CloseIcon />
-      </IconButton>
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
 
         <DialogContent
           sx={{
@@ -297,7 +273,7 @@ export default function NoticesUser(props) {
             select
             label="Река"
             value={state.noticeInfo.river}
-            onChange={handleChange}
+            onChange={handleChangeRiver}
             variant="standard"
             size="large"
           >
@@ -316,6 +292,7 @@ export default function NoticesUser(props) {
             value={state.noticeInfo.site}
             onChange={handleChange}
             variant="standard"
+            disabled={disabled}
           >
             {state.sites.map((site) => (
               <MenuItem key={site} value={site}>
@@ -329,7 +306,7 @@ export default function NoticesUser(props) {
               <p>Извещения с: </p>
               <TextField
                 name="date1"
-                type="datetime-local"
+                type="date"
                 value={state.noticeInfo.date1}
                 onChange={handleChange}
                 variant="standard"
@@ -339,7 +316,7 @@ export default function NoticesUser(props) {
               <p>Извещения по: </p>
               <TextField
                 name="date2"
-                type="datetime-local"
+                type="date"
                 value={state.noticeInfo.date2}
                 onChange={handleChange}
                 variant="standard"

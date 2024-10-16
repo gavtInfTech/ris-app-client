@@ -11,11 +11,20 @@ import { Typography } from "@mui/material";
 import styles from "./style.module.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
+import * as adminInfo from "../admin/adminInfo";
 
 export default function TableDislocations(props) {
   const data = props.data;
+  const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
-  
+  let informationData; 
+  if(allInfo){
+    informationData = adminInfo;
+  }
+  else{
+    informationData = auth.info;
+
+  }
   const riverRows = (organisation) => {
     let filteredRows = data.filter(
       (item) => item.organisation === organisation
@@ -73,7 +82,7 @@ export default function TableDislocations(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {auth.info.sibOrganizations.map((riverName) => {
+            {informationData.sibOrganizations.map((riverName) => {
               const rows = [];
               rows.push(
                 <TableRow key={riverName}>

@@ -19,7 +19,13 @@ import {
 import { api } from "../../axiosConfig";
 import { customComparator } from "../vvp/siteMethods";
 import DescriptionIcon from "@mui/icons-material/Description";
+import EMobiledataIcon from "@mui/icons-material/EMobiledata";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import FunctionsIcon from "@mui/icons-material/Functions";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { addEmitHelper } from "typescript";
+
 require("jspdf-autotable");
 
 const theme = createTheme({
@@ -47,6 +53,7 @@ const theme = createTheme({
 });
 
 export default function Sib() {
+  const { auth } = useContext(AuthContext);
   const [sites, setSites] = useState([]);
   const [date, setDate] = useState(() => {
     let todayDate = new Date();
@@ -62,13 +69,49 @@ export default function Sib() {
   const [dislocationsDataByDate, setDislocationsDataByDate] = useState([]);
   const [bridgesDataByDate, setBridgesDataByDate] = useState([]);
   const [noticesDataByDate, setNoticesDataByDate] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const resSites = await api.get("/sites/getAll");
-        setSites(resSites.data.sort(customComparator));
-
+        const newSites = resSites.data.sort(customComparator);
+        if (
+          auth.organisation ==
+          "Государственная администрация водного транспорта"
+        ) {
+          setSites(newSites);
+        } else {
+          if (
+            auth.organisation ==
+           'РУ Днепро-Двинское предприятие водных путей "Белводпуть"'
+          ) {
+            setSites(
+              newSites.filter(
+                (site) =>
+                  site.organisation == auth.organisation ||
+                  site.organisation == 'Филиал "Гродненский участок" г. Гродно'
+              )
+            );
+          } else {
+            if(auth.organisation == 'РУЭСП "Днепро-Бугский водный путь"'){
+              setSites(
+                newSites.filter(
+                  (site) =>
+                    site.organisation == auth.organisation ||
+                    site.organisation == 'Филиал "Витебскводтранс" г. Витебск' ||
+                    site.organisation == 'Филиал "Гродненский участок" г. Гродно' ||
+                    site.organisation == 'Филиал "Нижне-Припятский" г. Мозырь'
+                )
+              );
+            }
+            else{
+            setSites(
+              newSites.filter((site) => site.organisation == auth.organisation)
+            );
+            }  
+          }
+        }
         const resLevelsGp = await api.get("/levelsGp/getAllByDate", {
           params: { date: new Date(date) },
         });
@@ -105,7 +148,7 @@ export default function Sib() {
         const filteredresGabs = resGabs.data.filter(
           (item) => item.confirmation === true
         );
-
+        
         setGabsDataByDate(
           filteredresGabs.map((doc) => ({
             ...doc,
@@ -156,7 +199,7 @@ export default function Sib() {
               cause += "Изменение СНО; ";
             }
             if (doc.cause2) {
-              cause += "Метеологические условия; ";
+              cause += "Гидрометеорологические условия; ";
             }
             if (doc.cause3) {
               cause += "Путевые работы; ";
@@ -169,7 +212,17 @@ export default function Sib() {
         console.log(err);
       }
     };
-    getData();
+
+    const fetchData = async () => {
+      try {
+        await getData();
+        setLoading(true);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [date]);
 
   const handleChangeDate = (event) => {
@@ -233,9 +286,11 @@ export default function Sib() {
           endPeriod: new Date(endPeriod),
         },
       });
+      console.log("REES DISLOCATION", resDislocations);
       resDislocations.data.forEach((item) => {
         item.date = new Date(item.date);
         item.date_start = new Date(item.date_start);
+        item.date_end = new Date(item.date_end);
       });
       let dislocationsDataByPeriod = resDislocations.data;
 
@@ -266,7 +321,7 @@ export default function Sib() {
           cause += "Изменение СНО; ";
         }
         if (doc.cause2) {
-          cause += "Метеологические условия; ";
+          cause += "Гидрометеорологические условия; ";
         }
         if (doc.cause3) {
           cause += "Путевые работы; ";
@@ -284,7 +339,8 @@ export default function Sib() {
         dislocationsDataByPeriod,
         bridgesDataByPeriod,
         noticesDataByPeriod,
-        sites
+        sites,
+        auth.info
       );
     } catch (err) {
       console.log(err);
@@ -386,12 +442,12 @@ export default function Sib() {
       0
     );
     combineTableDataWithHeader("noticesTable", "6. ИЗВЕЩЕНИЯ", 0, 0, 0);
-    
-    const formattedDate = new Date(date).toLocaleDateString('ru-RU');
+
+    const formattedDate = new Date(date).toLocaleDateString("ru-RU");
     combinedData.push([""]);
     combinedData.push([""]);
-    combinedData.push(["Дата:","Подпись:"]);
-    combinedData.push([`${formattedDate}`])
+    combinedData.push(["Дата:", "Подпись:"]);
+    combinedData.push([`${formattedDate}`]);
 
     // Преобразуем объединенные данные в лист
     const combinedSheet = XLSX.utils.aoa_to_sheet(combinedData);
@@ -475,9 +531,11 @@ export default function Sib() {
                 dislocationsDataByDate,
                 bridgesDataByDate,
                 noticesDataByDate,
-                sites
+                sites,
+                auth.info
               )
             }
+            disabled={!loading}
             title="Скачать PDF"
           >
             <PictureAsPdfIcon />
@@ -488,14 +546,23 @@ export default function Sib() {
             type="submit"
             sx={{ margin: "2px", width: "50px" }}
             onClick={() => generateExcelFile(date)}
+            disabled={!loading}
             title="Скачать Excel"
           >
-            <DescriptionIcon />
+            Excel
           </Button>
         </div>
 
         <Typography sx={{ fontSize: 18 }}>
-          <span> </span>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ m: 1, width: "200px" }}
+            onClick={generatePdfFile}
+            disabled={!loading}
+          >
+            Скачать за период
+          </Button>
           <TextField
             name="startPeriod"
             type={"date"}
@@ -513,14 +580,6 @@ export default function Sib() {
             variant="standard"
             sx={{ m: 1 }}
           />
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ m: 1, width: "120px" }}
-            onClick={generatePdfFile}
-          >
-            Скачать
-          </Button>
         </Typography>
 
         <div id="tablesContainer" className={styles.tablesContainer}>

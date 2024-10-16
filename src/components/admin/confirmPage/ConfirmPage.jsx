@@ -27,13 +27,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 const organisations = {
-  'РУ ЭСП "Днепро-Бугский водный путь"': 1,
+  'РУЭСП "Днепро-Бугский водный путь"': 1,
   'РУ Днепро-Двинское предприятие водных путей "Белводпуть"': 2,
   "РУ Днепро-Березинское предприятие водных путей": 3,
   "Государственная администрация водного транспорта": 4,
-  "Нижне - Припятский": 5,
-  "Гродненский участок": 6,
-  "Витебскводтранс": 7,
+  'Филиал \"Нижне-Припятский\" г. Мозырь': 5,
+  'Филиал \"Гродненский участок\" г. Гродно': 6,
+  'Филиал \"Витебскводтранс\" г. Витебск': 7,
 };
 
 function Table(props) {
@@ -177,10 +177,10 @@ function Table(props) {
                       prefix = "Тип работ: ";
                       break;
                     case "depth":
-                      prefix = "Глубина: ";
+                      prefix = "Глубина, см: ";
                       break;
                     case "forecastDepth":
-                      prefix = "Ожидаемая глубина: ";
+                      prefix = "Ожидаемая глубина, см: ";
                       break;
                     case "forecastDate":
                       prefix = "Дата прогноза: ";
@@ -190,7 +190,7 @@ function Table(props) {
                       prefix = "Ограничивающий перекат: ";
                       break;
                     case "planDepth":
-                      prefix = "Плановая глубина: ";
+                      prefix = "Плановая глубина, см: ";
                       break;
                     case "width":
                       prefix = "Ширина: ";
@@ -266,16 +266,16 @@ function Table(props) {
                       prefix = "Тип работ: ";
                       break;
                     case "depth":
-                      prefix = "Глубина: ";
+                      prefix = "Глубина, см: ";
                       break;
                     case "forecastDepth":
-                      prefix = "Ожидаемая глубина: ";
+                      prefix = "Ожидаемая глубина, см: ";
                       break;
                     case "limitedRoll":
                       prefix = "Ограничивающий перекат: ";
                       break;
                     case "planDepth":
-                      prefix = "Плановая глубина: ";
+                      prefix = "Плановая глубина, см: ";
                       break;
                     case "width":
                       prefix = "Ширина: ";
@@ -526,7 +526,7 @@ export default function ConfirmPage() {
           aria-label="Vertical tabs example"
           sx={{ borderColor: "divider" }}
         >
-          <Tab label='РУ ЭСП "Днепро-Бугский водный путь"' {...a11yProps(0)} />
+          <Tab label='РУЭСП "Днепро-Бугский водный путь"' {...a11yProps(0)} />
           <Tab
             label='РУ Днепро-Двинское предприятие водных путей "Белводпуть"'
             {...a11yProps(1)}
@@ -536,15 +536,15 @@ export default function ConfirmPage() {
             {...a11yProps(2)}
           />
             <Tab
-            label="Нижне - Припятский"
+            label='Филиал "Нижне-Припятский" г. Мозырь'
             {...a11yProps(3)}
           />
             <Tab
-            label="Гродненский участок"
+            label='Филиал "Гродненский участок" г. Гродно'
             {...a11yProps(4)}
           />
             <Tab
-            label="Витебскводтранс"
+            label='Филиал "Витебскводтранс" г. Витебск'
             {...a11yProps(5)}
           />
         </Tabs>

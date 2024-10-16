@@ -432,7 +432,7 @@ export default function NoticeForm(props) {
                       name="cause2"
                     />
                   }
-                  label="Метеологические условия"
+                  label="Гидрометеорологические условия"
                 />
                 <FormControlLabel
                   sx={{ mb: 1 }}

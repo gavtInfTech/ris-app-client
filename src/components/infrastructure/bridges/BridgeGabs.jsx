@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import styles from "../menu.module.css";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
-import { api } from '../../../axiosConfig';
+import { api } from "../../../axiosConfig";
 
 const mapState = { center: [54.133392, 27.577899], zoom: 7, controls: [] };
 
@@ -78,7 +78,7 @@ export default function BridgeGabs() {
           iconLayout: "default#image",
           iconImageHref: "./images/bridge.png",
           iconImageSize: [30, 30],
-          iconImageOffset: [-15, -15]
+          iconImageOffset: [-15, -15],
         }}
       />
     );

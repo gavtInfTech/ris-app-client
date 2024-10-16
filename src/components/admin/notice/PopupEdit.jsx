@@ -423,7 +423,7 @@ export default function PopupEdit(props) {
                         name="cause2"
                       />
                     }
-                    label="Метеологические условия"
+                    label="Гидрометеорологические условия"
                   />
                   <FormControlLabel
                     sx={{ mb: 3 }}
