@@ -35,7 +35,7 @@ export default function App() {
       <Routes>
  
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Navigate to="/vvp" />} />
+          <Route path="/" element={<Navigate to="/notices" />} />
           <Route path="/vvp" element={<VVP />} />
           <Route path="/notices" element={<NoticesMainPage />} />
           <Route path="/notices/:id" element={<NoticesMainPage />} />

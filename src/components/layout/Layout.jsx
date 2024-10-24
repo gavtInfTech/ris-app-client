@@ -68,17 +68,14 @@ export default function Layout() {
           >
               РИС РБ<Typography sx={{fontSize: 12, marginTop: 1}}>Речные информационные службы</Typography>
           </Link>
-          <Link className={styles.link} to={"/notices"}>
-            Для судоводителей
-          </Link>
           <Link className={styles.link} to={"/sib"}>
             Сводный информационный бюллетень
           </Link>
-          <Link className={styles.link} to={"/gabarit"}>
-            Сроки навигации
-          </Link>
           <Link className={styles.link} to={"/infmenu"}>
             Инфраструктура ВВП
+          </Link>
+          <Link className={styles.link} to={"https://pogoda.by/"}>
+            Погода
           </Link>
         </Box>
         <Box className={styles.header_section}>
@@ -102,18 +99,8 @@ export default function Layout() {
           onClose={handleCloseUserMenu}
         >
           <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
-            <Link to={"/notices"}>
-              Для судоводителей
-            </Link>
-          </MenuItem>
-          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
             <Link to={"/sib"}>
               Сводный информационный бюллетень
-            </Link>
-          </MenuItem>
-          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
-            <Link to={"/gabarit"}>
-              Сроки навигации
             </Link>
           </MenuItem>
           <MenuItem  sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>

@@ -5,15 +5,17 @@
   grid-template-columns: 1fr 2.7fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    "item1 item3 item4"
-    "item2 item3 item5"
+    "item1 item3 item4 "
+    "item2 item3 item5 "
     ". item3 .";
 }
 
 .item1,
 .item2,
 .item4,
-.item5 {
+.item5, 
+.item6,
+.item7{
   display: flex;
   align-items: start;
   justify-content: center;
@@ -40,6 +42,9 @@
   grid-area: item5;
 }
 
+.row{
+  max-height: 100%;
+}
 .defaultContainer {
   display: flex;
   align-items: center;
@@ -61,8 +66,9 @@
   border: none;
   cursor: pointer;
   padding: 35px;
-  font-size: 23px;
-  width: 270px;
+  font-size: 17px;
+  height: 255px;
+  width: 195px;
 }
 
 .btn:hover {
