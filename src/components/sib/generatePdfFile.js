@@ -634,7 +634,7 @@ const generateLevelsGP = (doc, levelsGpData, adminInfo) => {
     head: [
       [
         {
-          content: "Наименование рек каналов и гидроузлов",
+          content: "Наименование гидропостов",
           rowSpan: 2,
           styles: { cellWidth: 40 },
         },
@@ -643,7 +643,7 @@ const generateLevelsGP = (doc, levelsGpData, adminInfo) => {
           styles: { cellWidth: 26 },
           rowSpan: 2,
         },
-        { content: "Уровни воды над проектным горизонтом, см", colSpan: 2 },
+        { content: "Уровни воды, см", colSpan: 2 },
         {
           content: "Прибыло (+), убыло (-), см",
           styles: { cellWidth: 26 },
@@ -741,7 +741,7 @@ const generateLevelsGU = (doc, levelsGuData, adminInfo) => {
     head: [
       [
         {
-          content: "Наименование рек каналов и гидроузлов",
+          content: "Наименование гидроузлов",
           rowSpan: 2,
           styles: { cellWidth: 50 }, // Сократил ширину
         },
@@ -750,7 +750,7 @@ const generateLevelsGU = (doc, levelsGuData, adminInfo) => {
           rowSpan: 2,
           styles: { cellWidth: 20 }, // Сократил ширину
         },
-        { content: "Уровни воды над проектным горизонтом, см", colSpan: 2 },
+        { content: "Уровни воды, см", colSpan: 2 },
         { content: "Изменение уровня за сутки, см", colSpan: 2 },
       ],
       [
