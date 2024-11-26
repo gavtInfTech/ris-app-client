@@ -11,8 +11,9 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import CookieConsentSnackbar from './CookieConsentSnackbar'
+import Modal from '@mui/material/Modal';
 import { Typography } from "@mui/material";
+import WeatherComponent from "../weather/weather";
 
 function Alert(props) {
   return <MuiAlert elevation={1} variant="filled" {...props} />;
@@ -21,12 +22,12 @@ function Alert(props) {
 export default function Layout() {
   const { message, setMessage } = useContext(MessageContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [showWeather, setShowWeather] = useState(false);
 
   const handleCloseMessage = (reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setMessage((prevState) => ({
       ...prevState,
       open: false,
@@ -39,6 +40,15 @@ export default function Layout() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleWeatherClick = (event) => {
+    event.preventDefault();
+    setShowWeather(true);
+  };
+
+  const handleCloseWeather = () => {
+    setShowWeather(false);
   };
 
   return (
@@ -74,7 +84,8 @@ export default function Layout() {
           <Link className={styles.link} to={"/infmenu"}>
             Инфраструктура ВВП
           </Link>
-          <Link className={styles.link} to={"https://pogoda.by/"}>
+          {/* Update link to trigger modal */}
+          <Link className={styles.link} to={"#"} onClick={handleWeatherClick}>
             Погода
           </Link>
         </Box>
@@ -103,10 +114,14 @@ export default function Layout() {
               Сводный информационный бюллетень
             </Link>
           </MenuItem>
-          <MenuItem  sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
             <Link to={"/infmenu"}>
               Инфраструктура ВВП
             </Link>
+          </MenuItem>
+          {/* Weather Link in Mobile Menu */}
+          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={(e) => {handleWeatherClick(e); handleCloseUserMenu();}}>
+            Погода
           </MenuItem>
         </Menu>
       </header>
@@ -133,7 +148,30 @@ export default function Layout() {
         </div>
       </Snackbar>
 
-      {/* <CookieConsentSnackbar /> */}
+      {/* WeatherComponent Modal */}
+      <Modal
+        open={showWeather}
+        onClose={handleCloseWeather}
+        aria-labelledby="weather-modal-title"
+        aria-describedby="weather-modal-description"
+      >
+        <Box sx={{ 
+          position: 'absolute', 
+          top: '50%', 
+          left: '50%', 
+          transform: 'translate(-50%, -50%)',
+          width: { xs: '90%', sm: 400 }, // Responsive width for mobile
+          bgcolor: 'background.paper', 
+          boxShadow: 24, 
+          p: 4, 
+          borderRadius: 2, 
+          display: "flex", 
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+          <WeatherComponent />
+        </Box>
+      </Modal>
     </div>
   );
 }
