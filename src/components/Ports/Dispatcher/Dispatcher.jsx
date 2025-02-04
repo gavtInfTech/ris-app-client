@@ -278,9 +278,56 @@ export default function Dispatcher(props) {
     },
     { field: "data", headerName:  "Данные о составе", editable: true, width: 130 },
     { field: "place", headerName: "Прибыл из", editable: true, width: 120 },
-    { field: "date_enter", headerName: "Дата входа", type: "date", editable: true, width: 120 },
-    { field: "date_out", headerName: "Дата выхода", type: "date", editable: true, width: 120 },
-  
+    {
+      field: "date_enter",
+      headerName: "Дата входа",
+      type: "dateTime",
+      editable: true,
+      width: 120,
+      renderCell: (params) => {
+        // If the date is empty or null, return an empty string
+        if (!params.value) {
+          return "";
+        }
+        const date = new Date(params.value);
+        // If the date is invalid, return an empty string
+        return isNaN(date.getTime()) ? "" : date.toLocaleString("ru-RU");
+      },
+      renderEditCell: (params) => (
+        <Select
+          value={params.value || ""}
+          onChange={(event) => params.api.setEditCellValue({ id: params.id, field: "date_enter", value: event.target.value })}
+          fullWidth
+        >
+          {/* Options for date selection */}
+        </Select>
+      ),
+    },
+    {
+      field: "date_out",
+      headerName: "Дата выхода",
+      type: "dateTime",
+      editable: true,
+      width: 120,
+      renderCell: (params) => {
+        // If the date is empty or null, return an empty string
+        if (!params.value) {
+          return "";
+        }
+        const date = new Date(params.value);
+        // If the date is invalid, return an empty string
+        return isNaN(date.getTime()) ? "" : date.toLocaleString("ru-RU");
+      },
+      renderEditCell: (params) => (
+        <Select
+          value={params.value || ""}
+          onChange={(event) => params.api.setEditCellValue({ id: params.id, field: "date_out", value: event.target.value })}
+          fullWidth
+        >
+          {/* Options for date selection */}
+        </Select>
+      ),
+    },
     {
       field: "status",
       headerName: "Статус",
