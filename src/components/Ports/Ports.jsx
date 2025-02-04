@@ -85,7 +85,7 @@ export default function ShipDirectory() {
           <Tab label="Справочник по судам" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <Box sx={{ width: "87%", p: 2 }}>
+      <Box sx={{ width: "87%", p: 2, height: "100vh", overflow: "auto" }}>
         <TabPanel value={value} index={0}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>

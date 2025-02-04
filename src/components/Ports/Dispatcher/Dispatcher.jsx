@@ -24,7 +24,7 @@ import { randomId } from "@mui/x-data-grid-generator";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
 import { forbiddenTime } from "../../admin/Time/forbiddenTime.js";
 import { AuthContext } from "../../../contexts/AuthContext.jsx";
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel, portName } = props;
@@ -226,6 +226,13 @@ export default function Dispatcher(props) {
       ),
     },
     {
+      field: "number_ship",
+      headerName: "Номер судна",
+      width: 120,
+      editable: true,
+      type: "string"
+    },
+    {
       field: "captain",
       headerName: "Капитан",
       width: 120,
@@ -281,51 +288,41 @@ export default function Dispatcher(props) {
     {
       field: "date_enter",
       headerName: "Дата входа",
-      type: "dateTime",
+      width: 160,
       editable: true,
-      width: 120,
-      renderCell: (params) => {
-        // If the date is empty or null, return an empty string
-        if (!params.value) {
-          return "";
-        }
-        const date = new Date(params.value);
-        // If the date is invalid, return an empty string
-        return isNaN(date.getTime()) ? "" : date.toLocaleString("ru-RU");
-      },
       renderEditCell: (params) => (
-        <Select
+        <TextField
+          type="datetime-local"
           value={params.value || ""}
-          onChange={(event) => params.api.setEditCellValue({ id: params.id, field: "date_enter", value: event.target.value })}
+          onChange={(event) =>
+            params.api.setEditCellValue({
+              id: params.id,
+              field: "date_enter",
+              value: event.target.value,
+            })
+          }
           fullWidth
-        >
-          {/* Options for date selection */}
-        </Select>
+        />
       ),
     },
     {
       field: "date_out",
       headerName: "Дата выхода",
-      type: "dateTime",
+      width: 160,
       editable: true,
-      width: 120,
-      renderCell: (params) => {
-        // If the date is empty or null, return an empty string
-        if (!params.value) {
-          return "";
-        }
-        const date = new Date(params.value);
-        // If the date is invalid, return an empty string
-        return isNaN(date.getTime()) ? "" : date.toLocaleString("ru-RU");
-      },
       renderEditCell: (params) => (
-        <Select
+        <TextField
+          type="datetime-local"
           value={params.value || ""}
-          onChange={(event) => params.api.setEditCellValue({ id: params.id, field: "date_out", value: event.target.value })}
+          onChange={(event) =>
+            params.api.setEditCellValue({
+              id: params.id,
+              field: "date_out",
+              value: event.target.value,
+            })
+          }
           fullWidth
-        >
-          {/* Options for date selection */}
-        </Select>
+        />
       ),
     },
     {
