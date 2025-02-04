@@ -34,6 +34,9 @@ export default function MenuListComposition() {
         case 'РУ Днепро-Двинское предприятие водных путей "Белводпуть"':
           navigate("/admin-dvinskoe/informationTab/levels/levelsGp");
           break;
+          case 'Диспетчер портов':
+            navigate("/dispetcher-portov");
+            break;
         case "РУ Днепро-Березинское предприятие водных путей":
           navigate("/admin-berezinskoe/informationTab/levels/levelsGp");
           break;

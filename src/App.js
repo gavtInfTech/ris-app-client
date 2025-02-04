@@ -25,6 +25,8 @@ import MainTabClient from "./components/client/MainTabClient";
 import BridgeGabs from "./components/infrastructure/bridges/BridgeGabs";
 import PathInformationMenu from "./components/admin/PathInformationMenu";
 import { AuthContext } from "./contexts/AuthContext";
+import PortsPage from "./components/Ports/Ports";
+import ShipDirectory from "./components/Ports/Ports";
 
 // const PathInformationMenu = lazy(() => import("./components/admin/PathInformationMenu"));
 // const MainTabClient = lazy(() => import("./components/client/MainTabClient")); 
@@ -50,6 +52,7 @@ export default function App() {
           <Route path="/bridges" element={<Bridges />} />
           <Route path="/bridgeGabs" element={<BridgeGabs />} />
           <Route path="/ports" element={<Ports />} />
+          <Route path="/allPorts" element={<ShipDirectory />} />
           <Route path="/ges" element={<GES />} />
           <Route path="/levelsMenu" element={<LevelsMenu />} />
           <Route path="/limit" element={<MainGabs />} />
@@ -76,6 +79,15 @@ export default function App() {
             }
           >
             <Route path="/admin-bugskoe/*" element={<MainTab />}></Route>
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                organisation={'Диспетчер портов'}
+              />
+            }
+          >
+            <Route path="/dispetcher-portov" element={<ShipDirectory />}></Route>
           </Route>
           <Route
             element={

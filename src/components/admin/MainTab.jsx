@@ -14,6 +14,7 @@ import Sites from "./sites/Sites";
 import ConfirmPage from "./confirmPage/ConfirmPage";
 import { api } from "../../axiosConfig";
 import { useState } from "react";
+import ShipDirectory from "../Ports/Ports";
 
 export default function FullWidthTabs() {
   const { pathname } = useLocation();
@@ -29,6 +30,7 @@ export default function FullWidthTabs() {
   else if (pathname.includes("sites")) value = "/admin-main/sites";
   else if (pathname.includes("marshrutnik")) value = "/admin-main/marshrutnik";
   else if (pathname.includes("confirmPage")) value = "/admin-main/confirmPage";
+  else if (pathname.includes("portAdmin")) value = "/admin-main/portAdmin";
   else value = "/admin-main/users";
 
   useEffect(() => {
@@ -109,6 +111,15 @@ export default function FullWidthTabs() {
               component={Link}
             />
           )}
+           {auth.role === "Администратор" && (
+            <Tab
+              sx={{ width: 300, fontSize: 14,  color: isConfirms ? "red" : "white" }}
+              label="Суда"
+              value="/admin-main/portAdmin"
+              to="/admin-main/portAdmin"
+              component={Link}
+            />
+          )}
         </Tabs>
       </AppBar>
 
@@ -126,6 +137,9 @@ export default function FullWidthTabs() {
           </Route>
           <Route element={<ProtectedRoute role="Администратор" />}>
             <Route path="/confirmPage" element={<ConfirmPage/>} />
+          </Route>
+          <Route element={<ProtectedRoute role="Администратор" />}>
+            <Route path="/portAdmin" element={<ShipDirectory/>} />
           </Route>
         </Routes>
       </Box>

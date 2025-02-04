@@ -41,6 +41,10 @@ export default function Login() {
         navigate("/path-information/dnepr");
       } else {
         switch (res.data.organisation) {
+          case 'Диспетчер портов':
+            setAuth({ ...res.data });
+            navigate("/dispetcher-portov");
+            break;
           case 'РУЭСП "Днепро-Бугский водный путь"':
             setAuth({ ...res.data, info: bugskoeInfo, rolePath: "bugskoe" });
             navigate("/admin-bugskoe/informationTab/levels/levelsGp");
