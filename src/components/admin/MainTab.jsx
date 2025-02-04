@@ -114,7 +114,7 @@ export default function FullWidthTabs() {
            {auth.role === "Администратор" && (
             <Tab
               sx={{ width: 300, fontSize: 14,  color: isConfirms ? "red" : "white" }}
-              label="Суда"
+              label="Порты"
               value="/admin-main/portAdmin"
               to="/admin-main/portAdmin"
               component={Link}
