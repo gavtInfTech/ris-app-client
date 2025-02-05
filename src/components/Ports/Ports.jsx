@@ -83,6 +83,13 @@ export default function ShipDirectory() {
         >
           <Tab label="Диспетчеризация" {...a11yProps(0)} />
           <Tab label="Справочник по судам" {...a11yProps(1)} />
+          <Tab label="Тарифные расстояния" {...a11yProps(2)} />
+          <Tab label="Статистика порта" {...a11yProps(3)} />
+          <Tab label="Документы" {...a11yProps(4)} />
+          <Tab label="Причальный сбор" {...a11yProps(5)} />
+          <Tab label="Видеоконтроль" {...a11yProps(6)} />
+
+
         </Tabs>
       </Box>
       <Box sx={{ width: "87%", p: 2, height: "100vh", overflow: "auto" }}>
@@ -151,6 +158,21 @@ export default function ShipDirectory() {
 
         <TabPanel value={value} index={1}>
           <Suda></Suda>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Suda></Suda>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          Заглушка
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+        Заглушка
+        </TabPanel>
+        <TabPanel value={value} index={5}>
+        Заглушка
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+        Заглушка
         </TabPanel>
       </Box>
     </Box>

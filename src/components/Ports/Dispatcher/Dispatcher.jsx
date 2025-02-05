@@ -206,7 +206,7 @@ export default function Dispatcher(props) {
   const columns = [
     {
       field: "id_ship",
-      headerName: "Судно",
+      headerName: "Название судна",
       width: 120,
       editable: true,
       renderCell: (params) => {
@@ -227,20 +227,13 @@ export default function Dispatcher(props) {
     },
     {
       field: "number_ship",
-      headerName: "Номер судна",
+      headerName: "№ судна",
       width: 120,
       editable: true,
       type: "string"
     },
     {
-      field: "captain",
-      headerName: "Капитан",
-      width: 120,
-      editable: true,
-      type: "string"
-    },
-    {
-      field: "type",
+      field: "Тип судна",
       headerName: "Тип судна",
       type: "string",
       editable: true,
@@ -263,6 +256,14 @@ export default function Dispatcher(props) {
         </Select>
       ),
     },
+    {
+      field: "captain",
+      headerName: "Капитан судна",
+      width: 120,
+      editable: true,
+      type: "string"
+    },
+   
     {
       field: "sostav",
       headerName: "Составы",
@@ -287,7 +288,7 @@ export default function Dispatcher(props) {
     { field: "place", headerName: "Прибыл из", editable: true, width: 120 },
     {
       field: "date_enter",
-      headerName: "Дата входа",
+      headerName: "Прибытие в порт",
       width: 160,
       editable: true,
       renderEditCell: (params) => (
@@ -307,7 +308,7 @@ export default function Dispatcher(props) {
     },
     {
       field: "date_out",
-      headerName: "Дата выхода",
+      headerName: "Отправление из порта",
       width: 160,
       editable: true,
       renderEditCell: (params) => (
