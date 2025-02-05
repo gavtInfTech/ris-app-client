@@ -70,11 +70,20 @@ export default function FullWidthTabs() {
         >
           <Tab
             sx={{ width: 300, height: 70, fontSize: 14 }}
-            label="Текущая информация"
+            label="Диспетчерская путей"
             value={`/admin-${rolePath}/informationTab`}
             to={ auth.organisation == "Белорусское речное пароходство" ? `/admin-${rolePath}/informationTab/spravkaorabote` : `/admin-${rolePath}/informationTab/levels/levelsGp`}
             component={Link}
           />
+           {auth.role === "Администратор" && (
+            <Tab
+              sx={{ width: 300, fontSize: 14,  color: isConfirms ? "red" : "white" }}
+              label="Диспетчерская порта"
+              value="/admin-main/portAdmin"
+              to="/admin-main/portAdmin"
+              component={Link}
+            />
+          )}
           {auth.role === "Администратор" && (
             <Tab
               sx={{ width: 300, height: 70, fontSize: 14 }}
@@ -111,15 +120,7 @@ export default function FullWidthTabs() {
               component={Link}
             />
           )}
-           {auth.role === "Администратор" && (
-            <Tab
-              sx={{ width: 300, fontSize: 14,  color: isConfirms ? "red" : "white" }}
-              label="Порты"
-              value="/admin-main/portAdmin"
-              to="/admin-main/portAdmin"
-              component={Link}
-            />
-          )}
+          
         </Tabs>
       </AppBar>
 
