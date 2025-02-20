@@ -18,12 +18,11 @@ import {
   GridActionsCellItem,
   gridClasses,
 } from "@mui/x-data-grid";
-import { api } from "../../../axiosConfig.js";
+import { api } from "../../axiosConfig.js";
 import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
-import { MessageContext } from "../../../contexts/MessageContext.jsx";
-import { forbiddenTime } from "../../admin/Time/forbiddenTime.js";
-import { AuthContext } from "../../../contexts/AuthContext.jsx";
+import { MessageContext } from "../../contexts/MessageContext.jsx";
+import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { MenuItem, Select, TextField } from "@mui/material";
 
 function EditToolbar(props) {
@@ -67,7 +66,7 @@ EditToolbar.propTypes = {
   portName: PropTypes.string.isRequired
 };
 
-export default function Dispatcher(props) {
+export default function Port(props) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const [updateFlag, setUpdateFlag] = useState(false);
@@ -78,10 +77,7 @@ export default function Dispatcher(props) {
   const [ships, setShips] = useState([]);
   const [nameCell,setNameCell] = useState("");
   const portName = props.portName;
-  const handleChange = () => {
-    // Вызываем onUpdate для информирования родительского компонента
-    props.onUpdate();
-  };
+
   useEffect(() => {
     const fetchShips = async () => {
       try {
@@ -93,7 +89,6 @@ export default function Dispatcher(props) {
     };
     fetchShips();
   }, []);
-
 
   useEffect(() => {
       setIsEditAllowed(true);
@@ -110,7 +105,6 @@ export default function Dispatcher(props) {
         console.log(err);
     }
     };
-    handleChange();
     getRows();
   }, [forceReload]);
   const handleRowEditStart = (params, event) => {
@@ -226,45 +220,6 @@ export default function Dispatcher(props) {
       ),
     },
     {
-      field: "number_ship",
-      headerName: "№ судна",
-      width: 120,
-      editable: true,
-      type: "string"
-    },
-    {
-      field: "Тип судна",
-      headerName: "Тип судна",
-      type: "string",
-      editable: true,
-      width: 140,
-      renderCell: (params) => <span>{params.value}</span>,  // Display the selected type
-      renderEditCell: (params) => (
-        <Select
-          value={params.value || ""}
-          onChange={(event) => {
-            const newValue = event.target.value;
-            // Update the cell value
-            params.api.setEditCellValue({ id: params.id, field: "type", value: newValue });
-            // Set the selected type to the nameCell state
-            setNameCell(newValue);
-          }}
-          fullWidth
-        >
-          <MenuItem value="Пассажирский">Пассажирский</MenuItem>
-          <MenuItem value="Грузовой">Грузовой</MenuItem>
-        </Select>
-      ),
-    },
-    {
-      field: "captain",
-      headerName: "Капитан судна",
-      width: 120,
-      editable: true,
-      type: "string"
-    },
-   
-    {
       field: "sostav",
       headerName: "Составы",
       type: "string",
@@ -284,7 +239,6 @@ export default function Dispatcher(props) {
         </Select>
       ),
     },
-    { field: "data", headerName:  "Данные о составе", editable: true, width: 130 },
     { field: "place", headerName: "Прибыл из", editable: true, width: 120 },
     {
       field: "date_enter",
@@ -425,15 +379,6 @@ export default function Dispatcher(props) {
   
 
   return (
-    <Accordion>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
-        <Typography sx={{ ml: "20px", fontSize: 17 }}>{portName}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
         <Typography>
           <DataGrid
             initialState={{
@@ -466,7 +411,5 @@ export default function Dispatcher(props) {
             }}
           />
         </Typography>
-      </AccordionDetails>
-    </Accordion>
   );
 }
