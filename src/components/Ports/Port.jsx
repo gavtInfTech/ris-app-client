@@ -24,6 +24,7 @@ import { randomId } from "@mui/x-data-grid-generator";
 import { MessageContext } from "../../contexts/MessageContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
 import { MenuItem, Select, TextField } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel, portName } = props;
@@ -77,7 +78,12 @@ export default function Port(props) {
   const [ships, setShips] = useState([]);
   const [nameCell,setNameCell] = useState("");
   const portName = props.portName;
-
+  const handleViewClick = (id) => () => {
+    const rowData = rows.find((row) => row.id === id);
+    console.log("Данные строки:", rowData);
+    alert(JSON.stringify(rowData, null, 2)); // Можно заменить на модальное окно
+  };
+  
   useEffect(() => {
     const fetchShips = async () => {
       try {
@@ -360,6 +366,13 @@ export default function Port(props) {
   
         return [
           <GridActionsCellItem
+            icon={<VisibilityIcon />}
+            label="View"
+            className="textPrimary"
+            onClick={handleViewClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
@@ -410,6 +423,7 @@ export default function Port(props) {
               toolbar: { setRows, setRowModesModel, portName },
             }}
           />
+          
         </Typography>
   );
 }
