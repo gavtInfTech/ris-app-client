@@ -11,10 +11,15 @@
   }
   
   .accordionDetails {
+    overflow: auto;
     display: flex;
     flex-flow: column;
     align-items: center;
     overflow: hidden;
+  }
+  .accordionDetails2 {
+    height: 500px; /* или минимальная высота */
+    overflow: auto;
   }
   
   .button {

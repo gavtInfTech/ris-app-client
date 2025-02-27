@@ -11,7 +11,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box, minWidth } from "@mui/system";
-import PropTypes from "prop-types";
+import Style from "./style.module.css";
 import {
   GridRowModes,
   GridToolbarContainer,
@@ -35,7 +35,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import NoticeForm from "./PortForm.jsx";
 import PopupEdit from "./PopupEdit.jsx";
-
+import Archive from "./Archive.jsx";
 
 export default function Port(props) {
   const [rows, setRows] = useState([]);
@@ -63,19 +63,19 @@ export default function Port(props) {
 
   const handleViewClick = (id) => async () => {
     try {
-        const rowData = rows.find((row) => row.id === id);
-        if (!rowData) {
-            console.error("Row not found");
-            return;
-        }
+      const rowData = rows.find((row) => row.id === id);
+      if (!rowData) {
+        console.error("Row not found");
+        return;
+      }
 
-        const res = await api.get(`/ports/getAllStatus?id_ship=${id}`);
-        setSelectedRow(res.data);
-        setOpen(true); // Открываем диалог
+      const res = await api.get(`/ports/getAllStatus?id_ship=${id}`);
+      setSelectedRow(res.data);
+      setOpen(true); // Открываем диалог
     } catch (error) {
-        console.error("Error fetching status:", error);
+      console.error("Error fetching status:", error);
     }
-};
+  };
 
   const handleSecondViewClick = () => () => {
     setOpenSecond(true); // Открываем диалог
@@ -85,9 +85,9 @@ export default function Port(props) {
     const fetchShips = async () => {
       try {
         const res = await api.get("/allShips/getAllShips");
-        const sortedShips = res.data.slice().sort((a, b) => 
-          a.name.localeCompare(b.name, "ru-RU")
-        );
+        const sortedShips = res.data
+          .slice()
+          .sort((a, b) => a.name.localeCompare(b.name, "ru-RU"));
         setShips(sortedShips);
       } catch (err) {
         console.error("Ошибка загрузки судов", err);
@@ -107,8 +107,8 @@ export default function Port(props) {
           params: { portName: portName },
         });
         setRows(res.data);
-        setWaitingRows(res.data.filter((item)=>item.status != "Отправлено"));
-        setSendedRows(res.data.filter((item)=>item.status == "Отправлено"));
+        setWaitingRows(res.data.filter((item) => item.status != "Отправлено"));
+        setSendedRows(res.data.filter((item) => item.status == "Отправлено"));
       } catch (err) {
         console.log(err);
       }
@@ -244,7 +244,7 @@ export default function Port(props) {
       editable: false,
       valueGetter: (params) => {
         if (!params.value) return "—"; // Если даты нет, показываем дефис
-        return new Date(params.value).toLocaleString("ru-RU")
+        return new Date(params.value).toLocaleString("ru-RU");
       },
     },
     {
@@ -254,7 +254,7 @@ export default function Port(props) {
       editable: true,
       valueGetter: (params) => {
         if (!params.value) return "—"; // Если даты нет, показываем дефис
-        return new Date(params.value).toLocaleString("ru-RU")
+        return new Date(params.value).toLocaleString("ru-RU");
       },
       renderEditCell: (params) => (
         <TextField
@@ -276,7 +276,7 @@ export default function Port(props) {
       headerName: "Отправление",
       valueGetter: (params) => {
         if (!params.value) return "—"; // Если даты нет, показываем дефис
-        return new Date(params.value).toLocaleString("ru-RU")
+        return new Date(params.value).toLocaleString("ru-RU");
       },
       width: 120,
       editable: true,
@@ -326,7 +326,7 @@ export default function Port(props) {
           minWidth: "120px",
           textAlign: "center",
         };
-  
+
         if (params.value === "Отправлено") {
           styles.color = "dark";
           styles.backgroundColor = "rgba(90, 240, 90, 0.8)";
@@ -335,7 +335,7 @@ export default function Port(props) {
           styles.color = "dark";
           styles.backgroundColor = "rgba(247, 255, 1, 0.97)";
         }
-  
+
         return <Box sx={styles}>{params.value}</Box>;
       },
       renderEditCell: (params) => (
@@ -370,7 +370,13 @@ export default function Port(props) {
             onClick={handleViewClick(id)}
             color="inherit"
           />,
-          <PopupEdit data={rows} portName={portName} ships={ships} id={id} setForceReload={setForceReload}/>,
+          <PopupEdit
+            data={selectedRow ? selectedRow : rows}
+            portName={portName}
+            ships={ships}
+            id={id}
+            setForceReload={setForceReload}
+          />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
@@ -381,18 +387,55 @@ export default function Port(props) {
       },
     },
   ];
-  
 
   return (
     <Typography>
-            <Button
-        variant="outlined"
-        sx={{ mb: 2 }}
-        onClick={handleSecondViewClick()}
+      <Accordion
+        sx={{
+          maxWidth: 1240,
+          backgroundColor: "#ebf4fc",
+          mb: "20px",
+          boxShadow: "0px 1px 1px #b4b8c2",
+        }}
       >
-        Архив
-      </Button>
-      <NoticeForm setForceReload={setForceReload} portName={portName}></NoticeForm>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography sx={{ ml: "20px", fontSize: 17 }}>Архив судов</Typography>
+        </AccordionSummary>
+        <AccordionDetails className={Style.accordionDetails2}>
+        <DataGrid
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "name", sort: "desc" }],
+              },
+            }}
+            rows={sendedRows}
+            columns={columns}
+            editMode="row"
+            rowModesModel={rowModesModel}
+            onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+            onRowEditStart={handleRowEditStart}
+            onRowEditStop={handleRowEditStop}
+            processRowUpdate={processRowUpdate}
+            experimentalFeatures={{ newEditingApi: true }}
+            getRowHeight={() => "auto"}
+            sx={{
+              [`& .${gridClasses.cell}`]: {
+                py: 1,
+              },
+              maxWidth: 1400,
+              height: 600,
+            }}
+          />
+        </AccordionDetails>
+      </Accordion>
+      <NoticeForm
+        setForceReload={setForceReload}
+        portName={portName}
+      ></NoticeForm>
       <DataGrid
         initialState={{
           sorting: {
@@ -462,51 +505,6 @@ export default function Port(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Закрыть</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={openSecond}
-        onClose={handleClose}
-        maxWidth="xl"
-        fullWidth
-        sx={{
-          "& .MuiDialog-paper": {
-            width: "80vw",
-            height: "80vh",
-            maxWidth: "none",
-            maxHeight: "none",
-          },
-        }}
-      >
-        <DialogTitle>Архив судов</DialogTitle>
-        <DialogContent>
-          <DataGrid
-            initialState={{
-              sorting: {
-                sortModel: [{ field: "name", sort: "desc" }],
-              },
-            }}
-            rows={sendedRows}
-            columns={columns}
-            editMode="row"
-            rowModesModel={rowModesModel}
-            onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
-            onRowEditStart={handleRowEditStart}
-            onRowEditStop={handleRowEditStop}
-            processRowUpdate={processRowUpdate}
-            experimentalFeatures={{ newEditingApi: true }}
-            getRowHeight={() => "auto"}
-            sx={{
-              [`& .${gridClasses.cell}`]: {
-                py: 1,
-              },
-              maxWidth: 1400,
-              height: 600,
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </Typography>

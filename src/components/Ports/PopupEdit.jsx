@@ -34,6 +34,17 @@ export default function PopupEdit(props) {
     content: [],
     status: "",
   });
+  function formatDateToLocalString(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+  
+    return `${year}-${month}-${day}T${hours}:${minutes}`; // Format for datetime-local
+  }
+
   const noticeStatus = [
     "Ожидается",
     "Прибыло",
@@ -46,6 +57,7 @@ export default function PopupEdit(props) {
   ];
   const handleClick = (event) => {
     const notice = props.data.find((doc) => doc.id === props.id);
+    console.log("BIG NOTICE", notice);
     setState(notice);
     setAnchorEl(event.currentTarget);
   };
@@ -128,7 +140,7 @@ export default function PopupEdit(props) {
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }}>
-          Изменение извещения
+          Изменение Записи
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -177,6 +189,7 @@ export default function PopupEdit(props) {
                   {props.children}
                 </Popper>
               )}
+              value={ships.find((ship) => ship.id === state.id_ship) || null} // Устанавливаем текущее значение судна
               ListboxProps={{
                 sx: {
                   "& .MuiAutocomplete-option": {
@@ -205,15 +218,15 @@ export default function PopupEdit(props) {
               label="Прибытие в порт"
             />
 
-            <TextField
-              sx={{ width: 180, marginBottom: 3 }}
-              name="date_out"
-              type="datetime-local"
-              value={state.date_out}
-              onChange={handleChange}
-              variant="standard"
-              label="Отправление в"
-            />
+          <TextField
+  sx={{ width: 180, marginBottom: 3 }}
+  name="date_out"
+  type="datetime-local"
+  value={formatDateToLocalString(state.date_out)} // Convert date_out to local format
+  onChange={handleChange}
+  variant="standard"
+  label="Отправление"
+/>
 
             <TextField
               sx={{ mb: 3 }}
