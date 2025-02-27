@@ -127,10 +127,18 @@ export default function ShipDirectory() {
 
         <TabPanel value={value} index={1}></TabPanel>
         <TabPanel value={value} index={2}></TabPanel>
-        <TabPanel value={value} index={3}>Заглушка</TabPanel>
-        <TabPanel value={value} index={4}>Заглушка</TabPanel>
-        <TabPanel value={value} index={5}>Заглушка</TabPanel>
-        <TabPanel value={value} index={6}>Заглушка</TabPanel>
+        <TabPanel value={value} index={3}>
+          Заглушка
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          Заглушка
+        </TabPanel>
+        <TabPanel value={value} index={5}>
+          Заглушка
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+          Заглушка
+        </TabPanel>
       </Box>
     </Box>
   );

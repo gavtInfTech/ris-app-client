@@ -23,49 +23,19 @@ import { DataGrid } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { MessageContext } from "../../contexts/MessageContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
-import { MenuItem, Select, TextField } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import NoticeForm from "./PortForm.jsx";
+import PopupEdit from "./PopupEdit.jsx";
 
-function EditToolbar(props) {
-  const { setRows, setRowModesModel, portName } = props;
-
-  const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => {
-      console.log("THIS IS OLD ROWS", oldRows); // Check what 'oldRows' is
-      return [
-        ...oldRows,
-        {
-          id,
-          portName: portName,
-          name: null,
-          date_enter: null,
-          date_out: null,
-          type: null,
-          id_ship: null,
-        },
-      ];
-    });
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "planDepth" },
-    }));
-  };
-
-  return (
-    <GridToolbarContainer sx={{ color: "#4778e9" }}>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Добавить данные
-      </Button>
-    </GridToolbarContainer>
-  );
-}
-
-EditToolbar.propTypes = {
-  setRowModesModel: PropTypes.func.isRequired,
-  setRows: PropTypes.func.isRequired,
-  portName: PropTypes.string.isRequired
-};
 
 export default function Port(props) {
   const [rows, setRows] = useState([]);
@@ -76,19 +46,49 @@ export default function Port(props) {
   const [forceReload, setForceReload] = useState(false);
   const { auth } = useContext(AuthContext);
   const [ships, setShips] = useState([]);
-  const [nameCell,setNameCell] = useState("");
+  const [nameCell, setNameCell] = useState("");
   const portName = props.portName;
-  const handleViewClick = (id) => () => {
-    const rowData = rows.find((row) => row.id === id);
-    console.log("Данные строки:", rowData);
-    alert(JSON.stringify(rowData, null, 2)); // Можно заменить на модальное окно
+  const [open, setOpen] = useState(false);
+  const [openSecond, setOpenSecond] = useState(false);
+  const [waitingRows, setWaitingRows] = useState([]);
+  const [sendedRows, setSendedRows] = useState([]);
+
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleClose = () => {
+    setOpen(false);
+    setOpenSecond(false);
+    setSelectedRow(null);
   };
-  
+
+  const handleViewClick = (id) => async () => {
+    try {
+        const rowData = rows.find((row) => row.id === id);
+        if (!rowData) {
+            console.error("Row not found");
+            return;
+        }
+
+        const res = await api.get(`/ports/getAllStatus?id_ship=${id}`);
+        setSelectedRow(res.data);
+        setOpen(true); // Открываем диалог
+    } catch (error) {
+        console.error("Error fetching status:", error);
+    }
+};
+
+  const handleSecondViewClick = () => () => {
+    setOpenSecond(true); // Открываем диалог
+  };
+
   useEffect(() => {
     const fetchShips = async () => {
       try {
         const res = await api.get("/allShips/getAllShips");
-        setShips(res.data);
+        const sortedShips = res.data.slice().sort((a, b) => 
+          a.name.localeCompare(b.name, "ru-RU")
+        );
+        setShips(sortedShips);
       } catch (err) {
         console.error("Ошибка загрузки судов", err);
       }
@@ -97,19 +97,21 @@ export default function Port(props) {
   }, []);
 
   useEffect(() => {
-      setIsEditAllowed(true);
+    setIsEditAllowed(true);
   }, []);
 
   useEffect(() => {
     const getRows = async () => {
       try {
-        const res = await api.get("/ports/getAllByPort",  {
+        const res = await api.get("/ports/getAllByPort", {
           params: { portName: portName },
         });
         setRows(res.data);
-    } catch (err) {
+        setWaitingRows(res.data.filter((item)=>item.status != "Отправлено"));
+        setSendedRows(res.data.filter((item)=>item.status == "Отправлено"));
+      } catch (err) {
         console.log(err);
-    }
+      }
     };
     getRows();
   }, [forceReload]);
@@ -121,19 +123,19 @@ export default function Port(props) {
     event.defaultMuiPrevented = true;
   };
   const statusOptions = ["Отправлено", "Ожидание"];
-  
+
   const getStatusColor = (status) => {
     if (status === "Отправлено") return "green";
-    if (status === "Ожидание") return "red";
+    if (status === "Ожидание") return "yellow";
     return "inherit";
   };
 
   const handleEditClick = (id) => () => {
-        setUpdateFlag(true);
-        setRowModesModel({
-          ...rowModesModel,
-          [id]: { mode: GridRowModes.Edit },
-        });
+    setUpdateFlag(true);
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.Edit },
+    });
   };
 
   const handleSaveClick = (id) => () => {
@@ -142,8 +144,8 @@ export default function Port(props) {
 
   const handleDeleteClick = (id) => async () => {
     setUpdateFlag(true);
-    await api.delete(`/ports/deleteById/${id}`)
-    setForceReload((prev) => !prev);     
+    await api.delete(`/ports/deleteById/${id}`);
+    setForceReload((prev) => !prev);
   };
 
   const handleCancelClick = (id) => () => {
@@ -154,7 +156,8 @@ export default function Port(props) {
     });
 
     const editedRow = rows.find((row) => row.id === id);
-    if (!editedRow.id_ship) { // Проверяем на null, undefined, пустую строку
+    if (!editedRow.id_ship) {
+      // Проверяем на null, undefined, пустую строку
       setRows((prevRows) => prevRows.filter((row) => row.id !== id));
     }
   };
@@ -171,10 +174,10 @@ export default function Port(props) {
     const updatedRow = { ...newRow };
     if (updateFlag) {
       try {
-          await api.post("/ports/change", {
-            ...updatedRow,
-          });
-          setForceReload((prev) => !prev);
+        await api.post("/ports/change", {
+          ...updatedRow,
+        });
+        setForceReload((prev) => !prev);
       } catch (err) {
         setMessage(() => ({
           open: true,
@@ -207,50 +210,52 @@ export default function Port(props) {
     {
       field: "id_ship",
       headerName: "Название судна",
-      width: 120,
+      width: 150,
       editable: true,
       renderCell: (params) => {
         const ship = ships.find((ship) => ship.id === params.value);
-        return <span>{ship ? ship.name : "Не указано"}</span>;  // Отображаем название судна или текст "Не указано"
+        return <span>{ship ? ship.name : "Не указано"}</span>;
       },
       renderEditCell: (params) => (
         <Select
           value={params.value || ""}
-          onChange={(event) => params.api.setEditCellValue({ id: params.id, field: "id_ship", value: event.target.value })}
+          onChange={(event) =>
+            params.api.setEditCellValue({
+              id: params.id,
+              field: "id_ship",
+              value: event.target.value,
+            })
+          }
           fullWidth
         >
           {ships.map((ship) => (
-            <MenuItem key={ship.id} value={ship.id}>{ship.name}</MenuItem>
+            <MenuItem key={ship.id} value={ship.id}>
+              {ship.name}
+            </MenuItem>
           ))}
         </Select>
       ),
     },
+    { field: "portName", headerName: "Порт", width: 120, editable: true },
     {
-      field: "sostav",
-      headerName: "Составы",
-      type: "string",
-      editable: true,
-      width: 80,
-      renderCell: (params) => <span>{params.value}</span>,  // Display the selected type
-      renderEditCell: (params) => (
-        <Select
-          value={params.value || ""}
-          onChange={(event) =>
-            params.api.setEditCellValue({ id: params.id, field: "sostav", value: event.target.value })
-          }
-          fullWidth
-        >
-          <MenuItem value="Есть">Есть</MenuItem>
-          <MenuItem value="Нету">Нету</MenuItem>
-        </Select>
-      ),
+      field: "date",
+      headerName: "Дата добавления записи",
+      width: 100,
+      editable: false,
+      valueGetter: (params) => {
+        if (!params.value) return "—"; // Если даты нет, показываем дефис
+        return new Date(params.value).toLocaleString("ru-RU")
+      },
     },
-    { field: "place", headerName: "Прибыл из", editable: true, width: 120 },
     {
       field: "date_enter",
-      headerName: "Прибытие в порт",
-      width: 160,
+      headerName: "Прибытие",
+      width: 120,
       editable: true,
+      valueGetter: (params) => {
+        if (!params.value) return "—"; // Если даты нет, показываем дефис
+        return new Date(params.value).toLocaleString("ru-RU")
+      },
       renderEditCell: (params) => (
         <TextField
           type="datetime-local"
@@ -268,8 +273,12 @@ export default function Port(props) {
     },
     {
       field: "date_out",
-      headerName: "Отправление из порта",
-      width: 160,
+      headerName: "Отправление",
+      valueGetter: (params) => {
+        if (!params.value) return "—"; // Если даты нет, показываем дефис
+        return new Date(params.value).toLocaleString("ru-RU")
+      },
+      width: 120,
       editable: true,
       renderEditCell: (params) => (
         <TextField
@@ -287,11 +296,24 @@ export default function Port(props) {
       ),
     },
     {
+      field: "sostav",
+      headerName: "Состав",
+      width: 120,
+      editable: true,
+      valueGetter: (params) => {
+        const shipNames = (params.value || [])
+          .map((id) => ships.find((ship) => ship.id === id)?.name) // Находим имя судна по id
+          .filter(Boolean) // Убираем undefined
+          .join(", "); // Объединяем в строку через запятую
+        return shipNames || "—"; // Если пусто, показываем дефис
+      },
+    },
+    { field: "content", headerName: "Контент", width: 200, editable: true },
+    {
       field: "status",
       headerName: "Статус",
-      type: "string",
+      width: 140,
       editable: true,
-      width: 160,
       renderCell: (params) => {
         let styles = {
           display: "flex",
@@ -302,42 +324,37 @@ export default function Port(props) {
           border: "1px solid blue",
           padding: "5px 5px",
           minWidth: "120px",
-          textAlign: "center"
+          textAlign: "center",
         };
-        
+  
         if (params.value === "Отправлено") {
           styles.color = "dark";
           styles.backgroundColor = "rgba(90, 240, 90, 0.8)";
         }
         if (params.value === "Ожидание") {
-             styles.color = "dark";
-          styles.backgroundColor = "rgba(255, 119, 119, 0.97)";
+          styles.color = "dark";
+          styles.backgroundColor = "rgba(247, 255, 1, 0.97)";
         }
-        
-        return (
-          <Box sx={styles}>
-            {params.value}
-          </Box>
-        );
+  
+        return <Box sx={styles}>{params.value}</Box>;
       },
-      renderEditCell: (params) => {
-        return (
-          <Select
-            value={params.value}
-            onChange={(event) => params.api.setEditCellValue({
+      renderEditCell: (params) => (
+        <Select
+          value={params.value || ""}
+          onChange={(event) =>
+            params.api.setEditCellValue({
               id: params.id,
-              field: params.field,
+              field: "status",
               value: event.target.value,
-            })}
-            fullWidth
-          >
-            <MenuItem value="Отправлено">Отправлено</MenuItem>
-            <MenuItem value="Ожидание">Ожидание</MenuItem>
-          </Select>
-        );
-      }
-    }
-    ,
+            })
+          }
+          fullWidth
+        >
+          <MenuItem value="Отправлено">Отправлено</MenuItem>
+          <MenuItem value="Ожидание">Ожидание</MenuItem>
+        </Select>
+      ),
+    },
     {
       field: "actions",
       type: "actions",
@@ -345,25 +362,6 @@ export default function Port(props) {
       width: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-  
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-  
         return [
           <GridActionsCellItem
             icon={<VisibilityIcon />}
@@ -372,13 +370,7 @@ export default function Port(props) {
             onClick={handleViewClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
+          <PopupEdit data={rows} portName={portName} ships={ships} id={id} setForceReload={setForceReload}/>,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
@@ -392,14 +384,109 @@ export default function Port(props) {
   
 
   return (
-        <Typography>
+    <Typography>
+            <Button
+        variant="outlined"
+        sx={{ mb: 2 }}
+        onClick={handleSecondViewClick()}
+      >
+        Архив
+      </Button>
+      <NoticeForm setForceReload={setForceReload} portName={portName}></NoticeForm>
+      <DataGrid
+        initialState={{
+          sorting: {
+            sortModel: [{ field: "name", sort: "desc" }],
+          },
+        }}
+        rows={waitingRows}
+        columns={columns}
+        editMode="row"
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+        onRowEditStart={handleRowEditStart}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
+        experimentalFeatures={{ newEditingApi: true }}
+        getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            py: 1,
+          },
+          maxWidth: 1400,
+          height: 600,
+        }}
+      />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="xl"
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "80vw",
+            height: "80vh",
+            maxWidth: "none",
+            maxHeight: "none",
+          },
+        }}
+      >
+        <DialogTitle>Статусы судна</DialogTitle>
+        <DialogContent>
+          {selectedRow && (
+            <DataGrid
+              initialState={{
+                sorting: {
+                  sortModel: [{ field: "name", sort: "desc" }],
+                },
+              }}
+              rows={selectedRow}
+              columns={columns}
+              editMode="row"
+              rowModesModel={rowModesModel}
+              onRowModesModelChange={(newModel) => setRowModesModel(newModel)}
+              onRowEditStart={handleRowEditStart}
+              onRowEditStop={handleRowEditStop}
+              processRowUpdate={processRowUpdate}
+              experimentalFeatures={{ newEditingApi: true }}
+              getRowHeight={() => "auto"}
+              sx={{
+                [`& .${gridClasses.cell}`]: {
+                  py: 1,
+                },
+                maxWidth: 1400,
+                height: 600,
+              }}
+            />
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Закрыть</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openSecond}
+        onClose={handleClose}
+        maxWidth="xl"
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "80vw",
+            height: "80vh",
+            maxWidth: "none",
+            maxHeight: "none",
+          },
+        }}
+      >
+        <DialogTitle>Архив судов</DialogTitle>
+        <DialogContent>
           <DataGrid
             initialState={{
               sorting: {
                 sortModel: [{ field: "name", sort: "desc" }],
               },
             }}
-            rows={rows}
+            rows={sendedRows}
             columns={columns}
             editMode="row"
             rowModesModel={rowModesModel}
@@ -416,14 +503,12 @@ export default function Port(props) {
               maxWidth: 1400,
               height: 600,
             }}
-            components={{
-              Toolbar: EditToolbar,
-            }}
-            componentsProps={{
-              toolbar: { setRows, setRowModesModel, portName },
-            }}
           />
-          
-        </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </Typography>
   );
 }
