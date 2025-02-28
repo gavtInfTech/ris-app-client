@@ -9,6 +9,7 @@ import { Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import Port from "./Port";
 import { IconShip } from "@tabler/icons-react";
+import Suda from "./Suda";
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -125,7 +126,9 @@ export default function ShipDirectory() {
           )}
         </TabPanel>
 
-        <TabPanel value={value} index={1}></TabPanel>
+        <TabPanel value={value} index={1}>
+          <Suda></Suda>
+        </TabPanel>
         <TabPanel value={value} index={2}></TabPanel>
         <TabPanel value={value} index={3}>
           Заглушка
