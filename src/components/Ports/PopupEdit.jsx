@@ -25,7 +25,7 @@ export default function PopupEdit(props) {
   const { setMessage } = useContext(MessageContext);
   const setForceReload = props.setForceReload;
   const [state, setState] = useState({
-    id: uuidv4(),
+    id: "",
     id_ship: "",
     portName: portName,
     place: "",
@@ -78,18 +78,24 @@ export default function PopupEdit(props) {
   const confirmDelete = async (withApiCall) => {
     if (withApiCall && selectedShip) {
       try {
-        await api.post("/ports/add", { shipId: selectedShip.id });
+        console.log("Привести в порядок!!!");
+        await api.post("/ports/deleteWithAdd", {
+          shipId: selectedShip.id,
+          portId: state.id,
+        });
+        handleClose();
+        setForceReload((prev) => !prev);
       } catch (error) {
         console.error("Ошибка при отправке запроса:", error);
       }
     }
-
-    setState((prevState) => ({
-      ...prevState,
-      sostav: prevState.sostav.filter((id) => id !== selectedShip.id),
-      id: uuidv4(),
-      id_ship: selectedShip.id
-    }));
+    else{
+      setState((prevState) => ({
+        ...prevState,
+        sostav: prevState.sostav.filter((id) => id !== selectedShip.id),
+        id_ship: selectedShip.id,
+      }));
+    }
 
     setOpenConfirm(false);
     setSelectedShip(null);

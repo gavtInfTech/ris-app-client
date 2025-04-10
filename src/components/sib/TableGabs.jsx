@@ -85,7 +85,7 @@ export default function TableGabs(props) {
               <TableCell rowSpan={2} align="center">
                 Дата
               </TableCell>
-              <TableCell rowSpan={2} align="center">
+              <TableCell rowSpan={2} align="center" style={{maxWidth: "200px", minWidth: "175px"}}>
                 Лимитирующий участок, перекат
               </TableCell>
               <TableCell rowSpan={2} align="center">
