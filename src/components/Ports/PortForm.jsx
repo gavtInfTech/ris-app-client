@@ -28,7 +28,7 @@ export default function NoticeForm(props) {
     date: getCurrentDateTime(),
     date_enter: new Date(),
     date_out: new Date(),
-    content: [],
+    content: "",
     status: "",
   });
   function getCurrentDateTime() {

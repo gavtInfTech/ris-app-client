@@ -30,6 +30,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import NoticeForm from "./PortForm.jsx";
 import PopupEdit from "./PopupEdit.jsx";
+import { AddIcCallOutlined, DirectionsBoatFilled } from "@mui/icons-material";
 
 export default function Port(props) {
   const [rows, setRows] = useState([]);
@@ -105,11 +106,10 @@ export default function Port(props) {
         setRows(res.data);
         setWaitingRows(res.data.filter((item) => item.status != "Отправлено"));
         setSendedRows(res.data.filter((item) => item.status == "Отправлено"));
-        if (open){
+        if (open) {
           const resOpen = await api.get(`/ports/getAllStatus?id=${activeId}`);
           setSelectedRow(resOpen.data);
         }
-  
       } catch (err) {
         console.log(err);
       }
@@ -393,6 +393,12 @@ export default function Port(props) {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
+          <GridActionsCellItem
+          icon={<DirectionsBoatFilled />}
+          label="Delete"
+          onClick={handleDeleteClick(id)}
+          color="inherit"
+        />,
         ];
       },
     },
@@ -598,7 +604,14 @@ export default function Port(props) {
               sorting: {
                 sortModel: [{ field: "name", sort: "desc" }],
               },
+              pagination: {
+                paginationModel: {
+                  pageSize: 5,  
+                },
+              },
             }}
+            pageSizeOptions={[5]}
+            checkboxSelection
             rows={sendedRows}
             columns={columns}
             editMode="row"
@@ -628,7 +641,14 @@ export default function Port(props) {
           sorting: {
             sortModel: [{ field: "name", sort: "desc" }],
           },
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
         }}
+        pageSizeOptions={[5]}
+        checkboxSelection
         rows={waitingRows}
         columns={columns}
         editMode="row"
