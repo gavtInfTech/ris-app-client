@@ -9,7 +9,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, DialogActions } from "@mui/material";
 import Style from "./style.module.css";
 import { api } from "../../axiosConfig.js";
 import { MessageContext } from "../../contexts/MessageContext.jsx";
@@ -19,15 +19,18 @@ import { v4 as uuidv4 } from "uuid";
 export default function PopupEdit(props) {
   const portName = props.portName;
   const ships = props.ships;
+  const edited = props.edited != undefined ? props.edited : false;
   const [anchorEl, setAnchorEl] = useState(null);
   const { changeData } = props;
   const { setMessage } = useContext(MessageContext);
   const setForceReload = props.setForceReload;
   const [state, setState] = useState({
-    id: uuidv4(),
+    id: "",
     id_ship: "",
     portName: portName,
     place: "",
+    gruz_amount: "",
+    gruz_type: "",
     date: getCurrentDateTime(),
     date_enter: new Date(),
     date_out: new Date(),
@@ -41,7 +44,7 @@ export default function PopupEdit(props) {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-  
+
     return `${year}-${month}-${day}T${hours}:${minutes}`; // Format for datetime-local
   }
 
@@ -55,6 +58,9 @@ export default function PopupEdit(props) {
     "Ожидает причала",
     "Отправлено",
   ];
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [selectedShip, setSelectedShip] = useState(null);
+
   const handleClick = (event) => {
     const notice = props.data.find((doc) => doc.id === props.id);
     console.log("BIG NOTICE", notice);
@@ -64,6 +70,37 @@ export default function PopupEdit(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = (ship) => {
+    setSelectedShip(ship);
+    setOpenConfirm(true);
+  };
+
+  const confirmDelete = async (withApiCall) => {
+    if (withApiCall && selectedShip) {
+      try {
+        console.log("Привести в порядок!!!");
+        await api.post("/ports/deleteWithAdd", {
+          shipId: selectedShip.id,
+          portId: state.id,
+        });
+        handleClose();
+        setForceReload((prev) => !prev);
+      } catch (error) {
+        console.error("Ошибка при отправке запроса:", error);
+      }
+    }
+    else{
+      setState((prevState) => ({
+        ...prevState,
+        sostav: prevState.sostav.filter((id) => id !== selectedShip.id),
+        id_ship: selectedShip.id,
+      }));
+    }
+
+    setOpenConfirm(false);
+    setSelectedShip(null);
   };
 
   const open = Boolean(anchorEl);
@@ -83,9 +120,13 @@ export default function PopupEdit(props) {
   const sendForm = async (event) => {
     event.preventDefault();
     try {
-      let res = await api.post("/ports/change", {
-        ...state,
-      });
+      edited
+        ? await api.post("/ports/changeArchive", {
+            ...state,
+          })
+        : await api.post("/ports/change", {
+            ...state,
+          });
       setForceReload((prev) => !prev);
       setAnchorEl(null);
       setMessage(() => ({
@@ -110,6 +151,8 @@ export default function PopupEdit(props) {
       date_enter: new Date(),
       date_out: new Date(),
       sostav: [],
+      gruz_amount: "",
+      gruz_type: "",
       content: "",
       status: "",
     });
@@ -207,6 +250,22 @@ export default function PopupEdit(props) {
               onChange={handleChange}
               variant="standard"
             />
+       <TextField
+              sx={{ mb: 2 }}
+              name="gruz_type"
+              label="Тип груза:"
+              value={state.gruz_type}
+              onChange={handleChange}
+              variant="standard"
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              name="gruz_amount"
+              label="Масса/объем груза:"
+              value={state.gruz_amount}
+              onChange={handleChange}
+              variant="standard"
+            />
 
             <TextField
               sx={{ width: 180, marginBottom: 3 }}
@@ -218,15 +277,18 @@ export default function PopupEdit(props) {
               label="Прибытие в порт"
             />
 
-          <TextField
-  sx={{ width: 180, marginBottom: 3 }}
-  name="date_out"
-  type="datetime-local"
-  value={formatDateToLocalString(state.date_out)} // Convert date_out to local format
-  onChange={handleChange}
-  variant="standard"
-  label="Отправление"
-/>
+            <TextField
+              sx={{ width: 180, marginBottom: 3 }}
+              name="date_out"
+              type="datetime-local"
+              value={
+                state.date_out ? formatDateToLocalString(state.date_out) : ""
+              }
+              onChange={handleChange}
+              variant="standard"
+              label="Отправление"
+              InputLabelProps={{ shrink: true }} // 🚀 Решает проблему наложения текста
+            />
 
             <TextField
               sx={{ mb: 3 }}
@@ -277,25 +339,37 @@ export default function PopupEdit(props) {
               }}
             />
 
-            <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-              {(state.sostav || [])
-                .map((id) => ships.find((ship) => ship.id === id)) // Ищем объект судна по id
-                .filter(Boolean) // Убираем undefined, если судно не найдено
-                .map((ship) => (
-                  <Chip
-                    key={ship.id}
-                    label={ship.name} // Выводим название судна
-                    onDelete={() =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        sostav: prevState.sostav.filter(
-                          (sId) => sId !== ship.id
-                        ), // Удаляем id из state
-                      }))
-                    }
-                  />
-                ))}
-            </Stack>
+            <>
+              <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
+                {(state.sostav || [])
+                  .map((id) => ships.find((ship) => ship.id === id))
+                  .filter(Boolean)
+                  .map((ship) => (
+                    <Chip
+                      key={ship.id}
+                      label={ship.name}
+                      onDelete={() => handleDelete(ship)}
+                    />
+                  ))}
+              </Stack>
+
+              {/* Модальное окно подтверждения удаления */}
+              <Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
+                <DialogTitle>Удаление судна</DialogTitle>
+                <DialogContent>
+                  Вы хотите просто удалить судно или удалить с добавлением
+                  записи?
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => confirmDelete(false)} color="primary">
+                    Просто удалить
+                  </Button>
+                  <Button onClick={() => confirmDelete(true)} color="secondary">
+                    Удалить с добавлением записи
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </>
 
             <TextField
               name="content"
