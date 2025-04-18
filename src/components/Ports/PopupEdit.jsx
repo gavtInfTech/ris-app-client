@@ -29,6 +29,8 @@ export default function PopupEdit(props) {
     id_ship: "",
     portName: portName,
     place: "",
+    gruz_amount: "",
+    gruz_type: "",
     date: getCurrentDateTime(),
     date_enter: new Date(),
     date_out: new Date(),
@@ -149,6 +151,8 @@ export default function PopupEdit(props) {
       date_enter: new Date(),
       date_out: new Date(),
       sostav: [],
+      gruz_amount: "",
+      gruz_type: "",
       content: "",
       status: "",
     });
@@ -243,6 +247,22 @@ export default function PopupEdit(props) {
               name="place"
               label="Прибыл из:"
               value={state.place}
+              onChange={handleChange}
+              variant="standard"
+            />
+       <TextField
+              sx={{ mb: 2 }}
+              name="gruz_type"
+              label="Тип груза:"
+              value={state.gruz_type}
+              onChange={handleChange}
+              variant="standard"
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              name="gruz_amount"
+              label="Масса/объем груза:"
+              value={state.gruz_amount}
               onChange={handleChange}
               variant="standard"
             />

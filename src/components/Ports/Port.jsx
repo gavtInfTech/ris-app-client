@@ -256,6 +256,8 @@ export default function Port(props) {
       },
     },
     { field: "place", headerName: "Прибыл из:", width: 100, editable: true },
+    { field: "gruz_type", headerName: "Тип груза:", width: 100, editable: true },
+    { field: "gruz_amount", headerName: "Масса/объем груза:", width: 100, editable: true },
     {
       field: "date_enter",
       headerName: "Прибытие",
@@ -368,7 +370,7 @@ export default function Port(props) {
       field: "actions",
       type: "actions",
       headerName: "Действия",
-      width: 100,
+      width: 150,
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -445,6 +447,8 @@ export default function Port(props) {
         return new Date(params.value).toLocaleString("ru-RU");
       },
     },
+    { field: "gruz_type", headerName: "Тип груза:", width: 100, editable: true },
+    { field: "gruz_amount", headerName: "Масса/объем груза:", width: 100, editable: true },
     { field: "place", headerName: "Прибыл из:", width: 100, editable: true },
     {
       field: "date_enter",
