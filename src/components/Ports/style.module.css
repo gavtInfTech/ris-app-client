@@ -18,8 +18,10 @@
     overflow: hidden;
   }
   .accordionDetails2 {
-    height: 500px; /* или минимальная высота */
+    height: fit-content; /* или минимальная высота */
     overflow: auto;
+    width: fit-content;
+    min-width: 100%;
   }
   
   .button {

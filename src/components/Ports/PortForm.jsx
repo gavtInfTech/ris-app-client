@@ -24,11 +24,13 @@ export default function NoticeForm(props) {
     id: uuidv4(),
     id_ship: "",
     portName: portName,
+    gruz_amount: "",
+    gruz_type: "",
     place: "",
     date: getCurrentDateTime(),
     date_enter: new Date(),
     date_out: new Date(),
-    content: [],
+    content: "",
     status: "",
   });
   function getCurrentDateTime() {
@@ -124,6 +126,8 @@ export default function NoticeForm(props) {
       date_enter: new Date(),
       date_out: new Date(),
       sostav: [],
+      gruz_amount: "",
+      gruz_type: "",
       content: "",
       status: "",
     });
@@ -149,7 +153,6 @@ export default function NoticeForm(props) {
     <div>
       <Accordion
         sx={{
-          maxWidth: 1240,
           backgroundColor: "#ebf4fc",
           mb: "5px",
           boxShadow: "0px 1px 1px #b4b8c2",
@@ -213,6 +216,22 @@ export default function NoticeForm(props) {
               name="place"
               label="Прибыл из:"
               value={state.place}
+              onChange={handleChange}
+              variant="standard"
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              name="gruz_type"
+              label="Тип груза:"
+              value={state.gruz_type}
+              onChange={handleChange}
+              variant="standard"
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              name="gruz_amount"
+              label="Масса/объем груза:"
+              value={state.gruz_amount}
               onChange={handleChange}
               variant="standard"
             />
