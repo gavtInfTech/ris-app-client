@@ -31,6 +31,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import NoticeForm from "./PortForm.jsx";
 import PopupEdit from "./PopupEdit.jsx";
 import { AddIcCallOutlined, DirectionsBoatFilled } from "@mui/icons-material";
+import BoatPopupButton from "./Popover.jsx";
 
 export default function Port(props) {
   const [rows, setRows] = useState([]);
@@ -218,7 +219,7 @@ export default function Port(props) {
     {
       field: "id_ship",
       headerName: "Название судна",
-      width: 100,
+      width: 150,
       editable: true,
       renderCell: (params) => {
         const ship = ships.find((ship) => ship.id === params.value);
@@ -248,7 +249,7 @@ export default function Port(props) {
     {
       field: "date",
       headerName: "Дата добавления записи",
-      width: 100,
+      width: 185,
       editable: false,
       valueGetter: (params) => {
         if (!params.value) return "—"; // Если даты нет, показываем дефис
@@ -256,8 +257,18 @@ export default function Port(props) {
       },
     },
     { field: "place", headerName: "Прибыл из:", width: 100, editable: true },
-    { field: "gruz_type", headerName: "Тип груза:", width: 100, editable: true },
-    { field: "gruz_amount", headerName: "Масса/объем груза:", width: 100, editable: true },
+    {
+      field: "gruz_type",
+      headerName: "Тип груза:",
+      width: 100,
+      editable: true,
+    },
+    {
+      field: "gruz_amount",
+      headerName: "Масса/объем груза:",
+      width: 150,
+      editable: true,
+    },
     {
       field: "date_enter",
       headerName: "Прибытие",
@@ -370,7 +381,7 @@ export default function Port(props) {
       field: "actions",
       type: "actions",
       headerName: "Действия",
-      width: 150,
+      width: 200,
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
@@ -395,12 +406,7 @@ export default function Port(props) {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-          icon={<DirectionsBoatFilled />}
-          label="Delete"
-          onClick={handleDeleteClick(id)}
-          color="inherit"
-        />,
+          <BoatPopupButton ships={ships} portName={portName} id={id} forceReload={forceReload} />,
         ];
       },
     },
@@ -440,15 +446,25 @@ export default function Port(props) {
     {
       field: "date",
       headerName: "Дата добавления записи",
-      width: 100,
+      width: 150,
       editable: false,
       valueGetter: (params) => {
         if (!params.value) return "—"; // Если даты нет, показываем дефис
         return new Date(params.value).toLocaleString("ru-RU");
       },
     },
-    { field: "gruz_type", headerName: "Тип груза:", width: 100, editable: true },
-    { field: "gruz_amount", headerName: "Масса/объем груза:", width: 100, editable: true },
+    {
+      field: "gruz_type",
+      headerName: "Тип груза:",
+      width: 100,
+      editable: true,
+    },
+    {
+      field: "gruz_amount",
+      headerName: "Масса/объем груза:",
+      width: 100,
+      editable: true,
+    },
     { field: "place", headerName: "Прибыл из:", width: 100, editable: true },
     {
       field: "date_enter",
@@ -589,7 +605,7 @@ export default function Port(props) {
     <Typography>
       <Accordion
         sx={{
-          maxWidth: 1240,
+          maxWidth: "100%",
           backgroundColor: "#ebf4fc",
           mb: "20px",
           boxShadow: "0px 1px 1px #b4b8c2",
@@ -610,7 +626,7 @@ export default function Port(props) {
               },
               pagination: {
                 paginationModel: {
-                  pageSize: 5,  
+                  pageSize: 5,
                 },
               },
             }}
@@ -630,7 +646,6 @@ export default function Port(props) {
               [`& .${gridClasses.cell}`]: {
                 py: 1,
               },
-              maxWidth: 1400,
               height: 600,
             }}
           />
@@ -652,7 +667,6 @@ export default function Port(props) {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
         rows={waitingRows}
         columns={columns}
         editMode="row"
@@ -667,7 +681,6 @@ export default function Port(props) {
           [`& .${gridClasses.cell}`]: {
             py: 1,
           },
-          maxWidth: 1400,
           height: 600,
         }}
       />

@@ -153,7 +153,6 @@ export default function NoticeForm(props) {
     <div>
       <Accordion
         sx={{
-          maxWidth: 1240,
           backgroundColor: "#ebf4fc",
           mb: "5px",
           boxShadow: "0px 1px 1px #b4b8c2",

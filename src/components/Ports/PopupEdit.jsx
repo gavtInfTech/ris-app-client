@@ -16,6 +16,7 @@ import { MessageContext } from "../../contexts/MessageContext.jsx";
 import Autocomplete from "@mui/material/Autocomplete";
 import Popper from "@mui/material/Popper";
 import { v4 as uuidv4 } from "uuid";
+
 export default function PopupEdit(props) {
   const portName = props.portName;
   const ships = props.ships;
@@ -90,8 +91,7 @@ export default function PopupEdit(props) {
       } catch (error) {
         console.error("Ошибка при отправке запроса:", error);
       }
-    }
-    else{
+    } else {
       setState((prevState) => ({
         ...prevState,
         sostav: prevState.sostav.filter((id) => id !== selectedShip.id),
@@ -250,7 +250,7 @@ export default function PopupEdit(props) {
               onChange={handleChange}
               variant="standard"
             />
-       <TextField
+            <TextField
               sx={{ mb: 2 }}
               name="gruz_type"
               label="Тип груза:"
@@ -355,17 +355,13 @@ export default function PopupEdit(props) {
 
               {/* Модальное окно подтверждения удаления */}
               <Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
-                <DialogTitle>Удаление судна</DialogTitle>
+                <DialogTitle>Вынести из состава</DialogTitle>
                 <DialogContent>
-                  Вы хотите просто удалить судно или удалить с добавлением
-                  записи?
+                  Убрав судно оно попадет в порт отдельной записью
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={() => confirmDelete(false)} color="primary">
-                    Просто удалить
-                  </Button>
                   <Button onClick={() => confirmDelete(true)} color="secondary">
-                    Удалить с добавлением записи
+                    Вынести
                   </Button>
                 </DialogActions>
               </Dialog>
@@ -387,14 +383,6 @@ export default function PopupEdit(props) {
                 type="submit"
               >
                 Изменить
-              </Button>
-
-              <Button
-                variant="contained"
-                className={Style.button}
-                onClick={resetForm}
-              >
-                Очистить
               </Button>
             </Box>
           </form>
