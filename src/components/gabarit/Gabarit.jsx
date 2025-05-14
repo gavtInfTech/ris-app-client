@@ -307,7 +307,7 @@ const EditSectionModal = ({
                 {selectedNoteFields.length > 0 && (<Box sx={{mt: 2}}>
                     <Typography variant="subtitle1">Заметки для выбранных полей</Typography>
                     {selectedNoteFields.map((fieldName) => (<Box key={fieldName} sx={{mt: 2}}>
-                        <Typography>Zаметка
+                        <Typography>Заметка
                             для {fields.find(f => f.name === fieldName)?.label || fieldName}</Typography>
                         <TextField
                             value={notes[fieldName] || ""}
