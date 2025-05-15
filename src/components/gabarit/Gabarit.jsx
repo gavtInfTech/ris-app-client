@@ -347,13 +347,12 @@ const ClickableTooltip = ({note}) => {
         <IconButton
             onClick={handleClick}
             sx={{
-                position: "absolute",
-                top: theme.spacing(0),
-                right: theme.spacing(0.5),
-                color: theme.palette.warning.main,
+                position: "absolute", top: theme.spacing(0), right: theme.spacing(0), color: theme.palette.warning.main,
             }}
         >
-            <HelpIcon sx={{fontSize: "1rem"}}/>
+            <HelpIcon sx={{
+                fontSize: "1rem", top: theme.spacing(0), right: theme.spacing(0)
+            }}/>
         </IconButton>
         <Popover
             open={Boolean(anchorEl)}
@@ -400,7 +399,7 @@ const SectionRow = memo(({row, extraData, isNearDate, calculateDuration, getStat
                     sx={{
                         position: "absolute",
                         top: theme.spacing(0),
-                        right: theme.spacing(0.5),
+                        right: theme.spacing(0),
                         fontSize: "1rem",
                         color: theme.palette.warning.main,
                         cursor: "pointer",
@@ -416,10 +415,16 @@ const SectionRow = memo(({row, extraData, isNearDate, calculateDuration, getStat
             {auth.role === "Администратор" && (<IconButton
                 onClick={() => onEdit(row.name)}
                 sx={{
-                    position: "absolute", bottom: theme.spacing(0), right: theme.spacing(0.5),
+                    position: "absolute", bottom: theme.spacing(0), right: theme.spacing(0),
                 }}
             >
-                <EditIcon sx={{fontSize: "1rem", color: theme.palette.warning.main}}/>
+                <EditIcon sx={{
+                    position: "absolute",
+                    fontSize: "1rem",
+                    color: theme.palette.warning.main,
+                    top: theme.spacing(0),
+                    right: theme.spacing(0),
+                }}/>
             </IconButton>)}
         </>, "section", {textAlign: "left"})}
         {renderCellContent(row.length, "length")}
@@ -428,16 +433,19 @@ const SectionRow = memo(({row, extraData, isNearDate, calculateDuration, getStat
             backgroundColor: isNearDate(extra?.start_date) ? theme.palette.warning.light : "inherit",
             color: isNearDate(extra?.start_date) ? theme.palette.warning.contrastText : "inherit",
             transition: "background-color 0.3s, color 0.3s",
+            textAlign: "center"
         })}
         {renderCellContent(extra?.end_date ? new Date(extra.end_date).toLocaleDateString() : "**", "end_date", {
             backgroundColor: isNearDate(extra?.end_date) ? theme.palette.warning.light : "inherit",
             color: isNearDate(extra?.end_date) ? theme.palette.warning.contrastText : "inherit",
             transition: "background-color 0.3s, color 0.3s",
+            textAlign: "center"
         })}
         {renderCellContent(calculateDuration(extra?.start_date, extra?.end_date), "duration")}
         {renderCellContent(status, null, {
             backgroundColor: status === "Открыто" ? "success.main" : status === "Закрыто" ? "secondary.main" : "transparent",
             color: status !== "-" ? "white" : "inherit",
+            textAlign: "center"
         })}
         {renderCellContent(extra?.depth || "-", "depth")}
         {renderCellContent(extra?.width || "-", "width")}
@@ -586,7 +594,7 @@ const Gabarit = () => {
             });
         });
 
-        return shtsRecords.sort((a, b) => String(a.id || "").localeCompare(String(b.id || "")));
+        return shtsRecords.sort((a, b) => Number(a.id) - Number(b.id));
     }, []);
 
     useEffect(() => {
@@ -798,7 +806,7 @@ const Gabarit = () => {
                                             sx={{
                                                 position: "absolute",
                                                 top: theme.spacing(0),
-                                                right: theme.spacing(0.5),
+                                                right: theme.spacing(0),
                                                 fontSize: "1rem",
                                                 color: theme.palette.warning.main,
                                             }}
