@@ -11,7 +11,7 @@ import  Icon  from "@mui/material/Icon";
 
 export default function NoticesList(props) {
   const { data } = props;
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
 
   const [currentPage, setCurrentPage] = useState(1);
 

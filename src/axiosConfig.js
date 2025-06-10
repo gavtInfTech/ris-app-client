@@ -1,6 +1,6 @@
     import axios from 'axios';
 
-    const API_URL = 'https://rias.by/api';
+    const API_URL = 'http://localhost:3001/api';
 
     export const api = axios.create({
         withCredentials: true,

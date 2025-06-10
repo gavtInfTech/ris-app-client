@@ -1,7 +1,10 @@
 .App {
   text-align: center;
 }
-
+.slick-prev:before,
+.slick-next:before {
+  display: none !important;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

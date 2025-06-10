@@ -221,7 +221,7 @@ export default function NoticesUser(props) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography sx={{ fontSize: 23, textAlign: "center", marginBottom: 2 }}>
+      <Typography sx={{ fontSize: 23, textAlign: "center", marginBottom: 2, marginTop: 2 }}>
         Извещения для судоводителей
       </Typography>
       {filterApply && !open && (

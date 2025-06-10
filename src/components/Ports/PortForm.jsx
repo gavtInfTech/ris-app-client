@@ -14,11 +14,13 @@ import { MessageContext } from "../../contexts/MessageContext.jsx";
 import Autocomplete from "@mui/material/Autocomplete";
 import Popper from "@mui/material/Popper";
 import { v4 as uuidv4 } from "uuid";
+import PopupAddSydno from "./PopupAddSydno.jsx";
 
 export default function NoticeForm(props) {
   const portName = props.portName;
   const setForceReload = props.setForceReload;
   const { setMessage } = useContext(MessageContext);
+  const [showShipPopup, setShowShipPopup] = useState(false);
   const [ships, setShips] = useState([]);
   const [state, setState] = useState({
     id: uuidv4(),
@@ -271,39 +273,53 @@ export default function NoticeForm(props) {
                 </MenuItem>
               ))}
             </TextField>
-            <Autocomplete
-              sx={{ mb: 3 }}
-              options={ships}
-              getOptionLabel={(option) => option.name}
-              filterSelectedOptions
-              onChange={(event, newValue) => {
-                if (newValue && !(state.sostav || []).includes(newValue.id)) {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sostav: [...(prevState.sostav || []), newValue.id], // Записываем только id
-                  }));
-                }
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Выберите состав:"
-                  variant="standard"
-                />
-              )}
-              PopperComponent={(props) => (
-                <Popper {...props} placement="bottom-start" disablePortal>
-                  {props.children}
-                </Popper>
-              )}
-              ListboxProps={{
-                sx: {
-                  "& .MuiAutocomplete-option": {
-                    padding: "10px 16px",
-                  },
-                },
-              }}
-            />
+          <Autocomplete
+  sx={{ mb: 3 }}
+  options={ships}
+  getOptionLabel={(option) => option.name}
+  filterSelectedOptions
+  onChange={(event, newValue) => {
+    if (newValue && !(state.sostav || []).includes(newValue.id)) {
+      setState((prevState) => ({
+        ...prevState,
+        sostav: [...(prevState.sostav || []), newValue.id],
+      }));
+      
+      // Показываем попап при выборе судна
+      // setSelectedShip(newValue);
+      setShowShipPopup(true);
+    }
+  }}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Выберите состав:"
+      variant="standard"
+    />
+  )}
+  PopperComponent={(props) => (
+    <Popper {...props} placement="bottom-start" disablePortal>
+      {props.children}
+    </Popper>
+  )}
+  ListboxProps={{
+    sx: {
+      "& .MuiAutocomplete-option": {
+        padding: "10px 16px",
+      },
+    },
+  }}
+/>
+
+{/* Добавляем попап
+{showShipPopup && selectedShip && (
+  <PopupAddSydno
+    open={showShipPopup}
+    onClose={() => setShowShipPopup(false)}
+    ship={selectedShip}
+    // Другие необходимые пропсы для попапа
+  />
+)} */}
 
             <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
               {(state.sostav || [])

@@ -1,154 +1,231 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Grid, CircularProgress, Link, Select, MenuItem } from "@mui/material";
+import { Box, Typography, Grid, CircularProgress, Link } from "@mui/material";
+import { IconBrandSpeedtest, IconDroplet } from "@tabler/icons-react";
 import { api } from "../../axiosConfig";
 
-const cityData = {
-  Березино: 26853,
-  Бобруйск: 26961,
-  Брест: 33008,
-  Витебск: 26666,
-  Гомель: 33041,
-  Гродно: 26820,
-  Жлобин: 26966,
-  Лоев: 519308,
-  Минск: 26851,
-  Могилев: 26862,
-  Мозырь: 33036,
-  Наровля: 518295,
-  Петриков: 521285,
-  Пинск: 33019,
-  Полоцк: 26653,
-  Речица: 524304,
-  Светлогорск: 526298,
-  Славгород: 26878,
-  Шклов: 542303
+// ⚠️ Лучше переместить API ключ в переменные окружения (.env)
+const API_KEY = "3a608d0742cb14e9bc5a090a3b3719d0";
+
+const reverseGeocode = async (lat, lon) => {
+  try {
+    const response = await api.get(`/weatherName?lat=${lat}&lon=${lon}`);
+    const data = response.data; // ✅ axios уже распарсил JSON
+    console.log("Название:", data);
+
+    return (
+      data.address?.city ||
+      data.address?.town ||
+      data.address?.village ||
+      data.address?.state
+    );
+  } catch (error) {
+    console.error("Ошибка при геокодировании:", error);
+    return "Неизвестное место";
+  }
 };
 
 export default function WeatherComponent() {
-  const [selectedCity, setSelectedCity] = useState("Минск"); // Default to Минск
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [locationError, setLocationError] = useState(null);
 
-  const fetchWeather = async (cityId) => {
-    try {  
+  const fetchWeather = async (lat, lon) => {
+    try {
       setLoading(true);
-      const response = await api.get(`weather/${cityId}`);
-      setWeatherData(response.data);
+
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=ru&appid=${API_KEY}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("WEATHER DATA:", data);
+
+      if (data.cod !== 200) {
+        console.error("Ошибка OpenWeatherMap API:", data.message);
+        setWeatherData(null);
+        return;
+      }
+
+      const RU_name = await reverseGeocode(lat, lon);
+
+      setWeatherData({ ...data, name: RU_name });
     } catch (error) {
-      console.error("Error fetching weather data:", error);
+      console.error("Ошибка при получении погоды:", error);
+      setWeatherData(null);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchWeather(cityData[selectedCity]);
-  }, [selectedCity]);
+    if (!navigator.geolocation) {
+      setLocationError("Геолокация не поддерживается этим браузером.");
+      setLoading(false);
+      return;
+    }
 
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
-  };
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetchWeather(latitude, longitude);
+      },
+      (error) => {
+        console.error("Ошибка определения местоположения:", error);
+        setLocationError(
+          "Не удалось определить местоположение. Разрешите доступ к геолокации."
+        );
+        setLoading(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  }, []);
 
-  if (loading) {
-    return <CircularProgress />;
-  }
-
-  if (!weatherData) {
-    return <Typography>Не удалось загрузить погоду.</Typography>;
-  }
+  if (loading) return <CircularProgress />;
+  if (locationError) return <Typography>{locationError}</Typography>;
+  if (!weatherData)
+    return <Typography sx={{textAlign: "center"}}>Не удалось загрузить погоду.</Typography>;
 
   const {
-    t,
-    speedWind,
-    dirWind,
-    w,
-    pStation,
-    pSea,
-    vis_m,
+    name,
+    main: { temp, humidity, pressure, grnd_level },
+    visibility,
+    wind: { speed, deg },
+    dt,
+    weather,
   } = weatherData;
 
   const windDirections = [
-    "Северный", "Северо-Восточный", "Восточный", "Юго-Восточный",
-    "Южный", "Юго-Западный", "Западный", "Северо-Западный"
+    "Северный",
+    "Северо-Восточный",
+    "Восточный",
+    "Юго-Восточный",
+    "Южный",
+    "Юго-Западный",
+    "Западный",
+    "Северо-Западный",
   ];
-  const windDirection = windDirections[Math.round(dirWind / 45) % 8];
+  const windDirection = windDirections[Math.round(deg / 45) % 8];
 
   return (
-    <Box
-      sx={{
-        p: 2,
-        borderRadius: 2,
-        boxShadow: 3,
-        backgroundColor: "#f4f7fa",
-        maxWidth: 300,
-        textAlign: "center",
-      }}
-    >
-      <Select
-        value={selectedCity}
-        onChange={handleCityChange}
-        sx={{ mb: 2 }}
+     <Box
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            boxShadow: 3,
+            backgroundColor: "#f4f7fa",
+            textAlign: "left",
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            position: "relative",
+          }}
+        >
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography sx={{ fontSize: "26px" }} gutterBottom>
+          Фактическая погода, {name}
+          <Typography
+            sx={{ display: "inline", fontSize: "16px" }}
+            variant="body2"
+            color="textSecondary"
+          >
+            {" "}
+            {new Date(dt * 1000).toLocaleTimeString("ru-RU", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </Typography>
+        </Typography>
+      </div>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          mt: 2,
+          justifyContent: "space-between",
+        }}
       >
-        {Object.keys(cityData).map((city) => (
-          <MenuItem key={city} value={city}>{city}</MenuItem>
-        ))}
-      </Select>
-
-      <Typography variant="h6" gutterBottom>
-        Фактическая погода
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {new Date(weatherData.d).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}
-      </Typography>
-      <Typography variant="h2" color="primary" sx={{ fontWeight: "bold", mt: 2 }}>
-        {t}°C
-      </Typography>
-      
-      <Grid container spacing={1} sx={{ mt: 2 }}>
-        <Grid item xs={6}>
-          <Typography variant="body2">Ветер:</Typography>
+        <Typography
+          color="orange"
+          sx={{ fontWeight: "bold", fontSize: "32px" }}
+        >
+          {Math.round(temp)}°C
+        </Typography>
+        {weather?.[0]?.icon && (
+          <img
+            src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+            alt={weather[0].description}
+            title={weather[0].description}
+            style={{ width: 68, height: 68 }}
+          />
+        )}
+      </Box>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
+        <Grid
+          item
+          xs={6}
+          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+        >
+          <IconDroplet />
+          <Typography>Влажность: {humidity}%</Typography>
         </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body2">
-            {speedWind} м/с, {windDirection}
+        <Grid
+          item
+          xs={6}
+          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+        >
+          <IconBrandSpeedtest />
+          <Typography>
+            Давление: на уровне станции {grnd_level} гПа [
+            {(grnd_level * 0.75006).toFixed(1)} мм рт. ст.]
           </Typography>
         </Grid>
-        
-        <Grid item xs={6}>
-          <Typography variant="body2">Влажность:</Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body2">{w}%</Typography>
-        </Grid>
-
-        <Grid item xs={6}>
-          <Typography variant="body2">Давление (ст.):</Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body2">{pStation} гПа</Typography>
+        <Grid
+          item
+          xs={6}
+          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+        >
+          <IconBrandSpeedtest />
+          <Typography>
+            Давление: на уровне моря {pressure} гПа [
+            {(pressure * 0.75006).toFixed(1)} мм рт. ст.]
+          </Typography>
         </Grid>
 
         <Grid item xs={6}>
-          <Typography variant="body2">Давление (море):</Typography>
+          <Typography>
+            Ветер: {speed} м/с, {windDirection}
+          </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="body2">{pSea} гПа</Typography>
-        </Grid>
-
-        <Grid item xs={6}>
-          <Typography variant="body2">Видимость:</Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body2">{(vis_m / 1000).toFixed(2)} км</Typography>
+          <Typography>
+            Видимость: {(visibility / 1000).toFixed(1)} км
+          </Typography>
         </Grid>
       </Grid>
-
-      <Typography variant="caption" color="textSecondary" sx={{ mt: 2 }}>
-        Данные взяты с сайта{" "}
-        <Link href="https://pogoda.by/" target="_blank" rel="noopener noreferrer" underline="hover">
-          pogoda.by
-        </Link>
-      </Typography>
+ <Box
+        sx={{
+          mt: 2,
+          textAlign: "center",
+          fontSize: "14px",
+          color: "#888",
+        }}
+      >
+        Данные предоставлены{" "}
+        <a href={`https://openweathermap.org/`} target="_blank" style={{ color: "blue" }}>
+          OpenWeatherMap
+        </a>
+      </Box>
     </Box>
   );
 }
