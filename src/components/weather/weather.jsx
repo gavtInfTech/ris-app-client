@@ -91,7 +91,11 @@ export default function WeatherComponent() {
   if (loading) return <CircularProgress />;
   if (locationError) return <Typography>{locationError}</Typography>;
   if (!weatherData)
-    return <Typography sx={{textAlign: "center"}}>Не удалось загрузить погоду.</Typography>;
+    return (
+      <Typography sx={{ textAlign: "center" }}>
+        Не удалось загрузить погоду.
+      </Typography>
+    );
 
   const {
     name,
@@ -115,21 +119,21 @@ export default function WeatherComponent() {
   const windDirection = windDirections[Math.round(deg / 45) % 8];
 
   return (
-     <Box
-          sx={{
-            p: 3,
-            borderRadius: 2,
-            boxShadow: 3,
-            backgroundColor: "#f4f7fa",
-            textAlign: "left",
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            position: "relative",
-          }}
-        >
+    <Box
+      sx={{
+        p: 3,
+        borderRadius: 2,
+        boxShadow: 3,
+        backgroundColor: "#f4f7fa",
+        textAlign: "left",
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        position: "relative",
+      }}
+    >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography sx={{ fontSize: "26px" }} gutterBottom>
           Фактическая погода, {name}
@@ -213,7 +217,7 @@ export default function WeatherComponent() {
           </Typography>
         </Grid>
       </Grid>
- <Box
+      <Box
         sx={{
           mt: 2,
           textAlign: "center",
@@ -222,7 +226,11 @@ export default function WeatherComponent() {
         }}
       >
         Данные предоставлены{" "}
-        <a href={`https://openweathermap.org/`} target="_blank" style={{ color: "blue" }}>
+        <a
+          href={`https://openweathermap.org/`}
+          target="_blank"
+          style={{ color: "blue" }}
+        >
           OpenWeatherMap
         </a>
       </Box>

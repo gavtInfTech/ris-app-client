@@ -142,6 +142,7 @@ export default function NewsComponent() {
     autoplay: true,
     autoplaySpeed: 10000,
     draggable: true,
+    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
   };
 
   return (
@@ -161,7 +162,7 @@ export default function NewsComponent() {
       }}
     >
       <Typography
-        sx={{ fontSize: "26px", textAlign: "center", mb: 2 }}
+        sx={{ fontSize: "32px", textAlign: "center", mb: 2 }}
         gutterBottom
       >
         Новости
@@ -180,7 +181,7 @@ export default function NewsComponent() {
                   gap: "20px",
                   alignItems: "center",
                   justifyContent: "center",
-                  marginBottom: "15px",
+                  marginBottom: "5px",
                 }}
               >
                 <BelarusLogo color={item.stormColor} />
@@ -190,7 +191,7 @@ export default function NewsComponent() {
                   maxWidth: "90%",
                   fontWeight: 700,
                   textAlign: "left",
-                  fontSize: "16px",
+                  fontSize: "18px",
                   overflow: "hidden",
                 }}
               >
@@ -205,7 +206,7 @@ export default function NewsComponent() {
               >
                 Выписано: {formatDate(item.Date_write)}
               </div>
-              <div style={{ fontSize: "14px" }}>
+              <div style={{ fontSize: "16px" }}>
                 {firstSentence}{" "}
                 <a
                   href={`https://pogoda.by/information/news/${item.id}`}

@@ -42,11 +42,6 @@ export default function Layout() {
     setAnchorElUser(null);
   };
 
-  const handleWeatherClick = (event) => {
-    event.preventDefault();
-    setShowWeather(true);
-  };
-
   const handleCloseWeather = () => {
     setShowWeather(false);
   };
@@ -84,10 +79,6 @@ export default function Layout() {
           <Link className={styles.link} to={"/infmenu"}>
             Инфраструктура ВВП
           </Link>
-          {/* Update link to trigger modal */}
-          <Link className={styles.link} to={"#"} onClick={handleWeatherClick}>
-            Погода
-          </Link>
         </Box>
         <Box className={styles.header_section}>
           <Profile />
@@ -118,10 +109,6 @@ export default function Layout() {
             <Link to={"/infmenu"}>
               Инфраструктура ВВП
             </Link>
-          </MenuItem>
-          {/* Weather Link in Mobile Menu */}
-          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={(e) => {handleWeatherClick(e); handleCloseUserMenu();}}>
-            Погода
           </MenuItem>
         </Menu>
       </header>
