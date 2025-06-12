@@ -7,9 +7,8 @@ import { api } from "../../axiosConfig";
 import { ports } from "../infrastructure/ports/data";
 import { Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import Port from "./Port";
-import { IconShip } from "@tabler/icons-react";
 import Suda from "./Suda";
+import AdminPort from "../AdminPort/AdminPorts";
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -109,7 +108,7 @@ export default function ShipDirectory() {
                 Назад
               </Button>
               <div>{selectedPort}</div>
-              <Port portName={selectedPort} />
+              <AdminPort portName={selectedPort} />
             </>
           ) : (
             <Stack direction="column" spacing={1}>
