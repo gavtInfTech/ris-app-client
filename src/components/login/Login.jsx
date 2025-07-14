@@ -39,7 +39,12 @@ export default function Login() {
       } else if (res.data.role === "Путевик") {
         setAuth({ ...res.data });
         navigate("/path-information/dnepr");
-      } else {
+      }
+      else if (res.data.role === "Диспетчер порта") {
+        setAuth({ ...res.data });
+        navigate("/dispetcher-porta");
+      }
+       else{
         switch (res.data.organisation) {
           case 'Диспетчер портов':
             setAuth({ ...res.data });

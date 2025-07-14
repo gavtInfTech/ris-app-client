@@ -144,6 +144,15 @@ export default function App() {
           >
             <Route path="/admin-parahodstvo/*" element={<MainTab />}></Route>
           </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                role={'Диспетчер порта'}
+              />
+            }
+          >
+            <Route path="/dispetcher-porta" element={<ShipDirectory />}></Route>
+          </Route>
           <Route element={<ProtectedRoute role="Клиент" />}>
             <Route path="/client/*" element={<MainTabClient />}></Route>
           </Route>

@@ -175,7 +175,7 @@ export default function MainGabs() {
     <ThemeProvider theme={theme}>
       <div className={styles.container}>
         <Typography sx={{ fontSize: 19 }}>
-          Габариты на лимитирующих пер.тах на <span> </span>
+          Габариты на лимитирующих перекатах на <span> </span>
           {
             <TextField
               name="date"

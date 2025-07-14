@@ -1,121 +1,131 @@
 .conteiner {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
- 
+
 .header {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px;
-    border: none;
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
-    background-color: #34418f;
-    height: 70px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #34418f;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* чтобы хедер был поверх остального контента */
 }
 
 .main {
-    flex: 1;
-    position: relative;
-    height: 100%;
-    overflow: hidden;
+  flex: 1;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
 }
 
 .footer {
-    width: 100%;
-    height: 45px;
-    font-size: 20px;
-    color: white;
-    background-color: #34418f;
-    display: flex;
-    align-items: center;
-    border-top: 1px solid #BFC4C9;
-    justify-content: center;
-    text-align: center;
+  width: 100%;
+  height: 45px;
+  font-size: 20px;
+  color: white;
+  background-color: #34418f;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #bfc4c9;
+  justify-content: center;
+  text-align: center;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* поверх основного контента */
 }
 
 .header_section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mainLink {
-    font-size: 24px;
-    font-weight: 600;
-    padding-block: 0.5vw;
-    padding-inline: 0.8vw;
-    color: white;
+  font-size: 24px;
+  font-weight: 600;
+  padding-block: 0.5vw;
+  padding-inline: 0.8vw;
+  color: white;
 }
 
 .link {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    font-size: 20px;
-    padding-block: 0.5vw;
-    padding-inline: 0.8vw;
-  }
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-size: 20px;
+  padding-block: 0.5vw;
+  padding-inline: 0.8vw;
+}
 
+.profileLink {
+  display: block;
+}
+
+.link:hover {
+  background-color: #e1def4;
+  color: black;
+  border-radius: 0.2vw;
+}
+
+@media (max-width: 1200px) {
+  .mainLink {
+    font-size: 20px;
+  }
+  .link {
+    font-size: 17px;
+  }
+  .footer {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 900px) {
+  .mainLink {
+    font-size: 20px;
+  }
+  .link {
+    display: none;
+  }
   .profileLink {
     display: block;
   }
-  
-.link:hover {
-    background-color: #e1def4;
-    color: black;
-    border-radius: 0.2vw;
+  .footer {
+    font-size: 15px;
   }
-
-  @media (max-width: 1200px) {
-    .mainLink {
-        font-size: 20px;
-      }
-    .link {
-        font-size: 17px;
-      }
-    .footer { 
-        font-size: 17px;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .mainLink {
-        font-size: 20px;
-      }
-    .link {
-        display: none;
-      }
-    .profileLink {
-        display: block;
-    }
-    .footer { 
-        font-size: 15px;
-    }
-  }
+}
 
 .map {
-    width: 70%;
-    height: 600px;
-    margin: 20px;
-    align-self: center;
+  width: 70%;
+  height: 600px;
+  margin: 20px;
+  align-self: center;
 }
 
 .conteiner-map {
-    display: flex;
-    justify-content: center;
-    
+  display: flex;
+  justify-content: center;
 }
 
 .avatarImg {
-    margin-top: 4px;
-    margin-right: 6px;
-    color: white;
+  margin-top: 4px;
+  margin-right: 6px;
+  color: white;
 }
 
 .avatarImg:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .menu {
@@ -130,7 +140,7 @@
   padding: 0;
   float: none;
   z-index: 3;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .menuActive {
@@ -139,12 +149,12 @@
 
 .menu li {
   text-align: center;
-  border-bottom: 1px solid #EBEBE3;
+  border-bottom: 1px solid #ebebe3;
   margin-right: 0;
   line-height: 40px;
 }
 
 .menu li a {
   display: block;
-  color:#34418f;
+  color: #34418f;
 }
