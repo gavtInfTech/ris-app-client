@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { MessageContext } from "../../contexts/MessageContext";
 import { randomId } from "@mui/x-data-grid-generator";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 const EMAIL_REGEXP =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
@@ -20,6 +21,8 @@ export default function Login() {
     password: "",
     passwordRepeat: "",
   });
+  const [agree, setAgree] = useState(false);
+  const [agreeError, setAgreeError] = useState(false);
 
   const [errState, setErrState] = useState({
     fio: false,
@@ -43,18 +46,25 @@ export default function Login() {
   };
 
   const resetForm = (event) => {
-    if (event) {event.preventDefault();}
+    if (event) {
+      event.preventDefault();
+    }
     setState({
       fio: "",
       email: "",
       password: "",
       passwordRepeat: "",
-    })
-}
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     let flag = false;
+
+    if (!agree) {
+      setAgreeError(true);
+      return;
+    }
 
     if (state.fio.length === 0) {
       setErrState((prevState) => ({
@@ -115,7 +125,7 @@ export default function Login() {
         messageText: err.response.data,
         severity: "error",
       }));
-    } 
+    }
   };
 
   return (
@@ -181,6 +191,39 @@ export default function Login() {
             error={errState.passwordRepeat}
             helperText={errState.passwordRepeat && "Пароли не совпадают."}
           />
+          <Box sx={{ mb: 2 }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={agree}
+                  onChange={(e) => {
+                    setAgree(e.target.checked);
+                    setAgreeError(false);
+                  }}
+                  color="primary"
+                />
+              }
+              label={
+                <Typography>
+                  Я соглашаюсь с{" "}
+                  <a
+                    href="/policy" // ← измени путь, если другой
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{color: "blue"}}
+                  >
+                    политикой обработки персональных данных
+                  </a>
+                  *
+                </Typography>
+              }
+            />
+            {agreeError && (
+              <Typography color="error" variant="caption">
+                Необходимо согласие на обработку персональных данных
+              </Typography>
+            )}
+          </Box>
 
           <Button
             variant="contained"
