@@ -78,6 +78,12 @@ export function AuthProvider(props) {
             rolePath: "parahodstvo",
           });
         }
+         else if (res.data.role === "Диспетчер порта") {
+          setAuth({
+            ...res.data,
+            rolePath: "dispetcher-porta",
+          });
+        }
         setIsLoading(false);
       } catch (err) {
         console.log(err);

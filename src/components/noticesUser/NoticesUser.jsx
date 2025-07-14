@@ -221,17 +221,36 @@ export default function NoticesUser(props) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography sx={{ fontSize: 23, textAlign: "center", marginBottom: 2, marginTop: 2 }}>
+      <Typography
+        sx={{
+          fontSize: 23,
+          textAlign: "center",
+          marginBottom: 2,
+          marginTop: 2,
+        }}
+      >
         Извещения для судоводителей
       </Typography>
       {filterApply && !open && (
-  <Chip
-    sx={{ mb: 1 }}
-    label={`${state.noticeInfo.river}${state.noticeInfo.site ?  ","  + state.noticeInfo.site : ""} ${state.noticeInfo.date1 ? "," + new Date(state.noticeInfo.date1).toLocaleDateString("ru-Ru") : ""}${state.noticeInfo.date2 ?  " - " + new Date(state.noticeInfo.date2).toLocaleDateString("ru-Ru") : ""}`}
-    variant="outlined"
-    onDelete={unsetFilter}
-  />
-)}
+        <Chip
+          sx={{ mb: 1 }}
+          label={`${state.noticeInfo.river}${
+            state.noticeInfo.site ? "," + state.noticeInfo.site : ""
+          } ${
+            state.noticeInfo.date1
+              ? "," +
+                new Date(state.noticeInfo.date1).toLocaleDateString("ru-Ru")
+              : ""
+          }${
+            state.noticeInfo.date2
+              ? " - " +
+                new Date(state.noticeInfo.date2).toLocaleDateString("ru-Ru")
+              : ""
+          }`}
+          variant="outlined"
+          onDelete={unsetFilter}
+        />
+      )}
 
       <Button onClick={handleOpen} className={Style.btnFilter}>
         <FilterAltIcon className={Style.filterIcon} />

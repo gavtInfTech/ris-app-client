@@ -9,9 +9,9 @@ import { useContext, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Modal from '@mui/material/Modal';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Modal from "@mui/material/Modal";
 import { Typography } from "@mui/material";
 import WeatherComponent from "../weather/weather";
 
@@ -67,17 +67,11 @@ export default function Layout() {
 
         <Box className={styles.header_section}>
           <Avatar sx={{ mr: 1, ml: 1 }} src="/yakor3.png" />
-          <Link
-            className={styles.mainLink}
-            to={"/"}
-          >
-              РИС РБ<Typography sx={{fontSize: 12, marginTop: 1}}>Речные информационные службы</Typography>
-          </Link>
-          <Link className={styles.link} to={"/sib"}>
-            Сводный информационный бюллетень
-          </Link>
-          <Link className={styles.link} to={"/infmenu"}>
-            Инфраструктура ВВП
+          <Link className={styles.mainLink} to={"/"}>
+            РИС РБ
+            <Typography sx={{ fontSize: 12, marginTop: 1 }}>
+              Речные информационные службы
+            </Typography>
           </Link>
         </Box>
         <Box className={styles.header_section}>
@@ -85,30 +79,32 @@ export default function Layout() {
         </Box>
 
         <Menu
-          sx={{ mt: '45px' }}
+          sx={{ mt: "45px" }}
           id="menu-appbar"
           anchorEl={anchorElUser}
           anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
+            vertical: "top",
+            horizontal: "right",
           }}
-          keepMounted
+          keepMounted 
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
+            vertical: "top",
+            horizontal: "right",
           }}
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
-            <Link to={"/sib"}>
-              Сводный информационный бюллетень
-            </Link>
+          <MenuItem
+            sx={{ fontSize: 20, color: "#34418f", fontWeight: "bold" }}
+            onClick={handleCloseUserMenu}
+          >
+            <Link to={"/sib"}>Сводный информационный бюллетень</Link>
           </MenuItem>
-          <MenuItem sx={{ fontSize: 20, color: '#34418f', fontWeight: 'bold' }} onClick={handleCloseUserMenu}>
-            <Link to={"/infmenu"}>
-              Инфраструктура ВВП
-            </Link>
+          <MenuItem
+            sx={{ fontSize: 20, color: "#34418f", fontWeight: "bold" }}
+            onClick={handleCloseUserMenu}
+          >
+            <Link to={"/infmenu"}>Инфраструктура ВВП</Link>
           </MenuItem>
         </Menu>
       </header>
@@ -118,11 +114,13 @@ export default function Layout() {
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://gawt.by/" target="_blank" rel="noopener noreferrer">Государственная администрация водного транспорта</a>
+        <a href="https://gawt.by/" target="_blank" rel="noopener noreferrer">
+          Государственная администрация водного транспорта
+        </a>
       </footer>
 
       <Snackbar
-        sx={{mb: 10}}
+        sx={{ mb: 10 }}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={message.open}
         autoHideDuration={5000}
@@ -134,31 +132,6 @@ export default function Layout() {
           </Alert>
         </div>
       </Snackbar>
-
-      {/* WeatherComponent Modal */}
-      <Modal
-        open={showWeather}
-        onClose={handleCloseWeather}
-        aria-labelledby="weather-modal-title"
-        aria-describedby="weather-modal-description"
-      >
-        <Box sx={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          width: { xs: '90%', sm: 400 }, // Responsive width for mobile
-          bgcolor: 'background.paper', 
-          boxShadow: 24, 
-          p: 4, 
-          borderRadius: 2, 
-          display: "flex", 
-          alignItems: "center",
-          justifyContent: "center"
-        }}>
-          <WeatherComponent />
-        </Box>
-      </Modal>
     </div>
   );
 }

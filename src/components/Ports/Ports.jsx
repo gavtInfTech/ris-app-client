@@ -6,10 +6,10 @@ import Box from "@mui/material/Box";
 import { api } from "../../axiosConfig";
 import { ports } from "../infrastructure/ports/data";
 import { Button, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Suda from "./Suda";
 import AdminPort from "../AdminPort/AdminPorts";
-
+import { AuthContext } from "../../contexts/AuthContext";
 function TabPanel({ children, value, index, ...other }) {
   return (
     <div
@@ -46,6 +46,11 @@ export default function ShipDirectory() {
   const [rows, setRows] = useState([]);
   const [update, setUpdate] = useState(false);
   const [selectedPort, setSelectedPort] = useState(null);
+  const { auth } = useContext(AuthContext);
+  const [newPorts, setNewPorts] = useState([]);
+    const filteredPorts = auth.role === "Диспетчер порта" 
+    ? ports.filter(port => port.name === auth.organisation)
+    : ports;
 
   useEffect(() => {
     const getRows = async () => {
@@ -53,6 +58,7 @@ export default function ShipDirectory() {
         const res = await api.get("/ports/getDataNumber");
         console.log("VSEE SIDOO", res.data);
         setRows(res.data);
+        console.log("THIS NEW PORTS", newPorts)
       } catch (err) {
         console.error("Ошибка загрузки данных:", err);
       }
@@ -65,8 +71,8 @@ export default function ShipDirectory() {
     setValue(newValue);
   };
 
-  const handleSelectPort = (portName) => {
-    setSelectedPort(portName);
+  const handleSelectPort = (portId) => {
+    setSelectedPort(portId);
   };
 
   const handleBack = () => {
@@ -74,7 +80,7 @@ export default function ShipDirectory() {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: "flex", height: "100vh", mt: auth.role == "Диспетчер порта" ? "80px" : 0 }}>
       <Box
         sx={{
           width: "13%",
@@ -107,20 +113,21 @@ export default function ShipDirectory() {
               <Button variant="outlined" onClick={handleBack} sx={{ mb: 2 }}>
                 Назад
               </Button>
-              <div>{selectedPort}</div>
-              <AdminPort portName={selectedPort} />
+              <AdminPort portId={selectedPort} />
             </>
           ) : (
             <Stack direction="column" spacing={1}>
-              {ports.map((port) => (
+              {filteredPorts.map((port) =>
+              (
                 <Button
                   variant="outlined"
                   key={port.id}
-                  onClick={() => handleSelectPort(port.name)}
+                  onClick={() => handleSelectPort(port.id)}
                 >
                   {port.name}
                 </Button>
               ))}
+
             </Stack>
           )}
         </TabPanel>

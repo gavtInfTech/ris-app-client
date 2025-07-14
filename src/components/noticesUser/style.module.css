@@ -59,6 +59,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 90px;
 }
 
 .NoticeUser{
@@ -66,4 +67,20 @@
 }
 .SecondColumn{
   overflow: hidden;
+}
+
+
+.navLink {
+  text-decoration: none;
+  font-weight: 500;
+  color: #000000;
+  padding: 8px 16px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.navLink:hover {
+  background-color: #e6f0ff;
+  color: #003366;
 }

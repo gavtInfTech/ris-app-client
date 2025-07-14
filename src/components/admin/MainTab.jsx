@@ -31,6 +31,7 @@ export default function FullWidthTabs() {
   else if (pathname.includes("marshrutnik")) value = "/admin-main/marshrutnik";
   else if (pathname.includes("confirmPage")) value = "/admin-main/confirmPage";
   else if (pathname.includes("portAdmin")) value = "/admin-main/portAdmin";
+  else if (pathname.includes("dispetcher-porta")) value = "/dispetcher-porta";
   else value = "/admin-main/users";
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function FullWidthTabs() {
   });
 
   return (
-    <Box sx={{ bgcolor: "background.paper", height: "100%" }}>
+    <Box sx={{ bgcolor: "background.paper", height: "100%", marginTop: "70px" }}>
       <AppBar
         position="static"
         className={style.appBar}

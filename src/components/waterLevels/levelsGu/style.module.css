@@ -14,7 +14,18 @@
 .additionalInfo {
     overflow: visible;
 }
-
+.tablesContainer {
+  padding: 15px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 70vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #ebf4fc;
+}
 .graph {
     overflow-y: hidden;
     overflow-x: hidden;
