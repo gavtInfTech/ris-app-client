@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, CircularProgress, Link } from "@mui/material";
 import { IconBrandSpeedtest, IconDroplet } from "@tabler/icons-react";
 import { api } from "../../axiosConfig";
+import axios from "axios";
 
 // ⚠️ Лучше переместить API ключ в переменные окружения (.env)
 const API_KEY = "3a608d0742cb14e9bc5a090a3b3719d0";
@@ -61,28 +62,31 @@ export default function WeatherComponent() {
     }
   };
 
-  useEffect(() => {
-    getLocationByIP();
-  }, []);
-
   const getLocationByIP = async () => {
     try {
-      const response = await fetch("https://ipapi.co/json/");
-      const data = await response.json();
-      const { latitude, longitude } = data;
+      setLoading(true);
+      const ipRes = await axios.get("https://api.ipify.org?format=json");
+      const ip = ipRes.data.ip;
 
-      if (latitude && longitude) {
-        fetchWeather(latitude, longitude);
+      const locationRes = await axios.get(`https://ipapi.co/${ip}/json/`);
+      const location = locationRes.data;
+
+      if (location.latitude && location.longitude) {
+        fetchWeather(location.latitude, location.longitude);
       } else {
-        setLocationError("Не удалось определить местоположение по IP.");
-        setLoading(false);
+        throw new Error("Координаты не найдены");
       }
     } catch (error) {
-      console.error("Ошибка при получении IP-геолокации:", error);
-      setLocationError("Ошибка при определении местоположения.");
+      console.error("Ошибка при определении локации:", error);
+      setLocationError("Не удалось определить ваше местоположение");
+    } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    getLocationByIP();
+  }, []);
 
   if (loading) return <CircularProgress />;
   if (locationError) return <Typography>{locationError}</Typography>;
