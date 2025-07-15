@@ -28,13 +28,13 @@ export default function TableGabs(props) {
   let rows = [];
   const { auth } = useContext(AuthContext);
   const allInfo = props.allInfo;
+  const headerHidden = props.headerHidden
   let informationData; 
   if(allInfo){
     informationData = adminInfo;
   }
   else{
     informationData = auth.info;
-
   }
   let index = 0;
   props.sites.map((site) => {
@@ -69,9 +69,9 @@ export default function TableGabs(props) {
 
   return (
     <>
-      <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
+      {!headerHidden && <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
         3. НАИМЕНЬШИЕ ГАБАРИТЫ СУДОВОГО ХОДА
-      </Typography>
+      </Typography>}
       <TableContainer sx={{ marginBottom: 5 }}>
         <Table id="gabsTable" className={styles.table} size="small">
           <TableHead>
