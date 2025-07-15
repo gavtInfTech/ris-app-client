@@ -67,7 +67,7 @@ useEffect(() => {
 
 const getLocationByIP = async () => {
   try {
-    const response = await fetch("http://ip-api.com/json/?fields=lat,lon");
+    const response = await fetch("https://ip-api.com/json/?fields=lat,lon");
     const data = await response.json();
     
     if (data.lat && data.lon) {
