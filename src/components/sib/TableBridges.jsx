@@ -46,6 +46,7 @@ export default function TableBridges(props) {
   const data = props.data;
   const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
+  const headerHidden  = props.headerHidden;
 
   let informationData; 
   if(allInfo){
@@ -87,9 +88,9 @@ export default function TableBridges(props) {
 
   return (
     <>
-      <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
+      {!headerHidden && <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
         5. ГАБАРИТЫ ПОДМОСТОВЫХ ПЕРЕХОДОВ
-      </Typography>
+      </Typography>}
       <TableContainer sx={{ marginBottom: 5 }}>
         <Table id="bridgesTable" className={styles.table} size="small">
           <TableHead>

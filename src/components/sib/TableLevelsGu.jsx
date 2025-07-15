@@ -17,6 +17,7 @@ export default function TableLevelsGu(props) {
   const data = props.data;
   const allInfo = props.allInfo;
   const { auth } = useContext(AuthContext);
+    const headerHidden  = props.headerHidden;
   let informationData; 
   if(allInfo){
     informationData = adminInfo;
@@ -56,9 +57,9 @@ export default function TableLevelsGu(props) {
 
   return (
     <>
-      <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
-        2. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ НА 8 УТРА
-      </Typography>
+       {!headerHidden && <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
+                2. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ НА 8 УТРА
+            </Typography>}
       <TableContainer sx={{ marginBottom: 5 }}>
         <Table id="levelsGuTable" className={styles.table} size="small">
           <TableHead>

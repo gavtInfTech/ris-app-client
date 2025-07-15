@@ -20,7 +20,16 @@ export default function NoticesMainPage() {
           <NewsComponent></NewsComponent>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{display: "flex", alignItems: "center", justifyContent: "center", marginBottom:"50px"}}>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: "50px",
+        }}
+      >
         <button className={Style.btn}>
           <Link to={"/levelsGp"}>
             <img src="/images/levelGp.png" alt="mlevel"></img>
@@ -42,9 +51,11 @@ export default function NoticesMainPage() {
         </button>
 
         <button className={Style.btn}>
-          <Link to={"/vvp"}>
-            <img src="/images/VVP.png" alt="limit"></img>
-            <br></br>Схема ВВП<br></br>
+          <Link to={"/limit"}>
+            <img src="/images/depth.png" alt="limit"></img>
+            <br></br>Габариты<br></br>
+            на лимитирующих <br></br>
+            перекатах
           </Link>
         </button>
 
@@ -57,19 +68,17 @@ export default function NoticesMainPage() {
         </button>
 
         <button className={Style.btn}>
-          <Link to={"/limit"}>
-            <img src="/images/depth.png" alt="limit"></img>
-            <br></br>Габариты<br></br>
-            на лимитирующих <br></br>
-            перекатах
-          </Link>
-        </button>
-
-        <button className={Style.btn}>
           <Link to={"/gabarit"}>
             <img src="/images/Навигации.png" alt="navigation"></img>
             <br></br>Сроки<br></br>
             навигации <br></br>
+          </Link>
+        </button>
+
+        <button className={Style.btn}>
+          <Link to={"/vvp"}>
+            <img src="/images/VVP.png" alt="limit"></img>
+            <br></br>Схема ВВП<br></br>
           </Link>
         </button>
       </Grid>

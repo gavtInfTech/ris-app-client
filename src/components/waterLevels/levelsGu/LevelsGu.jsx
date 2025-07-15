@@ -40,17 +40,17 @@ export default function LevelsGu(props) {
       }
     };
     getData();
-  }, []);
+  }, [date]);
 
   const handleChangeDate = (event) => {
     setDate(event.target.value);
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "20px" }}>
       <div className={styles.tablesContainer} style={{backgroundColor: "white",}}>
         <Typography sx={{ fontSize: 19, marginBottom: "20px" }}>
-          Габариты на лимитирующих перекатах на <span> </span>
+          СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ НА ГИДРОУЗЛАХ НА 8 УТРА на <span> </span>
           {
             <TextField
               name="date"
@@ -64,7 +64,7 @@ export default function LevelsGu(props) {
             />
           }
         </Typography>
-        <TableLevelsGu allInfo={true} data={levelsGuDataByDate} />
+        <TableLevelsGu allInfo={true} data={levelsGuDataByDate} headerHidden={true} />
       </div>
     </div>
   );

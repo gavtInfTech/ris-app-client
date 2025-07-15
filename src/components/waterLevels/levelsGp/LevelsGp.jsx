@@ -42,17 +42,17 @@ export default function LevelsGp(props) {
       }
     };
     getData();
-  }, []);
+  }, [date]);
 
   const handleChangeDate = (event) => {
     setDate(event.target.value);
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "20px" }}>
       <div className={styles.tablesContainer} style={{backgroundColor: "white",}}>
         <Typography sx={{ fontSize: 19, marginBottom: "20px" }}>
-          Габариты на лимитирующих перекатах на <span> </span>
+           СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ ПО ОСНОВНЫМ ГИДРОПОСТАМ НА 8 ЧАСОВ УТРА на <span> </span>
           {
             <TextField
               name="date"
@@ -66,7 +66,7 @@ export default function LevelsGp(props) {
             />
           }
         </Typography>
-        <TableLevelsGp allInfo={true} data={levelsGpDataByDate}></TableLevelsGp>
+        <TableLevelsGp allInfo={true} data={levelsGpDataByDate} headerHidden={true}></TableLevelsGp>
       </div>
     </div>
   );

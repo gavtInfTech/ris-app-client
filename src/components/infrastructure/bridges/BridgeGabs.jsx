@@ -36,17 +36,17 @@ export default function BridgeGabs(props) {
       }
     };
     getData();
-  }, []);
+  }, [date]);
 
   const handleChangeDate = (event) => {
     setDate(event.target.value);
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "20px" }}>
       <div className={styles.tablesContainer} style={{backgroundColor: "white",}}>
         <Typography sx={{ fontSize: 19, marginBottom: "20px" }}>
-          Габариты на лимитирующих перекатах на <span> </span>
+          ГАБАРИТЫ ПОДМОСТОВЫХ ПЕРЕХОДОВ на <span> </span>
           {
             <TextField
               name="date"
@@ -60,7 +60,7 @@ export default function BridgeGabs(props) {
             />
           }
         </Typography>
-            <TableBridges allInfo={true} data={bridgesDataByDate} />
+            <TableBridges allInfo={true} data={bridgesDataByDate} headerHidden={true} />
       </div>
     </div>
   );

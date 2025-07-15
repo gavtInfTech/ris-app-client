@@ -17,6 +17,7 @@ import * as adminInfo from "../admin/adminInfo";
 export default function TableLevelsGp(props) {
   const data = props.data;
   const allInfo = props.allInfo;
+  const headerHidden  = props.headerHidden;
   const { auth } = useContext(AuthContext);
 
   let informationData; 
@@ -59,9 +60,9 @@ export default function TableLevelsGp(props) {
 
   return (
     <>
-      <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
+      {!headerHidden && <Typography sx={{ fontSize: 18, alignSelf: "start" }}>
         1. СВЕДЕНИЯ ОБ УРОВНЯХ ВОДЫ ПО ОСНОВНЫМ ГИДРОПОСТАМ НА 8 ЧАСОВ УТРА
-      </Typography>
+      </Typography>}
       <TableContainer sx={{ marginBottom: 5 }}>
         <Table id="levelsGpTable" className={styles.table} size="small">
           <TableHead>
