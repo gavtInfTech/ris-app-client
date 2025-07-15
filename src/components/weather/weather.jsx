@@ -61,32 +61,27 @@ export default function WeatherComponent() {
     }
   };
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setLocationError("Геолокация не поддерживается этим браузером.");
-      setLoading(false);
-      return;
-    }
+useEffect(() => {
+  getLocationByIP();
+}, []);
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetchWeather(latitude, longitude);
-      },
-      (error) => {
-        console.error("Ошибка определения местоположения:", error);
-        setLocationError(
-          "Не удалось определить местоположение. Разрешите доступ к геолокации."
-        );
-        setLoading(false);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      }
-    );
-  }, []);
+const getLocationByIP = async () => {
+  try {
+    const response = await fetch("http://ip-api.com/json/?fields=lat,lon");
+    const data = await response.json();
+    
+    if (data.lat && data.lon) {
+      fetchWeather(data.lat, data.lon);
+    } else {
+      setLocationError("Не удалось определить местоположение по IP.");
+      setLoading(false);
+    }
+  } catch (error) {
+    console.error("Ошибка при получении IP-геолокации:", error);
+    setLocationError("Ошибка при определении местоположения.");
+    setLoading(false);
+  }
+};
 
   if (loading) return <CircularProgress />;
   if (locationError) return <Typography>{locationError}</Typography>;
