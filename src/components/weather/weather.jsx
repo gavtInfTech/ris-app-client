@@ -61,27 +61,28 @@ export default function WeatherComponent() {
     }
   };
 
-useEffect(() => {
-  getLocationByIP();
-}, []);
+  useEffect(() => {
+    getLocationByIP();
+  }, []);
 
-const getLocationByIP = async () => {
-  try {
-    const response = await fetch("https://ip-api.com/json/?fields=lat,lon");
-    const data = await response.json();
-    
-    if (data.lat && data.lon) {
-      fetchWeather(data.lat, data.lon);
-    } else {
-      setLocationError("Не удалось определить местоположение по IP.");
+  const getLocationByIP = async () => {
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      const data = await response.json();
+      const { latitude, longitude } = data;
+
+      if (latitude && longitude) {
+        fetchWeather(latitude, longitude);
+      } else {
+        setLocationError("Не удалось определить местоположение по IP.");
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Ошибка при получении IP-геолокации:", error);
+      setLocationError("Ошибка при определении местоположения.");
       setLoading(false);
     }
-  } catch (error) {
-    console.error("Ошибка при получении IP-геолокации:", error);
-    setLocationError("Ошибка при определении местоположения.");
-    setLoading(false);
-  }
-};
+  };
 
   if (loading) return <CircularProgress />;
   if (locationError) return <Typography>{locationError}</Typography>;
