@@ -733,7 +733,7 @@ const Gabarit = () => {
     }
 
     return (<ThemeProvider theme={theme}>
-        <Box sx={{p: 2}}>
+        <Box sx={{p: 2, marginTop: "60px"}}>
             <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2}}>
                 <FormControlLabel
                     control={<Switch

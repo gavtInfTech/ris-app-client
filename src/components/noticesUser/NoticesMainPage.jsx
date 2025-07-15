@@ -20,7 +20,7 @@ export default function NoticesMainPage() {
           <NewsComponent></NewsComponent>
         </Grid>
       </Grid>
-      <Grid container spacing={2} sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+      <Grid container spacing={2} sx={{display: "flex", alignItems: "center", justifyContent: "center", marginBottom:"50px"}}>
         <button className={Style.btn}>
           <Link to={"/levelsGp"}>
             <img src="/images/levelGp.png" alt="mlevel"></img>
