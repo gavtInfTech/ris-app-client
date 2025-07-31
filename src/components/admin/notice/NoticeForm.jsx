@@ -17,7 +17,7 @@ import { randomId } from "@mui/x-data-grid-generator";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
-import { Button } from "@mui/material";
+import { Autocomplete, Button } from "@mui/material";
 
 export default function NoticeForm(props) {
   const [sites, setSites] = useState(props.sites);
@@ -50,11 +50,15 @@ export default function NoticeForm(props) {
       cause3: false,
       content: "",
       status: "",
+      theme: "",
+      importance: "",
+      recipient: "",
+      source: "",
     },
 
     sites: ["Выберите Реку!"],
   });
-  const noticeStatus = ["Действует", "Завершено"]
+  const noticeStatus = ["Действует", "Завершено"];
   const sendForm = async (event) => {
     event.preventDefault();
     if (
@@ -77,7 +81,7 @@ export default function NoticeForm(props) {
         await api.post("/notices/add", {
           ...state.noticeInfo,
           id: id,
-          date_end: state.date_end ? state.date_end : new Date()
+          date_end: state.date_end ? state.date_end : new Date(),
         });
         addData(state.noticeInfo, id);
         setMessage(() => ({
@@ -109,6 +113,10 @@ export default function NoticeForm(props) {
         cause3: false,
         content: "",
         status: "",
+        theme: "",
+        importance: "",
+        recipient: "",
+        source: "",
       },
 
       sites: [],
@@ -378,7 +386,7 @@ export default function NoticeForm(props) {
               variant="standard"
               label="Действует с"
             />
-                 <TextField
+            <TextField
               sx={{ mb: 2 }}
               name="status"
               select
@@ -402,9 +410,11 @@ export default function NoticeForm(props) {
               variant="standard"
               label="Действует по"
             />
-            <Typography sx={{fontSize: 12}}>*если не известна дата конца, не указывайте</Typography>
+            <Typography sx={{ fontSize: 12 }}>
+              *если не известна дата конца, не указывайте
+            </Typography>
             <FormControl
-              sx={{ mt: 3, ml: 1, width: 240 }}
+              sx={{ mt: 3, width: 240 }}
               component="fieldset"
               variant="standard"
             >
@@ -446,6 +456,118 @@ export default function NoticeForm(props) {
                   label="Путевые работы"
                 />
               </FormGroup>
+            </FormControl>
+
+            <FormControl
+              sx={{ mt: 3, width: "full", mb: 3 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Тема извещения
+              </FormLabel>
+              <Autocomplete
+                options={[
+                  "Объявление",
+                  "Предупреждение",
+                  "Уведомление",
+                  "Оповещение",
+                  "Информирование",
+                ]}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Выберите тему"
+                  />
+                )}
+                onChange={(event, newValue) => {
+                  setState({ ...state, noticeInfo: { ...state.noticeInfo , theme: newValue } }); // Просто сохраняем строку
+                }}
+                disableClearable
+                freeSolo={false}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{ width: "full" }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Укажите важность уведомления, если требуется
+              </FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.importance}
+                      onChange={handleChangeCheckBox}
+                      name="importance"
+                    />
+                  }
+                  label="Важное"
+                />
+              </FormGroup>
+            </FormControl>
+
+            <FormControl
+              sx={{ width: "full", mb: 3 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Укажите получателей уведомления:
+              </FormLabel>
+              <TextField
+                name="recipient"
+                label="Получатели уведомления"
+                value={state.noticeInfo.recipient}
+                onChange={handleChange}
+                rows={4}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{ width: "full", mb: 3 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                 Укажите официальный источник:
+              </FormLabel>
+              <Autocomplete
+                options={[
+                  "Государственная администрация водного транспорта",
+                  'РУЭСП "Днепро-Бугский водный путь"',
+                  'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
+                  "РУ Днепро-Березинское предприятие водных путей",
+                  'Филиал "Нижне-Припятский" г. Мозырь',
+                  'Филиал "Витебскводтранс" г. Витебск',
+                  'Филиал "Гродненский участок" г. Гродно',
+                  "Белорусское речное пароходство",
+                  "Речной порт Бобруйск",
+                  "Речной порт Гомель",
+                  "Речной порт Речица",
+                  "Речной порт Брест",
+                  "Речной порт Пинск",
+                  "Речной порт Мозырь",
+                  "Речной порт Микашевичи",
+                ]}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Официальный источник"
+                  />
+                )}
+                onChange={(event, newValue) => {
+                 setState({ ...state, noticeInfo: { ...state.noticeInfo , source: newValue } }); // Просто сохраняем строку
+                }}
+                disableClearable
+                freeSolo={false}
+              />
             </FormControl>
 
             <TextField

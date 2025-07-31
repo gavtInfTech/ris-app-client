@@ -18,7 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { api } from "../../../axiosConfig";
 import { MessageContext } from "../../../contexts/MessageContext.jsx";
-import { Button, DialogContentText } from "@mui/material";
+import { Autocomplete, Button, DialogContentText } from "@mui/material";
 
 export default function PopupEdit(props) {
   const { auth } = useContext(AuthContext);
@@ -37,6 +37,10 @@ export default function PopupEdit(props) {
       cause2: false,
       cause3: false,
       content: "",
+              theme: "",
+        importance: "",
+        recipient: "",
+        source: "",
     },
 
     sites: [],
@@ -252,6 +256,10 @@ export default function PopupEdit(props) {
         cause2: false,
         cause3: false,
         content: "",
+                theme: "",
+        importance: "",
+        recipient: "",
+        source: "",
       },
 
       sites: [],
@@ -438,6 +446,117 @@ export default function PopupEdit(props) {
                   />
                 </FormGroup>
               </FormControl>
+  <FormControl
+              sx={{width: "full", mb: 3 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Тема извещения
+              </FormLabel>
+              <Autocomplete
+                options={[
+                  "Объявление",
+                  "Предупреждение",
+                  "Уведомление",
+                  "Оповещение",
+                  "Информирование",
+                ]}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Выберите тему"
+                  />
+                )}
+                onChange={(event, newValue) => {
+                 setState({ ...state, noticeInfo: { ...state.noticeInfo , theme: newValue } }); // Просто сохраняем строку
+                }}
+                disableClearable
+                freeSolo={false}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{ width: "full" }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+               Укажите важность уведомления, если требуется
+              </FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.importance}
+                      onChange={handleChangeCheckBox}
+                      name="importance"
+                    />
+                  }
+                  label="Важное"
+                />
+              </FormGroup>
+            </FormControl>
+
+            <FormControl
+              sx={{ width: "full", mb: 3 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Укажите получателей уведомления:
+              </FormLabel>
+              <TextField
+                name="recipient"
+                label="Получатели уведомления"
+                value={state.noticeInfo.recipient}
+                onChange={handleChange}
+                rows={4}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{ width: "full", mb: 3 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Укажите официальный источник:
+              </FormLabel>
+              <Autocomplete
+                options={[
+                  "Государственная администрация водного транспорта",
+                  'РУЭСП "Днепро-Бугский водный путь"',
+                  'РУ Днепро-Двинское предприятие водных путей "Белводпуть"',
+                  "РУ Днепро-Березинское предприятие водных путей",
+                  'Филиал "Нижне-Припятский" г. Мозырь',
+                  'Филиал "Витебскводтранс" г. Витебск',
+                  'Филиал "Гродненский участок" г. Гродно',
+                  "Белорусское речное пароходство",
+                  "Речной порт Бобруйск",
+                  "Речной порт Гомель",
+                  "Речной порт Речица",
+                  "Речной порт Брест",
+                  "Речной порт Пинск",
+                  "Речной порт Мозырь",
+                  "Речной порт Микашевичи",
+                ]}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Официальный источник"
+                  />
+                )}
+                onChange={(event, newValue) => {
+               setState({ ...state, noticeInfo: { ...state.noticeInfo , source: newValue } }); // Просто сохраняем строку
+                }}
+                disableClearable
+                freeSolo={false}
+              />
+            </FormControl>
 
               <TextField
                 name="content"

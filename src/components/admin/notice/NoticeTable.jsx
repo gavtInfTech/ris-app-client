@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useContext } from "react";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import ReplayIcon from '@mui/icons-material/Replay';
+import ReplayIcon from "@mui/icons-material/Replay";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import { GridActionsCellItem } from "@mui/x-data-grid";
@@ -53,7 +53,7 @@ export default function NoticeTable(props) {
           open: true,
           messageText: "Удалять извещения может только администратор!",
           severity: "warning",
-        }));  
+        }));
         return;
       }
       let res = await api.delete("/notices/delete/" + id);
@@ -62,24 +62,24 @@ export default function NoticeTable(props) {
       console.log(err.response.data);
     }
   };
-  console.log(rows);  
+  console.log(rows);
   const handlerReplayClick = (id) => async () => {
     try {
       if (!props.data) {
         console.error("Props data is undefined or null.");
         return;
       }
-  
+
       const findObjectById = (array, id) => {
-        return array.find(obj => obj.id === id);
+        return array.find((obj) => obj.id === id);
       };
       const notice = findObjectById(props.data, id);
-  
+
       if (!notice) {
         console.error("Notice with the specified ID not found.");
         return;
       }
-  
+
       const date = new Date();
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -87,11 +87,10 @@ export default function NoticeTable(props) {
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
       const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-  
+
       await api.post("/notices/change", { ...notice, date: formattedDate });
 
       const newDate = `${day}.${month}.${year},\n${hours}:${minutes}`;
-
 
       console.log(newDate);
 
@@ -100,17 +99,19 @@ export default function NoticeTable(props) {
         messageText: "Извещение успешно обновлено!",
         severity: "success",
       }));
-      
+
       // Check if rows and setRows are defined
       if (rows && setRows) {
-        const newRows = rows.data.map(row => (row.id === id ? { ...row, date: newDate } : row));
+        const newRows = rows.data.map((row) =>
+          row.id === id ? { ...row, date: newDate } : row
+        );
         setRows(newRows);
       }
     } catch (err) {
       console.error(err.response?.data || err.message);
     }
   };
-  
+
   const columns = [
     {
       field: "river",
@@ -141,8 +142,36 @@ export default function NoticeTable(props) {
       editable: true,
     },
     {
+      field: "theme",
+      headerName: "Тема извещения",
+      type: "string",
+      width: 200,
+      editable: true,
+    },
+    {
+      field: "importance",
+      headerName: "Важность",
+      type: "boolean",
+      width: 100,
+      editable: true,
+    },
+    {
+      field: "recipient",
+      headerName: "Получатели",
+      type: "string",
+      width: 200,
+      editable: true,
+    },
+    {
       field: "content",
       headerName: "Содержание",
+      type: "string",
+      width: 350,
+      editable: true,
+    },
+    {
+      field: "source",
+      headerName: " Официальный источник",
       type: "string",
       width: 350,
       editable: true,
@@ -186,19 +215,24 @@ export default function NoticeTable(props) {
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
-          <PopupEdit data={props.data} changeData={props.changeData} id={id} sites={props.sites} />,
+          <PopupEdit
+            data={props.data}
+            changeData={props.changeData}
+            id={id}
+            sites={props.sites}
+          />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
-        //   <GridActionsCellItem
-        //   icon={<ReplayIcon />}
-        //   label="Повторить"
-        //   onClick={handlerReplayClick(id)}
-        //   color="inherit"
-        // />,
+          //   <GridActionsCellItem
+          //   icon={<ReplayIcon />}
+          //   label="Повторить"
+          //   onClick={handlerReplayClick(id)}
+          //   color="inherit"
+          // />,
         ];
       },
     },
@@ -206,24 +240,24 @@ export default function NoticeTable(props) {
 
   return (
     <Box
-    sx={{
-      "& .super-app.negative": {
-        backgroundColor: "#d47483",
-        color: "#1a3e72",
-        fontWeight: "600",
-      },
-      "& .super-app.positive": {
-        backgroundColor: "rgba(157, 255, 118, 0.49)",
-        color: "#1a3e72",
-        fontWeight: "600",
-      },
-      "& .super-app.default": {
-        backgroundColor: "rgba(114, 163, 255, 0.49)",
-        color: "#1a3e72",
-        fontWeight: "600",
-      },
-    }}
-  >
+      sx={{
+        "& .super-app.negative": {
+          backgroundColor: "#d47483",
+          color: "#1a3e72",
+          fontWeight: "600",
+        },
+        "& .super-app.positive": {
+          backgroundColor: "rgba(157, 255, 118, 0.49)",
+          color: "#1a3e72",
+          fontWeight: "600",
+        },
+        "& .super-app.default": {
+          backgroundColor: "rgba(114, 163, 255, 0.49)",
+          color: "#1a3e72",
+          fontWeight: "600",
+        },
+      }}
+    >
       <DataGrid
         rows={rows}
         columns={columns}
