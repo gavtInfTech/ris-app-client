@@ -26,7 +26,7 @@ export default function NoticesList(props) {
     <div>
       {visibleData.map((doc) => (
         <Accordion sx={{ mt: 1 }} key={doc.id}>
-          <AccordionSummary sx={{background: doc.importance ? "#fc9d45ff" : ""}}>
+          <AccordionSummary sx={{background: doc.importance ? "#FF9999" : ""}}>
             {doc.cause.includes("Изменение СНО") && (
               <Icon sx={{ width: "30px", height: "40px" }}>
                 {" "}

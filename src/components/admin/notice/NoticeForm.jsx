@@ -380,11 +380,12 @@ export default function NoticeForm(props) {
             <TextField
               sx={{ width: 180, marginBottom: 3 }}
               name="date_start"
-              type={"date"}
+              type="date"
               value={state.noticeInfo.date_start}
               onChange={handleChange}
               variant="standard"
               label="Действует с"
+              InputLabelProps={{ shrink: true }}
             />
             <TextField
               sx={{ mb: 2 }}
@@ -409,6 +410,7 @@ export default function NoticeForm(props) {
               onChange={handleChange}
               variant="standard"
               label="Действует по"
+              InputLabelProps={{ shrink: true }}
             />
             <Typography sx={{ fontSize: 12 }}>
               *если не известна дата конца, не указывайте
@@ -482,7 +484,10 @@ export default function NoticeForm(props) {
                   />
                 )}
                 onChange={(event, newValue) => {
-                  setState({ ...state, noticeInfo: { ...state.noticeInfo , theme: newValue } }); // Просто сохраняем строку
+                  setState({
+                    ...state,
+                    noticeInfo: { ...state.noticeInfo, theme: newValue },
+                  }); // Просто сохраняем строку
                 }}
                 disableClearable
                 freeSolo={false}
@@ -535,7 +540,7 @@ export default function NoticeForm(props) {
               variant="standard"
             >
               <FormLabel sx={{ mb: 1 }} component="legend">
-                 Укажите официальный источник:
+                Укажите официальный источник:
               </FormLabel>
               <Autocomplete
                 options={[
@@ -563,7 +568,10 @@ export default function NoticeForm(props) {
                   />
                 )}
                 onChange={(event, newValue) => {
-                 setState({ ...state, noticeInfo: { ...state.noticeInfo , source: newValue } }); // Просто сохраняем строку
+                  setState({
+                    ...state,
+                    noticeInfo: { ...state.noticeInfo, source: newValue },
+                  }); // Просто сохраняем строку
                 }}
                 disableClearable
                 freeSolo={false}
