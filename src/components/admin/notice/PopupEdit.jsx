@@ -36,41 +36,41 @@ export default function PopupEdit(props) {
       cause1: false,
       cause2: false,
       cause3: false,
+      cause4: false,
+      cause5: false,
+      cause6: false,
       content: "",
-              theme: "",
-        importance: "",
-        recipient: "",
-        source: "",
+      theme: "",
+      importance: "",
+      recipient: "",
+      source: "",
     },
 
     sites: [],
   });
   const rivers = auth.info.siteRivers;
-  const noticeStatus = ["Действует", "Завершено"]
+  const noticeStatus = ["Действует", "Завершено"];
   const handleClick = (event) => {
     const notice = props.data.find((doc) => doc.id === props.id);
-    
 
-   function formatDate(noticeDate) {
-    const date = new Date(noticeDate);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-    
+    function formatDate(noticeDate) {
+      const date = new Date(noticeDate);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
 
-
-    console.log("THIS IS NOTIIICE!", notice)
+    console.log("THIS IS NOTIIICE!", notice);
     setState((prevState) => ({
       noticeInfo: {
         ...notice,
         date: formatDate(notice.date),
         date_start: formatDate(notice.date_start),
-        date_end: formatDate(notice.date_end)
-     },
+        date_end: formatDate(notice.date_end),
+      },
       sites: [...prevState.sites],
     }));
     setAnchorEl(event.currentTarget);
@@ -90,7 +90,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Березина":
@@ -98,7 +100,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Сож":
@@ -106,7 +110,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Неман":
@@ -114,7 +120,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Мухавец":
@@ -122,7 +130,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Днепро-Бугский канал":
@@ -130,7 +140,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Пина":
@@ -138,7 +150,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Верхний участок реки Припять":
@@ -146,7 +160,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Припять":
@@ -154,7 +170,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Микашевичский канал":
@@ -162,7 +180,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Горынь":
@@ -170,7 +190,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Западная Двина":
@@ -178,7 +200,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Туровский затон":
@@ -186,7 +210,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Августовский канал":
@@ -194,7 +220,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
       case "Свислочь":
@@ -202,7 +230,9 @@ export default function PopupEdit(props) {
           noticeInfo: {
             ...prevState.noticeInfo,
           },
-          sites: sites.filter(site => site.river === river).map(site => site.name),
+          sites: sites
+            .filter((site) => site.river === river)
+            .map((site) => site.name),
         }));
         break;
     }
@@ -255,8 +285,11 @@ export default function PopupEdit(props) {
         cause1: false,
         cause2: false,
         cause3: false,
+        cause4: false,
+        cause5: false,
+        cause6: false,
         content: "",
-                theme: "",
+        theme: "",
         importance: "",
         recipient: "",
         source: "",
@@ -310,7 +343,12 @@ export default function PopupEdit(props) {
         onClick={handleClick}
         color="inherit"
       />
-      <Dialog fullWidth='true'  sx={{ '& .MuiDialog-paper': {  maxWidth: 750 } }} onClose={handleClose} open={open}>
+      <Dialog
+        fullWidth="true"
+        sx={{ "& .MuiDialog-paper": { maxWidth: 750 } }}
+        onClose={handleClose}
+        open={open}
+      >
         <DialogTitle sx={{ m: 0, p: 2 }}>
           Изменение извещения
           <IconButton
@@ -327,49 +365,48 @@ export default function PopupEdit(props) {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-        
-            <form className={styles.form} onSubmit={sendForm}>
-              <TextField
-                name="river"
-                select
-                label="Река"
-                value={state.noticeInfo.river}
-                onChange={handleChange}
-                variant="standard"
-                sx={{mb: 2}}
-              >
-                {rivers.map((river) => (
-                  <MenuItem key={river} value={river}>
-                    {river}
-                  </MenuItem>
-                ))}
-              </TextField>
+          <form className={styles.form} onSubmit={sendForm}>
+            <TextField
+              name="river"
+              select
+              label="Река"
+              value={state.noticeInfo.river}
+              onChange={handleChange}
+              variant="standard"
+              sx={{ mb: 2 }}
+            >
+              {rivers.map((river) => (
+                <MenuItem key={river} value={river}>
+                  {river}
+                </MenuItem>
+              ))}
+            </TextField>
 
-              <TextField
-                name="site"
-                select
-                label="Участок реки"
-                value={state.noticeInfo.site}
-                onChange={handleChange}
-                variant="standard"
-                sx={{mb: 2}}
-              >
-                {state.sites.map((site) => (
-                  <MenuItem key={site} value={site}>
-                    {site}
-                  </MenuItem>
-                ))}
-              </TextField>
+            <TextField
+              name="site"
+              select
+              label="Участок реки"
+              value={state.noticeInfo.site}
+              onChange={handleChange}
+              variant="standard"
+              sx={{ mb: 2 }}
+            >
+              {state.sites.map((site) => (
+                <MenuItem key={site} value={site}>
+                  {site}
+                </MenuItem>
+              ))}
+            </TextField>
 
-              <TextField
-                sx={{ width: 180, mb: 2}}
-                label="Дата"
-                name="date"
-                type={"datetime-local"}
-                value={state.noticeInfo.date}
-                onChange={handleChange}
-                variant="standard"
-              />
+            <TextField
+              sx={{ width: 180, mb: 2 }}
+              label="Дата"
+              name="date"
+              type={"datetime-local"}
+              value={state.noticeInfo.date}
+              onChange={handleChange}
+              variant="standard"
+            />
             <TextField
               sx={{ width: 180, mb: 3 }}
               name="date_start"
@@ -380,7 +417,7 @@ export default function PopupEdit(props) {
               label="Действует с"
             />
             <TextField
-              sx={{ width: 180, mb: 3}}
+              sx={{ width: 180, mb: 3 }}
               name="date_end"
               type={"datetime-local"}
               value={state.noticeInfo.date_end}
@@ -388,7 +425,7 @@ export default function PopupEdit(props) {
               variant="standard"
               label="Действует по"
             />
-                <TextField
+            <TextField
               name="status"
               select
               label="Статус на данный момент"
@@ -402,52 +439,85 @@ export default function PopupEdit(props) {
                 </MenuItem>
               ))}
             </TextField>
-              <FormControl
-                sx={{ mt: 3, ml: 1, width: 240 }}
-                component="fieldset"
-                variant="standard"
-              >
-                <FormLabel sx={{ mb: 1 }} component="legend">
-                  Причина извещения
-                </FormLabel>
-                <FormGroup>
-                  <FormControlLabel
-                    sx={{ mb: 1 }}
-                    control={
-                      <Checkbox
-                        checked={state.noticeInfo.cause1}
-                        onChange={handleChangeCheckBox}
-                        name="cause1"
-                      />
-                    }
-                    label="Изменение СНО"
-                  />
-                  <FormControlLabel
-                    sx={{ mb: 1 }}
-                    control={
-                      <Checkbox
-                        checked={state.noticeInfo.cause2}
-                        onChange={handleChangeCheckBox}
-                        name="cause2"
-                      />
-                    }
-                    label="Гидрометеорологические условия"
-                  />
-                  <FormControlLabel
-                    sx={{ mb: 3 }}
-                    control={
-                      <Checkbox
-                        checked={state.noticeInfo.cause3}
-                        onChange={handleChangeCheckBox}
-                        name="cause3"
-                      />
-                    }
-                    label="Путевые работы"
-                  />
-                </FormGroup>
-              </FormControl>
-  <FormControl
-              sx={{width: "full", mb: 3 }}
+            <FormControl
+              sx={{ mt: 3, ml: 1, width: 240 }}
+              component="fieldset"
+              variant="standard"
+            >
+              <FormLabel sx={{ mb: 1 }} component="legend">
+                Причина извещения
+              </FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause1}
+                      onChange={handleChangeCheckBox}
+                      name="cause1"
+                    />
+                  }
+                  label="Изменение СНО"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause2}
+                      onChange={handleChangeCheckBox}
+                      name="cause2"
+                    />
+                  }
+                  label="Гидрометеорологические условия"
+                />
+                <FormControlLabel
+                  sx={{ mb: 3 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause3}
+                      onChange={handleChangeCheckBox}
+                      name="cause3"
+                    />
+                  }
+                  label="Путевые работы"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause4}
+                      onChange={handleChangeCheckBox}
+                      name="cause4"
+                    />
+                  }
+                  label="Ремонтные работы"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause5}
+                      onChange={handleChangeCheckBox}
+                      name="cause5"
+                    />
+                  }
+                  label="Мероприятие"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause6}
+                      onChange={handleChangeCheckBox}
+                      name="cause6"
+                    />
+                  }
+                  label="Другое"
+                />
+              </FormGroup>
+            </FormControl>
+            <FormControl
+              sx={{ width: "full", mb: 3 }}
               component="fieldset"
               variant="standard"
             >
@@ -470,7 +540,10 @@ export default function PopupEdit(props) {
                   />
                 )}
                 onChange={(event, newValue) => {
-                 setState({ ...state, noticeInfo: { ...state.noticeInfo , theme: newValue } }); // Просто сохраняем строку
+                  setState({
+                    ...state,
+                    noticeInfo: { ...state.noticeInfo, theme: newValue },
+                  }); // Просто сохраняем строку
                 }}
                 disableClearable
                 freeSolo={false}
@@ -483,7 +556,7 @@ export default function PopupEdit(props) {
               variant="standard"
             >
               <FormLabel sx={{ mb: 1 }} component="legend">
-               Укажите важность уведомления, если требуется
+                Укажите важность уведомления, если требуется
               </FormLabel>
               <FormGroup>
                 <FormControlLabel
@@ -551,41 +624,43 @@ export default function PopupEdit(props) {
                   />
                 )}
                 onChange={(event, newValue) => {
-               setState({ ...state, noticeInfo: { ...state.noticeInfo , source: newValue } }); // Просто сохраняем строку
+                  setState({
+                    ...state,
+                    noticeInfo: { ...state.noticeInfo, source: newValue },
+                  }); // Просто сохраняем строку
                 }}
                 disableClearable
                 freeSolo={false}
               />
             </FormControl>
 
-              <TextField
-                name="content"
-                label="Содержание"
-                value={state.noticeInfo.content}
-                onChange={handleChange}
-                multiline
-                rows={4}
-              />
+            <TextField
+              name="content"
+              label="Содержание"
+              value={state.noticeInfo.content}
+              onChange={handleChange}
+              multiline
+              rows={4}
+            />
 
-              <Box className={styles.buttonsConteiner}>
-                <Button
-                  variant="contained"
-                  className={styles.button}
-                  type="submit"
-                >
-                  Изменить
-                </Button>
+            <Box className={styles.buttonsConteiner}>
+              <Button
+                variant="contained"
+                className={styles.button}
+                type="submit"
+              >
+                Изменить
+              </Button>
 
-                <Button
-                  variant="contained"
-                  className={styles.button}
-                  onClick={resetForm}
-                >
-                  Очистить
-                </Button>
-              </Box>
-            </form>
-        
+              <Button
+                variant="contained"
+                className={styles.button}
+                onClick={resetForm}
+              >
+                Очистить
+              </Button>
+            </Box>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

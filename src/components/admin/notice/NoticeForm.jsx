@@ -48,6 +48,9 @@ export default function NoticeForm(props) {
       cause1: false,
       cause2: false,
       cause3: false,
+      cause4: false,
+      cause5: false,
+      cause6: false,
       content: "",
       status: "",
       theme: "",
@@ -111,6 +114,9 @@ export default function NoticeForm(props) {
         cause1: false,
         cause2: false,
         cause3: false,
+        cause4: false,
+        cause5: false,
+        cause6: false,
         content: "",
         status: "",
         theme: "",
@@ -456,6 +462,39 @@ export default function NoticeForm(props) {
                     />
                   }
                   label="Путевые работы"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause4}
+                      onChange={handleChangeCheckBox}
+                      name="cause4"
+                    />
+                  }
+                  label="Ремонтные работы"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause5}
+                      onChange={handleChangeCheckBox}
+                      name="cause5"
+                    />
+                  }
+                  label="Мероприятие"
+                />
+                <FormControlLabel
+                  sx={{ mb: 1 }}
+                  control={
+                    <Checkbox
+                      checked={state.noticeInfo.cause6}
+                      onChange={handleChangeCheckBox}
+                      name="cause6"
+                    />
+                  }
+                  label="Другое"
                 />
               </FormGroup>
             </FormControl>

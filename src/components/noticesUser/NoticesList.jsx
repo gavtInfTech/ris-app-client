@@ -26,7 +26,9 @@ export default function NoticesList(props) {
     <div>
       {visibleData.map((doc) => (
         <Accordion sx={{ mt: 1 }} key={doc.id}>
-          <AccordionSummary sx={{background: doc.importance ? "#FF9999" : ""}}>
+          <AccordionSummary
+            sx={{ background: doc.importance ? "#FF9999" : "" }}
+          >
             {doc.cause.includes("Изменение СНО") && (
               <Icon sx={{ width: "30px", height: "40px" }}>
                 {" "}
@@ -46,6 +48,24 @@ export default function NoticesList(props) {
                 <img src="/images/put1.png" />
               </Icon>
             )}
+             {doc.cause.includes("Ремонтные работы") && (
+              <Icon sx={{ width: "40px", height: "40px" }}>
+                {" "}
+                <img src="/images/remrab.png" />
+              </Icon>
+            )}
+              {doc.cause.includes("Мероприятие") && (
+              <Icon sx={{ width: "40px", height: "40px" }}>
+                {" "}
+                <img src="/images/mer.png" />
+              </Icon>
+            )}
+              {doc.cause.includes("Другое") && (
+              <Icon sx={{ width: "40px", height: "40px" }}>
+                {" "}
+                <img src="/images/drygrab.png" />
+              </Icon>
+            )}
             <Typography
               sx={{
                 ml: "20px",
@@ -62,13 +82,10 @@ export default function NoticesList(props) {
           </AccordionSummary>
           <AccordionDetails>
             <Typography className={Style.typography}>
-              <p className={Style.p}>Тема: {doc.theme || "-"}</p>
+              <p className={Style.p}>Причина извещения: {doc.cause}</p>
             </Typography>
             <Typography className={Style.typography}>
-              <p className={Style.p}>Река: {doc.river}</p>
-            </Typography>
-            <Typography className={Style.typography}>
-              <p className={Style.p}>Причины: {doc.cause}</p>
+              <p className={Style.p}>Тема извещения: {doc.theme || "-"}</p>
             </Typography>
             <Typography className={Style.typography}>
               <p className={Style.p}>Получатели: {doc.recipient || "-"}</p>
