@@ -80,7 +80,7 @@ export default function ShipDirectory() {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", mt: auth.role == "Диспетчер порта" || auth.role == "Диспетчер портов" ? "80px" : 10 }}>
+    <Box sx={{ display: "flex", height: "100vh", mt: auth.role == "Диспетчер порта" || auth.organisation == "Диспетчер портов" ? "80px" : 0 }}>
       <Box
         sx={{
           width: "13%",
