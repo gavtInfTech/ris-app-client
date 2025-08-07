@@ -32,20 +32,20 @@ export default function NoticesList(props) {
             {doc.cause.includes("Изменение СНО") && (
               <Icon sx={{ width: "30px", height: "40px" }}>
                 {" "}
-                <img src="/images/sno.png" />
+                <img src="/images/izmSno.png" />
               </Icon>
             )}
             {(doc.cause.includes("Гидрометеорологические условия") ||
               doc.cause.includes("Гидрометеорологические условия")) && (
               <Icon sx={{ width: "40px", height: "40px" }}>
                 {" "}
-                <img src="/images/weatherNotices.png" />
+                <img src="/images/metUSL.png" />
               </Icon>
             )}
             {doc.cause.includes("Путевые работы") && (
               <Icon sx={{ width: "40px", height: "40px" }}>
                 {" "}
-                <img src="/images/put1.png" />
+                <img src="/images/putRab.png" />
               </Icon>
             )}
              {doc.cause.includes("Ремонтные работы") && (
@@ -81,11 +81,28 @@ export default function NoticesList(props) {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
+                <Typography className={Style.typography}>
+              <p className={Style.p}>Дата и время публикации: {doc.date.toLocaleString().slice(0, 17)}</p>
+            </Typography>
+             <Typography className={Style.typography}>
+              <p className={Style.p}>Река: {doc.river}</p>
+            </Typography>
+               <Typography className={Style.typography}>
+              <p className={Style.p}>Участок: {doc.site}</p>
+            </Typography>
+             <Typography className={Style.typography}>
+              <p className={Style.p}>Срок действия:</p>
+              <p style={{marginLeft: "20px"}} className={Style.p}>Дата начала:   {new Date(doc.date_start).toLocaleDateString("ru-Ru")}</p>
+              <p style={{marginLeft: "20px"}} className={Style.p}>Дата конца: {new Date(doc.date_end).toLocaleDateString("ru-Ru")}</p>
+            </Typography>
             <Typography className={Style.typography}>
               <p className={Style.p}>Причина извещения: {doc.cause}</p>
             </Typography>
             <Typography className={Style.typography}>
               <p className={Style.p}>Тема извещения: {doc.theme || "-"}</p>
+            </Typography>
+                <Typography className={Style.typography}>
+              <p className={Style.p}>Статус: {doc.importance ? "Важное": "-"}</p>
             </Typography>
             <Typography className={Style.typography}>
               <p className={Style.p}>Получатели: {doc.recipient || "-"}</p>
