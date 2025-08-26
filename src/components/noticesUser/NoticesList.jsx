@@ -30,7 +30,7 @@ export default function NoticesList(props) {
             sx={{ background: doc.importance ? "#FF9999" : "" }}
           >
             {doc.cause.includes("Изменение СНО") && (
-              <Icon sx={{ width: "30px", height: "40px" }}>
+              <Icon sx={{ width: "40px", height: "40px" }}>
                 {" "}
                 <img src="/images/izmSno.png" />
               </Icon>

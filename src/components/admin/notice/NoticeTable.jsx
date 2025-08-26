@@ -33,6 +33,15 @@ export default function NoticeTable(props) {
         if (doc.cause3) {
           cause += "Путевые работы; ";
         }
+        if (doc.cause4) {
+          cause += "Ремонтные работы; ";
+        }
+        if (doc.cause5) {
+          cause += "Мероприятие; ";
+        }
+        if (doc.cause6) {
+          cause += "Другое; ";
+        }
         return { ...doc, cause: cause };
       })
     );
