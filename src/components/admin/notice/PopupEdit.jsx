@@ -249,7 +249,10 @@ export default function PopupEdit(props) {
       state.noticeInfo.status === "" ||
       (state.noticeInfo.cause1 === false &&
         state.noticeInfo.cause2 === false &&
-        state.noticeInfo.cause3 === false) ||
+        state.noticeInfo.cause3 === false &&
+        state.noticeInfo.cause4 === false &&
+        state.noticeInfo.cause5 === false &&
+        state.noticeInfo.cause6 === false) ||
       state.noticeInfo.content === ""
     ) {
       setMessage(() => ({
